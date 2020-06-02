@@ -20,11 +20,12 @@ It currently contains only metrics used for the evaluation of Information Retrie
 * Ideal Discounted Cumulative Gain (IDCG)
 * Normalized Discounted Cumulative Gain (NDCG)
 
-Ranking metrics have been tested against [TREC Eval](https://github.com/usnistgov/trec_eval) — through [pytrec_eval](https://github.com/cvangysel/pytrec_eval) — for correctness.
+Ranking metrics have been tested against [TREC Eval](https://github.com/usnistgov/trec_eval) for correctness — through a comparison with [pytrec_eval](https://github.com/cvangysel/pytrec_eval).
 
-The implemented metrics are up to more than 50 times faster than [pytrec_eval](https://github.com/cvangysel/pytrec_eval) and with a much lower memory footprint (_see [pytrec_eval_comparison](https://github.com/AmenRa/metrics_eval/tree/master/pytrec_eval_comparison) folder_).
+The implemented metrics are up to 50 times faster than [pytrec_eval](https://github.com/cvangysel/pytrec_eval) and with a much lower memory footprint (_see [pytrec_eval_comparison](https://github.com/AmenRa/metrics_eval/tree/master/pytrec_eval_comparison) folder_).
 
 ## Requirements
+* Python >= 3.7
 * Numba >= 0.49.1
 * Numpy >= 1.15
 
@@ -44,7 +45,7 @@ metrics.hits_at_k(y_true, y_pred, k)
 >>> 3.0
 ```
 
-## Documentations
+## Documentation
 WORK IN PROGRESS
 
 ## Citation
