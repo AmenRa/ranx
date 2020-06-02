@@ -7,7 +7,7 @@ The goal of the project is to create a package of high performant metrics implem
 It currently contains only metrics used for the evaluation of Information Retrieval Systems (Search Engines) and Recommender Systems.
 
 ## Available Metrics
-Ranking metrics:
+### Ranking metrics:
 * Hit List
 * Hits
 * Precision
