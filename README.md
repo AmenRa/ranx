@@ -24,6 +24,13 @@ Ranking metrics have been tested against [TREC Eval](https://github.com/usnistgo
 
 The implemented metrics are up to 50 times faster than [pytrec_eval](https://github.com/cvangysel/pytrec_eval) (even more on large scale datasets...) and with a much lower memory footprint.
 
+## Requirements
+* Numba >= 0.49.1
+* Numpy >= 1.15
+
+## Installation
+WORK IN PROGRESS
+
 ## Usage
 ```python
 from metrics_eval import ranking_metrics as metrics
@@ -39,10 +46,6 @@ metrics.hits_at_k(y_true, y_pred, k)
 
 ## Documentations
 WORK IN PROGRESS
-
-## Dependencies
-* Numba >= 0.49.1
-* Numpy >= 1.15
 
 ## Citation
 WORK IN PROGRESS
