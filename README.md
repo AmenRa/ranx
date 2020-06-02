@@ -22,7 +22,7 @@ It currently contains only metrics used for the evaluation of Information Retrie
 
 Ranking metrics have been tested against [TREC Eval](https://github.com/usnistgov/trec_eval) — through [pytrec_eval](https://github.com/cvangysel/pytrec_eval) — for correctness.
 
-The implemented metrics are up to 50 times faster than [pytrec_eval](https://github.com/cvangysel/pytrec_eval) (even more on large scale datasets...) and with a much lower memory footprint.
+The implemented metrics are up to more than 50 times faster than [pytrec_eval](https://github.com/cvangysel/pytrec_eval) and with a much lower memory footprint (_see [pytrec_eval_comparison](https://github.com/AmenRa/metrics_eval/tree/master/pytrec_eval_comparison) folder_).
 
 ## Requirements
 * Numba >= 0.49.1
