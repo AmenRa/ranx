@@ -4,6 +4,7 @@ from numba.typed import List
 
 
 def to_typed_list(ls):
+    """Convert a list of Numpy Arrays into a Numba Typed List."""
     typed_list = List()
 
     for x in ls:

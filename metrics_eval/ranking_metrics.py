@@ -218,74 +218,61 @@ def _weighted_hit_list(y_true, y_pred):
 
 
 @njit(cache=True)
-def _dcg(y_true, y_pred, k, method):
+def _dcg(y_true, y_pred, k):
     k = k if k <= y_pred.shape[0] else y_pred.shape[0]
 
     weighted_hit_list = _weighted_hit_list(y_true, y_pred[:k])
 
-    if method == "classic":
-        # Classic formulation
-        return np.sum(weighted_hit_list / np.log2(np.arange(1, k + 1) + 1))
-    elif method == "alternative":
-        # Alternative formulation
-        return np.sum(
-            (2 ** weighted_hit_list - 1) / np.log(np.arange(1, k + 1) + 1)
-        )
-    else:
-        # Standard formulation
-        return np.sum(
-            (2 ** weighted_hit_list - 1) / np.log2(np.arange(1, k + 1) + 1)
-        )
+    # Standard formulation
+    return np.sum(
+        (2 ** weighted_hit_list - 1) / np.log2(np.arange(1, k + 1) + 1)
+    )
 
 
 @njit(cache=True, parallel=True)
-def _dcg_parallel(y_true, y_pred, k, method):
+def _dcg_parallel(y_true, y_pred, k):
     scores = np.zeros((len(y_true)))
 
     for i in prange(len(y_true)):
-        scores[nb.int64(i)] = _dcg(
-            y_true[nb.int64(i)], y_pred[nb.int64(i)], k, method
-        )
+        scores[nb.int64(i)] = _dcg(y_true[nb.int64(i)], y_pred[nb.int64(i)], k)
 
     # return np.sum(scores) / len(y_true)
     return scores
 
 
 @njit(cache=True)
-def _idcg(y_true, k, method, binary):
+def _idcg(y_true, k, binary):
     if not binary:
         # Sort by descending order of second column
         y_pred = y_true[np.argsort(y_true[:, 1])[::-1]][:, 0]
     else:
         y_pred = y_true[:, 0]
-    return _dcg(y_true, y_pred, k, method)
+    return _dcg(y_true, y_pred, k)
 
 
 @njit(cache=True, parallel=True)
-def _idcg_parallel(y_true, k, method, binary):
+def _idcg_parallel(y_true, k, binary):
     scores = np.zeros((len(y_true)))
 
     for i in prange(len(y_true)):
-        scores[nb.int64(i)] = _idcg(y_true[nb.int64(i)], k, method, binary)
+        scores[nb.int64(i)] = _idcg(y_true[nb.int64(i)], k, binary)
 
     return scores
 
 
 @njit(cache=True)
-def _ndcg(y_true, y_pred, k, method, binary):
-    dcg_score = _dcg(y_true, y_pred, k, method)
-    idcg_score = _idcg(y_true, k, method, binary)
+def _ndcg(y_true, y_pred, k, binary):
+    dcg_score = _dcg(y_true, y_pred, k)
+    idcg_score = _idcg(y_true, k, binary)
     return dcg_score / idcg_score
 
 
 @njit(cache=True, parallel=True)
-def _ndcg_parallel(y_true, y_pred, k, method, binary):
+def _ndcg_parallel(y_true, y_pred, k, binary):
     score = 0
 
     for i in prange(len(y_true)):
-        score += _ndcg(
-            y_true[nb.int64(i)], y_pred[nb.int64(i)], k, method, binary
-        )
+        score += _ndcg(y_true[nb.int64(i)], y_pred[nb.int64(i)], k, binary)
 
     return score / len(y_true)
 
@@ -378,21 +365,18 @@ def hit_list_at_k(y_true, y_pred, k):
 
     Parameters
     ----------
-    y_true : Numpy Array or List
-        (List of) Numpy Array of IDs of _relevant_ documents.
+    y_true : Numpy Array or List of Numpy Arrays or Numba Typed List
+        IDs of _relevant_ documents.
 
-    y_pred : Numpy Array
-        (2d) Numpy Array of IDs of _retrieved_ documents.
+    y_pred : Numpy Array or List of Numpy Arrays or Numba Typed List
+        IDs of _retrieved_ documents.
 
     k : Int
         Number of results to consider.
 
-    multi : Boolean
-        If `True` the function will be computer for multiple inputs -> y_true : List of Numpy Array, y_pred : 2d Numpy Array.
-
     Returns
     -------
-    List:
+    Numpy Array or List of Numpy Arrays:
         Hit list at k.
 
     """
@@ -412,21 +396,20 @@ def hit_list_at_k(y_true, y_pred, k):
 def hits_at_k(y_true, y_pred, k):
     """Compute hits at k.
 
-    Hits at k is the number of relevant documents in the first k positions of the list of retrieved documents.
+    Hits at k is the number of relevant documents in the first k positions of the retrieved documents list.
+
+    If y_true and y_pred are bi-dimensional, it computes the arithmetic mean of the hits at k scores.
 
     Parameters
     ----------
-    y_true : Numpy Array or List
-        (List of) Numpy Array of IDs of _relevant_ documents.
+    y_true : Numpy Array or List of Numpy Arrays or Numba Typed List
+        IDs of _relevant_ documents.
 
-    y_pred : Numpy Array
-        (2d) Numpy Array of IDs of _retrieved_ documents.
+    y_pred : Numpy Array or List of Numpy Arrays or Numba Typed List
+        IDs of _retrieved_ documents.
 
     k : Int
         Number of results to consider.
-
-    multi : Boolean
-        If `True` the function will be computer for multiple inputs -> y_true : List of Numpy Array, y_pred : 2d Numpy Array.
 
     Returns
     -------
@@ -467,7 +450,7 @@ def precision_at_k(y_true, y_pred, k):
     }
     ```
 
-    If y_true and y_pred are bi-dimensional, it computes the arithmetic mean of the precision at k scores for an information retrieval system / recommender system over a set of n retrieval / recommendation tasks.
+    If y_true and y_pred are bi-dimensional, it computes the arithmetic mean of the precision at k scores.
 
     $$mP@k = {1\over n}\sum\limits_n {P@k_n }$$
 
@@ -478,17 +461,14 @@ def precision_at_k(y_true, y_pred, k):
 
     Parameters
     ----------
-    y_true : Numpy Array or List
-        (List of) Numpy Array of IDs of _relevant_ documents.
+    y_true : Numpy Array or List of Numpy Arrays or Numba Typed List
+        IDs of _relevant_ documents.
 
-    y_pred : Numpy Array
-        (2d) Numpy Array of IDs of _retrieved_ documents (already) sorted by descending rank order.
+    y_pred : Numpy Array or List of Numpy Arrays or Numba Typed List
+        IDs of _retrieved_ documents sorted by descending rank order.
 
     k : Int
         Number of results to consider.
-
-    multi : Boolean
-        If `True` the function will be computer for multiple inputs -> y_true : List of Numpy Array, y_pred : 2d Numpy Array.
 
     Returns
     -------
@@ -514,7 +494,7 @@ def recall_at_k(y_true, y_pred, k):
     - \(r\) is the number of retrieved relevant documents at k.
     - \(R\) is the total number of relevant documents.
 
-    If y_true and y_pred are bi-dimensional, it computes the arithmetic mean of the recall at k scores for an information retrieval system / recommender system over a set of n retrieval / recommendation tasks.
+    If y_true and y_pred are bi-dimensional, it computes the arithmetic mean of the recall at k scores.
 
     $$mR@k = {1\over n}\sum\limits_n {R@k_n }$$
 
@@ -525,17 +505,14 @@ def recall_at_k(y_true, y_pred, k):
 
     Parameters
     ----------
-    y_true : Numpy Array or List
-        (List of) Numpy Array of IDs of _relevant_ documents.
+    y_true : Numpy Array or List of Numpy Arrays or Numba Typed List
+        IDs of _relevant_ documents.
 
-    y_pred : Numpy Array
-        (2d) Numpy Array of IDs of _retrieved_ documents (already) sorted by descending rank order.
+    y_pred : Numpy Array or List of Numpy Arrays or Numba Typed List
+        IDs of _retrieved_ documents sorted by descending rank order.
 
     k : Int
         Number of results to consider.
-
-    multi : Boolean
-        If `True` the function will be computer for multiple inputs -> y_true : List of Numpy Array, y_pred : 2d Numpy Array.
 
     Returns
     -------
@@ -556,16 +533,15 @@ def r_precision(y_true, y_pred):
 
     $$\frac{r}{R}$$
 
+    If y_true and y_pred are bi-dimensional, it computes the arithmetic mean of the R-precision scores.
+
     Parameters
     ----------
-    y_true : Numpy Array or List
-        (List of) Numpy Array of IDs of _relevant_ documents.
+    y_true : Numpy Array or List of Numpy Arrays or Numba Typed List
+        IDs of _relevant_ documents.
 
-    y_pred : Numpy Array
-        (2d) Numpy Array of IDs of _retrieved_ documents (already) sorted by descending rank order.
-
-    multi : Boolean
-        If `True` the function will be computer for multiple inputs -> y_true : List of Numpy Array, y_pred : 2d Numpy Array.
+    y_pred : Numpy Array or List of Numpy Arrays or Numba Typed List
+        IDs of _retrieved_ documents sorted by descending rank order.
 
     Returns
     -------
@@ -590,19 +566,16 @@ def mrr(y_true, y_pred):
 
     where,
 
-    - \(N\) is the number of tasks (queries o recommendation requests);
+    - \(N\) is the number of tasks (ranked lists);
     - \(rank_i\) is the position of the correct document for the task \(i\).
 
     Parameters
     ----------
-    y_true : Numpy Array or List
-        (List of) Numpy Array of IDs of _relevant_ documents.
+    y_true : Numpy Array or List of Numpy Arrays or Numba Typed List
+        IDs of _relevant_ documents.
 
-    y_pred : Numpy Array
-        (2d) Numpy Array of IDs of _retrieved_ documents (already) sorted by descending rank order.
-
-    multi : Boolean
-        If `True` the function will be computer for multiple inputs -> y_true : List of Numpy Array, y_pred : 2d Numpy Array. If `False` it wil compute Reciprocal Rank.
+    y_pred : Numpy Array or List of Numpy Arrays or Numba Typed List
+        IDs of _retrieved_ documents sorted by descending rank order.
 
     Returns
     -------
@@ -615,7 +588,7 @@ def mrr(y_true, y_pred):
 
 
 def average_precision(y_true, y_pred, k=0):
-    r"""Compute average precision.
+    """Compute average precision.
 
     Average precision is a measure that combines recall and precision for ranked retrieval results. For one information need, the average precision is the mean of the precision scores after each relevant document is retrieved.
 
@@ -645,11 +618,11 @@ def average_precision(y_true, y_pred, k=0):
 
     Parameters
     ----------
-    y_true : Numpy Array
-        Numpy Array of IDs of _relevant_ documents.
+    y_true : Numpy Array or List of Numpy Arrays or Numba Typed List
+        IDs of _relevant_ documents.
 
-    y_pred : Numpy Array
-        Numpy Array of IDs of _retrieved_ documents (already) sorted by descending rank order.
+    y_pred : Numpy Array or List of Numpy Arrays or Numba Typed List
+        IDs of _retrieved_ documents sorted by descending rank order.
 
     Returns
     -------
@@ -669,13 +642,13 @@ def average_precision(y_true, y_pred, k=0):
 def map(y_true, y_pred, k=0):
     r"""Compute mean average precision.
 
-    The Mean Average Precision (MAP) is the arithmetic mean of the average precision values for an information retrieval system / recommender system over a set of n retrieval / recommendation tasks.
+    The Mean Average Precision (MAP) is the arithmetic mean of the average precision values for a set of ranked lists.
 
     $$MAP = {1\over n}\sum\limits_n {AP_n }$$
 
     where,
 
-    - \(n\) is the number of tasks;
+    - \(n\) is the number of tasks (ranked lists);
     - \(AP_n\) is the \(Average\,Precision\) of \(n\)-th task.
 
     ```
@@ -696,14 +669,14 @@ def map(y_true, y_pred, k=0):
 
     Parameters
     ----------
-    y_true : Numpy Array or List
-        (List of) Numpy Array of IDs of _relevant_ documents.
+    y_true : Numpy Array or List of Numpy Arrays or Numba Typed List
+        IDs of _relevant_ documents.
 
-    y_pred : Numpy Array
-        (2d) Numpy Array of IDs of _retrieved_ documents (already) sorted by descending rank order.
+    y_pred : Numpy Array or List of Numpy Arrays or Numba Typed List
+        IDs of _retrieved_ documents sorted by descending rank order.
 
-    multi : Boolean
-        If `True` the function will be computer for multiple inputs -> y_true : List of Numpy Array, y_pred : 2d Numpy Array. If `False` it wil compute Average Precision.
+    k : Int
+        Number of results to consider.
 
     Returns
     -------
@@ -718,21 +691,18 @@ def map(y_true, y_pred, k=0):
 
 
 def binary_metrics(y_true, y_pred, k):
-    r"""Hits at k, Precision at k, Recall at k, R-precision, Mean Reciprocal Rank, Mean Average Precision.
+    r"""Compute Hits at k, Precision at k, Recall at k, R-precision, Mean Reciprocal Rank, Mean Average Precision.
 
     Parameters
     ----------
-    y_true : Numpy Array or List
-        (List of) Numpy Array of IDs of _relevant_ documents.
+    y_true : Numpy Array or List of Numpy Arrays or Numba Typed List
+        IDs of _relevant_ documents.
 
-    y_pred : Numpy Array
-        (2d) Numpy Array of IDs of _retrieved_ documents (already) sorted by descending rank order.
+    y_pred : Numpy Array or List of Numpy Arrays or Numba Typed List
+        IDs of _retrieved_ documents sorted by descending rank order.
 
     k : Int
         Number of results to consider.
-
-    multi : Boolean
-        If `True` the function will be computer for multiple inputs -> y_true : List of Numpy Array, y_pred : 2d Numpy Array.
 
     Returns
     -------
@@ -747,7 +717,7 @@ def binary_metrics(y_true, y_pred, k):
 
 
 # NON-BINARY METRICS -----------------------------------------------------------
-def dcg(y_true, y_pred, k, method=None):
+def dcg(y_true, y_pred, k):
     r"""Compute Discounted Cumulative Gain (DCG) at k.
 
     Discounted Cumulative Gain measures the usefulness, or _gain_, of a document based on its position in the result list. The gain is accumulated from the top of the result list to the bottom, with the gain of each result discounted at lower ranks.
@@ -755,15 +725,6 @@ def dcg(y_true, y_pred, k, method=None):
     Standard formulation:
 
     $$DCG(k) = \sum_{n=1}^{k}\frac{2^{r_n}-1}{\log_2(n+1)}$$
-
-    Classic formulation:
-
-    $$DCG(k) = \sum_{n=1}^{k}\frac{r_n}{\log_2(n+1))}$$
-
-    Alternative formulation:
-
-    $$DCG(k) = \sum_{n=1}^{k}\frac{2^{r_n}-1}{\log_e(n+1)}$$
-
 
     where,
 
@@ -785,22 +746,25 @@ def dcg(y_true, y_pred, k, method=None):
     }
     ```
 
+    If y_true and y_pred are multi-dimensional, it computes the arithmetic mean of the Discounted Cumulative Gain scores.
+
+    Example:
+    >>> y_true = np.array([[[12, 0.5], [25, 0.3]], [[11, 0.4], [2, 0.6]]])
+    >>> y_pred = np.array([[12, 234, 25, 36, 32, 35], [12, 11, 25, 36, 2, 35]])
+    >>> k = 5
+    >>> dcg(y_true, y_pred, k)
+    array([0.52978577, 0.40109345])
+
     Parameters
     ----------
-    y_true : Numpy Array or List
-        (List of) Numpy Array of IDs of _relevant_ documents.
+    y_true : Numpy Array or List of Numpy Arrays or Numba Typed List
+        IDs and true relevance scores of _relevant_ documents.
 
-    y_pred : Numpy Array
-        (2d) Numpy Array of IDs of _retrieved_ documents (already) sorted by descending rank order.
+    y_pred : Numpy Array or List of Numpy Arrays or Numba Typed List
+        IDs of _retrieved_ documents.
 
     k : Int
         Number of results to consider.
-
-    method : String
-        Select Classic or Alternative score formulation.
-
-    multi : Boolean
-        If `True` the function will be computer for multiple inputs -> y_true : List of Numpy Array, y_pred : 2d Numpy Array.
 
     Returns
     -------
@@ -810,12 +774,12 @@ def dcg(y_true, y_pred, k, method=None):
     """
 
     return _choose_optimal_function(
-        y_true, y_pred, _dcg, _dcg_parallel, {"k": k, "method": method}
+        y_true, y_pred, _dcg, _dcg_parallel, {"k": k}
     )
 
 
-def idcg(y_true, k, method=None, binary=False):
-    r"""Compute Ideal Discounted Cumulative Gain (DCG) at k.
+def idcg(y_true, k, binary=False):
+    r"""Compute Ideal Discounted Cumulative Gain (IDCG) at k.
 
     Parameters
     ----------
@@ -824,12 +788,6 @@ def idcg(y_true, k, method=None, binary=False):
 
     k : Int
         Number of results to consider.
-
-    method : String
-        Select Classic or Alternative score formulation.
-
-    multi : Boolean
-        If `True` the function will be computer for multiple inputs -> y_true : List of Numpy Array, y_pred : 2d Numpy Array.
 
     binary : Boolean
         If `True` it will not reorder y_true by relevance score.
@@ -841,19 +799,17 @@ def idcg(y_true, k, method=None, binary=False):
 
     """
     if type(y_true) == nb.typed.typedlist.List:
-        return _idcg_parallel(y_true, k, method, binary)
+        return _idcg_parallel(y_true, k, binary)
     elif type(y_true) == list and y_true[0] == np.ndarray:
-        return np.sum([_idcg(y_t, k, method, binary) for y_t, in y_true]) / len(
-            y_true
-        )
+        return np.sum([_idcg(y_t, k, binary) for y_t, in y_true]) / len(y_true)
     elif type(y_true) == np.ndarray:
-        return _idcg(y_true, k, method, binary)
+        return _idcg(y_true, k, binary)
     else:
         raise TypeError("Input not supported.")
 
 
-def ndcg(y_true, y_pred, k, method=None, binary=False):
-    r"""Compute Normalized Discounted Cumulative Gain (DCG) at k.
+def ndcg(y_true, y_pred, k, binary=False):
+    r"""Compute Normalized Discounted Cumulative Gain (NDCG) at k.
 
     $$nDCG(k) = \frac{DCG(k)}{IDCG(k)}$$
 
@@ -876,22 +832,25 @@ def ndcg(y_true, y_pred, k, method=None, binary=False):
     }
     ```
 
+    If y_true and y_pred are multi-dimensional, it computes the arithmetic mean of the Normalized Discounted Cumulative Gain scores.
+
+    Example:
+    >>> y_true = np.array([[[12, 0.5], [25, 0.3]], [[11, 0.4], [2, 0.6]]])
+    >>> y_pred = np.array([[12, 234, 25, 36, 32, 35], [12, 11, 25, 36, 2, 35]])
+    >>> k = 5
+    >>> ndcg(y_true, y_pred, k)
+    0.7525653965843032
+
     Parameters
     ----------
-    y_true : Numpy Array or List
-        (List of) Numpy Array of IDs of _relevant_ documents.
+    y_true : Numpy Array or List of Numpy Arrays or Numba Typed List
+        IDs and true relevance scores of _relevant_ documents.
 
-    y_pred : Numpy Array
-        (2d) Numpy Array of IDs of _retrieved_ documents (already) sorted by descending rank order.
+    y_pred : Numpy Array or List of Numpy Arrays or Numba Typed List
+        IDs of _retrieved_ documents.
 
     k : Int
         Number of results to consider.
-
-    method : String
-        Select Classic or Alternative score formulation.
-
-    multi : Boolean
-        If `True` the function will be computer for multiple inputs -> y_true : List of Numpy Array, y_pred : 2d Numpy Array.
 
     binary : Boolean
         If `True` it will not reorder y_true by relevance score during iDCG computation.
@@ -904,9 +863,5 @@ def ndcg(y_true, y_pred, k, method=None, binary=False):
     """
 
     return _choose_optimal_function(
-        y_true,
-        y_pred,
-        _ndcg,
-        _ndcg_parallel,
-        {"k": k, "method": method, "binary": binary},
+        y_true, y_pred, _ndcg, _ndcg_parallel, {"k": k, "binary": binary}
     )
