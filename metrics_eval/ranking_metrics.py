@@ -426,38 +426,43 @@ def hits_at_k(y_true, y_pred, k):
 def precision_at_k(y_true, y_pred, k):
     r"""Compute precision at k.
 
-    Precision at k (P@k) is the proportion of the top-k documents that are relevant. The top-k documents are the first k in a ranking.
+    Precision at k (P@k) is the proportion of the top-k documents that are relevant. The top-k documents are the first k documents of a ranked list.
 
-    $$P@k={{r}\over{k}}$$
+    .. math:: P@k={{r}\over{k}}
 
     where,
 
-    - \(r\) is the number of relevant documents.
-
-    ```
-    @Inbook{Craswell2009,
-        author="Craswell, Nick",
-        editor="LIU, LING and {\"O}ZSU, M. TAMER",
-        title="Precision at n",
-        bookTitle="Encyclopedia of Database Systems",
-        year="2009",
-        publisher="Springer US",
-        address="Boston, MA",
-        pages="2127--2128",
-        isbn="978-0-387-39940-9",
-        doi="10.1007/978-0-387-39940-9_484",
-        url="https://doi.org/10.1007/978-0-387-39940-9_484"
-    }
-    ```
+    - :math:`r` is the number of relevant documents.
 
     If y_true and y_pred are bi-dimensional, it computes the arithmetic mean of the precision at k scores.
 
-    $$mP@k = {1\over n}\sum\limits_n {P@k_n }$$
+    .. math:: mP@k = {1\over n}\sum\limits_n {P@k_n }
 
     where,
 
-    - \(n\) is the number of tasks;
-    - \(P@k_n\) is the \(Precision\,at\,k\) of \(n\)-th task.
+    - :math:`n` is the number of tasks;
+    - :math:`P@k_n` is the :math:`Precision\,at\,k` of :math:`n`-th task.
+
+
+    .. highlight:: bibtex
+    .. code-block:: bibtex
+
+        @Inbook{Craswell2009,
+            author="Craswell, Nick",
+            editor="LIU, LING
+            and {\"O}ZSU, M. TAMER",
+            title="Precision at n",
+            bookTitle="Encyclopedia of Database Systems",
+            year="2009",
+            publisher="Springer US",
+            address="Boston, MA",
+            pages="2127--2128",
+            isbn="978-0-387-39940-9",
+            doi="10.1007/978-0-387-39940-9_484",
+            url="https://doi.org/10.1007/978-0-387-39940-9_484"
+        }
+
+
 
     Parameters
     ----------
@@ -487,21 +492,21 @@ def recall_at_k(y_true, y_pred, k):
 
     Recall at k (P@k) is the ratio between the top-k documents that are relevant and the total number of relevant documents. The top-k documents are the first k in a ranking.
 
-    $$R@k={{r}\over{R}}$$
+    .. math:: R@k={{r}\over{R}}
 
     where,
 
-    - \(r\) is the number of retrieved relevant documents at k.
-    - \(R\) is the total number of relevant documents.
+    - :math:`r` is the number of retrieved relevant documents at k.
+    - :math:`R` is the total number of relevant documents.
 
     If y_true and y_pred are bi-dimensional, it computes the arithmetic mean of the recall at k scores.
 
-    $$mR@k = {1\over n}\sum\limits_n {R@k_n }$$
+    .. math:: mR@k = {1\over n}\sum\limits_n {R@k_n }
 
     where,
 
-    - \(n\) is the number of tasks;
-    - \(R@k_n\) is the \(Recall\,at\,k\) of \(n\)-th task.
+    - :math:`n` is the number of tasks;
+    - :math:`R@k_n` is the :math:`Recall\,at\,k` of :math:`n`-th task.
 
     Parameters
     ----------
@@ -529,9 +534,9 @@ def recall_at_k(y_true, y_pred, k):
 def r_precision(y_true, y_pred):
     r"""Compute R-precision.
 
-    For a given query topic \(Q\), R-precision is the precision at \(R\), where \(R\) is the number of relevant documents for \(Q\). In other words, if there are \(r\) relevant documents among the top-\(R\) retrieved documents, then R-precision is
+    For a given query topic :math:`Q`, R-precision is the precision at :math:`R`, where :math:`R` is the number of relevant documents for :math:`Q`. In other words, if there are :math:`r` relevant documents among the top-:math:`R` retrieved documents, then R-precision is
 
-    $$\frac{r}{R}$$
+    .. math:: \frac{r}{R}
 
     If y_true and y_pred are bi-dimensional, it computes the arithmetic mean of the R-precision scores.
 
@@ -562,12 +567,12 @@ def mrr(y_true, y_pred):
 
     Usefull when only one document is the correct answer.
 
-    $$MRR = \frac{1}{N}\sum_{i=1}^{N}\frac{1}{rank_i}$$
+    .. math:: MRR = \frac{1}{N}\sum_{i=1}^{N}\frac{1}{rank_i}
 
     where,
 
-    - \(N\) is the number of tasks (ranked lists);
-    - \(rank_i\) is the position of the correct document for the task \(i\).
+    - :math:`N` is the number of tasks (ranked lists);
+    - :math:`rank_i` is the position of the correct document for the task :math:`i`.
 
     Parameters
     ----------
@@ -592,29 +597,31 @@ def average_precision(y_true, y_pred, k=0):
 
     Average precision is a measure that combines recall and precision for ranked retrieval results. For one information need, the average precision is the mean of the precision scores after each relevant document is retrieved.
 
-    $$AP = {1\over R}{{\sum\limits _{r}P @ r}}$$
+    .. math:: AP = {1\over R}{{\sum\limits _{r}P @ r}}
 
     where,
 
-    - \(R\) is the number of relevant documents;
-    - \(r\) values are the positions of relevant documents;
-    - \(P @ r\) is the \(Precision\,at\,r\).
+    - :math:`R` is the number of relevant documents;
+    - :math:`r` values are the positions of relevant documents;
+    - :math:`P @ r` is the :math:`Precision\,at\,r`.
 
-    ```
-    @Inbook{Zhang2009,
-        author="Zhang, Ethan and Zhang, Yi",
-        editor="LIU, LING and {\"O}ZSU, M. TAMER",
-        title="Average Precision",
-        bookTitle="Encyclopedia of Database Systems",
-        year="2009",
-        publisher="Springer US",
-        address="Boston, MA",
-        pages="192--193",
-        isbn="978-0-387-39940-9",
-        doi="10.1007/978-0-387-39940-9_482",
-        url="https://doi.org/10.1007/978-0-387-39940-9_482"
-    }
-    ```
+    .. highlight:: bibtex
+    .. code-block:: bibtex
+
+        @Inbook{Zhang2009,
+            author="Zhang, Ethan and Zhang, Yi",
+            editor="LIU, LING and {\"O}ZSU, M. TAMER",
+            title="Average Precision",
+            bookTitle="Encyclopedia of Database Systems",
+            year="2009",
+            publisher="Springer US",
+            address="Boston, MA",
+            pages="192--193",
+            isbn="978-0-387-39940-9",
+            doi="10.1007/978-0-387-39940-9_482",
+            url="https://doi.org/10.1007/978-0-387-39940-9_482"
+        }
+
 
     Parameters
     ----------
@@ -644,28 +651,29 @@ def map(y_true, y_pred, k=0):
 
     The Mean Average Precision (MAP) is the arithmetic mean of the average precision values for a set of ranked lists.
 
-    $$MAP = {1\over n}\sum\limits_n {AP_n }$$
+    .. math:: MAP = {1\over n}\sum\limits_n {AP_n }
 
     where,
 
-    - \(n\) is the number of tasks (ranked lists);
-    - \(AP_n\) is the \(Average\,Precision\) of \(n\)-th task.
+    - :math:`n` is the number of tasks (ranked lists);
+    - :math:`AP_n` is the :math:`Average\,Precision` of :math:`n`-th task.
 
-    ```
-    @Inbook{Zhang2009,
-        author="Zhang, Ethan and Zhang, Yi",
-        editor="LIU, LING and {\"O}ZSU, M. TAMER",
-        title="Average Precision",
-        bookTitle="Encyclopedia of Database Systems",
-        year="2009",
-        publisher="Springer US",
-        address="Boston, MA",
-        pages="192--193",
-        isbn="978-0-387-39940-9",
-        doi="10.1007/978-0-387-39940-9_482",
-        url="https://doi.org/10.1007/978-0-387-39940-9_482"
-    }
-    ```
+    .. highlight:: bibtex
+    .. code-block:: bibtex
+
+        @Inbook{Zhang2009,
+            author="Zhang, Ethan and Zhang, Yi",
+            editor="LIU, LING and {\"O}ZSU, M. TAMER",
+            title="Average Precision",
+            bookTitle="Encyclopedia of Database Systems",
+            year="2009",
+            publisher="Springer US",
+            address="Boston, MA",
+            pages="192--193",
+            isbn="978-0-387-39940-9",
+            doi="10.1007/978-0-387-39940-9_482",
+            url="https://doi.org/10.1007/978-0-387-39940-9_482"
+        }
 
     Parameters
     ----------
@@ -724,27 +732,28 @@ def dcg(y_true, y_pred, k):
 
     Standard formulation:
 
-    $$DCG(k) = \sum_{n=1}^{k}\frac{2^{r_n}-1}{\log_2(n+1)}$$
+    .. math:: DCG(k) = \sum_{n=1}^{k}\frac{2^{r_n}-1}{\log_2(n+1)}
 
     where,
 
-    - \(k\) is the number of results to consider;
-    - \(r_n\) is the relevance of the item in position \(n\) of the result list;
-    - \(\log_2(n)\) is the _discount_ factor.
+    - :math:`k` is the number of results to consider;
+    - :math:`r_n` is the relevance of the item in position :math:`n` of the result list;
+    - :math:`\log_2(n)` is the _discount_ factor.
 
-    ```
-    @article{jarvelin2002cumulated,
-        title="Cumulated gain-based evaluation of IR techniques",
-        author="J{\"a}rvelin, Kalervo and Kek{\"a}l{\"a}inen, Jaana",
-        journal="ACM Transactions on Information Systems (TOIS)",
-        volume="20",
-        number="4",
-        pages="422--446",
-        year="2002",
-        publisher="ACM",
-        doi="10.1145/582415.582418",
-    }
-    ```
+    .. highlight:: bibtex
+    .. code-block:: bibtex
+
+        @article{jarvelin2002cumulated,
+            title="Cumulated gain-based evaluation of IR techniques",
+            author="J{\"a}rvelin, Kalervo and Kek{\"a}l{\"a}inen, Jaana",
+            journal="ACM Transactions on Information Systems (TOIS)",
+            volume="20",
+            number="4",
+            pages="422--446",
+            year="2002",
+            publisher="ACM",
+            doi="10.1145/582415.582418",
+        }
 
     If y_true and y_pred are multi-dimensional, it computes the arithmetic mean of the Discounted Cumulative Gain scores.
 
@@ -811,26 +820,27 @@ def idcg(y_true, k, binary=False):
 def ndcg(y_true, y_pred, k, binary=False):
     r"""Compute Normalized Discounted Cumulative Gain (NDCG) at k.
 
-    $$nDCG(k) = \frac{DCG(k)}{IDCG(k)}$$
+    .. math:: nDCG(k) = \frac{DCG(k)}{IDCG(k)}
 
     where,
 
-    - \(DCG(k)\) is Discounted Cumulative Gain at k;
-    - \(IDCG(k)\) is Ideal Discounted Cumulative Gain at k (max possibile DCG at k).
+    - :math:`DCG(k)` is Discounted Cumulative Gain at k;
+    - :math:`IDCG(k)` is Ideal Discounted Cumulative Gain at k (max possibile DCG at k).
 
-    ```
-    @article{jarvelin2002cumulated,
-        title="Cumulated gain-based evaluation of IR techniques",
-        author="J{\"a}rvelin, Kalervo and Kek{\"a}l{\"a}inen, Jaana",
-        journal="ACM Transactions on Information Systems (TOIS)",
-        volume="20",
-        number="4",
-        pages="422--446",
-        year="2002",
-        publisher="ACM",
-        doi="10.1145/582415.582418",
-    }
-    ```
+    .. highlight:: bibtex
+    .. code-block:: bibtex
+
+        @article{jarvelin2002cumulated,
+            title="Cumulated gain-based evaluation of IR techniques",
+            author="J{\"a}rvelin, Kalervo and Kek{\"a}l{\"a}inen, Jaana",
+            journal="ACM Transactions on Information Systems (TOIS)",
+            volume="20",
+            number="4",
+            pages="422--446",
+            year="2002",
+            publisher="ACM",
+            doi="10.1145/582415.582418",
+        }
 
     If y_true and y_pred are multi-dimensional, it computes the arithmetic mean of the Normalized Discounted Cumulative Gain scores.
 
