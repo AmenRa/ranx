@@ -24,22 +24,29 @@ The goal of the project is to create a package of high performant metrics implem
 _It currently contains only metrics for [Information Retrieval](https://en.wikipedia.org/wiki/Information_retrieval) and [Recommender Systems](https://en.wikipedia.org/wiki/Recommender_system) evaluation._
 
 ## ✨ Available Metrics
-### Ranking Metrics:
-* Hit List
-* Hits
-* Precision
-* Recall
-* rPrecision
-* Mean Reciprocal Rank (MRR)
-* Average Precision (AP)
-* Mean Average Precision (MAP)
-* Discounted Cumulative Gain (DCG)
-* Ideal Discounted Cumulative Gain (IDCG)
-* Normalized Discounted Cumulative Gain (NDCG)
 
-Ranking metrics have been tested against [TREC Eval](https://github.com/usnistgov/trec_eval) for correctness — through a comparison with [pytrec_eval](https://github.com/cvangysel/pytrec_eval).
+<details>
+  <summary>Ranking Metrics</summary>
+  
+  * Hit List
+  * Hits
+  * Precision
+  * Recall
+  * rPrecision
+  * Mean Reciprocal Rank (MRR)
+  * Average Precision (AP)
+  * Mean Average Precision (MAP)
+  * Discounted Cumulative Gain (DCG)
+  * Ideal Discounted Cumulative Gain (IDCG)
+  * Normalized Discounted Cumulative Gain (NDCG)
 
-The implemented metrics are up to 50 times faster than [pytrec_eval](https://github.com/cvangysel/pytrec_eval) and with a much lower memory footprint (_see [pytrec_eval_comparison](https://github.com/AmenRa/metrics_eval/tree/master/pytrec_eval_comparison) folder_).
+  Ranking metrics have been tested against [TREC Eval](https://github.com/usnistgov/trec_eval) for correctness — through a comparison with [pytrec_eval](https://github.com/cvangysel/pytrec_eval).
+
+  The implemented metrics are up to 50 times faster than [pytrec_eval](https://github.com/cvangysel/pytrec_eval) and with a much lower memory footprint (_see [pytrec_eval_comparison](https://github.com/AmenRa/metrics_eval/tree/master/pytrec_eval_comparison) folder_).
+</details>
+
+
+
 
 ## Requirements
 * Python >= 3.7
@@ -50,47 +57,52 @@ The implemented metrics are up to 50 times faster than [pytrec_eval](https://git
 WORK IN PROGRESS
 
 ## 💡 Usage
-```python
-from metrics_eval import ndcg
-import numpy as np
+<details>
+  <summary>Examples</summary>
+  
+  ```python
+  from metrics_eval import ndcg
+  import numpy as np
 
-# Note that y_true does not need to be ordered
-# Integers are documents IDs, while floats are the true relevance scores
-y_true = np.array([[[12, 0.5], [25, 0.3]], [[11, 0.4], [2, 0.6]]])
-y_pred = np.array([[12, 234, 25, 36, 32, 35], [12, 11, 25, 36, 2, 35]])
-k = 5
+  # Note that y_true does not need to be ordered
+  # Integers are documents IDs, while floats are the true relevance scores
+  y_true = np.array([[[12, 0.5], [25, 0.3]], [[11, 0.4], [2, 0.6]]])
+  y_pred = np.array([[12, 234, 25, 36, 32, 35], [12, 11, 25, 36, 2, 35]])
+  k = 5
 
-ndcg(y_true, y_pred, k)
->>> 0.7525653965843032
-```
+  ndcg(y_true, y_pred, k)
+  >>> 0.7525653965843032
+  ```
 
-metrics_eval support the usage of y_true elements of different lenght by using a list of arrays:
-```python
-from metrics_eval import ndcg
-import numpy as np
+  metrics_eval support the usage of y_true elements of different lenght by using a list of arrays:
+  ```python
+  from metrics_eval import ndcg
+  import numpy as np
 
-y_true = [np.array([[12, 0.5], [25, 0.3]]), np.array([[11, 0.4], [2, 0.6], [12, 0.1]])]
-y_pred = np.array([[12, 234, 25, 36, 32, 35], [12, 11, 25, 36, 2, 35]])
-k = 5
+  y_true = [np.array([[12, 0.5], [25, 0.3]]), np.array([[11, 0.4], [2, 0.6], [12, 0.1]])]
+  y_pred = np.array([[12, 234, 25, 36, 32, 35], [12, 11, 25, 36, 2, 35]])
+  k = 5
 
-ndcg(y_true, y_pred, k)
->>> 0.7525653965843032
-```
+  ndcg(y_true, y_pred, k)
+  >>> 0.7525653965843032
+  ```
 
-However, for maximum speed, consider converting the y_true list to a [Numba Typed List](https://numba.pydata.org/numba-doc/dev/reference/pysupported.html#typed-list) by simply using the provided utility function:
-```python
-from metrics_eval import ndcg, utils
-import numpy as np
+  However, for maximum speed, consider converting the y_true list to a [Numba Typed List](https://numba.pydata.org/numba-doc/dev/reference/pysupported.html#typed-list) by simply using the provided utility function:
+  ```python
+  from metrics_eval import ndcg, utils
+  import numpy as np
 
-y_true = [np.array([[12, 0.5], [25, 0.3]]), np.array([[11, 0.4], [2, 0.6], [12, 0.1]])]
-y_pred = np.array([[12, 234, 25, 36, 32, 35], [12, 11, 25, 36, 2, 35]])
-k=5
+  y_true = [np.array([[12, 0.5], [25, 0.3]]), np.array([[11, 0.4], [2, 0.6], [12, 0.1]])]
+  y_pred = np.array([[12, 234, 25, 36, 32, 35], [12, 11, 25, 36, 2, 35]])
+  k=5
 
-y_true = utils.to_typed_list(y_true)
+  y_true = utils.to_typed_list(y_true)
 
-ndcg(y_true, y_pred, k)
->>> 0.786890544287473
-```
+  ndcg(y_true, y_pred, k)
+  >>> 0.786890544287473
+  ```
+  
+</details>
 
 ## 📚 Documentation
 [Documentation](https://metrics-eval.readthedocs.io/en/latest/)
