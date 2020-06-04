@@ -2,6 +2,7 @@
 
 [![Documentation Status](https://readthedocs.org/projects/metrics-eval/badge/?version=latest)](https://metrics-eval.readthedocs.io/en/latest/?badge=latest)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 [metrics_eval](https://github.com/AmenRa/metrics_eval) is a collection of fast metrics implemented in Python, taking advantage of [Numba](https://github.com/numba/numba) for high speed vector operations and automatic parallelization.
 
