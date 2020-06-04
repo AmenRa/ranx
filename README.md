@@ -76,7 +76,7 @@ ndcg(y_true, y_pred, k)
 ```
 
 ## Documentation
-WORK IN PROGRESS
+[Documentation](https://metrics-eval.readthedocs.io/en/latest/)
 
 ## Citation
 WORK IN PROGRESS
