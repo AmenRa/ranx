@@ -56,3 +56,4 @@ html_static_path = ["_static"]
 
 
 autodoc_mock_imports = ["numpy", "numba"]
+master_doc = "index"
