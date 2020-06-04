@@ -24,7 +24,6 @@ The goal of the project is to create a package of high performant metrics implem
 _It currently contains only metrics for [Information Retrieval](https://en.wikipedia.org/wiki/Information_retrieval) and [Recommender Systems](https://en.wikipedia.org/wiki/Recommender_system) evaluation._
 
 ## ✨ Available Metrics
-
 <details>
   <summary>Ranking Metrics</summary>
   
@@ -45,16 +44,15 @@ _It currently contains only metrics for [Information Retrieval](https://en.wikip
   The implemented metrics are up to 50 times faster than [pytrec_eval](https://github.com/cvangysel/pytrec_eval) and with a much lower memory footprint (_see [pytrec_eval_comparison](https://github.com/AmenRa/metrics_eval/tree/master/pytrec_eval_comparison) folder_).
 </details>
 
-
-
-
-## Requirements
+## 🔧 Requirements
 * Python >= 3.7
 * Numba >= 0.49.1
 * Numpy >= 1.15
 
-## Installation
-WORK IN PROGRESS
+## 🔌 Installation
+```bash
+pip install metrics_eval
+```
 
 ## 💡 Usage
 <details>
@@ -105,7 +103,7 @@ WORK IN PROGRESS
 </details>
 
 ## 📚 Documentation
-[Documentation](https://metrics-eval.readthedocs.io/en/latest/)
+Search the [documentation](https://metrics-eval.readthedocs.io/en/latest/) for more details and examples.
 
 ## 🎓 Citation
 If you end up using [metrics_eval](https://github.com/AmenRa/metrics_eval) to evaluate results for your sceintific publication, please consider citing my work:
@@ -119,8 +117,11 @@ If you end up using [metrics_eval](https://github.com/AmenRa/metrics_eval) to ev
 }
 ```
 
+## 🎁 Feature Requests
+If you want a metric to be added, please open a [new issue](https://github.com/AmenRa/metrics_eval/issues/new).
+
 ## 🤘 Want to contribute?
-WORK IN PROGRESS
+If you want to contribute, please drop me an [e-mail](mailto:elias.bssn@gmail.com?subject=[GitHub]%20metrics_eval).
 
 ## 📄 License
 
