@@ -96,7 +96,7 @@ ndcg(y_true, y_pred, k)
 [Documentation](https://metrics-eval.readthedocs.io/en/latest/)
 
 ## 🎓 Citation
-If you end up using metrics_eval to evaluate results for your sceintific publication, please consider citing my work:
+If you end up using [metrics_eval](https://github.com/AmenRa/metrics_eval) to evaluate results for your sceintific publication, please consider citing my work:
 ```
 @misc{metricsEval2020,
   title = {Metrics\_eval: Blazing Fast Evaluation Metrics in Python},
@@ -112,4 +112,4 @@ WORK IN PROGRESS
 
 ## 📄 License
 
-metrics_eval is an open-sourced software licensed under the [MIT license](LICENSE).
+[metrics_eval](https://github.com/AmenRa/metrics_eval) is an open-sourced software licensed under the [MIT license](LICENSE).
