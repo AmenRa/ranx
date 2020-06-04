@@ -15,6 +15,8 @@
   </a>
 </p>
 
+## ⚡️ Introduction
+
 [metrics_eval](https://github.com/AmenRa/metrics_eval) is a collection of fast metrics implemented in Python, taking advantage of [Numba](https://github.com/numba/numba) for high speed vector operations and automatic parallelization.
 
 The goal of the project is to create a package of high performant metrics implementations that can be used in Python for research.
@@ -90,13 +92,13 @@ ndcg(y_true, y_pred, k)
 >>> 0.786890544287473
 ```
 
-## Documentation
+## 📚 Documentation
 [Documentation](https://metrics-eval.readthedocs.io/en/latest/)
 
-## Citation
+## 🎓 Citation
 WORK IN PROGRESS
 
-## Want to contribute?
+## 🤘 Want to contribute?
 WORK IN PROGRESS
 
 ## 📄 License
