@@ -17,9 +17,9 @@
 
 ## ⚡️ Introduction
 
-[metrics_eval](https://github.com/AmenRa/metrics_eval) is a collection of fast metrics implemented in Python, taking advantage of [Numba](https://github.com/numba/numba) for high speed vector operations and automatic parallelization.
+[metrics_eval](https://github.com/AmenRa/metrics_eval) is a collection of fast metrics implemented in [Python](https://en.wikipedia.org/wiki/Python_(programming_language)), taking advantage of [Numba](https://github.com/numba/numba) for high speed vector operations and automatic parallelization.
 
-The goal of the project is to create a package of high performant metrics implementations that can be used in Python for research.
+The goal of the project is to create a package of high performant metrics implementations that can be used in [Python](https://en.wikipedia.org/wiki/Python_(programming_language)) for research.
 
 _It currently contains only metrics for [Information Retrieval](https://en.wikipedia.org/wiki/Information_retrieval) and [Recommender Systems](https://en.wikipedia.org/wiki/Recommender_system) evaluation._
 
