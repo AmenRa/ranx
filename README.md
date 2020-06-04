@@ -96,7 +96,16 @@ ndcg(y_true, y_pred, k)
 [Documentation](https://metrics-eval.readthedocs.io/en/latest/)
 
 ## 🎓 Citation
-WORK IN PROGRESS
+If you end up using metrics_eval to evaluate results for your sceintific publication, please consider citing my work:
+```
+@misc{metricsEval2020,
+  title = {Metrics\_eval: Blazing Fast Evaluation Metrics in Python},
+  author = {Bassani, Elias},
+  year = {2020},
+  publisher = {GitHub},
+  howpublished = {\url{https://github.com/AmenRa/metrics_eval}},
+}
+```
 
 ## 🤘 Want to contribute?
 WORK IN PROGRESS
