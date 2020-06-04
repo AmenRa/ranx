@@ -21,7 +21,7 @@
 
 The goal of the project is to create a package of high performant metrics implementations that can be used in Python for research.
 
-It currently contains only metrics for [Information Retrieval](https://en.wikipedia.org/wiki/Information_retrieval) and [Recommender Systems](https://en.wikipedia.org/wiki/Recommender_system) evaluation.
+_It currently contains only metrics for [Information Retrieval](https://en.wikipedia.org/wiki/Information_retrieval) and [Recommender Systems](https://en.wikipedia.org/wiki/Recommender_system) evaluation._
 
 ## ✨ Available Metrics
 ### Ranking Metrics:
