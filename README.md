@@ -21,7 +21,7 @@ The goal of the project is to create a package of high performant metrics implem
 
 It currently contains only metrics used for the evaluation of Information Retrieval Systems (Search Engines) and Recommender Systems.
 
-## Available Metrics
+## ✨ Available Metrics
 ### Ranking Metrics:
 * Hit List
 * Hits
@@ -47,7 +47,7 @@ The implemented metrics are up to 50 times faster than [pytrec_eval](https://git
 ## Installation
 WORK IN PROGRESS
 
-## Usage
+## 💡 Usage
 ```python
 from metrics_eval import ndcg
 import numpy as np
@@ -98,3 +98,7 @@ WORK IN PROGRESS
 
 ## Want to contribute?
 WORK IN PROGRESS
+
+## 📄 License
+
+metrics_eval is an open-sourced software licensed under the [MIT license](LICENSE).
