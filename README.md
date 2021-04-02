@@ -64,7 +64,7 @@ ndcg(y_true, y_pred, k)
 >>> 0.7525653965843032
 ```
 
-rank_eval supports the usage of y_true elements of different lenght by using [Numba Typed List](https://numba.pydata.org/numba-doc/dev/reference/pysupported.html#typed-list). Simply convert your y_true list of arrays using the provided utility function:
+[rank_eval](https://github.com/AmenRa/rank_eval) supports the usage of `y_true` elements of different lenght by using [Numba Typed List](https://numba.pydata.org/numba-doc/dev/reference/pysupported.html#typed-list). Simply convert your `y_true` list of arrays using the provided utility function:
 ```python
 from rank_eval import ndcg
 from rank_eval.utils import to_typed_list
