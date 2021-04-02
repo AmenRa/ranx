@@ -1,20 +1,25 @@
-.. metrics_eval documentation master file, created by
-   sphinx-quickstart on Wed Jun  3 19:28:47 2020.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+Welcome to Rank Eval's documentation!
+=====================================
 
-Welcome to metrics_eval's documentation!
-========================================
+`rank_eval <https://github.com/AmenRa/rank_eval>`_ is a collection of fast ranking evaluation metrics implemented in `Python <https://en.wikipedia.org/wiki/Python_(programming_language)>`_, taking advantage of `Numba <https://github.com/numba/numba>`_ for high speed vector operations and automatic parallelization.
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+.. automodule:: rank_eval
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
-   modules
+.. .. automodule:: rank_eval.metrics
 
-Indices and tables
-==================
+.. .. toctree::
+..    :maxdepth: 2
+..    :caption: Contents:
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+..    rank_eval
+
+
+.. Indices and tables
+.. ==================
+
+.. * :ref:`genindex`
+.. * :ref:`modindex`
+.. * :ref:`search`
