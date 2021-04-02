@@ -60,7 +60,7 @@ y_pred = np.array(
 )
 k = 5
 
-ndcg(y_true, y_pred, k)
+ndcg(y_true, y_pred, k, threads=1)
 >>> 0.7525653965843032
 ```
 
@@ -80,7 +80,7 @@ y_pred = np.array(
 )
 k = 5
 
-ndcg(y_true, y_pred, k)
+ndcg(y_true, y_pred, k, threads=1)
 >>> 0.786890544287473
 ```
 
