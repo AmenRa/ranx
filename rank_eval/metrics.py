@@ -1,6 +1,6 @@
 import numba as nb
 import numpy as np
-from numba import njit, prange, set_threads
+from numba import njit, prange, set_num_threads
 
 
 # LOW LEVEL FUNCTIONS ==========================================================
@@ -192,7 +192,7 @@ def _choose_optimal_function(
     sort=False,
     threads=1,
 ):
-    set_threads(threads)
+    set_num_threads(threads)
 
     # Check y_true -------------------------------------------------------------
     if type(y_true) == np.ndarray and y_true.ndim == 2:

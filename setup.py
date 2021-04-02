@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="rank_eval",  # Replace with your own username
-    version="0.1",
+    version="0.0.1",
     author="Elias Bassani",
     author_email="elias.bssn@gmail.com",
     description="A collection of fast ranking evaluation metrics built with Numba",
