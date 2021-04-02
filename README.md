@@ -32,7 +32,7 @@ The metrics have been tested against [TREC Eval](https://github.com/usnistgov/tr
 
 The implemented metrics are up to 50 times faster than [pytrec_eval](https://github.com/cvangysel/pytrec_eval) and with a much lower memory footprint.
 
-Please note that `TREC Eval` uses a non-standard NDCG implementation. To mimic its behaviour, pass `trec_eval=True` to `rank_eval`'s `ndcg` function.
+Please note that [TREC Eval](https://github.com/usnistgov/trec_eval) uses a non-standard NDCG implementation. To mimic its behaviour, pass `trec_eval=True` to [rank_eval](https://github.com/AmenRa/rank_eval)'s `ndcg` function.
 
 ## 🔧 Requirements
 * Python 3
