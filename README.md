@@ -2,8 +2,8 @@
 
 <p align="center">
   <!-- Docs -->
-  <a href="https://metrics-eval.readthedocs.io/en/latest/?badge=latest" alt="Documentation Status">
-      <img src="https://readthedocs.org/projects/metrics-eval/badge/?version=latest" />
+  <a href="https://rank-eval.readthedocs.io/en/latest/?badge=latest" alt="Documentation Status">
+      <img src="https://readthedocs.org/projects/rank-eval/badge/?version=latest" />
   </a>
   <!-- Black -->
   <a href="https://github.com/psf/black" alt="Code style: black">
