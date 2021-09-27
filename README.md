@@ -90,7 +90,7 @@ ndcg(y_true, y_pred, k, threads=1)
 Search the [documentation](https://rank-eval.readthedocs.io/en/latest/) for more details and examples.
 
 ## 🎓 Citation
-If you end up using [rank_eval](https://github.com/AmenRa/rank_eval) to evaluate results for your sceintific publication, please consider citing it:
+If you use [rank_eval](https://github.com/AmenRa/rank_eval) to evaluate results for your scientific publication, please consider citing it:
 ```
 @misc{rankEval2021,
   title = {Rank\_eval: Blazing Fast Ranking Evaluation Metrics in Python},
