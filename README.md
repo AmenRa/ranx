@@ -34,7 +34,7 @@ The metrics have been tested against [TREC Eval](https://github.com/usnistgov/tr
 
 The implemented metrics are up to 50 times faster than [pytrec_eval](https://github.com/cvangysel/pytrec_eval) and with a much lower memory footprint.
 
-To compute NDCG as proposed by [Järvelin et al.](https://dl-acm-org.proxy.unimib.it/doi/pdf/10.1145/582415.582418) please pass `trec_eval=True` to [rank_eval](https://github.com/AmenRa/rank_eval)'s `ndcg` function, otherwise [Burges et al.](https://icml.cc/2015/wp-content/uploads/2015/06/icml_ranking.pdf). Note that this behaviour will be inverted in a future release. For comparison, [TREC Eval](https://github.com/usnistgov/trec_eval) uses the first one.
+To compute NDCG as proposed by [Järvelin et al.](https://dl-acm-org.proxy.unimib.it/doi/pdf/10.1145/582415.582418) please pass `trec_eval=True` to [rank_eval](https://github.com/AmenRa/rank_eval)'s `ndcg` function, otherwise [Burges et al.](https://icml.cc/2015/wp-content/uploads/2015/06/icml_ranking.pdf)'s variant will be used (for binary relevance judgement the two are equal). Note that this behaviour will be inverted in a future release. For comparison, [TREC Eval](https://github.com/usnistgov/trec_eval) uses the first one.
 
 ## 🔧 Requirements
 * Python 3
