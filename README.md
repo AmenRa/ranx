@@ -130,7 +130,7 @@ e    model_5  0.4053ᵃᵇᶜᵈ  0.4061ᵃᵇᶜᵈ  0.4512ᵃᵇᶜᵈ
 
 ## 📖 Examples
 * [Overview](https://github.com/AmenRa/rank_eval/tree/master/examples/overview.ipynb): This notebook shows the main features of [rank_eval](https://github.com/AmenRa/rank_eval).
-* [Create Qrels and Run](https://github.com/AmenRa/rank_eval/tree/master/examples/create_qrels_and_run.ipynb): This notebook shows the different ways to create `Qrels` and `Run`.
+* [Create Qrels and Run](https://github.com/AmenRa/rank_eval/tree/master/examples/create_qrels_and_run.ipynb): This notebook shows different ways of creating `Qrels` and `Run`.
 
 ## 📚 Documentation
 _To be updated! Please, refer to the examples in the meantime._  
