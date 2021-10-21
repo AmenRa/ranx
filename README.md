@@ -21,7 +21,7 @@
       <img src="https://img.shields.io/badge/License-MIT-green.svg" />
   </a>
   <!-- Google Colab -->
-  <a href="https://colab.research.google.com/github/AmenRa/colabtools/blob/rank_eval/examples/overview.ipynb">
+  <a href="https://colab.research.google.com/github/AmenRa/rank_eval/blob/master/examples/overview.ipynb">
       <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
   </a>
 </p>
