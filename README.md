@@ -28,7 +28,7 @@
 
 ## ⚡️ Introduction
 
-[rank_eval](https://github.com/AmenRa/rank_eval) is an library composed of fast ranking evaluation metrics implemented in [Python](https://en.wikipedia.org/wiki/Python_(programming_language)), leveraging [Numba](https://github.com/numba/numba) for high-speed vector operations and automatic parallelization. 
+[rank_eval](https://github.com/AmenRa/rank_eval) is an library of fast ranking evaluation metrics implemented in [Python](https://en.wikipedia.org/wiki/Python_(programming_language)), leveraging [Numba](https://github.com/numba/numba) for high-speed vector operations and automatic parallelization. 
 
 It allows you to compare different runs, perform statistical tests, and export a LaTeX table for your scientific publications.
 
@@ -44,7 +44,7 @@ We strongly incourage you to check the example folder to learn how to use [rank_
 * Mean Average Precision (MAP)
 * Normalized Discounted Cumulative Gain (NDCG)
 
-The metrics have been tested against [TREC Eval](https://github.com/usnistgov/trec_eval) for correctness — through a comparison with [pytrec_eval](https://github.com/cvangysel/pytrec_eval).
+The metrics have been tested against [TREC Eval](https://github.com/usnistgov/trec_eval) for correctness.
 
 ## 🔌 Installation
 ```bash
