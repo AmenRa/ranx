@@ -1,13 +1,33 @@
+from numba.typed import List as TypedList
+
 from . import utils
-from .metrics import hits_at_k, map, mrr, ndcg, precision_at_k, r_precision, recall_at_k
+from .meta_functions import compare, evaluate
+from .metrics import (
+    average_precision,
+    hits,
+    ndcg,
+    ndcg_burges,
+    precision,
+    r_precision,
+    recall,
+    reciprocal_rank,
+)
+from .qrels import Qrels
+from .run import Run
 
 __all__ = [
-    "hits_at_k",
-    "precision_at_k",
-    "recall_at_k",
-    "r_precision",
-    "mrr",
-    "map",
+    "average_precision",
+    "hits",
+    "ndcg_burges",
     "ndcg",
+    "precision",
+    "r_precision",
+    "recall",
+    "reciprocal_rank",
     "utils",
+    "evaluate",
+    "compare",
+    "TypedList",
+    "Qrels",
+    "Run",
 ]

@@ -3,6 +3,11 @@
 </div>
 
 <p align="center">
+  <!-- Python -->
+  <a href="https://www.python.org" alt="Python">
+      <img src="https://badges.aleen42.com/src/python.svg" />
+  </a>
+
   <!-- Docs -->
   <a href="https://rank-eval.readthedocs.io/en/latest/?badge=latest" alt="Documentation Status">
       <img src="https://readthedocs.org/projects/rank-eval/badge/?version=latest" />
@@ -15,14 +20,23 @@
   <a href="https://opensource.org/licenses/MIT" alt="License: MIT">
       <img src="https://img.shields.io/badge/License-MIT-green.svg" />
   </a>
+  <!-- Google Colab -->
+  <a href="https://colab.research.google.com/github/AmenRa/colabtools/blob/rank_eval/examples/overview.ipynb">
+      <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+  </a>
 </p>
 
 ## ⚡️ Introduction
 
-[rank_eval](https://github.com/AmenRa/rank_eval) is a collection of fast ranking evaluation metrics implemented in [Python](https://en.wikipedia.org/wiki/Python_(programming_language)), taking advantage of [Numba](https://github.com/numba/numba) for high speed vector operations and automatic parallelization.
+[rank_eval](https://github.com/AmenRa/rank_eval) is an library composed of fast ranking evaluation metrics implemented in [Python](https://en.wikipedia.org/wiki/Python_(programming_language)), leveraging [Numba](https://github.com/numba/numba) for high-speed vector operations and automatic parallelization. 
+
+It allows you to compare different runs, perform statistical tests, and export a LaTeX table for your scientific publications.
+
+We strongly incourage you to check the example folder to learn how to use [rank_eval](https://github.com/AmenRa/rank_eval) in just a few minutes.
+
 
 ## ✨ Available Metrics
-* Hits
+* Hits 
 * Precision
 * Recall
 * rPrecision
@@ -32,61 +46,94 @@
 
 The metrics have been tested against [TREC Eval](https://github.com/usnistgov/trec_eval) for correctness — through a comparison with [pytrec_eval](https://github.com/cvangysel/pytrec_eval).
 
-The implemented metrics are up to 50 times faster than [pytrec_eval](https://github.com/cvangysel/pytrec_eval) and with a much lower memory footprint.
-
-To compute NDCG as proposed by [Järvelin et al.](https://dl-acm-org.proxy.unimib.it/doi/pdf/10.1145/582415.582418) please pass `trec_eval=True` to [rank_eval](https://github.com/AmenRa/rank_eval)'s `ndcg` function, otherwise [Burges et al.](https://icml.cc/2015/wp-content/uploads/2015/06/icml_ranking.pdf)'s variant will be used (for binary relevance judgement the two are equal). Note that this behaviour will be inverted in a future release. For comparison, [TREC Eval](https://github.com/usnistgov/trec_eval) uses the first one.
-
-## 🔧 Requirements
-* Python 3
-* Numpy
-* Numba
-
 ## 🔌 Installation
 ```bash
 pip install rank_eval
 ```
 
-## 💡 Usage  
+## 💡 Usage
+
+### Create Qrels and Run
 ```python
-from rank_eval import ndcg
-import numpy as np
+from rank_eval import Qrels, Run, evaluate
 
-# Note that y_true does not need to be ordered
-# Integers are documents IDs, while floats are the true relevance scores
-y_true = np.array([[[12, 0.5], [25, 0.3]], [[11, 0.4], [2, 0.6]]])
-y_pred = np.array(
-    [
-        [[12, 0.9], [234, 0.8], [25, 0.7], [36, 0.6], [32, 0.5], [35, 0.4]],
-        [[12, 0.9], [11, 0.8], [25, 0.7], [36, 0.6], [2, 0.5], [35, 0.4]],
-    ]
+qrels = Qrels()
+qrels.add_multi(
+    q_ids=["q_1", "q_2"],
+    doc_ids=[
+        ["doc_12", "doc_25"],  # q_1 relevant documents
+        ["doc_11", "doc_2"],  # q_2 relevant documents
+    ],
+    scores=[
+        [5, 3],  # q_1 relevance judgements
+        [6, 1],  # q_2 relevance judgements
+    ],
 )
-k = 5
 
-ndcg(y_true, y_pred, k, threads=1)
->>> 0.7525653965843032
+run = Run()
+run.add_multi(
+    q_ids=["q_1", "q_2"],
+    doc_ids=[
+        ["doc_12", "doc_23", "doc_25", "doc_36", "doc_32", "doc_35"],
+        ["doc_12", "doc_11", "doc_25", "doc_36", "doc_2",  "doc_35"],
+    ],
+    scores=[
+        [0.9, 0.8, 0.7, 0.6, 0.5, 0.4],
+        [0.9, 0.8, 0.7, 0.6, 0.5, 0.4],
+    ],
+)
 ```
 
-[rank_eval](https://github.com/AmenRa/rank_eval) supports the usage of `y_true` elements of different lenght by using [Numba Typed List](https://numba.pydata.org/numba-doc/dev/reference/pysupported.html#typed-list). Simply convert your `y_true` list of arrays using the provided utility function:
+### Evaluate
 ```python
-from rank_eval import ndcg
-from rank_eval.utils import to_typed_list
-import numpy as np
+# Compute score for a single metric
+evaluate(qrels, run, "ndcg@5")
+>>> 0.7861
 
-y_true = [np.array([[12, 0.5], [25, 0.3]]), np.array([[11, 0.4], [2, 0.6], [12, 0.1]])]
-y_true = to_typed_list(y_true)
-y_pred = np.array(
-    [
-        [[12, 0.9], [234, 0.8], [25, 0.7], [36, 0.6], [32, 0.5], [35, 0.4]],
-        [[12, 0.9], [11, 0.8], [25, 0.7], [36, 0.6], [2, 0.5], [35, 0.4]],
-    ]
-)
-k = 5
+# Compute scores for multiple metrics at once
+evaluate(qrels, run, ["map@5", "mrr"])
+>>> {"map@5": 0.6416, "mrr": 0.75}
 
-ndcg(y_true, y_pred, k, threads=1)
->>> 0.786890544287473
+# Computed metric scores are saved in the Run object
+run.mean_scores
+>>> {"ndcg@5": 0.7861, "map@5": 0.6416, "mrr": 0.75}
+
+# Access scores for each query
+dict(run.scores)
+>>> {"ndcg@5": {"q_1": 0.9430, "q_2": 0.6292},
+      "map@5": {"q_1": 0.8333, "q_2": 0.4500},
+        "mrr": {"q_1": 1.0000, "q_2": 0.5000}}
 ```
+
+### Compare
+```python
+# Compare different runs and perform statistical tests
+report = compare(
+    qrels=qrels,
+    runs=[run_1, run_2, run_3, run_4, run_5],
+    metrics=["map@100", "mrr@100", "ndcg@10"],
+    max_p=0.01  # P-value threshold
+)
+
+print(report)
+```
+Output:
+```
+#    Model    MAP@100     MRR@100     NDCG@10
+---  -------  ----------  ----------  ----------
+a    model_1  0.3202ᵇ     0.3207ᵇ     0.3684ᵇᶜ
+b    model_2  0.2332      0.2339      0.239
+c    model_3  0.3082ᵇ     0.3089ᵇ     0.3295ᵇ
+d    model_4  0.3664ᵃᵇᶜ   0.3668ᵃᵇᶜ   0.4078ᵃᵇᶜ
+e    model_5  0.4053ᵃᵇᶜᵈ  0.4061ᵃᵇᶜᵈ  0.4512ᵃᵇᶜᵈ
+```
+
+## 📖 Examples
+* [Overview](https://github.com/AmenRa/rank_eval/tree/master/examples/overview.ipynb): This notebook shows the main features of [rank_eval](https://github.com/AmenRa/rank_eval).
+* [Create Qrels and Run](https://github.com/AmenRa/rank_eval/tree/master/examples/create_qrels_and_run.ipynb): This notebook shows the different ways to create `Qrels` and `Run`.
 
 ## 📚 Documentation
+_To be updated! Please, refer to the examples in the meantime._  
 Search the [documentation](https://rank-eval.readthedocs.io/en/latest/) for more details and examples.
 
 ## 🎓 Citation
@@ -102,10 +149,10 @@ If you use [rank_eval](https://github.com/AmenRa/rank_eval) to evaluate results 
 ```
 
 ## 🎁 Feature Requests
-If you want a metric to be added, please open a [new issue](https://github.com/AmenRa/rank_eval/issues/new).
+Would you like to see a new metric implemented? Please, open a [new issue](https://github.com/AmenRa/rank_eval/issues/new).
 
 ## 🤘 Want to contribute?
-If you want to contribute, please drop me an [e-mail](mailto:elias.bssn@gmail.com?subject=[GitHub]%20rank_eval).
+Would you like to contribute? Please, drop me an [e-mail](mailto:elias.bssn@gmail.com?subject=[GitHub]%20rank_eval).
 
 ## 📄 License
 

@@ -1,0 +1,12 @@
+q_1 Q0 doc_12 1 0.9 example
+q_1 Q0 doc_23 2 0.8 example
+q_1 Q0 doc_25 3 0.7 example
+q_1 Q0 doc_36 4 0.6 example
+q_1 Q0 doc_32 5 0.5 example
+q_1 Q0 doc_35 6 0.4 example
+q_2 Q0 doc_12 1 0.9 example
+q_2 Q0 doc_11 2 0.8 example
+q_2 Q0 doc_25 3 0.7 example
+q_2 Q0 doc_36 4 0.6 example
+q_2 Q0 doc_2 5 0.5 example
+q_2 Q0 doc_35 6 0.4 example
