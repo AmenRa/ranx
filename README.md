@@ -28,7 +28,7 @@
 
 ## ⚡️ Introduction
 
-[rank_eval](https://github.com/AmenRa/rank_eval) is an library of fast ranking evaluation metrics implemented in [Python](https://en.wikipedia.org/wiki/Python_(programming_language)), leveraging [Numba](https://github.com/numba/numba) for high-speed vector operations and automatic parallelization. 
+[rank_eval](https://github.com/AmenRa/rank_eval) is a library of fast ranking evaluation metrics implemented in [Python](https://en.wikipedia.org/wiki/Python_(programming_language)), leveraging [Numba](https://github.com/numba/numba) for high-speed vector operations and automatic parallelization. 
 
 It allows you to compare different runs, perform statistical tests, and export a LaTeX table for your scientific publications.
 
