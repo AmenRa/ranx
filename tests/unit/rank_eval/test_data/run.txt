@@ -1,0 +1,5 @@
+q1 Q0 d1 1 0.1 example
+q1 Q0 d2 2 0.2 example
+q1 Q0 d3 3 0.3 example
+q2 Q0 d1 1 0.1 example
+q2 Q0 d2 2 0.2 example
