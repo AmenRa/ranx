@@ -113,7 +113,7 @@ class Run(object):
         """Parse a TREC-style run file into rank_eval.Run."""
         n_lines = 0
         with open(path) as f:
-            for line in f:
+            for _ in f:
                 n_lines += 1
 
         run = defaultdict(dict)
@@ -133,13 +133,8 @@ class Run(object):
                     name = run_name
                 pbar.update(1)
 
-        # for x in lines:
-        #     q_id, _, doc_id, _, rel, _ = x.split()
-        #     run[q_id][doc_id] = float(rel)
-
         run = Run.from_dict(run)
         run.name = name
-        # run.name = lines[0].split()[-1]
 
         return run
 
@@ -176,14 +171,11 @@ class Run(object):
     def __getitem__(self, q_id):
         return dict(self.run[q_id])
 
-    # def __setitem__(self, q_id, x):
-    #     self.run[q_id] = x
-
     def __len__(self) -> int:
         return len(self.run)
 
     def __repr__(self):
-        return self.qrels.__repr__()
+        return self.run.__repr__()
 
     def __str__(self):
-        return self.qrels.__str__()
+        return self.run.__str__()

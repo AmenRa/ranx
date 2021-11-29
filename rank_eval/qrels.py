@@ -113,7 +113,7 @@ class Qrels(object):
         """Parse a TREC-style qrels file into rank_eval.Qrels."""
         n_lines = 0
         with open(path) as f:
-            for line in f:
+            for _ in f:
                 n_lines += 1
 
         qrels = defaultdict(dict)
