@@ -26,6 +26,10 @@
   </a>
 </p>
 
+## 🔥 News
+
+[rank_eval](https://github.com/AmenRa/rank_eval) will be featured in [ECIR 2022](https://ecir2022.org), the 44th European Conference on Information Retrieval!
+
 ## ⚡️ Introduction
 
 [rank_eval](https://github.com/AmenRa/rank_eval) is a library of fast ranking evaluation metrics implemented in [Python](https://en.wikipedia.org/wiki/Python_(programming_language)), leveraging [Numba](https://github.com/numba/numba) for high-speed vector operations and automatic parallelization. 
