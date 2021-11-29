@@ -13,7 +13,13 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/AmenRa/rank_eval",
     packages=setuptools.find_packages(),
-    install_requires=["numpy", "numba", "pandas", "tabulate", "tqdm"],
+    install_requires=[
+        "numpy>=1.20.3",
+        "numba>=0.54.1",
+        "pandas>=1.3.4",
+        "tabulate>=0.8.9",
+        "tqdm>=4.62.3",
+    ],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
