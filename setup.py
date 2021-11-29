@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="rank_eval",
-    version="0.1.1",
+    version="0.1.2",
     author="Elias Bassani",
     author_email="elias.bssn@gmail.com",
     description="rank_eval: A Blazing Fast Python Library for Ranking Evaluation and Comparison",
