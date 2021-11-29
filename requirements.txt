@@ -1,5 +1,0 @@
-numpy
-numba
-pandas
-tabulate
-tqdm
