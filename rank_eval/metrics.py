@@ -517,7 +517,7 @@ def average_precision(qrels, run, k=0):
 def ndcg(
     qrels,
     run,
-    k,
+    k=0,
 ):
     r"""Compute Normalized Discounted Cumulative Gain (NDCG) as proposed by Järvelin et al. (http://doi.acm.org/10.1145/582415.582418).
     If k > 0, only the top-k retrieved documents are considered.
@@ -578,7 +578,7 @@ def ndcg(
 def ndcg_burges(
     qrels,
     run,
-    k,
+    k=0,
 ):
     r"""Compute Normalized Discounted Cumulative Gain (NDCG) at k as proposed by Burges et al. (https://doi.org/10.1145/1102351.1102363).
     If k > 0, only the top-k retrieved documents are considered.
