@@ -1,3 +1,5 @@
+# TODO: avoid useless comparisons
+
 from collections import defaultdict
 from numbers import Number
 from typing import Dict, List, Union
@@ -65,11 +67,7 @@ def extract_metric_and_k(metric):
     metric_splitted = metric.split("@")
     m = metric_splitted[0]
 
-    if len(metric_splitted) > 1:
-        k = int(metric_splitted[1])
-    else:
-        k = 0
-
+    k = int(metric_splitted[1]) if len(metric_splitted) > 1 else 0
     return m, k
 
 
@@ -117,13 +115,13 @@ def evaluate(
     elif threads != 0:
         set_num_threads(threads)
 
-    if type(qrels) in [Qrels, dict] and type(qrels) in [Qrels, dict]:
+    if type(qrels) in [Qrels, dict] and type(run) in [Run, dict]:
         check_keys(qrels, run)
 
     _qrels = convert_qrels(qrels)
     _run = convert_run(run)
     metrics = format_metrics(metrics)
-    assert all([type(m) == str for m in metrics]), "Metrics error"
+    assert all(type(m) == str for m in metrics), "Metrics error"
 
     # Compute metrics ----------------------------------------------------------
     metric_scores_dict = {}
@@ -144,18 +142,13 @@ def evaluate(
     # Save results in Run ------------------------------------------------------
     if type(run) == Run and save_results_in_run:
         for m, scores in metric_scores_dict.items():
-            if m != "r_precision" and m != "r-precision":
+            if m not in ["r_precision", "r-precision"]:
                 run.mean_scores[m] = np.mean(scores)
             else:
                 run.scores[m] = np.mean(scores)
         for m, scores in metric_scores_dict.items():
-            if m != "r_precision" and m != "r-precision":
-                for i, q_id in enumerate(run.get_query_ids()):
-                    run.scores[m][q_id] = scores[i]
-            else:
-                for i, q_id in enumerate(run.get_query_ids()):
-                    run.scores[m][q_id] = scores[i]
-
+            for i, q_id in enumerate(run.get_query_ids()):
+                run.scores[m][q_id] = scores[i]
     # Prepare output -----------------------------------------------------------
     if return_mean:
         for m, scores in metric_scores_dict.items():
@@ -207,7 +200,7 @@ def compare(
     threads: int = 0,
 ):
     metrics = format_metrics(metrics)
-    assert all([type(m) == str for m in metrics]), "Metrics error"
+    assert all(type(m) == str for m in metrics), "Metrics error"
 
     model_names = []
     results = defaultdict(dict)
