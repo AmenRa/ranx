@@ -1,6 +1,8 @@
 .DS_Store
 playground.ipynb
-test_data
+bug_data
+find_bugs.*
+TODO.md
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
