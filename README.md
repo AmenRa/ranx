@@ -36,7 +36,7 @@ We are aware [rank_eval](https://github.com/AmenRa/rank_eval) is currently not w
 That's because [Google Colab](https://colab.research.google.com) runs Python 3.6 while [rank_eval](https://github.com/AmenRa/rank_eval) currently requires a newer Python version.  
 I will try to downgrade the required Python version soon.
 
-If you experienced in the `numba.typed` issue, it should now be solved. Please, re-install [rank_eval](https://github.com/AmenRa/rank_eval).
+If you experienced the `numba.typed` issue, it should now be solved. Please, re-install [rank_eval](https://github.com/AmenRa/rank_eval).
 
 ## ⚡️ Introduction
 
