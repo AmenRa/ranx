@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="rank_eval",
-    version="0.1.2",
+    version="0.1.3",
     author="Elias Bassani",
     author_email="elias.bssn@gmail.com",
     description="rank_eval: A Blazing Fast Python Library for Ranking Evaluation and Comparison",
@@ -14,11 +14,11 @@ setuptools.setup(
     url="https://github.com/AmenRa/rank_eval",
     packages=setuptools.find_packages(),
     install_requires=[
-        "numpy>=1.20.3",
+        "numpy",
         "numba>=0.54.1",
-        "pandas>=1.3.4",
-        "tabulate>=0.8.9",
-        "tqdm>=4.62.3",
+        "pandas",
+        "tabulate",
+        "tqdm",
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
@@ -28,5 +28,5 @@ setuptools.setup(
         "Topic :: Text Processing :: General",
     ],
     keywords=["trec_eval", "information retrieval", "evaluation", "ranking", "numba"],
-    python_requires=">=3.8",
+    python_requires=">=3.7",
 )

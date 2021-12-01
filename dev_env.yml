@@ -2,15 +2,15 @@ name: rank_eval
 channels:
   - conda-forge
 dependencies:
-  - python=3.9
+  - python=3.7
   - black
-  - numpy>=1.20.3
+  - numpy
   - numba>=0.54.1
-  - pandas>=1.3.4
+  - pandas
   - notebook
   - ipykernel
-  - tqdm>=4.62.3
-  - tabulate>=0.8.9
+  - tqdm
+  - tabulate
   - pip
   - pip:
     - pytrec_eval
