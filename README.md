@@ -30,6 +30,14 @@
 
 [rank_eval](https://github.com/AmenRa/rank_eval) will be featured in [ECIR 2022](https://ecir2022.org), the 44th European Conference on Information Retrieval!
 
+## 🤖 Dev Bulletin
+
+We are aware [rank_eval](https://github.com/AmenRa/rank_eval) is currently not working on [Google Colab](https://colab.research.google.com).  
+That's because [Google Colab](https://colab.research.google.com) runs Python 3.6 while [rank_eval](https://github.com/AmenRa/rank_eval) currently requires a newer Python version.  
+I will try to downgrade the required Python version soon.
+
+If you experienced the `numba.typed` issue, it should now be solved. Please, re-install [rank_eval](https://github.com/AmenRa/rank_eval).
+
 ## ⚡️ Introduction
 
 [rank_eval](https://github.com/AmenRa/rank_eval) is a library of fast ranking evaluation metrics implemented in [Python](https://en.wikipedia.org/wiki/Python_(programming_language)), leveraging [Numba](https://github.com/numba/numba) for high-speed vector operations and automatic parallelization. 
