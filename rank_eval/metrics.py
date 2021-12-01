@@ -19,7 +19,7 @@ def fix_k(k, run):
 
 
 @njit(cache=True)
-def _hits_at_k(qrels, run, k):
+def _hits(qrels, run, k):
     qrels = _clean_qrels(qrels.copy())
     if len(qrels) == 0:
         return 0.0
@@ -45,44 +45,44 @@ def _hits_at_k(qrels, run, k):
 
 
 @njit(cache=True, parallel=True)
-def _hits_at_k_parallel(qrels, run, k):
+def _hits_parallel(qrels, run, k):
     scores = np.zeros((len(qrels)), dtype=np.float64)
     for i in prange(len(qrels)):
-        scores[i] = _hits_at_k(qrels[i], run[i], k)
+        scores[i] = _hits(qrels[i], run[i], k)
     return scores
 
 
 @njit(cache=True)
-def _precision_at_k(qrels, run, k):
+def _precision(qrels, run, k):
     qrels = _clean_qrels(qrels.copy())
     if len(qrels) == 0:
         return 0.0
     k = k if k != 0 else run.shape[0]
-    return _hits_at_k(qrels, run, k) / k
+    return _hits(qrels, run, k) / k
 
 
 @njit(cache=True, parallel=True)
-def _precision_at_k_parallel(qrels, run, k):
+def _precision_parallel(qrels, run, k):
     scores = np.zeros((len(qrels)), dtype=np.float64)
     for i in prange(len(qrels)):
-        scores[i] = _precision_at_k(qrels[i], run[i], k)
+        scores[i] = _precision(qrels[i], run[i], k)
     return scores
 
 
 @njit(cache=True)
-def _recall_at_k(qrels, run, k):
+def _recall(qrels, run, k):
     qrels = _clean_qrels(qrels.copy())
     if len(qrels) == 0:
         return 0.0
     k = k if k != 0 else run.shape[0]
-    return _hits_at_k(qrels, run, k) / qrels.shape[0]
+    return _hits(qrels, run, k) / qrels.shape[0]
 
 
 @njit(cache=True, parallel=True)
-def _recall_at_k_parallel(qrels, run, k):
+def _recall_parallel(qrels, run, k):
     scores = np.zeros((len(qrels)), dtype=np.float64)
     for i in prange(len(qrels)):
-        scores[i] = _recall_at_k(qrels[i], run[i], k)
+        scores[i] = _recall(qrels[i], run[i], k)
     return scores
 
 
@@ -91,8 +91,7 @@ def _r_precision(qrels, run):
     qrels = _clean_qrels(qrels.copy())
     if len(qrels) == 0:
         return 0.0
-
-    return _precision_at_k(qrels, run, qrels.shape[0])
+    return _precision(qrels, run, qrels.shape[0])
 
 
 @njit(cache=True, parallel=True)
@@ -153,7 +152,7 @@ def _average_precision(qrels, run, k):
     for r in range(k):
         if hit_list[r]:
             # Compute precision at k without computing hit list at k again
-            # same as _precision_at_k(qrels, run, r + 1)
+            # same as _precision(qrels, run, r + 1)
             precision_scores[r] = np.sum(hit_list[: r + 1]) / (r + 1)
 
     return np.sum(precision_scores) / qrels.shape[0]
@@ -168,7 +167,7 @@ def _average_precision_parallel(qrels, run, k):
 
 
 @njit(cache=True)
-def _dcg(qrels, run, k, trec_eval):
+def _dcg(qrels, run, k, jarvelin):
     qrels = _clean_qrels(qrels.copy())
     if len(qrels) == 0:
         return 0.0
@@ -190,7 +189,7 @@ def _dcg(qrels, run, k, trec_eval):
                 weighted_hit_list[i] = qrels[j, 1]
                 break
 
-    if trec_eval:
+    if jarvelin:
         # Järvelin et al. formulation (see http://doi.acm.org/10.1145/582415.582418)
         return np.sum(weighted_hit_list / np.log2(np.arange(1, k + 1) + 1))
 
@@ -200,14 +199,14 @@ def _dcg(qrels, run, k, trec_eval):
 
 
 @njit(cache=True)
-def _idcg(qrels, k, trec_eval):
-    return _dcg(qrels, qrels, k, trec_eval)
+def _idcg(qrels, k, jarvelin):
+    return _dcg(qrels, qrels, k, jarvelin)
 
 
 @njit(cache=True)
-def _ndcg(qrels, run, k, trec_eval):
-    dcg_score = _dcg(qrels, run, k, trec_eval)
-    idcg_score = _idcg(qrels, k, trec_eval)
+def _ndcg(qrels, run, k, jarvelin):
+    dcg_score = _dcg(qrels, run, k, jarvelin)
+    idcg_score = _idcg(qrels, k, jarvelin)
 
     # For numerical stability
     if idcg_score == 0.0:
@@ -217,10 +216,10 @@ def _ndcg(qrels, run, k, trec_eval):
 
 
 @njit(cache=True, parallel=True)
-def _ndcg_parallel(qrels, run, k, trec_eval):
+def _ndcg_parallel(qrels, run, k, jarvelin):
     scores = np.zeros((len(qrels)), dtype=np.float64)
     for i in prange(len(qrels)):
-        scores[i] = _ndcg(qrels[i], run[i], k, trec_eval)
+        scores[i] = _ndcg(qrels[i], run[i], k, jarvelin)
     return scores
 
 
@@ -252,7 +251,7 @@ def hits(qrels, run, k=0):
 
     assert k >= 0, "k must be grater or equal to 0"
 
-    return _hits_at_k_parallel(qrels, run, k)
+    return _hits_parallel(qrels, run, k)
 
 
 def precision(qrels, run, k=0):
@@ -299,7 +298,7 @@ def precision(qrels, run, k=0):
 
     assert k >= 0, "k must be grater or equal to 0"
 
-    return _precision_at_k_parallel(qrels, run, k)
+    return _precision_parallel(qrels, run, k)
 
 
 def recall(qrels, run, k=0):
@@ -346,10 +345,10 @@ def recall(qrels, run, k=0):
 
     assert k >= 0, "k must be grater or equal to 0"
 
-    return _recall_at_k_parallel(qrels, run, k)
+    return _recall_parallel(qrels, run, k)
 
 
-def r_precision(qrels, run):
+def r_precision(qrels, run, k=0):
     r"""Compute R-precision.
 
     For a given query :math:`Q`, R-precision is the precision at :math:`R`, where :math:`R` is the number of relevant documents for :math:`Q`. In other words, if there are :math:`r` relevant documents among the top-:math:`R` retrieved documents, then R-precision is
@@ -363,6 +362,9 @@ def r_precision(qrels, run):
 
     run : Numpy Array or Numba Typed List
         IDs and relevance scores of _retrieved_ documents.
+
+    k : Int
+        This argument is ignored. It was added to standardize metrics' input.
 
     Returns
     -------
@@ -409,40 +411,6 @@ def reciprocal_rank(qrels, run, k=0):
     return _reciprocal_rank_parallel(qrels, run, k)
 
 
-# def mrr(qrels, run, k=0):
-#     r"""Compute Mean Reciprocal Rank.
-
-#     The Mean Reciprocal Rank is the arithmetic mean of the Reciprocal Rank scores for a set of queries.
-#     The Reciprocal Rank is the multiplicative inverse of the rank of the first retrieved relevant document: 1 for first place, ​1/2 for second place, 1/3 for third place, and so on.
-
-#     .. math:: MRR = \frac{1}{N}\sum_{i=1}^{N}\frac{1}{rank_i}
-
-#     where,
-
-#     - :math:`N` is the number of ranked lists;
-#     - :math:`rank_i` is the position of the correct document for the ranked list :math:`i`.
-
-#     Parameters
-#     ----------
-#     qrels : Numpy Array or Numba Typed List
-#         IDs and relevance scores of _relevant_ documents.
-
-#     run : Numpy Array or Numba Typed List
-#         IDs and relevance scores of _retrieved_ documents.
-
-#     k : Int
-#         Number of retrieved documents to consider. k=0 means all retrieved documents will be considered (default behaviour).
-
-#     Returns
-#     -------
-#     Float
-#         Mean Reciprocal Rank score.
-
-#     """
-
-#     return _mrr(qrels, run, k)
-
-
 def average_precision(qrels, run, k=0):
     r"""Compute Average Precision.
 
@@ -477,40 +445,6 @@ def average_precision(qrels, run, k=0):
     assert k >= 0, "k must be grater or equal to 0"
 
     return _average_precision_parallel(qrels, run, k)
-
-
-# def map(qrels, run, k=0):
-#     r"""Compute Mean Average Precision.
-
-#     The Mean Average Precision (MAP) is the arithmetic mean of the Average Precision scores for a set of queries.
-#     The Average Precision is the Precision after each relevant item is retrieved.
-
-#     .. math:: MAP = {1\over n}\sum\limits_n {AP_n }
-
-#     where,
-
-#     - :math:`n` is the number of queries;
-#     - :math:`AP_n` is the :math:`Average\,Precision` for :math:`n`-th query.
-
-#     Parameters
-#     ----------
-#     qrels : Numpy Array or Numba Typed List
-#         IDs and relevance scores of _relevant_ documents.
-
-#     run : Numpy Array or Numba Typed List
-#         IDs and relevance scores of _retrieved_ documents.
-
-#     k : Int
-#         Number of retrieved documents to consider. k=0 means all retrieved documents will be considered (default behaviour).
-
-#     Returns
-#     -------
-#     Float
-#         Mean Average Precision score.
-
-#     """
-
-#     return _map(qrels, run, k)
 
 
 # NON-BINARY METRICS -----------------------------------------------------------
@@ -572,7 +506,7 @@ def ndcg(
 
     assert k >= 0, "k must be grater or equal to 0"
 
-    return _ndcg_parallel(qrels, run, k, trec_eval=True)
+    return _ndcg_parallel(qrels, run, k, jarvelin=True)
 
 
 def ndcg_burges(
@@ -640,4 +574,4 @@ def ndcg_burges(
 
     assert k >= 0, "k must be grater or equal to 0"
 
-    return _ndcg_parallel(qrels, run, k, trec_eval=False)
+    return _ndcg_parallel(qrels, run, k, jarvelin=False)

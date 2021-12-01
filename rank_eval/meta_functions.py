@@ -68,6 +68,7 @@ def extract_metric_and_k(metric):
     m = metric_splitted[0]
 
     k = int(metric_splitted[1]) if len(metric_splitted) > 1 else 0
+
     return m, k
 
 
@@ -110,6 +111,7 @@ def evaluate(
     save_results_in_run=True,
 ) -> Union[Dict[str, float], float]:
     """Compute performance scores for all the provided metrics."""
+
     if len(qrels) < 10:
         set_num_threads(1)
     elif threads != 0:
@@ -127,28 +129,19 @@ def evaluate(
     metric_scores_dict = {}
     for metric in metrics:
         m, k = extract_metric_and_k(metric)
-        if "r-precision" not in metric:
-            metric_scores_dict[metric] = metric_functions_switch(m)(
-                _qrels,
-                _run,
-                k=k,
-            )
-        else:
-            metric_scores_dict[metric] = metric_functions_switch(m)(
-                _qrels,
-                _run,
-            )
+        metric_scores_dict[metric] = metric_functions_switch(m)(
+            _qrels,
+            _run,
+            k=k,
+        )
 
     # Save results in Run ------------------------------------------------------
     if type(run) == Run and save_results_in_run:
         for m, scores in metric_scores_dict.items():
-            if m not in ["r_precision", "r-precision"]:
-                run.mean_scores[m] = np.mean(scores)
-            else:
-                run.scores[m] = np.mean(scores)
-        for m, scores in metric_scores_dict.items():
+            run.mean_scores[m] = np.mean(scores)
             for i, q_id in enumerate(run.get_query_ids()):
                 run.scores[m][q_id] = scores[i]
+
     # Prepare output -----------------------------------------------------------
     if return_mean:
         for m, scores in metric_scores_dict.items():
