@@ -28,7 +28,7 @@
 
 ## ⚠️ DISCLAIMER
 
-- [rank_eval](https://github.com/AmenRa/rank_eval) will be soon renamed as [ranx](https://github.com/AmenRa/rank_eval) because of other libraries with almost identical naming.
+- [rank_eval](https://github.com/AmenRa/rank_eval) will soon be renamed to [ranx](https://github.com/AmenRa/rank_eval) because of other libraries with almost identical naming.
 - You can already install [rank_eval](https://github.com/AmenRa/rank_eval) with `pip install ranx`.
 
 ## 🔥 News
