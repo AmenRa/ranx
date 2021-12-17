@@ -149,8 +149,8 @@ Search the [documentation](https://rank-eval.readthedocs.io/en/latest/) for more
 ## 🎓 Citation
 If you use [ranx](https://github.com/AmenRa/ranx) to evaluate results for your scientific publication, please consider citing it:
 ```
-@misc{rankEval2021,
-  title = {Rank\_eval: Blazing Fast Ranking Evaluation Metrics in Python},
+@misc{ranx2021,
+  title = {ranx: A Blazing-Fast Python Library for Ranking Evaluation and Comparison},
   author = {Bassani, Elias},
   year = {2021},
   publisher = {GitHub},
