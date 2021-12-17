@@ -2,7 +2,7 @@ import pandas as pd
 import pytest
 from numba.typed import List
 
-from rank_eval import Qrels
+from ranx import Qrels
 
 
 def test_size():
@@ -161,7 +161,7 @@ def test_from_dict():
 
 
 def test_from_file():
-    qrels = Qrels.from_file("tests/unit/rank_eval/test_data/qrels.txt")
+    qrels = Qrels.from_file("tests/unit/ranx/test_data/qrels.txt")
 
     assert len(qrels.qrels) == 2
     assert len(qrels.qrels["q1"]) == 3

@@ -22,7 +22,7 @@ def descending_sort_parallel(x):
 
 # ------------------------------------------------------------------------------
 def python_dict_to_typed_list(x: Dict[str, Dict[str, Number]], sort: bool = True):
-    """Converts a nested Python Dictionary to Numba Typed List to be used with rank_eval's metrics with no effort.
+    """Converts a nested Python Dictionary to Numba Typed List to be used with ranx's metrics with no effort.
 
     Note: Doc IDs will be hashed.
     """

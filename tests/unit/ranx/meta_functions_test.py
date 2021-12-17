@@ -3,7 +3,7 @@ import numpy as np
 import pytest
 from numba.typed import List
 
-from rank_eval import Qrels, Run, evaluate
+from ranx import Qrels, Run, evaluate
 
 
 # BINARY RELEVANCE =============================================================

@@ -4,11 +4,11 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="rank_eval",
-    version="0.1.3",
+    name="ranx",
+    version="0.1.4",
     author="Elias Bassani",
     author_email="elias.bssn@gmail.com",
-    description="rank_eval: A Blazing Fast Python Library for Ranking Evaluation and Comparison",
+    description="ranx: A Blazing Fast Python Library for Ranking Evaluation and Comparison",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/AmenRa/rank_eval",

@@ -3,7 +3,7 @@ import numpy as np
 import pytest
 from numba.typed import List
 
-from rank_eval import metrics as rm
+from ranx import metrics as rm
 
 
 # BINARY RELEVANCE =============================================================

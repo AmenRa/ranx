@@ -1,0 +1,53 @@
+site_name: ranx
+site_description: "⚡️ A Blazing-Fast Python Library for Ranking Evaluation and Comparison 🐍"
+site_url: "https://ranx.github.io/"
+repo_url: "https://github.com/amenra/ranx"
+edit_uri: "blob/master/docs/"
+repo_name: "ranx/ranx"
+site_dir: "site"
+
+
+theme:
+  name: material
+  palette: # 
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: red
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate # 
+      primary: red
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+
+plugins:
+  - search
+  - autorefs
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          rendering:
+            show_source: false
+      custom_templates: templates
+      watch:
+        - ranx
+
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.snippets
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+

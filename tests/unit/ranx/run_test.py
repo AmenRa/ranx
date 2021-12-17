@@ -2,7 +2,7 @@ import pandas as pd
 import pytest
 from numba.typed import List
 
-from rank_eval import Run
+from ranx import Run
 
 
 def test_size():
@@ -161,7 +161,7 @@ def test_from_dict():
 
 
 def test_from_file():
-    run = Run.from_file("tests/unit/rank_eval/test_data/run.txt")
+    run = Run.from_file("tests/unit/ranx/test_data/run.txt")
 
     assert len(run.run) == 2
     assert len(run.run["q1"]) == 3

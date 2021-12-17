@@ -5,7 +5,7 @@ import numpy as np
 import pytest
 import pytrec_eval
 
-from rank_eval import Qrels, Run, evaluate
+from ranx import Qrels, Run, evaluate
 
 REL_TOL = 1e-09  # Default value 1e-09
 

@@ -1,4 +1,4 @@
-name: rank_eval
+name: ranx
 channels:
   - conda-forge
 dependencies:
@@ -11,6 +11,7 @@ dependencies:
   - ipykernel
   - tqdm
   - tabulate
+  - mkdocs-material
   - pip
   - pip:
     - pytrec_eval
