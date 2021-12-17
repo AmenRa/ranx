@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://repository-images.githubusercontent.com/268892956/6ec35327-5041-4296-b679-832a22b441cb">
+  <img src="https://repository-images.githubusercontent.com/268892956/750228ec-f3f2-465d-9c17-420c688ba2bc">
 </div>
 
 <p align="center">
@@ -21,33 +21,28 @@
       <img src="https://img.shields.io/badge/License-MIT-green.svg" />
   </a>
   <!-- Google Colab -->
-  <a href="https://colab.research.google.com/github/AmenRa/rank_eval/blob/master/examples/overview.ipynb">
+  <a href="https://colab.research.google.com/github/AmenRa/ranx/blob/master/examples/overview.ipynb">
       <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
   </a>
 </p>
 
-## ⚠️ DISCLAIMER
-
-- [rank_eval](https://github.com/AmenRa/rank_eval) will soon be renamed to [ranx](https://github.com/AmenRa/rank_eval) because of other libraries with almost identical naming.
-- You can already install [rank_eval](https://github.com/AmenRa/rank_eval) with `pip install ranx`.
-
 ## 🔥 News
 
-- [rank_eval](https://github.com/AmenRa/rank_eval) will be featured in [ECIR 2022](https://ecir2022.org), the 44th European Conference on Information Retrieval!
+- [ranx](https://github.com/AmenRa/ranx) will be featured in [ECIR 2022](https://ecir2022.org), the 44th European Conference on Information Retrieval!
 
 ## 🤖 Dev Bulletin
 
-- [rank_eval](https://github.com/AmenRa/rank_eval) works on [Google Colab](https://colab.research.google.com) now. Unfortunately, Google Colab takes some time to compile the Numba functions the first time you call them...
+- [ranx](https://github.com/AmenRa/ranx) works on [Google Colab](https://colab.research.google.com) now. Unfortunately, Google Colab takes some time to compile the Numba functions the first time you call them...
 
-- If you experienced the `numba.typed` issue, it should now be solved. Please, re-install [rank_eval](https://github.com/AmenRa/rank_eval).
+- If you experienced the `numba.typed` issue, it should now be solved. Please, re-install [ranx](https://github.com/AmenRa/ranx).
 
 ## ⚡️ Introduction
 
-[rank_eval](https://github.com/AmenRa/rank_eval) is a library of fast ranking evaluation metrics implemented in [Python](https://en.wikipedia.org/wiki/Python_(programming_language)), leveraging [Numba](https://github.com/numba/numba) for high-speed vector operations and automatic parallelization. 
+[ranx](https://github.com/AmenRa/ranx) is a library of fast ranking evaluation metrics implemented in [Python](https://en.wikipedia.org/wiki/Python_(programming_language)), leveraging [Numba](https://github.com/numba/numba) for high-speed vector operations and automatic parallelization. 
 
 It allows you to compare different runs, perform statistical tests, and export a LaTeX table for your scientific publications.
 
-We strongly incourage you to check the example folder to learn how to use [rank_eval](https://github.com/AmenRa/rank_eval) in just a few minutes.
+We strongly incourage you to check the example folder to learn how to use [ranx](https://github.com/AmenRa/ranx) in just a few minutes.
 
 
 ## ✨ Available Metrics
@@ -63,14 +58,14 @@ The metrics have been tested against [TREC Eval](https://github.com/usnistgov/tr
 
 ## 🔌 Installation
 ```bash
-pip install rank_eval
+pip install ranx
 ```
 
 ## 💡 Usage
 
 ### Create Qrels and Run
 ```python
-from rank_eval import Qrels, Run, evaluate
+from ranx import Qrels, Run, evaluate
 
 qrels = Qrels()
 qrels.add_multi(
@@ -144,31 +139,31 @@ e    model_5  0.4053ᵃᵇᶜᵈ  0.4061ᵃᵇᶜᵈ  0.4512ᵃᵇᶜᵈ
 ```
 
 ## 📖 Examples
-* [Overview](https://github.com/AmenRa/rank_eval/tree/master/examples/overview.ipynb): This notebook shows the main features of [rank_eval](https://github.com/AmenRa/rank_eval).
-* [Create Qrels and Run](https://github.com/AmenRa/rank_eval/tree/master/examples/create_qrels_and_run.ipynb): This notebook shows different ways of creating `Qrels` and `Run`.
+* [Overview](https://github.com/AmenRa/ranx/tree/master/examples/overview.ipynb): This notebook shows the main features of [ranx](https://github.com/AmenRa/ranx).
+* [Create Qrels and Run](https://github.com/AmenRa/ranx/tree/master/examples/create_qrels_and_run.ipynb): This notebook shows different ways of creating `Qrels` and `Run`.
 
 ## 📚 Documentation
 _To be updated! Please, refer to the examples in the meantime._  
 Search the [documentation](https://rank-eval.readthedocs.io/en/latest/) for more details and examples.
 
 ## 🎓 Citation
-If you use [rank_eval](https://github.com/AmenRa/rank_eval) to evaluate results for your scientific publication, please consider citing it:
+If you use [ranx](https://github.com/AmenRa/ranx) to evaluate results for your scientific publication, please consider citing it:
 ```
 @misc{rankEval2021,
   title = {Rank\_eval: Blazing Fast Ranking Evaluation Metrics in Python},
   author = {Bassani, Elias},
   year = {2021},
   publisher = {GitHub},
-  howpublished = {\url{https://github.com/AmenRa/rank_eval}},
+  howpublished = {\url{https://github.com/AmenRa/ranx}},
 }
 ```
 
 ## 🎁 Feature Requests
-Would you like to see a new metric implemented? Please, open a [new issue](https://github.com/AmenRa/rank_eval/issues/new).
+Would you like to see a new metric implemented? Please, open a [new issue](https://github.com/AmenRa/ranx/issues/new).
 
 ## 🤘 Want to contribute?
-Would you like to contribute? Please, drop me an [e-mail](mailto:elias.bssn@gmail.com?subject=[GitHub]%20rank_eval).
+Would you like to contribute? Please, drop me an [e-mail](mailto:elias.bssn@gmail.com?subject=[GitHub]%20ranx).
 
 ## 📄 License
 
-[rank_eval](https://github.com/AmenRa/rank_eval) is an open-sourced software licensed under the [MIT license](LICENSE).
+[ranx](https://github.com/AmenRa/ranx) is an open-sourced software licensed under the [MIT license](LICENSE).
