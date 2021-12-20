@@ -5,13 +5,13 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="ranx",
-    version="0.1.4",
+    version="0.1.5",
     author="Elias Bassani",
     author_email="elias.bssn@gmail.com",
     description="ranx: A Blazing Fast Python Library for Ranking Evaluation and Comparison",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/AmenRa/rank_eval",
+    url="https://github.com/AmenRa/ranx",
     packages=setuptools.find_packages(),
     install_requires=[
         "numpy",

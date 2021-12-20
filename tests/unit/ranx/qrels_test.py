@@ -160,8 +160,21 @@ def test_from_dict():
     assert qrels.qrels["q2"]["d2"] == 2
 
 
-def test_from_file():
+def test_from_trec_file():
     qrels = Qrels.from_file("tests/unit/ranx/test_data/qrels.txt")
+
+    assert len(qrels.qrels) == 2
+    assert len(qrels.qrels["q1"]) == 3
+    assert len(qrels.qrels["q2"]) == 2
+    assert qrels.qrels["q1"]["d1"] == 1
+    assert qrels.qrels["q1"]["d2"] == 2
+    assert qrels.qrels["q1"]["d3"] == 3
+    assert qrels.qrels["q2"]["d1"] == 1
+    assert qrels.qrels["q2"]["d2"] == 2
+
+
+def test_from_json_file():
+    qrels = Qrels.from_file("tests/unit/ranx/test_data/qrels.json", "json")
 
     assert len(qrels.qrels) == 2
     assert len(qrels.qrels["q1"]) == 3

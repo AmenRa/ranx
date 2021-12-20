@@ -1,3 +1,4 @@
+import json
 from collections import defaultdict
 from typing import Dict, List
 
@@ -5,7 +6,6 @@ import pandas as pd
 from numba import types
 from numba.typed import Dict as TypedDict
 from numba.typed import List as TypedList
-from tqdm import tqdm
 
 from .qrels_run_common import (
     add_and_sort,
@@ -109,32 +109,29 @@ class Run(object):
         return run
 
     @staticmethod
-    def from_file(path: str):
-        """Parse a TREC-style run file into ranx.Run."""
-        n_lines = 0
-        with open(path) as f:
-            for _ in f:
-                n_lines += 1
+    def from_file(path: str, type: str = "trec"):
+        """Parse a run file into ranx.Run."""
+        assert type in {
+            "trec",
+            "json",
+        }, "Error `type` must be 'trec' of 'json'"
 
-        run = defaultdict(dict)
-        name = ""
-
-        with tqdm(
-            total=n_lines,
-            desc="Parsing Run",
-            position=0,
-            dynamic_ncols=True,
-            mininterval=0.1,
-        ) as pbar, open(path) as f:
-            for line in f:
-                q_id, _, doc_id, _, rel, run_name = line.split()
-                run[q_id][doc_id] = float(rel)
-                if name == "":
-                    name = run_name
-                pbar.update(1)
+        if type == "trec":
+            run = defaultdict(dict)
+            name = ""
+            with open(path) as f:
+                for line in f:
+                    q_id, _, doc_id, _, rel, run_name = line.split()
+                    run[q_id][doc_id] = float(rel)
+                    if name == "":
+                        name = run_name
+        else:
+            run = json.loads(open(path, "r").read())
 
         run = Run.from_dict(run)
-        run.name = name
+
+        if type == "trec":
+            run.name = name
 
         return run
 

@@ -1,3 +1,4 @@
+import json
 from collections import defaultdict
 from typing import Dict, List
 
@@ -5,7 +6,6 @@ import pandas as pd
 from numba import types
 from numba.typed import Dict as TypedDict
 from numba.typed import List as TypedList
-from tqdm import tqdm
 
 from .qrels_run_common import (
     add_and_sort,
@@ -109,30 +109,21 @@ class Qrels(object):
         return qrels
 
     @staticmethod
-    def from_file(path: str):
-        """Parse a TREC-style qrels file into ranx.Qrels."""
-        n_lines = 0
-        with open(path) as f:
-            for _ in f:
-                n_lines += 1
+    def from_file(path: str, type: str = "trec"):
+        """Parse a qrels file into ranx.Qrels."""
+        assert type in {
+            "trec",
+            "json",
+        }, "Error `type` must be 'trec' of 'json'"
 
-        qrels = defaultdict(dict)
-
-        with tqdm(
-            total=n_lines,
-            desc="Parsing Qrels",
-            position=0,
-            dynamic_ncols=True,
-            mininterval=0.1,
-        ) as pbar, open(path) as f:
-            for line in f:
-                q_id, _, doc_id, rel = line.split()
-                qrels[q_id][doc_id] = int(rel)
-                pbar.update(1)
-
-        # for x in open(path, "r").read().splitlines():
-        #     q_id, _, doc_id, rel = x.split()
-        #     qrels[q_id][doc_id] = int(rel)
+        if type == "trec":
+            qrels = defaultdict(dict)
+            with open(path) as f:
+                for line in f:
+                    q_id, _, doc_id, rel = line.split()
+                    qrels[q_id][doc_id] = int(rel)
+        else:
+            qrels = json.loads(open(path, "r").read())
 
         return Qrels.from_dict(qrels)
 

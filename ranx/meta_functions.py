@@ -216,8 +216,8 @@ def compare(
 
     # Run statistical testing --------------------------------------------------
     for i, control in enumerate(runs):
+        control_metric_scores = metric_scores[control.name]
         for j, treatment in enumerate(runs):
-            control_metric_scores = metric_scores[control.name]
             if i < j:
                 treatment_metric_scores = metric_scores[treatment.name]
 
@@ -235,8 +235,8 @@ def compare(
     # Compute win / tie / lose -------------------------------------------------
     win_tie_loss = defaultdict(dict)
 
-    for i, control in enumerate(runs):
-        for j, treatment in enumerate(runs):
+    for control in runs:
+        for treatment in runs:
             for m in metrics:
                 control_scores = metric_scores[control.name][m]
                 treatment_scores = metric_scores[treatment.name][m]

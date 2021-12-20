@@ -2,16 +2,18 @@ name: ranx
 channels:
   - conda-forge
 dependencies:
-  - python=3.7
   - black
-  - numpy
-  - numba>=0.54.1
-  - pandas
-  - notebook
   - ipykernel
-  - tqdm
-  - tabulate
   - mkdocs-material
+  - notebook
+  - numba>=0.54.1
+  - numpy
+  - pandas
   - pip
+  - pytest
+  - python=3.7
+  - tabulate
+  - tqdm
   - pip:
     - pytrec_eval
+    - twine

@@ -160,8 +160,21 @@ def test_from_dict():
     assert run.run["q2"]["d2"] == 2
 
 
-def test_from_file():
+def test_from_trec_file():
     run = Run.from_file("tests/unit/ranx/test_data/run.txt")
+
+    assert len(run.run) == 2
+    assert len(run.run["q1"]) == 3
+    assert len(run.run["q2"]) == 2
+    assert run.run["q1"]["d1"] == 0.1
+    assert run.run["q1"]["d2"] == 0.2
+    assert run.run["q1"]["d3"] == 0.3
+    assert run.run["q2"]["d1"] == 0.1
+    assert run.run["q2"]["d2"] == 0.2
+
+
+def test_from_json_file():
+    run = Run.from_file("tests/unit/ranx/test_data/run.json", "json")
 
     assert len(run.run) == 2
     assert len(run.run["q1"]) == 3
