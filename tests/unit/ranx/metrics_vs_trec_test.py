@@ -23,11 +23,8 @@ def run_single_trec_metric(qrels, run, metric):
 def generate_qrels(query_count, max_relevant_per_query):
     qrels = {}
     for i in range(query_count):
-        y_t = {}
         k = random.choice(range(1, max_relevant_per_query))
-        for j in range(k):
-            y_t[f"d{j}"] = random.choice([0, 1, 2, 3, 4, 5])
-
+        y_t = {f"d{j}": random.choice([0, 1, 2, 3, 4, 5]) for j in range(k)}
         qrels[f"q{i}"] = y_t
 
     return qrels
@@ -36,11 +33,8 @@ def generate_qrels(query_count, max_relevant_per_query):
 def generate_run(query_count, max_result_count):
     run = {}
     for i in range(query_count):
-        y_p = {}
         result_count = random.choice(range(1, max_result_count))
-        for j in range(result_count):
-            y_p[f"d{j}"] = random.uniform(0.0, 1.0)
-
+        y_p = {f"d{j}": random.uniform(0.0, 1.0) for j in range(result_count)}
         run[f"q{i}"] = y_p
 
     return run

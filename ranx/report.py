@@ -108,7 +108,10 @@ class Report(object):
             + "\n\\textbf{\#}"
             + "\n& \\textbf{Model}"
             + "".join(
-                [f"\n& \\textbf{{{self.get_metric_label(m)}}}" for m in self.metrics]
+                [
+                    f"\n& \\textbf{{{self.get_metric_label(m)}}}"
+                    for m in self.metrics
+                ]
             )
             + " \\\\ \n\midrule"
         )
@@ -128,7 +131,9 @@ class Report(object):
                                 )
                                 if best_scores[m] == model
                                 else f"{round(self.results[model][m], 4)}",
-                                superscript=self.get_superscript_for_latex(model, m),
+                                superscript=self.get_superscript_for_latex(
+                                    model, m
+                                ),
                             )
                             for m in self.metrics
                         ]
@@ -146,6 +151,39 @@ class Report(object):
         )
 
         return table_prefix + "\n" + table_content + "\n" + table_suffix
+
+    def to_dict(self):
+        """Returns the Report data as a Python dictionary."""
+
+        d = {
+            "metrics": self.metrics,
+            "model_names": self.model_names,
+        }
+
+        for m1 in self.model_names:
+            d[m1] = {}
+            d[m1]["scores"] = self.results[m1]
+            d[m1]["comparisons"] = {}
+            d[m1]["win_tie_loss"] = {}
+
+            for m2 in self.model_names:
+                if m1 != m2:
+                    d[m1]["comparisons"][m2] = {}
+
+                    for metric in self.metrics:
+                        d[m1]["comparisons"][m2][metric] = self.comparisons[
+                            {m1, m2}
+                        ][metric]["p_value"]
+                        d[m1]["win_tie_loss"][m2] = self.win_tie_loss[(m1, m2)][
+                            metric
+                        ]
+        return d
+
+    def save(self, path):
+        """Save the Report data as a JSON file."""
+
+        with open(path, "w") as f:
+            f.write(json.dumps(self.to_dict(), indent=4))
 
     def print_results(self):
         print(json.dumps(self.results, indent=4))

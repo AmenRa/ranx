@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="ranx",
-    version="0.1.5",
+    version="0.1.6",
     author="Elias Bassani",
     author_email="elias.bssn@gmail.com",
     description="ranx: A Blazing Fast Python Library for Ranking Evaluation and Comparison",
@@ -27,6 +27,12 @@ setuptools.setup(
         "Operating System :: OS Independent",
         "Topic :: Text Processing :: General",
     ],
-    keywords=["trec_eval", "information retrieval", "evaluation", "ranking", "numba"],
+    keywords=[
+        "trec_eval",
+        "information retrieval",
+        "evaluation",
+        "ranking",
+        "numba",
+    ],
     python_requires=">=3.7",
 )
