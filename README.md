@@ -32,9 +32,9 @@
 
 ## 🤖 Dev Bulletin
 
-- [ranx](https://github.com/AmenRa/ranx) works on [Google Colab](https://colab.research.google.com) now. Unfortunately, Google Colab takes some time to compile the Numba functions the first time you call them...
+- It's now possible to export a Report as a Python dictionary with `Report.to_dict()` and save it as a JSON file with `Report.save(path)`. More details [here](https://github.com/AmenRa/ranx/issues/4#issuecomment-1013191897).
 
-- If you experienced the `numba.typed` issue, it should now be solved. Please, re-install [ranx](https://github.com/AmenRa/ranx).
+- [ranx](https://github.com/AmenRa/ranx) works on [Google Colab](https://colab.research.google.com) now. Unfortunately, Google Colab takes some time to compile the Numba functions the first time you call them...
 
 ## ⚡️ Introduction
 
