@@ -2,6 +2,7 @@ import json
 from collections import defaultdict
 from typing import Dict, List
 
+import numpy as np
 import pandas as pd
 from numba import types
 from numba.typed import Dict as TypedDict
@@ -9,6 +10,7 @@ from numba.typed import List as TypedList
 
 from .qrels_run_common import (
     add_and_sort,
+    create_and_sort,
     sort_dict_by_key,
     sort_dict_of_dict_by_value,
     to_typed_list,
@@ -79,32 +81,60 @@ class Run(object):
             self.sort()
         return to_typed_list(self.run)
 
+    def to_dict(self):
+        """Convert Run to Python dictionary."""
+        d = defaultdict(dict)
+        for q_id in self.keys():
+            d[q_id] = dict(self[q_id])
+        return d
+
     def save(self, path: str = "run.txt"):
-        """Write `run` to `path` in TREC run format."""
+        """Write `run` to `path` in TREC run format or as a JSON file."""
+        assert type in {
+            "trec",
+            "json",
+        }, "Error `type` must be 'trec' of 'json'"
+
         if self.sorted == False:
             self.sort()
-        with open(path, "w") as f:
-            for i, q_id in enumerate(self.run.keys()):
-                for rank, doc_id in enumerate(self.run[q_id].keys()):
-                    score = self.run[q_id][doc_id]
-                    f.write(f"{q_id} Q0 {doc_id} {rank+1} {score} {self.name}")
 
-                    if (
-                        i != len(self.run.keys()) - 1
-                        or rank != len(self.run[q_id].keys()) - 1
-                    ):
-                        f.write("\n")
+        with open(path, "w") as f:
+            if type == "trec":
+                for i, q_id in enumerate(self.run.keys()):
+                    for rank, doc_id in enumerate(self.run[q_id].keys()):
+                        score = self.run[q_id][doc_id]
+                        f.write(
+                            f"{q_id} Q0 {doc_id} {rank+1} {score} {self.name}"
+                        )
+
+                        if (
+                            i != len(self.run.keys()) - 1
+                            or rank != len(self.run[q_id].keys()) - 1
+                        ):
+                            f.write("\n")
+            else:
+                f.write(json.dumps(self.to_dict(), indent=4))
 
     @staticmethod
     def from_dict(d: Dict[str, Dict[str, float]]):
         """Convert a Python dictionary in form of {q_id: {doc_id: rank_score}} to a ranx.Run."""
+        # Query IDs
         q_ids = list(d.keys())
+        q_ids = TypedList(q_ids)
+
+        # Doc IDs
         doc_ids = [list(doc.keys()) for doc in d.values()]
+        max_len = max(len(y) for x in doc_ids for y in x)
+        dtype = f"<U{max_len}"
+        doc_ids = TypedList([np.array(x, dtype=dtype) for x in doc_ids])
+
+        # Scores
         scores = [list(doc.values()) for doc in d.values()]
+        scores = TypedList([np.array(x, dtype=float) for x in scores])
 
         run = Run()
-
-        run.add_multi(q_ids, doc_ids, scores)
+        run.run = create_and_sort(q_ids, doc_ids, scores)
+        run.sorted = True
 
         return run
 

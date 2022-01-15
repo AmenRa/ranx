@@ -2,6 +2,7 @@ import json
 from collections import defaultdict
 from typing import Dict, List
 
+import numpy as np
 import pandas as pd
 from numba import types
 from numba.typed import Dict as TypedDict
@@ -9,6 +10,7 @@ from numba.typed import List as TypedList
 
 from .qrels_run_common import (
     add_and_sort,
+    create_and_sort,
     sort_dict_by_key,
     sort_dict_of_dict_by_value,
     to_typed_list,
@@ -77,34 +79,55 @@ class Qrels(object):
             self.sort()
         return to_typed_list(self.qrels)
 
-    def save(self, path: str = "qrels.txt"):
-        """Write `qrels` to `path` in TREC qrels format."""
+    def to_dict(self):
+        """Convert Qrels to Python dictionary."""
+        d = defaultdict(dict)
+        for q_id in self.keys():
+            d[q_id] = dict(self[q_id])
+        return d
+
+    def save(self, path: str = "qrels.txt", type="trec"):
+        """Write `qrels` to `path` in TREC qrels format or as a JSON file."""
+        assert type in {
+            "trec",
+            "json",
+        }, "Error `type` must be 'trec' of 'json'"
+
         with open(path, "w") as f:
-            for i, q_id in enumerate(self.qrels.keys()):
-                for j, doc_id in enumerate(self.qrels[q_id].keys()):
-                    score = self.qrels[q_id][doc_id]
-                    f.write(f"{q_id} 0 {doc_id} {score}")
+            if type == "trec":
+                for i, q_id in enumerate(self.qrels.keys()):
+                    for j, doc_id in enumerate(self.qrels[q_id].keys()):
+                        score = self.qrels[q_id][doc_id]
+                        f.write(f"{q_id} 0 {doc_id} {score}")
 
-                    if (
-                        i != len(self.qrels.keys()) - 1
-                        or j != len(self.qrels[q_id].keys()) - 1
-                    ):
-                        f.write("\n")
-
-    @property
-    def size(self):
-        return len(self.qrels)
+                        if (
+                            i != len(self.qrels.keys()) - 1
+                            or j != len(self.qrels[q_id].keys()) - 1
+                        ):
+                            f.write("\n")
+            else:
+                f.write(json.dumps(self.to_dict(), indent=4))
 
     @staticmethod
     def from_dict(d: Dict[str, Dict[str, int]]):
         """Convert a Python dictionary in form of {q_id: {doc_id: rel_score}} to a ranx.Qrels."""
+        # Query IDs
         q_ids = list(d.keys())
+        q_ids = TypedList(q_ids)
+
+        # Doc IDs
         doc_ids = [list(doc.keys()) for doc in d.values()]
+        max_len = max(len(y) for x in doc_ids for y in x)
+        dtype = f"<U{max_len}"
+        doc_ids = TypedList([np.array(x, dtype=dtype) for x in doc_ids])
+
+        # Scores
         scores = [list(doc.values()) for doc in d.values()]
+        scores = TypedList([np.array(x, dtype=int) for x in scores])
 
         qrels = Qrels()
-
-        qrels.add_multi(q_ids, doc_ids, scores)
+        qrels.qrels = create_and_sort(q_ids, doc_ids, scores)
+        qrels.sorted = True
 
         return qrels
 
@@ -141,7 +164,9 @@ class Qrels(object):
         assert (
             df[doc_id_col].dtype == "O"
         ), "DataFrame scores column dtype must be `object` (string)"
-        assert df[score_col].dtype == int, "DataFrame scores column dtype must be `int`"
+        assert (
+            df[score_col].dtype == int
+        ), "DataFrame scores column dtype must be `int`"
 
         qrels_dict = (
             df.groupby(q_id_col)[[doc_id_col, score_col]]
@@ -151,11 +176,12 @@ class Qrels(object):
 
         return Qrels.from_dict(qrels_dict)
 
+    @property
+    def size(self):
+        return len(self.qrels)
+
     def __getitem__(self, q_id):
         return dict(self.qrels[q_id])
-
-    # def __setitem__(self, q_id, x):
-    #     self.qrels[q_id] = x
 
     def __len__(self) -> int:
         return len(self.qrels)

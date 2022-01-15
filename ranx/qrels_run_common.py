@@ -101,3 +101,26 @@ def add_and_sort(d, q_ids, doc_ids, scores):
     d = sort_dict_of_dict_by_value(d)
 
     return d
+
+
+# CREATE AND SORT --------------------------------------------------------------
+@njit(cache=True)
+def create_bulk(q_ids, doc_ids, scores):
+    d = TypedDict()
+
+    for i, q_id in enumerate(q_ids):
+        d[q_id] = create_dict_from_lists(doc_ids[i], scores[i])
+
+    return d
+
+
+@njit(cache=True)
+def create_and_sort(q_ids, doc_ids, scores):
+    # Add
+    d = create_bulk(q_ids, doc_ids, scores)
+    # Sort q_ids
+    d = sort_dict_by_key(d)
+    # Sort scores
+    d = sort_dict_of_dict_by_value(d)
+
+    return d
