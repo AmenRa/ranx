@@ -47,7 +47,7 @@
 
 It allows you to compare different runs, perform statistical tests, and export a LaTeX table for your scientific publications.
 
-We strongly incourage you to check the example folder to learn how to use [ranx](https://github.com/AmenRa/ranx) in just a few minutes.
+We strongly encourage you to check the example folder to learn how to use [ranx](https://github.com/AmenRa/ranx) in just a few minutes.
 
 
 ## ✨ Available Metrics
