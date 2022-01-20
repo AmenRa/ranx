@@ -28,6 +28,7 @@
 ## 🔥 News
 
 - [ranx](https://github.com/AmenRa/ranx) will be featured in [ECIR 2022](https://ecir2022.org), the 44th European Conference on Information Retrieval!
+- Up-to-date documentation available at https://amenra.github.io/ranx!
 
 ## 🤖 Dev Bulletin
 
