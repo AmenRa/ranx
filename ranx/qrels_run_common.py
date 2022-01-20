@@ -72,7 +72,7 @@ def sort_dict_by_value(d):
     return new_d
 
 
-@njit(cache=True)
+@njit(cache=True, parallel=True)
 def sort_dict_of_dict_by_value(d):
     keys = TypedList(d.keys())
     values = TypedList(d.values()).copy()
