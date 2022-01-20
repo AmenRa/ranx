@@ -29,6 +29,7 @@ class Report(object):
         metrics: List[str],
         max_p: float,
         win_tie_loss: Dict[Tuple[str], Dict[str, Dict[str, int]]],
+        rounding_digits: int = 4,
     ):
         self.model_names = model_names
         self.results = results
@@ -36,6 +37,7 @@ class Report(object):
         self.metrics = metrics
         self.max_p = max_p
         self.win_tie_loss = win_tie_loss
+        self.rounding_digits = rounding_digits
 
     def get_superscript_for_table(self, model, metric):
         """Used internally."""
@@ -60,7 +62,7 @@ class Report(object):
             [
                 [chars[i], run]
                 + [
-                    f"{round(score, 4)}{self.get_superscript_for_table(run, metric)}"
+                    f"{round(score, self.rounding_digits)}{self.get_superscript_for_table(run, metric)}"
                     for metric, score in v.items()
                 ]
                 for i, (run, v) in enumerate(self.results.items())
@@ -92,8 +94,12 @@ class Report(object):
             best_model = None
             best_score = 0.0
             for model in self.model_names:
-                if best_score < round(self.results[model][m], 4):
-                    best_score = round(self.results[model][m], 4)
+                if best_score < round(
+                    self.results[model][m], self.rounding_digits
+                ):
+                    best_score = round(
+                        self.results[model][m], self.rounding_digits
+                    )
                     best_model = model
             best_scores[m] = best_model
 
@@ -126,11 +132,11 @@ class Report(object):
                             "{score}$^{{{superscript}}}$ &".format(
                                 score=(
                                     "\\textbf{"
-                                    + f"{round(self.results[model][m], 4)}"
+                                    + f"{round(self.results[model][m], self.rounding_digits)}"
                                     + "}"
                                 )
                                 if best_scores[m] == model
-                                else f"{round(self.results[model][m], 4)}",
+                                else f"{round(self.results[model][m], self.rounding_digits)}",
                                 superscript=self.get_superscript_for_latex(
                                     model, m
                                 ),
