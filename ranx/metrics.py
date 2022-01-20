@@ -100,7 +100,9 @@ def _f1(qrels, run, k):
     precision_score = hits_score / k
     recall_score = hits_score / qrels.shape[0]
 
-    return 2 * ((precision_score * recall_score) / (precision_score + recall_score))
+    return 2 * (
+        (precision_score * recall_score) / (precision_score + recall_score)
+    )
 
 
 @njit(cache=True, parallel=True)
@@ -220,7 +222,9 @@ def _dcg(qrels, run, k, jarvelin):
 
     else:
         # Burges et al. formulation (see https://doi.org/10.1145/1102351.1102363)
-        return np.sum((2 ** weighted_hit_list - 1) / np.log2(np.arange(1, k + 1) + 1))
+        return np.sum(
+            (2 ** weighted_hit_list - 1) / np.log2(np.arange(1, k + 1) + 1)
+        )
 
 
 @njit(cache=True)
@@ -446,7 +450,7 @@ def reciprocal_rank(
 ) -> np.ndarray:
     r"""Compute Reciprocal Rank (at k).
 
-    The Reciprocal Rank is the multiplicative inverse of the rank of the first retrieved relevant document: 1 for first place, ​1/2 for second place, 1/3 for third place, and so on.<br />
+    The Reciprocal Rank is the multiplicative inverse of the rank of the first retrieved relevant document: 1 for first place, 1/2 for second place, 1/3 for third place, and so on.<br />
     If k > 0, only the top-k retrieved documents are considered.
 
     $$

@@ -1,5 +1,3 @@
-# TODO: avoid useless comparisons
-
 from collections import defaultdict
 from numbers import Number
 from typing import Dict, List, Union
