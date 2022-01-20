@@ -1,10 +1,10 @@
 name: ranx
-channels:
-  - conda-forge
 dependencies:
   - black
   - ipykernel
-  - mkdocs-material
+  - conda-forge::mkdocs-material
+  - conda-forge::mkdocs-autorefs
+  - conda-forge::mkdocstrings 
   - notebook
   - numba>=0.54.1
   - numpy

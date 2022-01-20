@@ -1,3 +1,3 @@
-# metrics.py
+# Metrics
 
-::: rank_eval.metrics
+::: ranx.metrics

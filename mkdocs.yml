@@ -3,7 +3,7 @@ site_description: "⚡️ A Blazing-Fast Python Library for Ranking Evaluation a
 site_url: "https://ranx.github.io/"
 repo_url: "https://github.com/amenra/ranx"
 edit_uri: "blob/master/docs/"
-repo_name: "ranx/ranx"
+repo_name: "amenra/ranx"
 site_dir: "site"
 
 

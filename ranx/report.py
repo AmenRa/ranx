@@ -1,3 +1,5 @@
+"""`Report` stores the results of a comparison."""
+
 import json
 from typing import Dict, List, Tuple
 
@@ -86,7 +88,7 @@ class Report(object):
             ]
         )
 
-    def to_latex(self):
+    def to_latex(self) -> str:
         """Returns LaTeX table."""
         best_scores = {}
 
@@ -158,7 +160,7 @@ class Report(object):
 
         return table_prefix + "\n" + table_content + "\n" + table_suffix
 
-    def to_dict(self):
+    def to_dict(self) -> Dict:
         """Returns the Report data as a Python dictionary."""
 
         d = {
@@ -186,7 +188,7 @@ class Report(object):
         return d
 
     def save(self, path):
-        """Save the Report data as a JSON file."""
+        """Save the Report data as JSON file."""
 
         with open(path, "w") as f:
             f.write(json.dumps(self.to_dict(), indent=4))

@@ -18,6 +18,26 @@ from .qrels_run_common import (
 
 
 class Run(object):
+    """`Run` stores the relevance scores estimated by the model under evaluation.\n
+    The preferred way for creating a `Run` istance is converting a Python dictionary using [**from_dict**][ranx.Run.from_dict]:
+
+    ```python
+    run_dict = {
+        "q_1": {
+            "d_1": 1.5,
+            "d_2": 2.6,
+        },
+        "q_2": {
+            "d_3": 2.8,
+            "d_2": 1.2,
+            "d_5": 3.1,
+        },
+    }
+
+    run = Run.from_dict(run_dict)
+    ```
+    """
+
     def __init__(self):
         self.run = TypedDict.empty(
             key_type=types.unicode_type,
@@ -32,8 +52,14 @@ class Run(object):
         """Returns query ids. Used internally."""
         return self.run.keys()
 
-    def add_score(self, q_id, doc_id, score):
-        """Add a (doc_id, score) pair to a query."""
+    def add_score(self, q_id: str, doc_id: str, score: int):
+        """Add a (doc_id, score) pair to a query (or, change its value if it already exists).
+
+        Args:
+            q_id (str): Query ID
+            doc_id (str): Document ID
+            score (int): Relevance score
+        """
         if self.run.get(q_id) is None:
             self.run[q_id] = TypedDict.empty(
                 key_type=types.unicode_type,
@@ -43,7 +69,13 @@ class Run(object):
         self.sorted = False
 
     def add(self, q_id: str, doc_ids: List[str], scores: List[float]):
-        """Add a query."""
+        """Add a query and its relevant documents with the associated relevance score.
+
+        Args:
+            q_id (str): Query ID
+            doc_ids (List[str]): List of Document IDs
+            scores (List[int]): List of relevance scores
+        """
         self.add_multi([q_id], [doc_ids], [scores])
 
     def add_multi(
@@ -52,7 +84,13 @@ class Run(object):
         doc_ids: List[List[str]],
         scores: List[List[float]],
     ):
-        """Add multiple queries at once."""
+        """Add multiple queries at once.
+
+        Args:
+            q_ids (List[str]): List of Query IDs
+            doc_ids (List[List[str]]): List of list of Document IDs
+            scores (List[List[int]]): List of list of relevance scores
+        """
         q_ids = TypedList(q_ids)
         doc_ids = TypedList([TypedList(x) for x in doc_ids])
         scores = TypedList([TypedList(map(float, x)) for x in scores])
@@ -82,14 +120,23 @@ class Run(object):
         return to_typed_list(self.run)
 
     def to_dict(self):
-        """Convert Run to Python dictionary."""
+        """Convert Run to Python dictionary.
+
+        Returns:
+            Dict[str, Dict[str, int]]: Run as Python dictionary
+        """
         d = defaultdict(dict)
         for q_id in self.keys():
             d[q_id] = dict(self[q_id])
         return d
 
     def save(self, path: str = "run.txt"):
-        """Write `run` to `path` in TREC run format or as a JSON file."""
+        """Write `run` to `path` in TREC run format or as JSON file.
+
+        Args:
+            path (str, optional): Saving path. Defaults to "run.txt".
+            type (str, optional): Type of file to save, must be either "trec" or "json". Defaults to "trec".
+        """
         assert type in {
             "trec",
             "json",
@@ -117,7 +164,15 @@ class Run(object):
 
     @staticmethod
     def from_dict(d: Dict[str, Dict[str, float]]):
-        """Convert a Python dictionary in form of {q_id: {doc_id: rank_score}} to a ranx.Run."""
+        """Convert a Python dictionary in form of {q_id: {doc_id: score}} to ranx.Run.
+
+        Args:
+            d (Dict[str, Dict[str, int]]): Run as Python dictionary
+
+        Returns:
+            Run: ranx.Run
+        """
+
         # Query IDs
         q_ids = list(d.keys())
         q_ids = TypedList(q_ids)
@@ -140,7 +195,15 @@ class Run(object):
 
     @staticmethod
     def from_file(path: str, type: str = "trec"):
-        """Parse a run file into ranx.Run."""
+        """Parse a run file into ranx.Run. Supported formats are TREC run format and JSON.
+
+        Args:
+            path (str): File path.
+            type (str, optional): Type of file to load, must be either "trec" or "json". Defaults to "trec".
+
+        Returns:
+            Run: ranx.Run
+        """
         assert type in {
             "trec",
             "json",
@@ -172,7 +235,17 @@ class Run(object):
         doc_id_col: str = "doc_id",
         score_col: str = "score",
     ):
-        """Convert a Pandas DataFrame to ranx.Run."""
+        """Convert a Pandas DataFrame to ranx.Run.
+
+        Args:
+            df (pd.DataFrame): Run as Pandas DataFrame
+            q_id_col (str, optional): Query IDs column. Defaults to "q_id".
+            doc_id_col (str, optional): Document IDs column. Defaults to "doc_id".
+            score_col (str, optional): Relevance scores column. Defaults to "score".
+
+        Returns:
+            Run: ranx.Run
+        """
         assert (
             df[q_id_col].dtype == "O"
         ), "DataFrame scores column dtype must be `object` (string)"

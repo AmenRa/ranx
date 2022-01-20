@@ -1,3 +1,5 @@
+"""Internal implementation of the provided metrics. Please refers to evaluate for usage."""
+
 from typing import Union
 
 import numba

@@ -18,6 +18,26 @@ from .qrels_run_common import (
 
 
 class Qrels(object):
+    """`Qrels`, or _query relevance judgments_, stores the ground truth for conducting evaluations.\n
+    The preferred way for creating a `Qrels` istance is converting Python dictionary using [**from_dict**][ranx.Qrels.from_dict]:
+
+    ```python
+    qrels_dict = {
+        "q_1": {
+            "d_1": 1,
+            "d_2": 2,
+        },
+        "q_2": {
+            "d_3": 2,
+            "d_2": 1,
+            "d_5": 3,
+        },
+    }
+
+    qrels = Qrels.from_dict(qrels_dict)
+    ```
+    """
+
     def __init__(self):
         self.qrels = TypedDict.empty(
             key_type=types.unicode_type,
@@ -30,8 +50,14 @@ class Qrels(object):
         """Returns query ids. Used internally."""
         return self.qrels.keys()
 
-    def add_score(self, q_id, doc_id, score):
-        """Add a (doc_id, score) pair to a query (or, change its value if it already exists)."""
+    def add_score(self, q_id: str, doc_id: str, score: int):
+        """Add a (doc_id, score) pair to a query (or, change its value if it already exists).
+
+        Args:
+            q_id (str): Query ID
+            doc_id (str): Document ID
+            score (int): Relevance score judgment
+        """
         if self.qrels.get(q_id) is None:
             self.qrels[q_id] = TypedDict.empty(
                 key_type=types.unicode_type,
@@ -40,8 +66,14 @@ class Qrels(object):
         self.qrels[q_id][doc_id] = int(score)
         self.sorted = False
 
-    def add(self, q_id, doc_ids, scores):
-        """Add a query."""
+    def add(self, q_id: str, doc_ids: List[str], scores: List[int]):
+        """Add a query and its relevant documents with the associated relevance score judgment.
+
+        Args:
+            q_id (str): Query ID
+            doc_ids (List[str]): List of Document IDs
+            scores (List[int]): List of relevance score judgments
+        """
         self.add_multi([q_id], [doc_ids], [scores])
 
     def add_multi(
@@ -50,7 +82,13 @@ class Qrels(object):
         doc_ids: List[List[str]],
         scores: List[List[int]],
     ):
-        """Add multiple queries at once."""
+        """Add multiple queries at once.
+
+        Args:
+            q_ids (List[str]): List of Query IDs
+            doc_ids (List[List[str]]): List of list of Document IDs
+            scores (List[List[int]]): List of list of relevance score judgments
+        """
         q_ids = TypedList(q_ids)
         doc_ids = TypedList([TypedList(x) for x in doc_ids])
         scores = TypedList([TypedList(map(int, x)) for x in scores])
@@ -79,15 +117,24 @@ class Qrels(object):
             self.sort()
         return to_typed_list(self.qrels)
 
-    def to_dict(self):
-        """Convert Qrels to Python dictionary."""
+    def to_dict(self) -> Dict[str, Dict[str, int]]:
+        """Convert Qrels to Python dictionary.
+
+        Returns:
+            Dict[str, Dict[str, int]]: Qrels as Python dictionary
+        """
         d = defaultdict(dict)
         for q_id in self.keys():
             d[q_id] = dict(self[q_id])
         return d
 
     def save(self, path: str = "qrels.txt", type="trec"):
-        """Write `qrels` to `path` in TREC qrels format or as a JSON file."""
+        """Write `qrels` to `path` in TREC qrels format or as JSON file.
+
+        Args:
+            path (str, optional): Saving path. Defaults to "qrels.txt".
+            type (str, optional): Type of file to save, must be either "trec" or "json". Defaults to "trec".
+        """
         assert type in {
             "trec",
             "json",
@@ -110,7 +157,14 @@ class Qrels(object):
 
     @staticmethod
     def from_dict(d: Dict[str, Dict[str, int]]):
-        """Convert a Python dictionary in form of {q_id: {doc_id: rel_score}} to a ranx.Qrels."""
+        """Convert a Python dictionary in form of {q_id: {doc_id: score}} to ranx.Qrels.
+
+        Args:
+            d (Dict[str, Dict[str, int]]): Qrels as Python dictionary
+
+        Returns:
+            Qrels: ranx.Qrels
+        """
         # Query IDs
         q_ids = list(d.keys())
         q_ids = TypedList(q_ids)
@@ -133,7 +187,15 @@ class Qrels(object):
 
     @staticmethod
     def from_file(path: str, type: str = "trec"):
-        """Parse a qrels file into ranx.Qrels."""
+        """Parse a qrels file into ranx.Qrels. Supported formats are TREC qrels format and JSON.
+
+        Args:
+            path (str): File path.
+            type (str, optional): Type of file to load, must be either "trec" or "json". Defaults to "trec".
+
+        Returns:
+            Qrels: ranx.Qrels
+        """
         assert type in {
             "trec",
             "json",
@@ -157,7 +219,17 @@ class Qrels(object):
         doc_id_col: str = "doc_id",
         score_col: str = "score",
     ):
-        """Convert a Pandas DataFrame to ranx.Qrels."""
+        """Convert a Pandas DataFrame to ranx.Qrels.
+
+        Args:
+            df (pd.DataFrame): Qrels as Pandas DataFrame
+            q_id_col (str, optional): Query IDs column. Defaults to "q_id".
+            doc_id_col (str, optional): Document IDs column. Defaults to "doc_id".
+            score_col (str, optional): Relevance score judgments column. Defaults to "score".
+
+        Returns:
+            Qrels: ranx.Qrels
+        """
         assert (
             df[q_id_col].dtype == "O"
         ), "DataFrame scores column dtype must be `object` (string)"

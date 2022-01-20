@@ -1,0 +1,3 @@
+# Report
+
+::: ranx.report

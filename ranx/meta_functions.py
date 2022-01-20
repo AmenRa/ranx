@@ -108,7 +108,41 @@ def evaluate(
     threads: int = 0,
     save_results_in_run=True,
 ) -> Union[Dict[str, float], float]:
-    """Compute performance scores for all the provided metrics."""
+    """Compute the performance scores for the provided `qrels` and `run` for all the specified metrics.
+
+    Usage examples:
+
+    ```python
+    # Compute score for a single metric
+    evaluate(qrels, run, "ndcg@5")
+    >>> 0.7861
+
+    # Compute scores for multiple metrics at once
+    evaluate(qrels, run, ["map@5", "mrr"])
+    >>> {"map@5": 0.6416, "mrr": 0.75}
+
+    # Computed metric scores are saved in the Run object
+    run.mean_scores
+    >>> {"ndcg@5": 0.7861, "map@5": 0.6416, "mrr": 0.75}
+
+    # Access scores for each query
+    dict(run.scores)
+    >>> {"ndcg@5": {"q_1": 0.9430, "q_2": 0.6292},
+        "map@5": {"q_1": 0.8333, "q_2": 0.4500},
+            "mrr": {"q_1": 1.0000, "q_2": 0.5000}}
+    ```
+
+    Args:
+        qrels (Union[ Qrels, Dict[str, Dict[str, Number]], nb.typed.typedlist.List, np.ndarray, ]): Qrels.
+        run (Union[ Run, Dict[str, Dict[str, Number]], nb.typed.typedlist.List, np.ndarray, ]): Run.
+        metrics (Union[List[str], str]): Metrics or list of metric to compute.
+        return_mean (bool, optional): Wether to return the metric scores averaged over the query set or the scores for individual queries. Defaults to True.
+        threads (int, optional): Number of threads to use, zero means all the available threads. Defaults to 0.
+        save_results_in_run (bool, optional): Save metric scores for each query in the input `run`. Defaults to True.
+
+    Returns:
+        Union[Dict[str, float], float]: Results.
+    """
 
     if len(qrels) < 10:
         set_num_threads(1)
@@ -190,6 +224,43 @@ def compare(
     random_seed: int = 42,
     threads: int = 0,
 ):
+    """Evaluate multiple `runs` and compute statistical tests.
+
+    Usage example:
+    ```python
+    # Compare different runs and perform statistical tests
+    report = compare(
+        qrels=qrels,
+        runs=[run_1, run_2, run_3, run_4, run_5],
+        metrics=["map@100", "mrr@100", "ndcg@10"],
+        max_p=0.01  # P-value threshold
+    )
+
+    print(report)
+    ```
+    Output:
+    ```
+    #    Model    MAP@100     MRR@100     NDCG@10
+    ---  -------  ----------  ----------  ----------
+    a    model_1  0.3202ᵇ     0.3207ᵇ     0.3684ᵇᶜ
+    b    model_2  0.2332      0.2339      0.239
+    c    model_3  0.3082ᵇ     0.3089ᵇ     0.3295ᵇ
+    d    model_4  0.3664ᵃᵇᶜ   0.3668ᵃᵇᶜ   0.4078ᵃᵇᶜ
+    e    model_5  0.4053ᵃᵇᶜᵈ  0.4061ᵃᵇᶜᵈ  0.4512ᵃᵇᶜᵈ
+    ```
+
+    Args:
+        qrels (Qrels): Qrels.
+        runs (List[Run]): List of runs.
+        metrics (Union[List[str], str]): Metric or list of metrics.
+        n_permutations (int, optional): Number of permutation to perform during statistical testing (Fisher's Randomization Test is used by default). Defaults to 1000.
+        max_p (float, optional): Maximum p-value to consider an increment as statistically significant. Defaults to 0.01.
+        random_seed (int, optional): Random seed to use for generating the permutations. Defaults to 42.
+        threads (int, optional): Number of threads to use, zero means all the available threads. Defaults to 0.
+
+    Returns:
+        Report: See report.
+    """
     metrics = format_metrics(metrics)
     assert all(type(m) == str for m in metrics), "Metrics error"
 
