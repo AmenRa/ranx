@@ -7,10 +7,9 @@
   <a href="https://www.python.org" alt="Python">
       <img src="https://badges.aleen42.com/src/python.svg" />
   </a>
-
   <!-- Docs -->
-  <a href="https://rank-eval.readthedocs.io/en/latest/?badge=latest" alt="Documentation Status">
-      <img src="https://readthedocs.org/projects/rank-eval/badge/?version=latest" />
+  <a href="https://amenra.github.io/ranx" alt="Documentation Status">
+      <img src="https://img.shields.io/badge/docs-passing-green.svg" />
   </a>
   <!-- Black -->
   <a href="https://github.com/psf/black" alt="Code style: black">
@@ -148,8 +147,7 @@ e    model_5  0.4053ᵃᵇᶜᵈ  0.4061ᵃᵇᶜᵈ  0.4512ᵃᵇᶜᵈ
 * [Create Qrels and Run](https://github.com/AmenRa/ranx/tree/master/examples/create_qrels_and_run.ipynb): This notebook shows different ways of creating `Qrels` and `Run`.
 
 ## 📚 Documentation
-_To be updated! Please, refer to the examples in the meantime._  
-Search the [documentation](https://rank-eval.readthedocs.io/en/latest/) for more details and examples.
+Browser the [documentation](https://amenra.github.io/ranx) for more details and examples.
 
 ## 🎓 Citation
 If you use [ranx](https://github.com/AmenRa/ranx) to evaluate results for your scientific publication, please consider citing it:
