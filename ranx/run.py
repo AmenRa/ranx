@@ -130,7 +130,7 @@ class Run(object):
             d[q_id] = dict(self[q_id])
         return d
 
-    def save(self, path: str = "run.txt"):
+    def save(self, path: str = "run.txt", type: str = "trec"):
         """Write `run` to `path` in TREC run format or as JSON file.
 
         Args:
