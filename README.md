@@ -7,6 +7,8 @@
   <a href="https://www.python.org" alt="Python">
       <img src="https://badges.aleen42.com/src/python.svg" />
   </a>
+  <!-- Version -->
+  <a href="https://badge.fury.io/py/ranx"><img src="https://badge.fury.io/py/ranx.svg" alt="PyPI version" height="18"></a>
   <!-- Docs -->
   <a href="https://amenra.github.io/ranx" alt="Documentation Status">
       <img src="https://img.shields.io/badge/docs-passing-green.svg" />
