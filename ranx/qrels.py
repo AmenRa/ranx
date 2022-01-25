@@ -128,7 +128,7 @@ class Qrels(object):
             d[q_id] = dict(self[q_id])
         return d
 
-    def save(self, path: str = "qrels.txt", type="trec"):
+    def save(self, path: str = "qrels.txt", type: str = "trec"):
         """Write `qrels` to `path` in TREC qrels format or as JSON file.
 
         Args:
