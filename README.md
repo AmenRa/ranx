@@ -34,6 +34,9 @@
 
 ## 🤖 Dev Bulletin
 
+- [ver 0.1.9]
+  - [Hit Rate](https://amenra.github.io/ranx/metrics/#ranx.metrics.hit_rate) metric is now available
+
 - [ver 0.1.7] 
   - Creating _big_ `Qrels` and `Run` from Python dictionaries, Pandas DataFrames, or loading them from files is now _much_ faster.
   - It's now possible to load/save `Qrels` and `Run` from/to `JSON` files using `Qrels.from_file(path, type="json")` (_same for `Run`_) and `Qrels.save(path, type="json")` (_same for `Run`_).
@@ -54,8 +57,10 @@ We strongly encourage you to check the example folder to learn how to use [ranx]
 
 ## ✨ Available Metrics
 * Hits 
+* Hit Rate
 * Precision
 * Recall
+* F1
 * rPrecision
 * Mean Reciprocal Rank (MRR)
 * Mean Average Precision (MAP)
