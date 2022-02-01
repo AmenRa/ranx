@@ -35,6 +35,34 @@ def test_hits_parallel():  # OK
     assert evaluate(y_true, y_pred, f"hits@{k}") == 2.5
 
 
+# hit_rate --------------------------------------------------------------------
+def test_hit_rate_single():  # OK
+    y_true = np.array([[[1, 1], [2, 1], [4, 1]]])
+    y_pred = np.array([[[1, 1], [2, 1], [4, 1], [3, 1], [5, 1], [7, 1]]])
+    k = 5
+
+    assert evaluate(y_true, y_pred, f"hit_rate@{k}") == 1
+
+
+def test_hit_rate_parallel():  # OK
+    y_true = List(
+        [
+            np.array([[9, 1], [6, 1], [8, 1], [6, 1]]),
+            np.array([[1, 1], [2, 1], [4, 1]]),
+        ]
+    )
+    y_pred = List(
+        [
+            np.array([[1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [7, 1]]),
+            np.array([[1, 1], [2, 1], [4, 1], [3, 1], [5, 1], [7, 1]]),
+        ]
+    )
+
+    k = 5
+
+    assert evaluate(y_true, y_pred, f"hit_rate@{k}") == 0.5
+
+
 # precision ---------------------------------------------------------------
 def test_precision_single():
     y_true = np.array([[[1, 1], [4, 1], [5, 1], [6, 1]]])
@@ -67,7 +95,9 @@ def test_precision_parallel():
 
     mean_precision_score = sum([p_1, p_2, p_3]) / 3
 
-    assert np.allclose(evaluate(y_true, y_pred, f"precision@{k}"), mean_precision_score)
+    assert np.allclose(
+        evaluate(y_true, y_pred, f"precision@{k}"), mean_precision_score
+    )
 
 
 # average_precision ------------------------------------------------------------
@@ -145,7 +175,9 @@ def test_reciprocal_rank_parallel():
 # r_precision ------------------------------------------------------------------
 def test_r_precision_single():
     y_true = np.array([[[1, 1], [2, 1], [3, 1]]])
-    y_pred = np.array([[[2, 1], [4, 1], [3, 1], [1, 1], [5, 1], [6, 1], [7, 1]]])
+    y_pred = np.array(
+        [[[2, 1], [4, 1], [3, 1], [1, 1], [5, 1], [6, 1], [7, 1]]]
+    )
 
     assert np.allclose(evaluate(y_true, y_pred, "r-precision"), 2 / 3)
 
@@ -164,13 +196,17 @@ def test_r_precision_parallel():
         ]
     )
 
-    assert np.allclose(evaluate(y_true, y_pred, "r-precision"), (2 / 3 + 1 / 2) / 2)
+    assert np.allclose(
+        evaluate(y_true, y_pred, "r-precision"), (2 / 3 + 1 / 2) / 2
+    )
 
 
 # recall ------------------------------------------------------------------
 def test_recall_single():
     y_true = np.array([[[1, 1], [2, 1], [3, 1]]])
-    y_pred = np.array([[[2, 1], [4, 1], [3, 1], [1, 1], [5, 1], [6, 1], [7, 1]]])
+    y_pred = np.array(
+        [[[2, 1], [4, 1], [3, 1], [1, 1], [5, 1], [6, 1], [7, 1]]]
+    )
     k = 2
 
     assert np.allclose(evaluate(y_true, y_pred, f"recall@{k}"), 1 / 3)
@@ -188,7 +224,9 @@ def test_recall_parallel():
     )
     k = 2
 
-    assert np.allclose(evaluate(y_true, y_pred, f"recall@{k}"), (1 / 3 + 1 / 2) / 2)
+    assert np.allclose(
+        evaluate(y_true, y_pred, f"recall@{k}"), (1 / 3 + 1 / 2) / 2
+    )
 
 
 # # NON-BINARY RELEVANCE rm =================================================
@@ -217,7 +255,8 @@ def test_ndcg_jarvelin():
 
     assert np.allclose(
         evaluate(y_true, y_pred_2, f"ndcg@{k}"),
-        (2 / np.log2(2) + 3 / np.log2(3) + 5 / np.log2(4) + 4 / np.log2(5)) / idcg,
+        (2 / np.log2(2) + 3 / np.log2(3) + 5 / np.log2(4) + 4 / np.log2(5))
+        / idcg,
     )
 
     assert np.allclose(evaluate(y_true, y_pred_3, f"ndcg@{k}"), 0.0)

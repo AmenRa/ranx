@@ -9,6 +9,7 @@ from numba import set_num_threads
 from .frozenset_dict import FrozensetDict
 from .metrics import (
     average_precision,
+    hit_rate,
     hits,
     ndcg,
     ndcg_burges,
@@ -27,6 +28,8 @@ from .utils import python_dict_to_typed_list
 def metric_functions_switch(metric):
     if metric == "hits":
         return hits
+    elif metric == "hit_rate":
+        return hit_rate
     elif metric == "precision":
         return precision
     elif metric == "recall":
@@ -43,7 +46,7 @@ def metric_functions_switch(metric):
         return ndcg_burges
     else:
         raise ValueError(
-            f"Metric {metric} not supported. Supported metrics are `hits`, `precision`, `recall`, `r-precision`, `mrr`, `map`, `ndcg`, and `ndcg_burges`."
+            f"Metric {metric} not supported. Supported metrics are `hits`, `hit_rate`, `precision`, `recall`, `r-precision`, `mrr`, `map`, `ndcg`, and `ndcg_burges`."
         )
 
 

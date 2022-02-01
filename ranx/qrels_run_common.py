@@ -72,10 +72,10 @@ def sort_dict_by_value(d):
     return new_d
 
 
-@njit(cache=True, parallel=True)
+@njit(cache=True)
 def sort_dict_of_dict_by_value(d):
     keys = TypedList(d.keys())
-    values = TypedList(d.values()).copy()
+    values = TypedList(d.values())
 
     for i in prange(len(values)):
         values[i] = sort_dict_by_value(values[i])
