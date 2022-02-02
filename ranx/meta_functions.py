@@ -9,6 +9,7 @@ from numba import set_num_threads
 from .frozenset_dict import FrozensetDict
 from .metrics import (
     average_precision,
+    f1,
     hit_rate,
     hits,
     ndcg,
@@ -34,6 +35,8 @@ def metric_functions_switch(metric):
         return precision
     elif metric == "recall":
         return recall
+    elif metric == "f1":
+        return f1
     elif metric == "r-precision":
         return r_precision
     elif metric == "mrr":
@@ -274,28 +277,36 @@ def compare(
     metric_scores = {}
 
     # Compute scores for each run for each query -------------------------------
-    for run in runs:
-        model_names.append(run.name)
-        metric_scores[run.name] = evaluate(
+    for i, run in enumerate(runs):
+        model_name = run.name if run.name is not None else f"run_{i+1}"
+        model_names.append(model_name)
+
+        metric_scores[model_name] = evaluate(
             qrels=qrels,
             run=run,
             metrics=metrics,
             return_mean=False,
             threads=threads,
         )
+
+        if len(metrics) == 1:
+            metric_scores[model_name] = {metrics[0]: metric_scores[model_name]}
+
         for m in metrics:
-            results[run.name][m] = np.mean(metric_scores[run.name][m])
+            results[model_name][m] = float(
+                np.mean(metric_scores[model_name][m])
+            )
 
     # Run statistical testing --------------------------------------------------
-    for i, control in enumerate(runs):
-        control_metric_scores = metric_scores[control.name]
-        for j, treatment in enumerate(runs):
-            if i < j:
-                treatment_metric_scores = metric_scores[treatment.name]
+    for control in model_names:
+        control_metric_scores = metric_scores[control]
+        for treatment in model_names:
+            if control != treatment:
+                treatment_metric_scores = metric_scores[treatment]
 
                 # Compute statistical significance
                 comparisons[
-                    frozenset([control.name, treatment.name])
+                    frozenset([control, treatment])
                 ] = compute_statistical_significance(
                     control_metric_scores,
                     treatment_metric_scores,
@@ -307,16 +318,17 @@ def compare(
     # Compute win / tie / lose -------------------------------------------------
     win_tie_loss = defaultdict(dict)
 
-    for control in runs:
-        for treatment in runs:
-            for m in metrics:
-                control_scores = metric_scores[control.name][m]
-                treatment_scores = metric_scores[treatment.name][m]
-                win_tie_loss[(control.name, treatment.name)][m] = {
-                    "W": sum(control_scores > treatment_scores),
-                    "T": sum(control_scores == treatment_scores),
-                    "L": sum(control_scores < treatment_scores),
-                }
+    for control in model_names:
+        for treatment in model_names:
+            if control != treatment:
+                for m in metrics:
+                    control_scores = metric_scores[control][m]
+                    treatment_scores = metric_scores[treatment][m]
+                    win_tie_loss[(control, treatment)][m] = {
+                        "W": int(sum(control_scores > treatment_scores)),
+                        "T": int(sum(control_scores == treatment_scores)),
+                        "L": int(sum(control_scores < treatment_scores)),
+                    }
 
     return Report(
         model_names=model_names,

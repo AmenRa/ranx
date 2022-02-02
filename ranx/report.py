@@ -3,6 +3,7 @@
 import json
 from typing import Dict, List, Tuple
 
+import numpy as np
 from tabulate import tabulate
 
 from .frozenset_dict import FrozensetDict
@@ -12,8 +13,10 @@ super_chars = list("ᵃᵇᶜᵈᵉᶠᵍʰᶦʲᵏˡᵐⁿᵒᵖ۹ʳˢᵗᵘᵛ
 
 metric_labels = {
     "hits": "Hits",
+    "hit_rate": "Hit_Rate",
     "precision": "P",
     "recall": "Recall",
+    "f1": "F1",
     "r-precision": "R-Prec",
     "mrr": "MRR",
     "map": "MAP",
@@ -55,8 +58,10 @@ class Report(object):
 
     def get_metric_label(self, m):
         """Used internally."""
-        m_splitted = m.split("@")
-        return f"{metric_labels[m_splitted[0]]}@{m_splitted[1]}"
+        if "@" in m:
+            m_splitted = m.split("@")
+            return f"{metric_labels[m_splitted[0]]}@{m_splitted[1]}"
+        return f"{metric_labels[m]}"
 
     def to_table(self):
         """Used internally."""
