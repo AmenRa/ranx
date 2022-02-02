@@ -94,7 +94,11 @@ class Report(object):
         )
 
     def to_latex(self) -> str:
-        """Returns LaTeX table."""
+        """Returns Report as LaTeX table.
+
+        Returns:
+            str: LaTeX table
+        """
         best_scores = {}
 
         for m in self.metrics:
@@ -166,7 +170,11 @@ class Report(object):
         return table_prefix + "\n" + table_content + "\n" + table_suffix
 
     def to_dict(self) -> Dict:
-        """Returns the Report data as a Python dictionary."""
+        """Returns the Report data as a Python dictionary.
+
+        Returns:
+            Dict: Report data as a Python dictionary
+        """
 
         d = {
             "metrics": self.metrics,
@@ -192,13 +200,17 @@ class Report(object):
                         ]
         return d
 
-    def save(self, path):
-        """Save the Report data as JSON file."""
+    def save(self, path: str):
+        """Save the Report data as JSON file.
 
+        Args:
+            path (str): Saving path
+        """
         with open(path, "w") as f:
             f.write(json.dumps(self.to_dict(), indent=4))
 
     def print_results(self):
+        """Print report data."""
         print(json.dumps(self.results, indent=4))
 
     def __repr__(self):
