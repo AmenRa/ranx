@@ -76,7 +76,7 @@ pip install ranx
 ## 💡 Usage
 
 ### Create Qrels and Run
-More details available [here](https://amenra.github.io/ranx/qrels_and_run/)
+More details available [here](https://amenra.github.io/ranx/qrels_and_run/).
 
 ```python
 from ranx import Qrels, Run, evaluate
