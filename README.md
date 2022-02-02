@@ -76,6 +76,8 @@ pip install ranx
 ## 💡 Usage
 
 ### Create Qrels and Run
+More details available [here](https://amenra.github.io/ranx/qrels_and_run/)
+
 ```python
 from ranx import Qrels, Run, evaluate
 
@@ -107,6 +109,8 @@ run.add_multi(
 ```
 
 ### Evaluate
+More details available [here](https://amenra.github.io/ranx/evaluate_and_compare/#ranx.meta_functions.evaluate).
+
 ```python
 # Compute score for a single metric
 evaluate(qrels, run, "ndcg@5")
@@ -128,6 +132,8 @@ dict(run.scores)
 ```
 
 ### Compare
+More details available [here](https://amenra.github.io/ranx/evaluate_and_compare/#ranx.meta_functions.compare).
+
 ```python
 # Compare different runs and perform statistical tests
 report = compare(
