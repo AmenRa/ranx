@@ -42,7 +42,7 @@
   - It's now possible to load/save `Qrels` and `Run` from/to `JSON` files using `Qrels.from_file(path, type="json")` (_same for `Run`_) and `Qrels.save(path, type="json")` (_same for `Run`_).
 
 - [ver 0.1.6]
-  - It's now possible to export a `Report` as a Python dictionary with `Report.to_dict()` and save it as a `JSON` file with `Report.save(path)`. More details [here](https://github.com/AmenRa/ranx/issues/4#issuecomment-1013191897).
+  - It's now possible to export a `Report` as a Python dictionary with `Report.to_dict()` and save it as a `JSON` file with `Report.save(path)`. More details [here](https://amenra.github.io/ranx/qrels_and_run%20copy/#ranx.report.Report).
 
 - [ranx](https://github.com/AmenRa/ranx) works on [Google Colab](https://colab.research.google.com) now. Unfortunately, Google Colab takes some time to compile the `Numba` functions the first time they are called.
 
