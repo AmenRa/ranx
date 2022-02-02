@@ -172,6 +172,41 @@ class Report(object):
     def to_dict(self) -> Dict:
         """Returns the Report data as a Python dictionary.
 
+        ```python
+        {
+            # metrics and model_names allows to read the report without
+            # inspecting the json to discover the used metrics and
+            # the compared models
+            "metrics": ["metric_1", "metric_2", ...],
+            "model_names": ["model_1", "model_2", ...],
+            #
+            "model_1": {
+                "scores": {
+                    "metric_1": ...,
+                    "metric_2": ...,
+                    ...
+                },
+                "comparisons": {
+                    "model_2": {
+                        "metric_1": ...,  # p-value
+                        "metric_2": ...,  # p-value
+                        ...
+                    },
+                    ...
+                },
+                "win_tie_loss": {
+                    "model_2": {
+                        "W": ...,
+                        "T": ...,
+                        "L": ...,
+                    },
+                    ...
+                },
+            },
+            ...
+        }
+        ```
+
         Returns:
             Dict: Report data as a Python dictionary
         """
@@ -202,6 +237,7 @@ class Report(object):
 
     def save(self, path: str):
         """Save the Report data as JSON file.
+        See [**Report.to_dict**][ranx.report.to_dict] for more details.
 
         Args:
             path (str): Saving path
