@@ -3,6 +3,7 @@ from numba import config, njit, prange
 from numba.typed import Dict as TypedDict
 from numba.typed import List as TypedList
 
+
 config.THREADING_LAYER = "workqueue"
 
 
@@ -34,7 +35,8 @@ def to_typed_list(d):
 def create_dict_from_lists(keys, values):
     d = TypedDict()
     for i, k in enumerate(keys):
-        d[k] = values[i]
+        # k + "" does force type conversion to numba.types.unicode_type
+        d[k + ""] = values[i]
     return d
 
 
@@ -77,7 +79,7 @@ def sort_dict_of_dict_by_value(d):
     keys = TypedList(d.keys())
     values = TypedList(d.values())
 
-    for i in prange(len(values)):
+    for i in range(len(values)):
         values[i] = sort_dict_by_value(values[i])
 
     return create_dict_from_lists(keys, values)

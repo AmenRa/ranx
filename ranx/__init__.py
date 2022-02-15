@@ -1,7 +1,7 @@
 from numba.typed import List as TypedList
 
 from . import utils
-from .meta_functions import compare, evaluate
+from .meta_functions import compare, evaluate, fuse, optimize_fusion
 from .metrics import (
     average_precision,
     hits,
@@ -27,6 +27,8 @@ __all__ = [
     "utils",
     "evaluate",
     "compare",
+    "fuse",
+    "optimize_fusion",
     "TypedList",
     "Qrels",
     "Run",

@@ -26,6 +26,35 @@ metric_labels = {
 
 
 class Report(object):
+    """A `Report` instance is automatically generated as the results of a comparison.
+    A `Report` provide a convenient way of inspecting a comparison results and exporting those il LaTeX for your scientific publications.
+
+    ```python
+    # Compare different runs and perform statistical tests
+    report = compare(
+        qrels=qrels,
+        runs=[run_1, run_2, run_3, run_4, run_5],
+        metrics=["map@100", "mrr@100", "ndcg@10"],
+        max_p=0.01  # P-value threshold
+    )
+
+    print(report)
+    ```
+    Output:
+    ```
+    #    Model    MAP@100     MRR@100     NDCG@10
+    ---  -------  ----------  ----------  ----------
+    a    model_1  0.3202ᵇ     0.3207ᵇ     0.3684ᵇᶜ
+    b    model_2  0.2332      0.2339      0.239
+    c    model_3  0.3082ᵇ     0.3089ᵇ     0.3295ᵇ
+    d    model_4  0.3664ᵃᵇᶜ   0.3668ᵃᵇᶜ   0.4078ᵃᵇᶜ
+    e    model_5  0.4053ᵃᵇᶜᵈ  0.4061ᵃᵇᶜᵈ  0.4512ᵃᵇᶜᵈ
+    ```
+    ```python
+    print(report.to_latex())  # To get the LaTeX code
+    ```
+    """
+
     def __init__(
         self,
         model_names: List[str],
@@ -34,7 +63,8 @@ class Report(object):
         metrics: List[str],
         max_p: float,
         win_tie_loss: Dict[Tuple[str], Dict[str, Dict[str, int]]],
-        rounding_digits: int = 4,
+        rounding_digits: int = 3,
+        show_percentages: bool = False,
     ):
         self.model_names = model_names
         self.results = results
@@ -43,55 +73,84 @@ class Report(object):
         self.max_p = max_p
         self.win_tie_loss = win_tie_loss
         self.rounding_digits = rounding_digits
+        self.show_percentages = show_percentages
+
+    def format_score(self, score):
+        if self.show_percentages:
+            new_score = round(score * 100, max(0, self.rounding_digits - 2))
+            return "%.{n}f".format(n=self.rounding_digits - 2) % new_score
+        new_score = round(score, self.rounding_digits)
+        return "%.{n}f".format(n=self.rounding_digits) % new_score
 
     def get_superscript_for_table(self, model, metric):
-        """Used internally."""
-        return ("").join(
-            [
-                super_chars[j]
-                for j, _model in enumerate(self.model_names)
-                if model != _model
-                and self.comparisons[model, _model][metric]["significant"]
-                and (self.results[model][metric] > self.results[_model][metric])
-            ]
-        )
+        superscript = [
+            super_chars[j]
+            for j, _model in enumerate(self.model_names)
+            if model != _model
+            and self.comparisons[model, _model][metric]["significant"]
+            and (self.results[model][metric] > self.results[_model][metric])
+        ]
+        return ("").join(superscript)
 
     def get_metric_label(self, m):
-        """Used internally."""
         if "@" in m:
             m_splitted = m.split("@")
-            return f"{metric_labels[m_splitted[0]]}@{m_splitted[1]}"
+            label = metric_labels[m_splitted[0]]
+            cutoff = m_splitted[1]
+            return f"{label}@{cutoff}"
         return f"{metric_labels[m]}"
 
     def to_table(self):
-        """Used internally."""
-        return tabulate(
-            [
-                [chars[i], run]
-                + [
-                    f"{round(score, self.rounding_digits)}{self.get_superscript_for_table(run, metric)}"
-                    for metric, score in v.items()
-                ]
-                for i, (run, v) in enumerate(self.results.items())
-            ],
-            headers=["#", "Model"]
-            + [
-                self.get_metric_label(x)
-                for x in list(list(self.results.values())[0].keys())
-            ],
-        )
+        tabular_data = []
+
+        for i, (run, v) in enumerate(self.results.items()):
+            data = [chars[i], run]
+
+            for metric, score in v.items():
+                formatted_score = self.format_score(score)
+                superscript = self.get_superscript_for_table(run, metric)
+                data.append(f"{formatted_score}{superscript}")
+
+            tabular_data.append(data)
+
+        headers = ["#", "Model"]
+
+        for x in self.metrics:
+            label = self.get_metric_label(x)
+            headers.append(label)
+
+        return tabulate(tabular_data=tabular_data, headers=headers)
 
     def get_superscript_for_latex(self, model, metric):
-        """Used internally."""
-        return ("").join(
-            [
-                chars[j]
-                for j, _model in enumerate(self.model_names)
-                if model != _model
+        superscript = [
+            chars[j]
+            for j, _model in enumerate(self.model_names)
+            if (
+                model != _model
                 and self.comparisons[model, _model][metric]["significant"]
-                and (self.results[model][metric] > self.results[_model][metric])
-            ]
-        )
+                and self.results[model][metric] > self.results[_model][metric]
+            )
+        ]
+        return ("").join(superscript)
+
+    def get_phantoms_for_latex(self, model, metric):
+        phantoms = [
+            chars[j]
+            for j, _model in enumerate(self.model_names)
+            if (
+                model != _model
+                and (
+                    not self.comparisons[model, _model][metric]["significant"]
+                    or not self.results[model][metric]
+                    > self.results[_model][metric]
+                )
+            )
+        ]
+
+        if len(phantoms) > 0:
+            return ("").join(phantoms)
+
+        return ""
 
     def to_latex(self) -> str:
         """Returns Report as LaTeX table.
@@ -114,12 +173,15 @@ class Report(object):
                     best_model = model
             best_scores[m] = best_model
 
+        preamble = "========================\n% Add in preamble\n\\usepackage{graphicx}\n\\usepackage{booktabs}\n========================\n\n"
+
         table_prefix = (
-            """========================\n% Add in preamble\n\\usepackage{graphicx}\n\setlength{\\tabcolsep}{6pt}\n========================\n\\begin{table*}[ht]\n\centering\n\caption{\nOverall effectiveness of the models.\nThe best results are highlighted in boldface.\nSuperscripts denote significant differences in Fisher's randomization test with $p\le"""
+            "% To change the table size, act on the resizebox argument `0.8`.\n"
+            + """\\begin{table*}[ht]\n\centering\n\caption{\nOverall effectiveness of the models.\nThe best results are highlighted in boldface.\nSuperscripts denote significant differences in Fisher's randomization test with $p \le """
             + str(self.max_p)
-            + "$.\n}\n\\resizebox{1.0\\textwidth}{!}{"
-            + "\n\\begin{tabular}{c|l"
-            + "|l" * len(self.metrics)
+            + "$.\n}\n\\resizebox{0.8\\textwidth}{!}{"
+            + "\n\\begin{tabular}{c|c"
+            + "|c" * len(self.metrics)
             + "}"
             + "\n\\toprule"
             + "\n\\textbf{\#}"
@@ -133,41 +195,47 @@ class Report(object):
             + " \\\\ \n\midrule"
         )
 
+        table_content = []
+
+        for i, model in enumerate(self.model_names):
+            table_raw = f"{chars[i]} &\n" + f"{model} &\n"
+            scores = []
+
+            for m in self.metrics:
+                score = self.format_score(self.results[model][m])
+                score = (
+                    f"\\textbf{{{score}}}"
+                    if best_scores[m] == model
+                    else f"{score}"
+                )
+                superscript = self.get_superscript_for_latex(model, m)
+                phantoms = self.get_phantoms_for_latex(model, m)
+                scores.append(
+                    f"{score}$^{{{superscript}}}$\\hphantom{{$^{{{phantoms}}}$}} &"
+                )
+
+            scores[-1] = scores[-1][:-1]  # Remove `&` at the end
+
+            table_raw += "\n".join(scores) + "\\\\"
+            table_content.append(table_raw)
+
         table_content = (
-            "\n".join(
-                [
-                    f"{chars[i]} &\n"
-                    + f"{model} &\n"
-                    + "\n".join(
-                        [
-                            "{score}$^{{{superscript}}}$ &".format(
-                                score=(
-                                    "\\textbf{"
-                                    + f"{round(self.results[model][m], self.rounding_digits)}"
-                                    + "}"
-                                )
-                                if best_scores[m] == model
-                                else f"{round(self.results[model][m], self.rounding_digits)}",
-                                superscript=self.get_superscript_for_latex(
-                                    model, m
-                                ),
-                            )
-                            for m in self.metrics
-                        ]
-                    )[:-1]
-                    + "\\\\"
-                    for i, model in enumerate(self.model_names)
-                ]
-            )
-            .replace("_", "\\_")
-            .replace("$^{}$", "")
+            "\n".join(table_content).replace("_", "\\_").replace("$^{}$", "")
         )
 
         table_suffix = (
             "\\bottomrule\n\end{tabular}\n}\n\label{tab:results}\n\end{table*}"
         )
 
-        return table_prefix + "\n" + table_content + "\n" + table_suffix
+        return (
+            preamble
+            + "\n"
+            + table_prefix
+            + "\n"
+            + table_content
+            + "\n"
+            + table_suffix
+        )
 
     def to_dict(self) -> Dict:
         """Returns the Report data as a Python dictionary.

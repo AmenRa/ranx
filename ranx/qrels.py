@@ -19,7 +19,7 @@ from .qrels_run_common import (
 
 class Qrels(object):
     """`Qrels`, or _query relevance judgments_, stores the ground truth for conducting evaluations.\n
-    The preferred way for creating a `Qrels` istance is converting Python dictionary using [**from_dict**][ranx.Qrels.from_dict]:
+    The preferred way for creating a `Qrels` istance is converting Python dictionary as follows:
 
     ```python
     qrels_dict = {
@@ -34,17 +34,40 @@ class Qrels(object):
         },
     }
 
-    qrels = Qrels.from_dict(qrels_dict)
+    qrels = Qrels(qrels_dict, name="MSMARCO")
+
+    qrels = Qrels()  # Creates an empty Qrels with no name
     ```
     """
 
-    def __init__(self):
-        self.qrels = TypedDict.empty(
-            key_type=types.unicode_type,
-            value_type=types.DictType(types.unicode_type, types.int64),
-        )
-        self.sorted = False
-        self.name = None
+    def __init__(
+        self, qrels: Dict[str, Dict[str, int]] = None, name: str = None
+    ):
+        if qrels is None:
+            self.qrels = TypedDict.empty(
+                key_type=types.unicode_type,
+                value_type=types.DictType(types.unicode_type, types.int64),
+            )
+            self.sorted = False
+        else:
+            # Query IDs
+            q_ids = list(qrels.keys())
+            q_ids = TypedList(q_ids)
+
+            # Doc IDs
+            doc_ids = [list(doc.keys()) for doc in qrels.values()]
+            max_len = max(len(y) for x in doc_ids for y in x)
+            dtype = f"<U{max_len}"
+            doc_ids = TypedList([np.array(x, dtype=dtype) for x in doc_ids])
+
+            # Scores
+            scores = [list(doc.values()) for doc in qrels.values()]
+            scores = TypedList([np.array(x, dtype=int) for x in scores])
+
+            self.qrels = create_and_sort(q_ids, doc_ids, scores)
+            self.sorted = True
+
+        self.name = name
 
     def keys(self):
         """Returns query ids. Used internally."""
@@ -128,20 +151,22 @@ class Qrels(object):
             d[q_id] = dict(self[q_id])
         return d
 
-    def save(self, path: str = "qrels.txt", type: str = "trec"):
-        """Write `qrels` to `path` in TREC qrels format or as JSON file.
+    def save(self, path: str = "qrels.json", kind: str = "json"):
+        """Write `qrels` to `path` as JSON file or TREC qrels format.
 
         Args:
-            path (str, optional): Saving path. Defaults to "qrels.txt".
-            type (str, optional): Type of file to save, must be either "trec" or "json". Defaults to "trec".
+            path (str, optional): Saving path. Defaults to "qrels.json".
+            kind (str, optional): Kind of file to save, must be either "json" or "trec". Defaults to "json".
         """
-        assert type in {
-            "trec",
+        assert kind in {
             "json",
-        }, "Error `type` must be 'trec' of 'json'"
+            "trec",
+        }, "Error `kind` must be 'json' or 'trec'"
 
         with open(path, "w") as f:
-            if type == "trec":
+            if kind == "json":
+                f.write(json.dumps(self.to_dict(), indent=4))
+            else:
                 for i, q_id in enumerate(self.qrels.keys()):
                     for j, doc_id in enumerate(self.qrels[q_id].keys()):
                         score = self.qrels[q_id][doc_id]
@@ -152,8 +177,6 @@ class Qrels(object):
                             or j != len(self.qrels[q_id].keys()) - 1
                         ):
                             f.write("\n")
-            else:
-                f.write(json.dumps(self.to_dict(), indent=4))
 
     @staticmethod
     def from_dict(d: Dict[str, Dict[str, int]]):
@@ -186,29 +209,29 @@ class Qrels(object):
         return qrels
 
     @staticmethod
-    def from_file(path: str, type: str = "trec"):
-        """Parse a qrels file into ranx.Qrels. Supported formats are TREC qrels format and JSON.
+    def from_file(path: str, kind: str = "json"):
+        """Parse a qrels file into ranx.Qrels. Supported formats are JSON and TREC qrels format.
 
         Args:
             path (str): File path.
-            type (str, optional): Type of file to load, must be either "trec" or "json". Defaults to "trec".
+            kind (str, optional): Kind of file to load, must be either "json" or "trec". Defaults to "json".
 
         Returns:
             Qrels: ranx.Qrels
         """
-        assert type in {
-            "trec",
+        assert kind in {
             "json",
-        }, "Error `type` must be 'trec' of 'json'"
+            "trec",
+        }, "Error `kind` must be 'json' or 'trec'"
 
-        if type == "trec":
+        if kind == "json":
+            qrels = json.loads(open(path, "r").read())
+        else:
             qrels = defaultdict(dict)
             with open(path) as f:
                 for line in f:
                     q_id, _, doc_id, rel = line.split()
                     qrels[q_id][doc_id] = int(rel)
-        else:
-            qrels = json.loads(open(path, "r").read())
 
         return Qrels.from_dict(qrels)
 

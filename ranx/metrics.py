@@ -1,4 +1,4 @@
-"""Internal implementation of the provided metrics. Please refers to evaluate for usage."""
+"""Internal implementation of the provided metrics. Please refers to `evaluate` for usage."""
 
 from typing import Union
 
@@ -322,6 +322,7 @@ def hit_rate(
 
     **Hit Rate** is the fraction of queries for which at least one relevant document is retrieved.<br />
     If k > 0, only the top-k retrieved documents are considered.
+    Note: it is equivalent to `success` from [trec_eval](https://github.com/usnistgov/trec_eval).
 
     Args:
         qrels (Union[np.ndarray, numba.typed.List]): IDs and relevance scores of _relevant_ documents.

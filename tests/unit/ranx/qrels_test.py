@@ -5,6 +5,33 @@ from numba.typed import List
 from ranx import Qrels
 
 
+def test_init():
+    qrels_dict = {
+        "q1": {
+            "d1": 1,
+            "d2": 2,
+            "d3": 3,
+        },
+        "q2": {
+            "d1": 1,
+            "d2": 2,
+        },
+    }
+
+    qrels = Qrels(qrels_dict, name="rocco")
+
+    assert len(qrels.qrels) == 2
+    assert len(qrels.qrels["q1"]) == 3
+    assert len(qrels.qrels["q2"]) == 2
+    assert qrels.qrels["q1"]["d1"] == 1
+    assert qrels.qrels["q1"]["d2"] == 2
+    assert qrels.qrels["q1"]["d3"] == 3
+    assert qrels.qrels["q2"]["d1"] == 1
+    assert qrels.qrels["q2"]["d2"] == 2
+    assert qrels.size == 2
+    assert qrels.name == "rocco"
+
+
 def test_size():
     qrels = Qrels()
 
@@ -161,7 +188,7 @@ def test_from_dict():
 
 
 def test_from_trec_file():
-    qrels = Qrels.from_file("tests/unit/ranx/test_data/qrels.txt")
+    qrels = Qrels.from_file("tests/unit/ranx/test_data/qrels.trec", kind="trec")
 
     assert len(qrels.qrels) == 2
     assert len(qrels.qrels["q1"]) == 3
@@ -174,7 +201,7 @@ def test_from_trec_file():
 
 
 def test_from_json_file():
-    qrels = Qrels.from_file("tests/unit/ranx/test_data/qrels.json", "json")
+    qrels = Qrels.from_file("tests/unit/ranx/test_data/qrels.json")
 
     assert len(qrels.qrels) == 2
     assert len(qrels.qrels["q1"]) == 3

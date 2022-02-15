@@ -19,7 +19,7 @@ from .qrels_run_common import (
 
 class Run(object):
     """`Run` stores the relevance scores estimated by the model under evaluation.\n
-    The preferred way for creating a `Run` istance is converting a Python dictionary using [**from_dict**][ranx.Run.from_dict]:
+    The preferred way for creating a `Run` istance is converting a Python dictionary as follows:
 
     ```python
     run_dict = {
@@ -34,17 +34,39 @@ class Run(object):
         },
     }
 
-    run = Run.from_dict(run_dict)
+    run = Run(run_dict, name="bm25")
+
+    run = Run()  # Creates an empty Run with no name
     ```
     """
 
-    def __init__(self):
-        self.run = TypedDict.empty(
-            key_type=types.unicode_type,
-            value_type=types.DictType(types.unicode_type, types.float64),
-        )
-        self.sorted = False
-        self.name = None
+    def __init__(
+        self, run: Dict[str, Dict[str, float]] = None, name: str = None
+    ):
+        if run is None:
+            self.run = TypedDict.empty(
+                key_type=types.unicode_type,
+                value_type=types.DictType(types.unicode_type, types.float64),
+            )
+            self.sorted = False
+        else:
+            # Query IDs
+            q_ids = list(run.keys())
+            q_ids = TypedList(q_ids)
+
+            # Doc IDs
+            doc_ids = [list(doc.keys()) for doc in run.values()]
+            max_len = max(len(y) for x in doc_ids for y in x)
+            dtype = f"<U{max_len}"
+            doc_ids = TypedList([np.array(x, dtype=dtype) for x in doc_ids])
+
+            # Scores
+            scores = [list(doc.values()) for doc in run.values()]
+            scores = TypedList([np.array(x, dtype=float) for x in scores])
+            self.run = create_and_sort(q_ids, doc_ids, scores)
+            self.sorted = True
+
+        self.name = name
         self.scores = defaultdict(dict)
         self.mean_scores = {}
 
@@ -130,23 +152,25 @@ class Run(object):
             d[q_id] = dict(self[q_id])
         return d
 
-    def save(self, path: str = "run.txt", type: str = "trec"):
-        """Write `run` to `path` in TREC run format or as JSON file.
+    def save(self, path: str = "run.json", kind: str = "json"):
+        """Write `run` to `path` as JSON file or TREC run format.
 
         Args:
-            path (str, optional): Saving path. Defaults to "run.txt".
-            type (str, optional): Type of file to save, must be either "trec" or "json". Defaults to "trec".
+            path (str, optional): Saving path. Defaults to "run.json".
+            kind (str, optional): Kind of file to save, must be either "json" or "trec". Defaults to "json".
         """
-        assert type in {
-            "trec",
+        assert kind in {
             "json",
-        }, "Error `type` must be 'trec' of 'json'"
+            "trec",
+        }, "Error `kind` must be 'json' or 'trec'"
 
         if self.sorted == False:
             self.sort()
 
         with open(path, "w") as f:
-            if type == "trec":
+            if kind == "json":
+                f.write(json.dumps(self.to_dict(), indent=4))
+            else:
                 for i, q_id in enumerate(self.run.keys()):
                     for rank, doc_id in enumerate(self.run[q_id].keys()):
                         score = self.run[q_id][doc_id]
@@ -159,8 +183,6 @@ class Run(object):
                             or rank != len(self.run[q_id].keys()) - 1
                         ):
                             f.write("\n")
-            else:
-                f.write(json.dumps(self.to_dict(), indent=4))
 
     @staticmethod
     def from_dict(d: Dict[str, Dict[str, float]]):
@@ -194,32 +216,32 @@ class Run(object):
         return run
 
     @staticmethod
-    def from_file(path: str, type: str = "trec"):
-        """Parse a run file into ranx.Run. Supported formats are TREC run format and JSON.
+    def from_file(path: str, kind: str = "json"):
+        """Parse a run file into ranx.Run. Supported formats are JSON and TREC run format.
 
         Args:
             path (str): File path.
-            type (str, optional): Type of file to load, must be either "trec" or "json". Defaults to "trec".
+            kind (str, optional): Kind of file to load, must be either "json" or "trec". Defaults to "json".
 
         Returns:
             Run: ranx.Run
         """
-        assert type in {
-            "trec",
+        assert kind in {
             "json",
-        }, "Error `type` must be 'trec' of 'json'"
+            "trec",
+        }, "Error `kind` must be 'json' or 'trec'"
 
-        if type == "trec":
+        if kind == "json":
+            run = json.loads(open(path, "r").read())
+        else:
             run = defaultdict(dict)
             name = ""
             with open(path) as f:
                 for line in f:
                     q_id, _, doc_id, _, rel, run_name = line.split()
                     run[q_id][doc_id] = float(rel)
-                    if name == "":
+                    if not name:
                         name = run_name
-        else:
-            run = json.loads(open(path, "r").read())
 
         run = Run.from_dict(run)
 

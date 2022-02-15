@@ -5,6 +5,33 @@ from numba.typed import List
 from ranx import Run
 
 
+def test_init():
+    run_dict = {
+        "q1": {
+            "d1": 1,
+            "d2": 2,
+            "d3": 3,
+        },
+        "q2": {
+            "d1": 1,
+            "d2": 2,
+        },
+    }
+
+    run = Run(run_dict, name="bm25")
+
+    assert len(run.run) == 2
+    assert len(run.run["q1"]) == 3
+    assert len(run.run["q2"]) == 2
+    assert run.run["q1"]["d1"] == 1
+    assert run.run["q1"]["d2"] == 2
+    assert run.run["q1"]["d3"] == 3
+    assert run.run["q2"]["d1"] == 1
+    assert run.run["q2"]["d2"] == 2
+    assert run.size == 2
+    assert run.name == "bm25"
+
+
 def test_size():
     run = Run()
 
@@ -161,7 +188,7 @@ def test_from_dict():
 
 
 def test_from_trec_file():
-    run = Run.from_file("tests/unit/ranx/test_data/run.txt")
+    run = Run.from_file("tests/unit/ranx/test_data/run.trec", kind="trec")
 
     assert len(run.run) == 2
     assert len(run.run["q1"]) == 3
@@ -174,7 +201,7 @@ def test_from_trec_file():
 
 
 def test_from_json_file():
-    run = Run.from_file("tests/unit/ranx/test_data/run.json", "json")
+    run = Run.from_file("tests/unit/ranx/test_data/run.json")
 
     assert len(run.run) == 2
     assert len(run.run["q1"]) == 3

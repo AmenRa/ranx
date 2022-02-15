@@ -1,12 +1,16 @@
 from collections import defaultdict
+from itertools import product
 from numbers import Number
 from typing import Dict, List, Union
 
 import numba as nb
 import numpy as np
 from numba import set_num_threads
+from numba.typed import List as TypedList
+from tqdm import tqdm
 
 from .frozenset_dict import FrozensetDict
+from .fusion import weighted_sum
 from .metrics import (
     average_precision,
     f1,
@@ -19,6 +23,7 @@ from .metrics import (
     recall,
     reciprocal_rank,
 )
+from .normalization import max_norm_parallel, min_max_norm_parallel
 from .qrels import Qrels
 from .report import Report
 from .run import Run
@@ -49,7 +54,7 @@ def metric_functions_switch(metric):
         return ndcg_burges
     else:
         raise ValueError(
-            f"Metric {metric} not supported. Supported metrics are `hits`, `hit_rate`, `precision`, `recall`, `r-precision`, `mrr`, `map`, `ndcg`, and `ndcg_burges`."
+            f"Metric {metric} not supported. Supported metrics are `hits`, `hit_rate`, `precision`, `recall`, `f1`, `r-precision`, `mrr`, `map`, `ndcg`, and `ndcg_burges`."
         )
 
 
@@ -197,6 +202,7 @@ def compute_statistical_significance(
     max_p: float = 0.01,
     random_seed: int = 42,
 ):
+    """Used internally."""
     metric_p_values = {}
 
     for m in list(control_metric_scores):
@@ -229,6 +235,8 @@ def compare(
     max_p: float = 0.01,
     random_seed: int = 42,
     threads: int = 0,
+    rounding_digits: int = 3,
+    show_percentages: bool = False,
 ):
     """Evaluate multiple `runs` and compute statistical tests.
 
@@ -337,4 +345,150 @@ def compare(
         metrics=metrics,
         max_p=max_p,
         win_tie_loss=dict(win_tie_loss),
+        rounding_digits=rounding_digits,
+        show_percentages=show_percentages,
     )
+
+
+# FUSION -----------------------------------------------------------------------
+def fuse(
+    runs: List[Run],
+    kind: str = "wsum",
+    params: dict = None,
+    norm: str = "max",
+    name: str = "fused_run",
+):
+    """Disclaimer: THIS IS AN EXPERIMENTAL FEATURE!
+    Fuses a list of runs using the specified function and parameters.
+    Only score weighted sum is currently supported.
+    Params must be `{weights: weight_list}`
+
+    Args:
+        runs (List[Run]): List of runs to fuse.
+        kind (str, optional): Fusion function. Only weighted sum is currently supported. Defaults to "wsum".
+        params (dict, optional): Parameters for the fusion function. Defaults to None.
+        norm (str, optional): Normalization to apply before fusion. Defaults to "max".
+        name (str, optional): Name of the fused run. Defaults to "fused_run".
+
+    Returns:
+        Run: fused run.
+        best_params:
+    """
+    assert len(runs) > 1, "Only one run provided"
+    assert len(runs) <= 10, "Too many runs provided"
+    assert all(
+        runs[0].keys() == run.keys() for run in runs
+    ), "Runs query ids do not match"
+
+    if params is None:
+        params = {}
+
+    # Extract Numba Typed Dict
+    runs = TypedList([run.run.copy() for run in runs])
+
+    # Scores normalization -----------------------------------------------------
+    if norm == "max":
+        for i, run in enumerate(runs):
+            runs[i] = max_norm_parallel(run)
+    elif norm == "min_max":
+        for i, run in enumerate(runs):
+            runs[i] = min_max_norm_parallel(run)
+    else:
+        raise NotImplementedError()
+
+    # Fusion -------------------------------------------------------------------
+    if kind in {"wsum", "weighted_sum"}:
+        if "weights" not in params:
+            params["weights"] = [0.5 for _ in runs]
+        run = weighted_sum(runs, np.array(params["weights"]))
+    else:
+        raise NotImplementedError()
+
+    fused_run = Run()
+    fused_run.name = name
+    fused_run.run = run
+
+    return fused_run
+
+
+def optimize_fusion(
+    qrels: Qrels,
+    runs: List[Run],
+    kind: str = "wsum",
+    norm: str = "max",
+    name: str = "fused_run",
+    search_kind: str = "greed",
+    optimize_metric: str = None,
+    optimize_kwargs: dict = None,
+):
+    """Disclaimer: THIS IS AN EXPERIMENTAL FEATURE!"""
+    if search_kind != "greed":
+        raise NotImplementedError()
+
+    assert len(runs) > 1, "Only one run provided"
+    assert len(runs) <= 10, "Too many runs provided"
+    assert all(
+        runs[0].keys() == run.keys() for run in runs
+    ), "Runs query ids do not match"
+
+    # Extract Numba Typed Dict
+    runs = TypedList([run.run.copy() for run in runs])
+
+    # Scores normalization -----------------------------------------------------
+    if norm == "max":
+        for i, run in enumerate(runs):
+            runs[i] = max_norm_parallel(run)
+    elif norm == "min_max":
+        for i, run in enumerate(runs):
+            runs[i] = min_max_norm_parallel(run)
+    else:
+        raise NotImplementedError()
+
+    # Fusion -------------------------------------------------------------------
+    if kind in {"wsum", "weighted_sum"}:
+        step = optimize_kwargs["step"]
+        rounding_digits = str(step)[::-1].find(".")
+        weights = [
+            round(x, rounding_digits) for x in np.arange(0, 1 + step, step)
+        ]
+
+        if optimize_kwargs.get("kind", False) == "convex":
+            trials = [
+                seq
+                for seq in product(*[weights] * len(runs))
+                if sum(seq) == 1.0
+            ]
+        else:
+            trials = list(product(*[weights for _ in runs]))
+
+        best_score = 0.0
+        best_weights = []
+
+        for weights in tqdm(
+            trials,
+            desc="Optimizing fusion",
+            position=0,
+            dynamic_ncols=True,
+            mininterval=0.5,
+        ):
+            run = Run()
+            run.run = weighted_sum(runs, np.array(weights))
+            score = evaluate(
+                qrels, run, optimize_metric, save_results_in_run=False
+            )
+
+            if score > best_score:
+                best_score = score
+                best_weights = weights
+
+        run = weighted_sum(runs, np.array(best_weights))
+        best_params = {"weights": best_weights}
+
+    else:
+        raise NotImplementedError()
+
+    fused_run = Run()
+    fused_run.name = name
+    fused_run.run = run
+
+    return fused_run, best_params, best_score
