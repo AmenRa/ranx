@@ -28,7 +28,7 @@
 
 - [ranx](https://github.com/AmenRa/ranx) will be featured in [ECIR 2022](https://ecir2022.org), the 44th European Conference on Information Retrieval!
 - Check out the new [examples](#-examples) on Google Colab! 
-- Added a [changelog](changelog) to document few breaking changes introduced in `v.0.1.11`.
+- Added a [changelog](https://github.com/AmenRa/ranx/blob/master/changelog.md) to document few breaking changes introduced in `v.0.1.11`.
 
 ## ⚡️ Introduction
 
