@@ -63,7 +63,7 @@ pip install ranx
 
 ### Create Qrels and Run
 ```python
-from ranx import Qrels, Run, evaluate
+from ranx import Qrels, Run
 
 qrels_dict = { "q_1": { "d_12": 5, "d_25": 3 },
                "q_2": { "d_11": 6, "d_22": 1 } }
@@ -79,6 +79,8 @@ run = Run(run_dict)
 
 ### Evaluate
 ```python
+from ranx import evaluate
+
 # Compute score for a single metric
 evaluate(qrels, run, "ndcg@5")
 >>> 0.7861
@@ -90,6 +92,8 @@ evaluate(qrels, run, ["map@5", "mrr"])
 
 ### Compare
 ```python
+from ranx import compare
+
 # Compare different runs and perform statistical tests
 report = compare(
     qrels=qrels,
