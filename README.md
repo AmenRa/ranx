@@ -101,10 +101,11 @@ report = compare(
     metrics=["map@100", "mrr@100", "ndcg@10"],
     max_p=0.01  # P-value threshold
 )
-
-print(report)
 ```
 Output:
+```python
+print(report)
+```
 ```
 #    Model    MAP@100    MRR@100    NDCG@10
 ---  -------  --------   --------   ---------
