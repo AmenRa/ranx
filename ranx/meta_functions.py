@@ -10,7 +10,7 @@ from numba.typed import List as TypedList
 from tqdm import tqdm
 
 from .frozenset_dict import FrozensetDict
-from .fusion import weighted_sum
+from .fusion import weighted_sum, reciprocal_rank_fusion
 from .metrics import (
     average_precision,
     f1,
@@ -393,6 +393,8 @@ def fuse(
     elif norm == "min_max":
         for i, run in enumerate(runs):
             runs[i] = min_max_norm_parallel(run)
+    elif norm is None:
+        pass
     else:
         raise NotImplementedError()
 
@@ -401,6 +403,8 @@ def fuse(
         if "weights" not in params:
             params["weights"] = [0.5 for _ in runs]
         run = weighted_sum(runs, np.array(params["weights"]))
+    elif kind == "reciprocal_rank_fusion":
+        run = reciprocal_rank_fusion(runs)
     else:
         raise NotImplementedError()
 
