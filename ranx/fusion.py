@@ -51,7 +51,7 @@ def weighted_sum(runs, weights):
     return combined_run
 
 
-# WEIGHTED SUM -----------------------------------------------------------------
+# RECIPROCAL RANK -----------------------------------------------------------
 @njit(cache=True)
 def reciprocal_rank_fn(results):
     combined_results = TypedDict.empty(
