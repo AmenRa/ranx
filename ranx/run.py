@@ -245,7 +245,7 @@ class Run(object):
 
         run = Run.from_dict(run)
 
-        if type == "trec":
+        if kind == "trec":
             run.name = name
 
         return run
