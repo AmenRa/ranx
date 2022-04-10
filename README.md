@@ -131,12 +131,15 @@ Browse the [documentation](https://amenra.github.io/ranx) for more details and e
 ## 🎓 Citation
 If you use [ranx](https://github.com/AmenRa/ranx) to evaluate results for your scientific publication, please consider citing it:
 ```
-@misc{ranx2021,
-  title = {ranx: A Blazing-Fast Python Library for Ranking Evaluation and Comparison},
-  author = {Bassani, Elias},
-  year = {2021},
-  publisher = {GitHub},
-  howpublished = {\url{https://github.com/AmenRa/ranx}},
+@inproceedings{DBLP:conf/ecir/Bassani22,
+  author    = {Elias Bassani},
+  title     = {ranx: {A} Blazing-Fast Python Library for Ranking Evaluation and Comparison},
+  booktitle = {{ECIR} {(2)}},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {13186},
+  pages     = {259--264},
+  publisher = {Springer},
+  year      = {2022}
 }
 ```
 
