@@ -24,17 +24,15 @@
   </a>
 </p>
 
-## 🔥 News
+<!-- ## 🔥 News -->
 
-- [ranx](https://github.com/AmenRa/ranx) will be featured in [ECIR 2022](https://ecir2022.org), the 44th European Conference on Information Retrieval!
-- Check out the new [examples](#-examples) on Google Colab! 
-- Added a [changelog](https://github.com/AmenRa/ranx/blob/master/changelog.md) to document few breaking changes introduced in `v.0.1.11`.
+<!-- - [ranx](https://github.com/AmenRa/ranx) was featured in [ECIR 2022](https://ecir2022.org), the 44th European Conference on Information Retrieval. -->
 
 ## ⚡️ Introduction
 
 [ranx](https://github.com/AmenRa/ranx) is a library of fast ranking evaluation metrics implemented in [Python](https://en.wikipedia.org/wiki/Python_(programming_language)), leveraging [Numba](https://github.com/numba/numba) for high-speed vector operations and automatic parallelization.
 It offers a user-friendly interface to evaluate and compare [Information Retrieval](https://en.wikipedia.org/wiki/Information_retrieval) and [Recommender Systems](https://en.wikipedia.org/wiki/Recommender_system).
-Moreover, [ranx](https://github.com/AmenRa/ranx) allows you to perform statistical tests and export LaTeX tables for your scientific publications.
+Moreover, [ranx](https://github.com/AmenRa/ranx) allows you to perform statistical tests and export [LaTeX](https://en.wikipedia.org/wiki/LaTeX) tables for your scientific publications.
 
 If you use [ranx](https://github.com/AmenRa/ranx) to evaluate results for your scientific publication, please consider [citing it](https://dblp.org/rec/conf/ecir/Bassani22.html?view=bibtex).
 
