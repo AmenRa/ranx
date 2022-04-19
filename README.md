@@ -36,6 +36,8 @@
 It offers a user-friendly interface to evaluate and compare [Information Retrieval](https://en.wikipedia.org/wiki/Information_retrieval) and [Recommender Systems](https://en.wikipedia.org/wiki/Recommender_system).
 Moreover, [ranx](https://github.com/AmenRa/ranx) allows you to perform statistical tests and export LaTeX tables for your scientific publications.
 
+If you use [ranx](https://github.com/AmenRa/ranx) to evaluate results for your scientific publication, please consider [citing it](https://dblp.org/rec/conf/ecir/Bassani22.html?view=bibtex).
+
 For a quick overview, follow the [Usage](#-usage) section.
 
 For a in-depth overview, follow the [Examples](#-examples) section.
