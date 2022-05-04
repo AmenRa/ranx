@@ -6,12 +6,13 @@ dependencies:
   - conda-forge::mkdocs-autorefs
   - conda-forge::mkdocstrings 
   - notebook
-  - numba>=0.54.1
+  - numba=0.54.1
   - numpy
   - pandas
   - pip
   - pytest
   - python=3.7
+  - scipy
   - tabulate
   - tqdm
   - pip:

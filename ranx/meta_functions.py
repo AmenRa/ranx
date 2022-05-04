@@ -27,7 +27,10 @@ from .normalization import max_norm_parallel, min_max_norm_parallel
 from .qrels import Qrels
 from .report import Report
 from .run import Run
-from .statistical_testing import fisher_randomization_test
+from .statistical_testing import (
+    fisher_randomization_test,
+    paired_student_t_test,
+)
 from .utils import python_dict_to_typed_list
 
 
@@ -198,6 +201,7 @@ def evaluate(
 def compute_statistical_significance(
     control_metric_scores,
     treatment_metric_scores,
+    stat_test: str = "fisher",
     n_permutations: int = 1000,
     max_p: float = 0.01,
     random_seed: int = 42,
@@ -206,18 +210,24 @@ def compute_statistical_significance(
     metric_p_values = {}
 
     for m in list(control_metric_scores):
-        (
-            control_mean,
-            treatment_mean,
-            p_value,
-            significant,
-        ) = fisher_randomization_test(
-            control_metric_scores[m],
-            treatment_metric_scores[m],
-            n_permutations,
-            max_p,
-            random_seed,
-        )
+        if stat_test == "fisher":
+            p_value, significant = fisher_randomization_test(
+                control_metric_scores[m],
+                treatment_metric_scores[m],
+                n_permutations,
+                max_p,
+                random_seed,
+            )
+        elif stat_test == "student":
+            p_value, significant = paired_student_t_test(
+                control_metric_scores[m],
+                treatment_metric_scores[m],
+                max_p,
+            )
+        else:
+            raise NotImplementedError(
+                f"Statistical test `{stat_test}` not supported."
+            )
 
         metric_p_values[m] = {
             "p_value": p_value,
@@ -231,6 +241,7 @@ def compare(
     qrels: Qrels,
     runs: List[Run],
     metrics: Union[List[str], str],
+    stat_test: str = "fisher",
     n_permutations: int = 1000,
     max_p: float = 0.01,
     random_seed: int = 42,
@@ -318,6 +329,7 @@ def compare(
                 ] = compute_statistical_significance(
                     control_metric_scores,
                     treatment_metric_scores,
+                    stat_test,
                     n_permutations,
                     max_p,
                     random_seed,
@@ -347,6 +359,7 @@ def compare(
         win_tie_loss=dict(win_tie_loss),
         rounding_digits=rounding_digits,
         show_percentages=show_percentages,
+        stat_test=stat_test,
     )
 
 

@@ -24,7 +24,9 @@
   </a>
 </p>
 
-<!-- ## 🔥 News -->
+## 🔥 News
+
+- Added [Paired Student's t-Test](https://en.wikipedia.org/wiki/Student%27s_t-test) in `v.0.1.12`.
 
 <!-- - [ranx](https://github.com/AmenRa/ranx) was featured in [ECIR 2022](https://ecir2022.org), the 44th European Conference on Information Retrieval. -->
 
@@ -41,7 +43,8 @@ For a quick overview, follow the [Usage](#-usage) section.
 For a in-depth overview, follow the [Examples](#-examples) section.
 
 
-## ✨ Available Metrics
+## ✨ Features
+### Metrics
 * [Hits](https://amenra.github.io/ranx/metrics/#ranx.metrics.hits)
 * [Hit Rate](https://amenra.github.io/ranx/metrics/#ranx.metrics.hit_rate)
 * [Precision](https://amenra.github.io/ranx/metrics/#ranx.metrics.precision)
@@ -53,6 +56,12 @@ For a in-depth overview, follow the [Examples](#-examples) section.
 * [Normalized Discounted Cumulative Gain (NDCG)](https://amenra.github.io/ranx/metrics/#ranx.metrics.ndcg)
 
 The metrics have been tested against [TREC Eval](https://github.com/usnistgov/trec_eval) for correctness.
+
+### Statistical tests
+* [Fisher's Randomization Test](https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/fishrand.htm)
+* [Paired Student's t-Test](https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/t_test.htm)
+
+Please, refer to [Smucker et al.](https://dl.acm.org/doi/10.1145/1321440.1321528) for additional information on statistical tests for Information Retrieval.
 
 ## 🔌 Installation
 ```bash

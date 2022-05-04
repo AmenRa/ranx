@@ -79,6 +79,8 @@ def test_to_dict(qrels, runs, metrics):
     report = compare(qrels, runs, metrics)
     report_dict = report.to_dict()
 
+    assert "stat_test" in report_dict
+    assert report_dict["stat_test"] == report.stat_test
     assert "model_names" in report_dict
     assert report_dict["model_names"] == report.model_names
     assert "metrics" in report_dict
@@ -119,3 +121,29 @@ def test_to_dict(qrels, runs, metrics):
         )
         for m1 in report_dict["model_names"]
     )
+
+
+def test_stat_test(qrels, runs, metrics):
+    report = compare(qrels, runs, metrics)
+    assert report.stat_test == "fisher"
+    assert (
+        report.get_stat_test_label(report.stat_test)
+        == "Fisher's randomization test"
+    )
+    assert report.get_stat_test_label(report.stat_test) in report.to_latex()
+
+    report = compare(qrels, runs, metrics, stat_test="fisher")
+    assert report.stat_test == "fisher"
+    assert (
+        report.get_stat_test_label(report.stat_test)
+        == "Fisher's randomization test"
+    )
+    assert report.get_stat_test_label(report.stat_test) in report.to_latex()
+
+    report = compare(qrels, runs, metrics, stat_test="student")
+    assert report.stat_test == "student"
+    assert (
+        report.get_stat_test_label(report.stat_test)
+        == "paired Student's t-test"
+    )
+    assert report.get_stat_test_label(report.stat_test) in report.to_latex()

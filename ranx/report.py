@@ -24,6 +24,11 @@ metric_labels = {
     "ndcg_burges": "NDCG_Burges",
 }
 
+stat_test_labels = {
+    "fisher": "Fisher's randomization test",
+    "student": "paired Student's t-test",
+}
+
 
 class Report(object):
     """A `Report` instance is automatically generated as the results of a comparison.
@@ -65,6 +70,7 @@ class Report(object):
         win_tie_loss: Dict[Tuple[str], Dict[str, Dict[str, int]]],
         rounding_digits: int = 3,
         show_percentages: bool = False,
+        stat_test: str = "fisher",
     ):
         self.model_names = model_names
         self.results = results
@@ -74,6 +80,7 @@ class Report(object):
         self.win_tie_loss = win_tie_loss
         self.rounding_digits = rounding_digits
         self.show_percentages = show_percentages
+        self.stat_test = stat_test
 
     def format_score(self, score):
         if self.show_percentages:
@@ -99,6 +106,9 @@ class Report(object):
             cutoff = m_splitted[1]
             return f"{label}@{cutoff}"
         return f"{metric_labels[m]}"
+
+    def get_stat_test_label(self, stat_test: str):
+        return stat_test_labels[stat_test]
 
     def to_table(self):
         tabular_data = []
@@ -177,7 +187,9 @@ class Report(object):
 
         table_prefix = (
             "% To change the table size, act on the resizebox argument `0.8`.\n"
-            + """\\begin{table*}[ht]\n\centering\n\caption{\nOverall effectiveness of the models.\nThe best results are highlighted in boldface.\nSuperscripts denote significant differences in Fisher's randomization test with $p \le """
+            + """\\begin{table*}[ht]\n\centering\n\caption{\nOverall effectiveness of the models.\nThe best results are highlighted in boldface.\nSuperscripts denote significant differences in """
+            + self.get_stat_test_label(self.stat_test)
+            + """with $p \le """
             + str(self.max_p)
             + "$.\n}\n\\resizebox{0.8\\textwidth}{!}{"
             + "\n\\begin{tabular}{c|c"
@@ -242,6 +254,7 @@ class Report(object):
 
         ```python
         {
+            "stat_test": "fisher"
             # metrics and model_names allows to read the report without
             # inspecting the json to discover the used metrics and
             # the compared models
@@ -280,6 +293,7 @@ class Report(object):
         """
 
         d = {
+            "stat_test": self.stat_test,
             "metrics": self.metrics,
             "model_names": self.model_names,
         }

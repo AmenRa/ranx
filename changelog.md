@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Experimental `Fusion` functionalities (_undocumented_).
 - Experimental `Normalization` functionalities (_undocumented_).
 
+## [0.1.12] - 2022-04-04
+### Added
+- Added `paired_student_t_test` to `statistical_testing.py`.
+- Added `stat_test` parameter to `compare`. Defaults to `fisher`.
+- Added `stat_test` parameter to `report`. Defaults to `fisher`.
+
+### Changed
+- `Report`'s `to_latex` function now takes into account the newly introduce `stat_test` parameter to correctly generating LaTeX tables' captions.
+- `Report`'s `to_dict` function now takes into account the newly introduce `stat_test` parameter and adds it to the output dictionary.
+- `Report`'s `save` function now takes into account the newly introduce `stat_test` parameter and adds it to the output JSON file.
+
 ## [0.1.11] - 2022-02-15
 ### Added
 - Added `show_percentages` parameter to `Report`. Defaults to `False`.
