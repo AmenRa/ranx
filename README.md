@@ -44,6 +44,7 @@ For a in-depth overview, follow the [Examples](#-examples) section.
 
 
 ## ✨ Features
+
 ### Metrics
 * [Hits](https://amenra.github.io/ranx/metrics/#ranx.metrics.hits)
 * [Hit Rate](https://amenra.github.io/ranx/metrics/#ranx.metrics.hit_rate)
@@ -62,6 +63,7 @@ The metrics have been tested against [TREC Eval](https://github.com/usnistgov/tr
 * [Paired Student's t-Test](https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/t_test.htm)
 
 Please, refer to [Smucker et al.](https://dl.acm.org/doi/10.1145/1321440.1321528) for additional information on statistical tests for Information Retrieval.
+
 
 ## 🔌 Installation
 ```bash
@@ -125,6 +127,7 @@ d    model_4  0.366ᵃᵇᶜ   0.367ᵃᵇᶜ   0.408ᵃᵇᶜ
 e    model_5  0.405ᵃᵇᶜᵈ  0.406ᵃᵇᶜᵈ  0.451ᵃᵇᶜᵈ
 ```
 
+
 ## 📖 Examples
 
 | Name                  | Link                                                                                                                                                                                   |
@@ -134,8 +137,10 @@ e    model_5  0.405ᵃᵇᶜᵈ  0.406ᵃᵇᶜᵈ  0.451ᵃᵇᶜᵈ
 | Evaluation            | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/3_evaluation.ipynb)            |
 | Comparison and Report | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/4_comparison_and_report.ipynb) |
 
+
 ## 📚 Documentation
 Browse the [documentation](https://amenra.github.io/ranx) for more details and examples.
+
 
 ## 🎓 Citation
 If you use [ranx](https://github.com/AmenRa/ranx) to evaluate results for your scientific publication, please consider citing it:
@@ -152,12 +157,14 @@ If you use [ranx](https://github.com/AmenRa/ranx) to evaluate results for your s
 }
 ```
 
+
 ## 🎁 Feature Requests
 Would you like to see other features implemented? Please, open a [feature request](https://github.com/AmenRa/ranx/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=%5BFeature+Request%5D+title).
+
 
 ## 🤘 Want to contribute?
 Would you like to contribute? Please, drop me an [e-mail](mailto:elias.bssn@gmail.com?subject=[GitHub]%20ranx).
 
-## 📄 License
 
+## 📄 License
 [ranx](https://github.com/AmenRa/ranx) is an open-sourced software licensed under the [MIT license](LICENSE).
