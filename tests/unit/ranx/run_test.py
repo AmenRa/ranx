@@ -198,6 +198,7 @@ def test_from_trec_file():
     assert run.run["q1"]["d3"] == 0.3
     assert run.run["q2"]["d1"] == 0.1
     assert run.run["q2"]["d2"] == 0.2
+    assert run.name == "example"
 
 
 def test_from_json_file():
