@@ -26,14 +26,16 @@
 
 ## 🔥 News
 
-- Added [Paired Student's t-Test](https://en.wikipedia.org/wiki/Student%27s_t-test) in `v.0.1.12`.
+- [May 18, 2022] Added support for loading qrels from [ir-datasets](https://ir-datasets.com) in `v.0.1.13`.  
+Usage example: `Qrels.from_ir_datasets("msmarco-document/dev")` for [MS MARCO](https://microsoft.github.io/msmarco/) document retrieval dev set.
+- [May 4, 2022] Added [Paired Student's t-Test](https://en.wikipedia.org/wiki/Student%27s_t-test) in `v.0.1.12`.
 
 ## ⚡️ Introduction
 
-[ranx](https://github.com/AmenRa/ranx) is a library of fast ranking evaluation metrics implemented in [Python](https://en.wikipedia.org/wiki/Python_(programming_language)), leveraging [Numba](https://github.com/numba/numba) for high-speed vector operations and automatic parallelization.
+[ranx](https://github.com/AmenRa/ranx) is a library of fast ranking evaluation metrics implemented in [Python](https://en.wikipedia.org/wiki/Python_(programming_language)), leveraging [Numba](https://github.com/numba/numba) for high-speed [vector operations](https://en.wikipedia.org/wiki/Automatic_vectorization) and [automatic parallelization](https://en.wikipedia.org/wiki/Automatic_parallelization).
 It offers a user-friendly interface to evaluate and compare [Information Retrieval](https://en.wikipedia.org/wiki/Information_retrieval) and [Recommender Systems](https://en.wikipedia.org/wiki/Recommender_system).
-Moreover, [ranx](https://github.com/AmenRa/ranx) allows you to perform statistical tests and export [LaTeX](https://en.wikipedia.org/wiki/LaTeX) tables for your scientific publications.
-
+Moreover, [ranx](https://github.com/AmenRa/ranx) allows you to perform statistical tests and export [LaTeX](https://en.wikipedia.org/wiki/LaTeX) tables for your scientific publications. [ranx](https://github.com/AmenRa/ranx) was featured in [ECIR 2022](https://ecir2022.org), the 44th European Conference on Information Retrieval. 
+ 
 If you use [ranx](https://github.com/AmenRa/ranx) to evaluate results for your scientific publication, please consider [citing it](https://dblp.org/rec/conf/ecir/Bassani22.html?view=bibtex).
 
 For a quick overview, follow the [Usage](#-usage) section.
@@ -62,6 +64,12 @@ The metrics have been tested against [TREC Eval](https://github.com/usnistgov/tr
 
 Please, refer to [Smucker et al.](https://dl.acm.org/doi/10.1145/1321440.1321528) for additional information on statistical tests for Information Retrieval.
 
+### Off-the-shelf qrels
+You can load qrels from [ir-datasets](https://ir-datasets.com) as simply as:
+```python
+qrels = Qrels.from_ir_datasets("msmarco-document/dev")
+```
+A full list of the available qrels is provided [here](https://ir-datasets.com).
 
 ## 🔌 Installation
 ```bash
@@ -72,7 +80,7 @@ pip install ranx
 
 ### Create Qrels and Run
 ```python
-from ranx import Qrels, Run, evaluate
+from ranx import Qrels, Run
 
 qrels_dict = { "q_1": { "d_12": 5, "d_25": 3 },
                "q_2": { "d_11": 6, "d_22": 1 } }
@@ -88,6 +96,8 @@ run = Run(run_dict)
 
 ### Evaluate
 ```python
+from ranx import evaluate
+
 # Compute score for a single metric
 evaluate(qrels, run, "ndcg@5")
 >>> 0.7861
@@ -99,6 +109,8 @@ evaluate(qrels, run, ["map@5", "mrr"])
 
 ### Compare
 ```python
+from ranx import compare
+
 # Compare different runs and perform statistical tests
 report = compare(
     qrels=qrels,
@@ -106,12 +118,12 @@ report = compare(
     metrics=["map@100", "mrr@100", "ndcg@10"],
     max_p=0.01  # P-value threshold
 )
-
-print(report)
 ```
 Output:
+```python
+print(report)
 ```
->>>
+```
 #    Model    MAP@100    MRR@100    NDCG@10
 ---  -------  --------   --------   ---------
 a    model_1  0.320ᵇ     0.320ᵇ     0.368ᵇᶜ
@@ -139,12 +151,15 @@ Browse the [documentation](https://amenra.github.io/ranx) for more details and e
 ## 🎓 Citation
 If you use [ranx](https://github.com/AmenRa/ranx) to evaluate results for your scientific publication, please consider citing it:
 ```
-@misc{ranx2021,
-  title = {ranx: A Blazing-Fast Python Library for Ranking Evaluation and Comparison},
-  author = {Bassani, Elias},
-  year = {2021},
-  publisher = {GitHub},
-  howpublished = {\url{https://github.com/AmenRa/ranx}},
+@inproceedings{bassani2022ranx,
+  author    = {Elias Bassani},
+  title     = {ranx: {A} Blazing-Fast Python Library for Ranking Evaluation and Comparison},
+  booktitle = {{ECIR} {(2)}},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {13186},
+  pages     = {259--264},
+  publisher = {Springer},
+  year      = {2022}
 }
 ```
 

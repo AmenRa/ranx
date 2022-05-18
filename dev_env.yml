@@ -18,3 +18,4 @@ dependencies:
   - pip:
     - pytrec_eval
     - twine
+    - ir_datasets

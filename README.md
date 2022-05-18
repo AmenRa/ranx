@@ -26,6 +26,8 @@
 
 ## 🔥 News
 
+- [May 18, 2022] Added support for loading qrels from [ir-datasets](https://ir-datasets.com) in `v.0.1.13`.  
+Usage example: `Qrels.from_ir_datasets("msmarco-document/dev")` for [MS MARCO](https://microsoft.github.io/msmarco/) document retrieval dev set.
 - [May 4, 2022] Added [Paired Student's t-Test](https://en.wikipedia.org/wiki/Student%27s_t-test) in `v.0.1.12`.
 
 ## ⚡️ Introduction
@@ -62,6 +64,12 @@ The metrics have been tested against [TREC Eval](https://github.com/usnistgov/tr
 
 Please, refer to [Smucker et al.](https://dl.acm.org/doi/10.1145/1321440.1321528) for additional information on statistical tests for Information Retrieval.
 
+### Off-the-shelf qrels
+You can load qrels from [ir-datasets](https://ir-datasets.com) as simply as:
+```python
+qrels = Qrels.from_ir_datasets("msmarco-document/dev")
+```
+A full list of the available qrels is provided [here](https://ir-datasets.com).
 
 ## 🔌 Installation
 ```bash
