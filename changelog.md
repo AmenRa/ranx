@@ -9,7 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Experimental `Fusion` functionalities (_undocumented_).
 - Experimental `Normalization` functionalities (_undocumented_).
 
-## [0.1.13] - 2022-04-04
+## [0.1.14] - 2022-04-19
+### Fixed
+- Fixed a bug in in `report.py:Report.to_dict`.
+  
+## [0.1.13] - 2022-04-18
 ### Added
 - Added `from_ir_datasets` to `qrels.py`. It allows loading qrels from [`ir_metadata`](https://ir-datasets.com).
 
