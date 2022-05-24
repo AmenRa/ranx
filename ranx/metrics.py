@@ -514,7 +514,7 @@ def reciprocal_rank(
     If k > 0, only the top-k retrieved documents are considered.
 
     $$
-    Reciprocal Rank = \frac{1}{rank}
+    \operatorname{Recip.Rank} = \frac{1}{rank}
     $$
 
     where,
@@ -549,7 +549,7 @@ def average_precision(
     If k > 0, only the top-k retrieved documents are considered.
 
     $$
-    \operatorname{Average Precision} = \frac{\sum_r \operatorname{Precision}@r}{R}
+    \operatorname{Avg.Precision} = \frac{\sum_r \operatorname{Precision@r}}{R}
     $$
 
     where,
