@@ -2,24 +2,18 @@ import json
 from collections import defaultdict
 from typing import Dict, List
 
-import ir_datasets
 import numpy as np
 import pandas as pd
 from numba import types
 from numba.typed import Dict as TypedDict
 from numba.typed import List as TypedList
 
-from .qrels_run_common import (
-    add_and_sort,
-    create_and_sort,
-    sort_dict_by_key,
-    sort_dict_of_dict_by_value,
-    to_typed_list,
-)
+from .common import (add_and_sort, create_and_sort, sort_dict_by_key,
+                     sort_dict_of_dict_by_value, to_typed_list)
 
 
 class Qrels(object):
-    """`Qrels`, or _query relevance judgments_, stores the ground truth for conducting evaluations.\n
+    """`Qrels`, or _query relevance judgments_, stores the ground truth for conducting evaluations.<\br>
     The preferred way for creating a `Qrels` istance is converting Python dictionary as follows:
 
     ```python
@@ -84,8 +78,7 @@ class Qrels(object):
         """
         if self.qrels.get(q_id) is None:
             self.qrels[q_id] = TypedDict.empty(
-                key_type=types.unicode_type,
-                value_type=types.int64,
+                key_type=types.unicode_type, value_type=types.int64,
             )
         self.qrels[q_id][doc_id] = int(score)
         self.sorted = False
@@ -271,20 +264,6 @@ class Qrels(object):
         )
 
         return Qrels.from_dict(qrels_dict)
-
-    @staticmethod
-    def from_ir_datasets(dataset_id: str):
-        """Convert `ir-datasets` qrels into ranx.Qrels. It automatically downloads data if missing.
-
-        Args:
-            dataset_id (str): ID of the detaset in `ir-datasets`. `ir-datasets` catalog is available here: https://ir-datasets.com/index.html.
-
-        Returns:
-            Qrels: ranx.Qrels
-        """
-        qrels = Qrels.from_dict(ir_datasets.load(dataset_id).qrels_dict())
-        qrels.name = dataset_id
-        return qrels
 
     @property
     def size(self):

@@ -2,7 +2,6 @@
 import numpy as np
 import pytest
 from numba.typed import List
-
 from ranx import Qrels, Run, evaluate
 
 
@@ -184,10 +183,7 @@ def test_r_precision_single():
 
 def test_r_precision_parallel():
     y_true = List(
-        [
-            np.array([[1, 1], [2, 1], [3, 1]]),
-            np.array([[1, 1], [2, 1]]),
-        ]
+        [np.array([[1, 1], [2, 1], [3, 1]]), np.array([[1, 1], [2, 1]]),]
     )
     y_pred = List(
         [
@@ -347,14 +343,8 @@ def test_with_Qrels_and_Run_control():
 
 def test_python_dict():
     qrels = {
-        "q_1": {
-            "doc_12": 5,
-            "doc_25": 3,
-        },
-        "q_2": {
-            "doc_11": 6,
-            "doc_2": 1,
-        },
+        "q_1": {"doc_12": 5, "doc_25": 3,},
+        "q_2": {"doc_11": 6, "doc_2": 1,},
     }
     run = {
         "q_1": {
@@ -415,14 +405,8 @@ def test_python_dict_2():
     x = evaluate(qrels, run, "ndcg@5")
 
     qrels = {
-        "q_1": {
-            "doc_12": 5,
-            "doc_25": 3,
-        },
-        "q_2": {
-            "doc_11": 6,
-            "doc_2": 1,
-        },
+        "q_1": {"doc_12": 5, "doc_25": 3,},
+        "q_2": {"doc_11": 6, "doc_2": 1,},
     }
     run = {
         "q_1": {

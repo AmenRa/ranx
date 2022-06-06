@@ -8,7 +8,7 @@ from numba import types
 from numba.typed import Dict as TypedDict
 from numba.typed import List as TypedList
 
-from .qrels_run_common import (
+from .common import (
     add_and_sort,
     create_and_sort,
     sort_dict_by_key,
@@ -18,7 +18,7 @@ from .qrels_run_common import (
 
 
 class Run(object):
-    """`Run` stores the relevance scores estimated by the model under evaluation.\n
+    """`Run` stores the relevance scores estimated by the model under evaluation.<\br>
     The preferred way for creating a `Run` istance is converting a Python dictionary as follows:
 
     ```python
@@ -84,8 +84,7 @@ class Run(object):
         """
         if self.run.get(q_id) is None:
             self.run[q_id] = TypedDict.empty(
-                key_type=types.unicode_type,
-                value_type=types.float64,
+                key_type=types.unicode_type, value_type=types.float64,
             )
         self.run[q_id][doc_id] = float(score)
         self.sorted = False
