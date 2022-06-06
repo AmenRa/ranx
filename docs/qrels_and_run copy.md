@@ -1,3 +1,0 @@
-# Report
-
-::: ranx.report

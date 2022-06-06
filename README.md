@@ -46,15 +46,15 @@ For a in-depth overview, follow the [Examples](#-examples) section.
 ## ✨ Features
 
 ### Metrics
-* [Hits](https://amenra.github.io/ranx/metrics/#ranx.metrics.hits)
-* [Hit Rate](https://amenra.github.io/ranx/metrics/#ranx.metrics.hit_rate)
-* [Precision](https://amenra.github.io/ranx/metrics/#ranx.metrics.precision)
-* [Recall](https://amenra.github.io/ranx/metrics/#ranx.metrics.recall)
-* [F1](https://amenra.github.io/ranx/metrics/#ranx.metrics.f1)
-* [r-Precision](https://amenra.github.io/ranx/metrics/#ranx.metrics.r_precision)
-* [Mean Reciprocal Rank (MRR)](https://amenra.github.io/ranx/metrics/#ranx.metrics.reciprocal_rank)
-* [Mean Average Precision (MAP)](https://amenra.github.io/ranx/metrics/#ranx.metrics.average_precision)
-* [Normalized Discounted Cumulative Gain (NDCG)](https://amenra.github.io/ranx/metrics/#ranx.metrics.ndcg)
+* [Hits](https://amenra.github.io/ranx/metrics/#hits)
+* [Hit Rate](https://amenra.github.io/ranx/metrics/#hit-rate-success)
+* [Precision](https://amenra.github.io/ranx/metrics/#precision)
+* [Recall](https://amenra.github.io/ranx/metrics/#recall)
+* [F1](https://amenra.github.io/ranx/metrics/#f1)
+* [r-Precision](https://amenra.github.io/ranx/metrics/#r-precision)
+* [Mean Reciprocal Rank (MRR)](https://amenra.github.io/ranx/metrics/#mean-reciprocal-rank)
+* [Mean Average Precision (MAP)](https://amenra.github.io/ranx/metrics/#mean-average-precision)
+* [Normalized Discounted Cumulative Gain (NDCG)](https://amenra.github.io/ranx/metrics/#ndcg)
 
 The metrics have been tested against [TREC Eval](https://github.com/usnistgov/trec_eval) for correctness.
 
