@@ -1,7 +1,7 @@
 # Report
 
-A `Report` instance is automatically generated as the results of a comparison.<\br>
-A `Report` provide a convenient way of inspecting a comparison results and exporting those il LaTeX for your scientific publications.<\br>
+A `Report` instance is automatically generated as the results of a comparison.  
+A `Report` provide a convenient way of inspecting a comparison results and exporting those il LaTeX for your scientific publications.  
 By changing the values of the parameters `rounding_digits` (int) and `show_percentages` (bool) you can control what is shown on printing and when generating LaTeX tables.
 
 ```python

@@ -1,19 +1,21 @@
 # Metrics
 
+## Aliases
+
 Aliases to use with `ranx.evaluate` and `ranx.compare`.
 
 | **Metric**                                       | **Alias**   | **@k** |
 | ------------------------------------------------ | ----------- | :----: |
-| [Hits][hits]                                     | hits        |   y    |
-| [Hit Rate / Success][hit-rate-success]           | hit_rate    |   y    |
-| [Precision][precision]                           | precision   |   y    |
-| [Recall][recall]                                 | recall      |   y    |
-| [F1][f1]                                         | f1          |   y    |
-| [R-Precision][r-precision]                       | r_precision |   n    |
-| [Mean Reciprocal Rank][mean-reciprocal-rank]     | mrr         |   y    |
-| [Mean Average Precision][mean-average-precision] | map         |   y    |
-| [NDCG][ndcg]                                     | ndcg        |   y    |
-| [NDCG Burges][ndcg-burges]                       | ndcg_burges |   y    |
+| [Hits][hits]                                     | hits        |  yes   |
+| [Hit Rate / Success][hit-rate-success]           | hit_rate    |  yes   |
+| [Precision][precision]                           | precision   |  yes   |
+| [Recall][recall]                                 | recall      |  yes   |
+| [F1][f1]                                         | f1          |  yes   |
+| [R-Precision][r-precision]                       | r_precision |   no   |
+| [Mean Reciprocal Rank][mean-reciprocal-rank]     | mrr         |  yes   |
+| [Mean Average Precision][mean-average-precision] | map         |  yes   |
+| [NDCG][ndcg]                                     | ndcg        |  yes   |
+| [NDCG Burges][ndcg-burges]                       | ndcg_burges |  yes   |
 
 ## Hits
 **Hits** is the number of relevant documents retrieved.

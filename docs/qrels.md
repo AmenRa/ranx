@@ -1,6 +1,6 @@
 # Qrels
 
-`Qrels`, or _query relevance judgments_, stores the ground truth for conducting evaluations.<\br>
+`Qrels`, or _query relevance judgments_, stores the ground truth for conducting evaluations.  
 The preferred way for creating a `Qrels` istance is converting Python dictionary as follows:
 
 ```python
@@ -23,25 +23,27 @@ qrels = Qrels(qrels_dict, name="MSMARCO")
 
 Qrels can also be loaded from TREC-style and JSON files, from [ir-datasets](https://ir-datasets.com), and from Pandas DataFrames.
 
-## From Files
+## Load from files
 ```python
 qrels = Qrels.from_file("path/to/json_file")
 qrels = Qrels.from_file("path/to/trec_file", kind="trec")
 ```
 
-## From ir-datasets
+## Load from ir-datasets
+You can find the full list of the qrels provided by [ir-datasets](https://ir-datasets.com) [here](https://ir-datasets.com).
+
 ```python
 qrels = Qrels.from_ir_datasets("msmarco-document/dev")
 ```
 
-## From Pandas DataFrames
+## Load from Pandas DataFrames
 ```python
 from pandas import DataFrame
 
 qrels_df = DataFrame.from_dict({
-    "q_id":   [ "q_1",  "q_1",  "q_2",  "q_2" ],
+    "q_id":   [ "q_1",  "q_1",  "q_2",  "q_2"  ],
     "doc_id": [ "d_12", "d_25", "d_11", "d_22" ],
-    "score":  [  5,      3,      6,      1 ],
+    "score":  [  5,      3,      6,      1     ],
 })
 
 qrels = Qrels.from_df(
