@@ -1,4 +1,3 @@
-# Test rm.py
 import numpy as np
 import pytest
 from numba.typed import List

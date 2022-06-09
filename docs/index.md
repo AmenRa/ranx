@@ -26,6 +26,8 @@
 
 ## 🔥 News
 
+- [June 9, 2022] Added support for **24 fusion algorithms**, **six normalization strategies**, and an **automatic fusion optimization** functionality in `v.0.2.0`.  
+Check out the [official documentation](https://amenra.github.io/ranx) for further details on [fusion](https://amenra.github.io/ranx/fusion) and [normalization](https://amenra.github.io/ranx/normalization).
 - [May 18, 2022] Added support for loading qrels from [ir-datasets](https://ir-datasets.com) in `v.0.1.13`.  
 Usage example: `Qrels.from_ir_datasets("msmarco-document/dev")` for [MS MARCO](https://microsoft.github.io/msmarco/) document retrieval dev set.
 - [May 4, 2022] Added [Paired Student's t-Test](https://en.wikipedia.org/wiki/Student%27s_t-test) in `v.0.1.12`.
@@ -34,9 +36,11 @@ Usage example: `Qrels.from_ir_datasets("msmarco-document/dev")` for [MS MARCO](h
 
 [ranx](https://github.com/AmenRa/ranx) is a library of fast ranking evaluation metrics implemented in [Python](https://en.wikipedia.org/wiki/Python_(programming_language)), leveraging [Numba](https://github.com/numba/numba) for high-speed [vector operations](https://en.wikipedia.org/wiki/Automatic_vectorization) and [automatic parallelization](https://en.wikipedia.org/wiki/Automatic_parallelization).
 It offers a user-friendly interface to evaluate and compare [Information Retrieval](https://en.wikipedia.org/wiki/Information_retrieval) and [Recommender Systems](https://en.wikipedia.org/wiki/Recommender_system).
-Moreover, [ranx](https://github.com/AmenRa/ranx) allows you to perform statistical tests and export [LaTeX](https://en.wikipedia.org/wiki/LaTeX) tables for your scientific publications. [ranx](https://github.com/AmenRa/ranx) was featured in [ECIR 2022](https://ecir2022.org), the 44th European Conference on Information Retrieval. 
+[ranx](https://github.com/AmenRa/ranx) allows you to perform statistical tests and export [LaTeX](https://en.wikipedia.org/wiki/LaTeX) tables for your scientific publications.
+Moreover, [ranx](https://github.com/AmenRa/ranx) provides several [fusion algorithms](https://amenra.github.io/ranx/fusion) and [normalization strategies](https://amenra.github.io/ranx/normalization), and an automatic [fusion optimization](https://amenra.github.io/ranx/fusion/optimize-fusion) functionality.
+[ranx](https://github.com/AmenRa/ranx) was featured in [ECIR 2022](https://ecir2022.org), the 44th European Conference on Information Retrieval. 
  
-If you use [ranx](https://github.com/AmenRa/ranx) to evaluate results for your scientific publication, please consider [citing it](https://dblp.org/rec/conf/ecir/Bassani22.html?view=bibtex).
+If you use [ranx](https://github.com/AmenRa/ranx) to evaluate results or conducting experiments involving fusion for your scientific publication, please consider [citing it](https://dblp.org/rec/conf/ecir/Bassani22.html?view=bibtex).
 
 For a quick overview, follow the [Usage](#-usage) section.
 
@@ -58,18 +62,43 @@ For a in-depth overview, follow the [Examples](#-examples) section.
 
 The metrics have been tested against [TREC Eval](https://github.com/usnistgov/trec_eval) for correctness.
 
-### Statistical tests
+### Statistical Tests
 * [Fisher's Randomization Test](https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/fishrand.htm)
 * [Paired Student's t-Test](https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/t_test.htm)
 
 Please, refer to [Smucker et al.](https://dl.acm.org/doi/10.1145/1321440.1321528) for additional information on statistical tests for Information Retrieval.
 
-### Off-the-shelf qrels
+### Off-the-shelf Qrels
 You can load qrels from [ir-datasets](https://ir-datasets.com) as simply as:
 ```python
 qrels = Qrels.from_ir_datasets("msmarco-document/dev")
 ```
 A full list of the available qrels is provided [here](https://ir-datasets.com).
+
+### Fusion Algorithms
+
+| **Name**                                                | **Name**                                                               | **Name**                                                    | **Name**                                                                      |
+| ------------------------------------------------------- | ---------------------------------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| [CombMIN](https://amenra.github.io/ranx/fusion/combmin) | [CombGMNZ](https://amenra.github.io/ranx/fusion/combgmnz)              | [PosFuse](https://amenra.github.io/ranx/fusion/posfuse)     | [BordaFuse](https://amenra.github.io/ranx/fusion/bordafuse)                   |
+| [CombMED](https://amenra.github.io/ranx/fusion/combmed) | [ISR](https://amenra.github.io/ranx/fusion/isr)                        | [ProbFuse](https://amenra.github.io/ranx/fusion/probfuse)   | [Weighted BordaFuse](https://amenra.github.io/ranx/fusion/weighted-bordafuse) |
+| [CombANZ](https://amenra.github.io/ranx/fusion/combanz) | [Log_ISR](https://amenra.github.io/ranx/fusion/log_isr)                | [SegFuse](https://amenra.github.io/ranx/fusion/segfuse)     | [Condorcet](https://amenra.github.io/ranx/fusion/condorcet)                   |
+| [CombMAX](https://amenra.github.io/ranx/fusion/combmax) | [LogN_ISR](https://amenra.github.io/ranx/fusion/logn_isr)              | [SlideFuse](https://amenra.github.io/ranx/fusion/slidefuse) | [Weighted Condorcet](https://amenra.github.io/ranx/fusion/weighted-condorcet) |
+| [CombSUM](https://amenra.github.io/ranx/fusion/combsum) | [RRF](https://amenra.github.io/ranx/fusion/reciprocal-rank-fusion-rrf) | [MAPFuse](https://amenra.github.io/ranx/fusion/mapfuse)     | [Mixed](https://amenra.github.io/ranx/fusion/mixed)                           |
+| [CombMNZ](https://amenra.github.io/ranx/fusion/combmnz) | [WMNZ](https://amenra.github.io/ranx/fusion/wmnz)                      | [BayesFuse](https://amenra.github.io/ranx/fusion/bayesfuse) | [Wighted Sum](https://amenra.github.io/ranx/fusion/wighted-sum)               |
+
+Please, refer to the [documentation](https://amenra.github.io/ranx/fusion) for further details.
+
+### Normalization Strategies
+
+* [Min-Max Norm](https://amenra.github.io/ranx/normalization/min-max-norm) 
+* [Max Norm](https://amenra.github.io/ranx/normalization/sum-norm)         
+* [Sum Norm](https://amenra.github.io/ranx/normalization/rank-norm)        
+* [ZMUV Norm](https://amenra.github.io/ranx/normalization/max-norm)   
+* [Rank Norm](https://amenra.github.io/ranx/normalization/zmuv-norm)  
+* [Borda Norm](https://amenra.github.io/ranx/normalization/borda-norm)
+
+Please, refer to the [documentation](https://amenra.github.io/ranx/fusion) for further details.
+
 
 ## 🔌 Installation
 ```bash
@@ -133,6 +162,25 @@ d    model_4  0.366ᵃᵇᶜ   0.367ᵃᵇᶜ   0.408ᵃᵇᶜ
 e    model_5  0.405ᵃᵇᶜᵈ  0.406ᵃᵇᶜᵈ  0.451ᵃᵇᶜᵈ
 ```
 
+### Fusion
+```python
+from ranx import fuse, optimize_fusion
+
+best_params = optimize_fusion(
+    qrels=train_qrels,
+    runs=[train_run_1, train_run_2, train_run_3],
+    norm="min-max",     # The norm. to apply before fusion
+    method="wsum",      # The fusion algorithm to use (Weighted Sum)
+    metric="ndcg@100",  # The metric to maximize
+)
+
+combined_test_run = fuse(
+    runs=[test_run_1, test_run_2, test_run_3],  
+    norm="min-max",       
+    method="wsum",        
+    params=best_params,
+)
+```
 
 ## 📖 Examples
 

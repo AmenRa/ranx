@@ -19,7 +19,7 @@ def compare(
     threads: int = 0,
     rounding_digits: int = 3,
     show_percentages: bool = False,
-):
+) -> Report:
     """Evaluate multiple `runs` and compute statistical tests.
 
     Usage example:

@@ -1,26 +1,29 @@
 # Metrics
 
 ## Aliases
+---
 
 Aliases to use with `ranx.evaluate` and `ranx.compare`.
 
 | **Metric**                                       | **Alias**   | **@k** |
 | ------------------------------------------------ | ----------- | :----: |
-| [Hits][hits]                                     | hits        |  yes   |
-| [Hit Rate / Success][hit-rate-success]           | hit_rate    |  yes   |
-| [Precision][precision]                           | precision   |  yes   |
-| [Recall][recall]                                 | recall      |  yes   |
-| [F1][f1]                                         | f1          |  yes   |
-| [R-Precision][r-precision]                       | r_precision |   no   |
-| [Mean Reciprocal Rank][mean-reciprocal-rank]     | mrr         |  yes   |
-| [Mean Average Precision][mean-average-precision] | map         |  yes   |
-| [NDCG][ndcg]                                     | ndcg        |  yes   |
-| [NDCG Burges][ndcg-burges]                       | ndcg_burges |  yes   |
+| [Hits][hits]                                     | hits        |  Yes   |
+| [Hit Rate / Success][hit-rate-success]           | hit_rate    |  Yes   |
+| [Precision][precision]                           | precision   |  Yes   |
+| [Recall][recall]                                 | recall      |  Yes   |
+| [F1][f1]                                         | f1          |  Yes   |
+| [R-Precision][r-precision]                       | r_precision |   No   |
+| [Mean Reciprocal Rank][mean-reciprocal-rank]     | mrr         |  Yes   |
+| [Mean Average Precision][mean-average-precision] | map         |  Yes   |
+| [NDCG][ndcg]                                     | ndcg        |  Yes   |
+| [NDCG Burges][ndcg-burges]                       | ndcg_burges |  Yes   |
 
 ## Hits
+---
 **Hits** is the number of relevant documents retrieved.
 
 ## Hit Rate / Success
+---
 **Hit Rate** is the fraction of queries for which at least one relevant document is retrieved.
 Note: it is equivalent to `success` from [trec_eval](https://github.com/usnistgov/trec_eval).
 
@@ -97,18 +100,18 @@ Compute **Normalized Discounted Cumulative Gain** (NDCG) as proposed by [Järvel
 
 <details>
     <summary>BibTeX</summary>
-        ```bibtex
-            @article{DBLP:journals/tois/JarvelinK02,
-                author    = {Kalervo J{\"{a}}rvelin and
-                            Jaana Kek{\"{a}}l{\"{a}}inen},
-                title     = {Cumulated gain-based evaluation of {IR} techniques},
-                journal   = {{ACM} Trans. Inf. Syst.},
-                volume    = {20},
-                number    = {4},
-                pages     = {422--446},
-                year      = {2002}
-            }
-        ```
+    ```bibtex
+    @article{DBLP:journals/tois/JarvelinK02,
+        author    = {Kalervo J{\"{a}}rvelin and
+                    Jaana Kek{\"{a}}l{\"{a}}inen},
+        title     = {Cumulated gain-based evaluation of {IR} techniques},
+        journal   = {{ACM} Trans. Inf. Syst.},
+        volume    = {20},
+        number    = {4},
+        pages     = {422--446},
+        year      = {2002}
+    }
+    ```
 </details>
 
 $$
@@ -126,24 +129,24 @@ Compute **Normalized Discounted Cumulative Gain** (NDCG) at k as proposed by [Bu
 
 <details>
     <summary>BibTeX</summary>
-        ```bibtex
-            @inproceedings{DBLP:conf/icml/BurgesSRLDHH05,
-                author    = {Christopher J. C. Burges and
-                            Tal Shaked and
-                            Erin Renshaw and
-                            Ari Lazier and
-                            Matt Deeds and
-                            Nicole Hamilton and
-                            Gregory N. Hullender},
-                title     = {Learning to rank using gradient descent},
-                booktitle = {{ICML}},
-                series    = {{ACM} International Conference Proceeding Series},
-                volume    = {119},
-                pages     = {89--96},
-                publisher = {{ACM}},
-                year      = {2005}
-            }
-        ```
+    ```bibtex
+    @inproceedings{DBLP:conf/icml/BurgesSRLDHH05,
+        author    = {Christopher J. C. Burges and
+                    Tal Shaked and
+                    Erin Renshaw and
+                    Ari Lazier and
+                    Matt Deeds and
+                    Nicole Hamilton and
+                    Gregory N. Hullender},
+        title     = {Learning to rank using gradient descent},
+        booktitle = {{ICML}},
+        series    = {{ACM} International Conference Proceeding Series},
+        volume    = {119},
+        pages     = {89--96},
+        publisher = {{ACM}},
+        year      = {2005}
+    }
+    ```
 </details>
 
 $$
