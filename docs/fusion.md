@@ -264,7 +264,7 @@ Computes Condorcet as proposed by [Montague et al.](https://dl.acm.org/doi/10.11
 <details>
     <summary>BibTeX</summary>
     ```bibtex
-        @inproceedings{DBLP:conf/cikm/MontagueA02,
+    @inproceedings{DBLP:conf/cikm/MontagueA02,
         author    = {Mark H. Montague and
                     Javed A. Aslam},
         title     = {Condorcet fusion for improved retrieval},
@@ -311,7 +311,7 @@ Computes Log_ISR as proposed by [Mourão et al.](https://www.sciencedirect.com/s
 <details>
     <summary>BibTeX</summary>
     ```bibtex
-        @article{DBLP:journals/cmig/MouraoMM15,
+    @article{DBLP:journals/cmig/MouraoMM15,
         author    = {Andr{\'{e}} Mour{\~{a}}o and
                     Fl{\'{a}}vio Martins and
                     Jo{\~{a}}o Magalh{\~{a}}es},
@@ -335,7 +335,7 @@ Computes Log_ISR as proposed by [Mourão et al.](https://www.sciencedirect.com/s
 <details>
     <summary>BibTeX</summary>
     ```bibtex
-        @article{DBLP:journals/cmig/MouraoMM15,
+    @article{DBLP:journals/cmig/MouraoMM15,
         author    = {Andr{\'{e}} Mour{\~{a}}o and
                     Fl{\'{a}}vio Martins and
                     Jo{\~{a}}o Magalh{\~{a}}es},
@@ -592,7 +592,7 @@ Computes Weighted Condorcet as proposed by [Montague et al.](https://dl.acm.org/
 <details>
     <summary>BibTeX</summary>
     ```bibtex
-        @inproceedings{DBLP:conf/cikm/MontagueA02,
+    @inproceedings{DBLP:conf/cikm/MontagueA02,
         author    = {Mark H. Montague and
                     Javed A. Aslam},
         title     = {Condorcet fusion for improved retrieval},
