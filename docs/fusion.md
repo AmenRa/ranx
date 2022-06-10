@@ -260,7 +260,27 @@ Computes CombSUM as proposed by [Fox et al.](https://trec.nist.gov/pubs/trec2/pa
 
 
 ### Condorcet
-
+Computes Condorcet as proposed by [Montague et al.](https://dl.acm.org/doi/10.1145/584792.584881).
+<details>
+    <summary>BibTeX</summary>
+    ```bibtex
+        @inproceedings{DBLP:conf/cikm/MontagueA02,
+        author    = {Mark H. Montague and
+                    Javed A. Aslam},
+        title     = {Condorcet fusion for improved retrieval},
+        booktitle = {Proceedings of the 2002 {ACM} {CIKM} International Conference on Information
+                    and Knowledge Management, McLean, VA, USA, November 4-9, 2002},
+        pages     = {538--548},
+        publisher = {{ACM}},
+        year      = {2002},
+        url       = {https://doi.org/10.1145/584792.584881},
+        doi       = {10.1145/584792.584881},
+        timestamp = {Tue, 06 Nov 2018 16:57:50 +0100},
+        biburl    = {https://dblp.org/rec/conf/cikm/MontagueA02.bib},
+        bibsource = {dblp computer science bibliography, https://dblp.org}
+    }
+    ```
+</details>
 
 ### ISR
 Computes ISR as proposed by [Mourão et al.](https://www.sciencedirect.com/science/article/abs/pii/S0895611114000664).
@@ -568,7 +588,27 @@ Computes Weighted BordaFuse as proposed by [Aslam et al.](https://dl.acm.org/doi
 
 
 ### Weighted Condorcet
-
+Computes Weighted Condorcet as proposed by [Montague et al.](https://dl.acm.org/doi/10.1145/584792.584881).
+<details>
+    <summary>BibTeX</summary>
+    ```bibtex
+        @inproceedings{DBLP:conf/cikm/MontagueA02,
+        author    = {Mark H. Montague and
+                    Javed A. Aslam},
+        title     = {Condorcet fusion for improved retrieval},
+        booktitle = {Proceedings of the 2002 {ACM} {CIKM} International Conference on Information
+                    and Knowledge Management, McLean, VA, USA, November 4-9, 2002},
+        pages     = {538--548},
+        publisher = {{ACM}},
+        year      = {2002},
+        url       = {https://doi.org/10.1145/584792.584881},
+        doi       = {10.1145/584792.584881},
+        timestamp = {Tue, 06 Nov 2018 16:57:50 +0100},
+        biburl    = {https://dblp.org/rec/conf/cikm/MontagueA02.bib},
+        bibsource = {dblp computer science bibliography, https://dblp.org}
+    }
+    ```
+</details>
 
 ### WMNZ
 Computes Weighted MNZ as proposed by [Wu et al.](https://dl.acm.org/doi/10.1145/584792.584908).
