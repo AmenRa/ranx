@@ -26,7 +26,7 @@
 
 ## 🔥 News
 
-- [June 9, 2022] Added support for **24 fusion algorithms**, **six normalization strategies**, and an **automatic fusion optimization** functionality in `v.0.2.0`.  
+- [June 9, 2022] Added support for **24 fusion algorithms**, **six normalization strategies**, and an **automatic fusion optimization** functionality in `v.0.2`.  
 Check out the [official documentation](https://amenra.github.io/ranx) for further details on [fusion](https://amenra.github.io/ranx/fusion) and [normalization](https://amenra.github.io/ranx/normalization).
 - [May 18, 2022] Added support for loading qrels from [ir-datasets](https://ir-datasets.com) in `v.0.1.13`.  
 Usage example: `Qrels.from_ir_datasets("msmarco-document/dev")` for [MS MARCO](https://microsoft.github.io/msmarco/) document retrieval dev set.
