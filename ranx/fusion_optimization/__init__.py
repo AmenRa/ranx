@@ -31,6 +31,24 @@ from .optimize_wmnz import optimize_wmnz
 from .optimize_wsum import optimize_wsum
 
 
+def has_hyperparams(method: str):
+    if method in {
+        "logn_isr",
+        "gmnz",
+        "mixed",
+        "probfuse",
+        "rrf",
+        "slidefuse",
+        "w_bordafuse",
+        "w_condorcet",
+        "wmnz",
+        "wsum",
+    }:
+        return True
+    else:
+        raise ValueError(f"{method} does not support optimization report.")
+
+
 def optimization_switch(method: str):
     if method == "logn_isr":
         return optimize_logn_isr

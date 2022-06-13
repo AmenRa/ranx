@@ -1,7 +1,7 @@
 from typing import List
 
-from ..data_structures import Qrels, Run
-from ..fusion_optimization import optimization_switch
+from ..data_structures import OptimizationReport, Qrels, Run
+from ..fusion_optimization import has_hyperparams, optimization_switch
 from ..normalization import norm_switch
 
 
@@ -12,6 +12,8 @@ def optimize_fusion(
     method: str = "wsum",
     metric: str = "ndcg",
     return_optimization_report: bool = False,
+    rounding_digits: int = 3,
+    show_percentages: bool = False,
     **kwargs,
 ):
     if kwargs is None:
@@ -54,4 +56,20 @@ def optimize_fusion(
             runs = norm_switch(norm)(runs)
 
     # Optimize fusion ----------------------------------------------------------
-    return optimization_switch(method)(qrels, runs, **kwargs)
+    if return_optimization_report and has_hyperparams(method):
+        best_params, optimization_report = optimization_switch(method)(
+            qrels, runs, **kwargs
+        )
+        return (
+            best_params,
+            OptimizationReport(
+                method=method,
+                configs=list(optimization_report.keys()),
+                results=list(optimization_report.values()),
+                metric=metric,
+                rounding_digits=rounding_digits,
+                show_percentages=show_percentages,
+            ),
+        )
+    else:
+        return optimization_switch(method)(qrels, runs, **kwargs)
