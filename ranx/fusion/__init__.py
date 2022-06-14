@@ -20,6 +20,7 @@ __all__ = [
     "posfuse",
     "probfuse_train",
     "probfuse",
+    "rbc",
     "rrf",
     "segfuse_train",
     "segfuse",
@@ -48,6 +49,7 @@ from .mapfuse import mapfuse, mapfuse_train
 from .mixed import mixed
 from .posfuse import posfuse, posfuse_train
 from .probfuse import probfuse, probfuse_train
+from .rbc import rbc
 from .rrf import rrf
 from .segfuse import segfuse, segfuse_train
 from .slidefuse import slidefuse, slidefuse_train
@@ -92,6 +94,8 @@ def fusion_switch(method):
         return posfuse
     elif method == "probfuse":
         return probfuse
+    elif method == "rbc":
+        return rbc
     elif method == "rrf":
         return rrf
     elif method == "segfuse":

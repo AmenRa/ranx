@@ -5,11 +5,8 @@ from numba import njit, prange
 from numba.typed import List as TypedList
 
 from ..data_structures import Run
-from .common import (
-    convert_results_dict_list_to_run,
-    create_empty_results_dict,
-    create_empty_results_dict_list,
-)
+from .common import (convert_results_dict_list_to_run,
+                     create_empty_results_dict, create_empty_results_dict_list)
 
 
 # LOW LEVEL FUNCTIONS ==========================================================
@@ -57,6 +54,7 @@ def comb_gmnz(runs: List[Run], gamma: float, name: str = "comb_gmnz") -> Run:
 
     Args:
         runs (List[Run]): List of Runs.
+        gamma (float): Gamma parameter.
         name (str): Name for the combined run. Defaults to "comb_gmnz".
 
     Returns:

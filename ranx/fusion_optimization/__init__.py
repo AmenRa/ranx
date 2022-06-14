@@ -6,6 +6,7 @@ __all__ = [
     "optimize_mixed",
     "optimize_posfuse",
     "optimize_probfuse",
+    "optimize_rbc",
     "optimize_rrf",
     "optimize_segfuse",
     "optimize_slidefuse",
@@ -22,6 +23,7 @@ from .optimize_mapfuse import optimize_mapfuse
 from .optimize_mixed import optimize_mixed
 from .optimize_posfuse import optimize_posfuse
 from .optimize_probfuse import optimize_probfuse
+from .optimize_rbc import optimize_rbc
 from .optimize_rrf import optimize_rrf
 from .optimize_segfuse import optimize_segfuse
 from .optimize_slidefuse import optimize_slidefuse
@@ -37,6 +39,7 @@ def has_hyperparams(method: str):
         "gmnz",
         "mixed",
         "probfuse",
+        "rbc",
         "rrf",
         "slidefuse",
         "w_bordafuse",
@@ -58,6 +61,8 @@ def optimization_switch(method: str):
         return optimize_mixed
     elif method == "probfuse":
         return optimize_probfuse
+    elif method == "rbc":
+        return optimize_rbc
     elif method == "rrf":
         return optimize_rrf
     elif method == "slidefuse":

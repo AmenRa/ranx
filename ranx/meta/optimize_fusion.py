@@ -24,6 +24,7 @@ def optimize_fusion(
         "logn_isr",
         "mixed",
         "probfuse",
+        "rbc",
         "rrf",
         "slidefuse",
         "w_bordafuse",
