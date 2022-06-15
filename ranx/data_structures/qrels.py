@@ -8,8 +8,13 @@ from numba import types
 from numba.typed import Dict as TypedDict
 from numba.typed import List as TypedList
 
-from .common import (add_and_sort, create_and_sort, sort_dict_by_key,
-                     sort_dict_of_dict_by_value, to_typed_list)
+from .common import (
+    add_and_sort,
+    create_and_sort,
+    sort_dict_by_key,
+    sort_dict_of_dict_by_value,
+    to_typed_list,
+)
 
 
 class Qrels(object):
