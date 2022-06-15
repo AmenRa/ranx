@@ -61,7 +61,7 @@ combined_test_run = fuse(
 | [Condorcet][condorcet]                                     | condorcet |     No     | [Weighted Condorcet][weighted-condorcet] | w_condorcet |    Yes     |
 | [BayesFuse][bayesfuse]                                     | bayesfuse |    Yes     | [Mixed][mixed]                           | mixed       |    Yes     |
 | [WMNZ][wmnz]                                               | wmnz      |    Yes     | [Wighted Sum][wighted-sum]               | wsum        |    Yes     |
-
+| [Rank-Biased Centroids (RBC)][rank-biased-centroids-rbc]   | rrf       |            |                                          |             |
 
 
 ### BayesFuse
@@ -476,6 +476,38 @@ Computes ProbFuse as proposed by [Lillis et al.](https://dl.acm.org/doi/10.1145/
     ```
 </details>
 
+
+### Rank-Biased Centroids (RBC)
+Computes Rank-Biased Centroid (RBC) as proposed by [Bailey et al.](https://dl.acm.org/doi/10.1145/3077136.3080839).
+<details>
+    <summary>BibTeX</summary>
+    ```bibtex
+    @inproceedings{DBLP:conf/sigir/BaileyMST17,
+        author    = {Peter Bailey and
+                    Alistair Moffat and
+                    Falk Scholer and
+                    Paul Thomas},
+        editor    = {Noriko Kando and
+                    Tetsuya Sakai and
+                    Hideo Joho and
+                    Hang Li and
+                    Arjen P. de Vries and
+                    Ryen W. White},
+        title     = {Retrieval Consistency in the Presence of Query Variations},
+        booktitle = {Proceedings of the 40th International {ACM} {SIGIR} Conference on
+                    Research and Development in Information Retrieval, Shinjuku, Tokyo,
+                    Japan, August 7-11, 2017},
+        pages     = {395--404},
+        publisher = {{ACM}},
+        year      = {2017},
+        url       = {https://doi.org/10.1145/3077136.3080839},
+        doi       = {10.1145/3077136.3080839},
+        timestamp = {Wed, 25 Sep 2019 16:43:14 +0200},
+        biburl    = {https://dblp.org/rec/conf/sigir/BaileyMST17.bib},
+        bibsource = {dblp computer science bibliography, https://dblp.org}
+    }
+    ```
+</details>
 
 ### Reciprocal Rank Fusion (RRF)
 Computes Reciprocal Rank Fusion as proposed by [Cormack et al.](https://dl.acm.org/doi/10.1145/1571941.1572114).
