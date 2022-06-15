@@ -4,7 +4,7 @@
 The preferred way for creating a `Run` istance is converting a Python dictionary as follows:
 
 ```python
-from ranx import run
+from ranx import Run
 
 run_dict = {
     "q_1": {

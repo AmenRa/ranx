@@ -4,7 +4,7 @@
 The preferred way for creating a `Qrels` istance is converting Python dictionary as follows:
 
 ```python
-from ranx import qrels
+from ranx import Qrels
 
 qrels_dict = {
     "q_1": {
