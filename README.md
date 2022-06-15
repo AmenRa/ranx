@@ -26,7 +26,7 @@
 
 ## 🔥 News
 
-- [June 9, 2022] Added support for **24 fusion algorithms**, **six normalization strategies**, and an **automatic fusion optimization** functionality in `v.0.2`.  
+- [June 9, 2022] Added support for **25 fusion algorithms**, **six normalization strategies**, and an **automatic fusion optimization** functionality in `v.0.2`.  
 Check out the [official documentation](https://amenra.github.io/ranx) for further details on [fusion](https://amenra.github.io/ranx/fusion) and [normalization](https://amenra.github.io/ranx/normalization).
 - [May 18, 2022] Added support for loading qrels from [ir-datasets](https://ir-datasets.com) in `v.0.1.13`.  
 Usage example: `Qrels.from_ir_datasets("msmarco-document/dev")` for [MS MARCO](https://microsoft.github.io/msmarco/) document retrieval dev set.
@@ -77,14 +77,13 @@ A full list of the available qrels is provided [here](https://ir-datasets.com).
 
 ### Fusion Algorithms
 
-| **Name**                                                | **Name**                                                               | **Name**                                                    | **Name**                                                                      |
-| ------------------------------------------------------- | ---------------------------------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| [CombMIN](https://amenra.github.io/ranx/fusion/#combmin) | [CombGMNZ](https://amenra.github.io/ranx/fusion/#combgmnz)              | [PosFuse](https://amenra.github.io/ranx/fusion/#posfuse)     | [BordaFuse](https://amenra.github.io/ranx/fusion/#bordafuse)                   |
-| [CombMED](https://amenra.github.io/ranx/fusion/#combmed) | [ISR](https://amenra.github.io/ranx/fusion/#isr)                        | [ProbFuse](https://amenra.github.io/ranx/fusion/#probfuse)   | [Weighted BordaFuse](https://amenra.github.io/ranx/fusion/#weighted-bordafuse) |
-| [CombANZ](https://amenra.github.io/ranx/fusion/#combanz) | [Log_ISR](https://amenra.github.io/ranx/fusion/#log_isr)                | [SegFuse](https://amenra.github.io/ranx/fusion/#segfuse)     | [Condorcet](https://amenra.github.io/ranx/fusion/#condorcet)                   |
-| [CombMAX](https://amenra.github.io/ranx/fusion/#combmax) | [LogN_ISR](https://amenra.github.io/ranx/fusion/#logn_isr)              | [SlideFuse](https://amenra.github.io/ranx/fusion/#slidefuse) | [Weighted Condorcet](https://amenra.github.io/ranx/fusion/#weighted-condorcet) |
-| [CombSUM](https://amenra.github.io/ranx/fusion/#combsum) | [RRF](https://amenra.github.io/ranx/fusion/#reciprocal-rank-fusion-rrf) | [MAPFuse](https://amenra.github.io/ranx/fusion/#mapfuse)     | [Mixed](https://amenra.github.io/ranx/fusion/#mixed)                           |
-| [CombMNZ](https://amenra.github.io/ranx/fusion/#combmnz) | [WMNZ](https://amenra.github.io/ranx/fusion/#wmnz)                      | [BayesFuse](https://amenra.github.io/ranx/fusion/#bayesfuse) | [Wighted Sum](https://amenra.github.io/ranx/fusion/#wighted-sum)               |
+| **Name**                                                 | **Name**                                                   | **Name**                                                                | **Name**                                                     | **Name**                                                                       |
+| -------------------------------------------------------- | ---------------------------------------------------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| [CombMIN](https://amenra.github.io/ranx/fusion/#combmin) | [CombMNZ](https://amenra.github.io/ranx/fusion/#combmnz)   | [RRF](https://amenra.github.io/ranx/fusion/#reciprocal-rank-fusion-rrf) | [MAPFuse](https://amenra.github.io/ranx/fusion/#mapfuse)     | [BordaFuse](https://amenra.github.io/ranx/fusion/#bordafuse)                   |
+| [CombMED](https://amenra.github.io/ranx/fusion/#combmed) | [CombGMNZ](https://amenra.github.io/ranx/fusion/#combgmnz) | [RBC](https://amenra.github.io/ranx/fusion/#rank-biased-centroids-rbc)  | [PosFuse](https://amenra.github.io/ranx/fusion/#posfuse)     | [Weighted BordaFuse](https://amenra.github.io/ranx/fusion/#weighted-bordafuse) |
+| [CombANZ](https://amenra.github.io/ranx/fusion/#combanz) | [ISR](https://amenra.github.io/ranx/fusion/#isr)           | [WMNZ](https://amenra.github.io/ranx/fusion/#wmnz)                      | [ProbFuse](https://amenra.github.io/ranx/fusion/#probfuse)   | [Condorcet](https://amenra.github.io/ranx/fusion/#condorcet)                   |
+| [CombMAX](https://amenra.github.io/ranx/fusion/#combmax) | [Log_ISR](https://amenra.github.io/ranx/fusion/#log_isr)   | [Mixed](https://amenra.github.io/ranx/fusion/#mixed)                    | [SegFuse](https://amenra.github.io/ranx/fusion/#segfuse)     | [Weighted Condorcet](https://amenra.github.io/ranx/fusion/#weighted-condorcet) |
+| [CombSUM](https://amenra.github.io/ranx/fusion/#combsum) | [LogN_ISR](https://amenra.github.io/ranx/fusion/#logn_isr) | [BayesFuse](https://amenra.github.io/ranx/fusion/#bayesfuse)            | [SlideFuse](https://amenra.github.io/ranx/fusion/#slidefuse) | [Wighted Sum](https://amenra.github.io/ranx/fusion/#wighted-sum)               |
 
 Please, refer to the [documentation](https://amenra.github.io/ranx/fusion) for further details.
 
