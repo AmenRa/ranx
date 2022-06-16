@@ -307,14 +307,16 @@ class Report(object):
             for m2 in self.model_names:
                 if m1 != m2:
                     d[m1]["comparisons"][m2] = {}
+                    d[m1]["win_tie_loss"][m2] = {}
 
                     for metric in self.metrics:
                         d[m1]["comparisons"][m2][metric] = self.comparisons[
                             {m1, m2}
                         ][metric]["p_value"]
-                        d[m1]["win_tie_loss"][m2] = self.win_tie_loss[(m1, m2)][
-                            metric
-                        ]
+                        d[m1]["win_tie_loss"][m2][metric] = self.win_tie_loss[
+                            (m1, m2)
+                        ][metric]
+
         return d
 
     def save(self, path: str):
