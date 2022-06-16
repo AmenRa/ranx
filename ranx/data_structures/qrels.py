@@ -2,6 +2,7 @@ import json
 from collections import defaultdict
 from typing import Dict, List
 
+import ir_datasets
 import numpy as np
 import pandas as pd
 from numba import types
@@ -269,6 +270,18 @@ class Qrels(object):
         )
 
         return Qrels.from_dict(qrels_dict)
+
+    @staticmethod
+    def from_ir_datasets(dataset_id: str):
+        """Convert `ir-datasets` qrels into ranx.Qrels. It automatically downloads data if missing.
+        Args:
+            dataset_id (str): ID of the detaset in `ir-datasets`. `ir-datasets` catalog is available here: https://ir-datasets.com/index.html.
+        Returns:
+            Qrels: ranx.Qrels
+        """
+        qrels = Qrels.from_dict(ir_datasets.load(dataset_id).qrels_dict())
+        qrels.name = dataset_id
+        return qrels
 
     @property
     def size(self):
