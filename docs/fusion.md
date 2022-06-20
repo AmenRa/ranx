@@ -61,7 +61,7 @@ combined_test_run = fuse(
 | [Condorcet][condorcet]                                     | condorcet |     No     | [Weighted Condorcet][weighted-condorcet] | w_condorcet |    Yes     |
 | [BayesFuse][bayesfuse]                                     | bayesfuse |    Yes     | [Mixed][mixed]                           | mixed       |    Yes     |
 | [WMNZ][wmnz]                                               | wmnz      |    Yes     | [Wighted Sum][wighted-sum]               | wsum        |    Yes     |
-| [Rank-Biased Centroids (RBC)][rank-biased-centroids-rbc]   | rrf       |            |                                          |             |
+| [Rank-Biased Centroids (RBC)][rank-biased-centroids-rbc]   | rbc       |    Yes     |                                          |             |
 
 
 ### BayesFuse
@@ -157,7 +157,11 @@ Computes CombGMNZ as proposed by [Joon Ho Lee](https://dl.acm.org/doi/10.1145/25
     }
     ```
 </details>
-
+| **Optimization Parameter** | **Default Value** |
+| -------------------------- | :---------------: |
+| min_gamma                  |       0.01        |
+| max_gamma                  |        1.0        |
+| step                       |       0.01        |
 
 ### CombMAX
 Computes CombMAX as proposed by [Fox et al.](https://trec.nist.gov/pubs/trec2/papers/txt/23.txt).
@@ -352,6 +356,11 @@ Computes Log_ISR as proposed by [Mourão et al.](https://www.sciencedirect.com/s
     }
     ```
 </details>
+| **Optimization Parameter** | **Default Value** |
+| -------------------------- | :---------------: |
+| min_sigma                  |       0.01        |
+| max_sigma                  |        1.0        |
+| step                       |       0.01        |
 
 
 ### MAPFuse
@@ -410,6 +419,9 @@ Computes Mixed as proposed by [Wu et al.](https://dl.acm.org/doi/10.1145/584792.
     }
     ```
 </details>
+| **Optimization Parameter** | **Default Value** |
+| -------------------------- | :---------------: |
+| step                       |        0.1        |
 
 
 ### PosFuse
@@ -475,6 +487,10 @@ Computes ProbFuse as proposed by [Lillis et al.](https://dl.acm.org/doi/10.1145/
     }
     ```
 </details>
+| **Optimization Parameter** | **Default Value** |
+| -------------------------- | :---------------: |
+| min_n_segments             |         1         |
+| max_n_segments             |        100        |
 
 
 ### Rank-Biased Centroids (RBC)
@@ -508,6 +524,11 @@ Computes Rank-Biased Centroid (RBC) as proposed by [Bailey et al.](https://dl.ac
     }
     ```
 </details>
+| **Optimization Parameter** | **Default Value** |
+| -------------------------- | :---------------: |
+| min_phi                    |       0.01        |
+| max_phi                    |        1.0        |
+| step                       |       0.01        |
 
 ### Reciprocal Rank Fusion (RRF)
 Computes Reciprocal Rank Fusion as proposed by [Cormack et al.](https://dl.acm.org/doi/10.1145/1571941.1572114).
@@ -527,6 +548,11 @@ Computes Reciprocal Rank Fusion as proposed by [Cormack et al.](https://dl.acm.o
     }
     ```
 </details>
+| **Optimization Parameter** | **Default Value** |
+| -------------------------- | :---------------: |
+| min_k                      |        10         |
+| max_k                      |        100        |
+| step                       |        10         |
 
 
 ### SegFuse
@@ -588,6 +614,10 @@ Computes SlideFuse as proposed by [Lillis et al.](https://link.springer.com/chap
     }
     ```
 </details>
+| **Optimization Parameter** | **Default Value** |
+| -------------------------- | :---------------: |
+| min_w                      |         1         |
+| max_w                      |        100        |
 
 
 ### Weighted BordaFuse
@@ -617,6 +647,9 @@ Computes Weighted BordaFuse as proposed by [Aslam et al.](https://dl.acm.org/doi
     }
     ```
 </details>
+| **Optimization Parameter** | **Default Value** |
+| -------------------------- | :---------------: |
+| step                       |        0.1        |
 
 
 ### Weighted Condorcet
@@ -641,6 +674,9 @@ Computes Weighted Condorcet as proposed by [Montague et al.](https://dl.acm.org/
     }
     ```
 </details>
+| **Optimization Parameter** | **Default Value** |
+| -------------------------- | :---------------: |
+| step                       |        0.1        |
 
 ### WMNZ
 Computes Weighted MNZ as proposed by [Wu et al.](https://dl.acm.org/doi/10.1145/584792.584908).
@@ -664,8 +700,16 @@ Computes Weighted MNZ as proposed by [Wu et al.](https://dl.acm.org/doi/10.1145/
     }
     ```
 </details>
+| **Optimization Parameter** | **Default Value** |
+| -------------------------- | :---------------: |
+| step                       |        0.1        |
 
 
 ### Wighted Sum
 Computes a weighted sum of the scores given to documents by a list of Runs.
+
+
+| **Optimization Parameter** | **Default Value** |
+| -------------------------- | :---------------: |
+| step                       |        0.1        |
 
