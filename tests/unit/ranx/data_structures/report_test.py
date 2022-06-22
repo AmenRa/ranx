@@ -1,7 +1,6 @@
 import random
 
 import pytest
-
 from ranx import Qrels, Run, compare
 
 
@@ -113,8 +112,11 @@ def test_to_dict(qrels, runs, metrics):
     assert all(
         all(
             all(
-                x in report_dict[m1]["win_tie_loss"][m2]
-                for x in ["W", "T", "L"]
+                all(
+                    x in report_dict[m1]["win_tie_loss"][m2][metric]
+                    for x in ["W", "T", "L"]
+                )
+                for metric in report_dict["metrics"]
             )
             for m2 in report_dict["model_names"]
             if m1 != m2
