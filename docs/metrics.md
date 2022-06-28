@@ -5,18 +5,20 @@
 
 Aliases to use with `ranx.evaluate` and `ranx.compare`.
 
-| **Metric**                                       | **Alias**   | **@k** |
-| ------------------------------------------------ | ----------- | :----: |
-| [Hits][hits]                                     | hits        |  Yes   |
-| [Hit Rate / Success][hit-rate-success]           | hit_rate    |  Yes   |
-| [Precision][precision]                           | precision   |  Yes   |
-| [Recall][recall]                                 | recall      |  Yes   |
-| [F1][f1]                                         | f1          |  Yes   |
-| [R-Precision][r-precision]                       | r_precision |   No   |
-| [Mean Reciprocal Rank][mean-reciprocal-rank]     | mrr         |  Yes   |
-| [Mean Average Precision][mean-average-precision] | map         |  Yes   |
-| [NDCG][ndcg]                                     | ndcg        |  Yes   |
-| [NDCG Burges][ndcg-burges]                       | ndcg_burges |  Yes   |
+| **Metric**                                       | **Alias**   | **@k** | **.p** |
+| ------------------------------------------------ | ----------- | :----: | :----: |
+| [Hits][hits]                                     | hits        |  Yes   |   No   |
+| [Hit Rate / Success][hit-rate-success]           | hit_rate    |  Yes   |   No   |
+| [Precision][precision]                           | precision   |  Yes   |   No   |
+| [Recall][recall]                                 | recall      |  Yes   |   No   |
+| [F1][f1]                                         | f1          |  Yes   |   No   |
+| [R-Precision][r-precision]                       | r_precision |   No   |   No   |
+| [Bpref][bpref]                                   | bpref       |   No   |  Yes   |
+| [Rank-biased Precision][rank-biased-precision]   | rbp         |   No   |   No   |
+| [Mean Reciprocal Rank][mean-reciprocal-rank]     | mrr         |  Yes   |   No   |
+| [Mean Average Precision][mean-average-precision] | map         |  Yes   |   No   |
+| [NDCG][ndcg]                                     | ndcg        |  Yes   |   No   |
+| [NDCG Burges][ndcg-burges]                       | ndcg_burges |  Yes   |   No   |
 
 ## Hits
 ---
@@ -68,6 +70,34 @@ For a given query $Q$, **R-Precision** is the precision at $R$, where $R$ is the
 $$
 \operatorname{R-Precision} = \frac{r}{R}
 $$
+
+## Bpref
+---
+**Bpref** is designed for situations where relevance judgments are known to be incomplete. It is defined as:
+
+$$
+\operatorname{bpref}=\frac{1}{R}\sum_r{1 - \frac{|\text{$n$ ranked higher than $r$}|}{R}}
+$$
+
+where,
+
+- $r$ is a relevant document;
+- $n$ is a member of the first R judged nonrelevant documents as retrieved by the system;
+- $R$ is the number of relevant documents.
+
+## Rank-biased Precision
+Compute Rank-biased Precision (RBP).
+
+It is defined as:
+
+$$
+\operatorname{RBP} = (1 - p) \cdot \sum_{i=1}^{d}{r_i \cdot p^{i - 1}}
+$$
+
+where,
+
+- $p$ is the persistence value;
+- $r_i$ is either 0 or 1, whether the $i$-th ranked document is non-relevant or relevant, repsectively.
 
 ## (Mean) Reciprocal Rank
 ---

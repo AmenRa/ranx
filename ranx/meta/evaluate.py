@@ -16,19 +16,23 @@ def format_metrics(metrics: Union[List[str], str]) -> List[str]:
     return metrics
 
 
-def format_k(k: Union[List[int], int], metrics: List[str]) -> Dict[str, int]:
-    if type(k) == int:
-        return {m: k for m in metrics}
-    elif type(k) == list:
-        return {m: k[i] for i, m in enumerate(list(metrics))}
-    return k
-
-
 def extract_metric_and_k(metric):
-    metric_splitted = metric.split("@")
-    m = metric_splitted[0]
-
-    k = int(metric_splitted[1]) if len(metric_splitted) > 1 else 0
+    if "rbp" in metric:
+        if "." in metric:
+            metric_splitted = metric.split(".")
+        elif "@" in metric:
+            metric_splitted = metric.split("@")
+        else:
+            raise ValueError(
+                "RBP requires persistence value. Example: `rpb.95`"
+            )
+        m = metric_splitted[0]
+        k = metric_splitted[1]
+        k = float(f"0.{k}")
+    else:
+        metric_splitted = metric.split("@")
+        m = metric_splitted[0]
+        k = int(metric_splitted[1]) if len(metric_splitted) > 1 else 0
 
     return m, k
 
@@ -123,7 +127,7 @@ def evaluate(
     metric_scores_dict = {}
     for metric in metrics:
         m, k = extract_metric_and_k(metric)
-        metric_scores_dict[metric] = metric_switch(m)(_qrels, _run, k=k,)
+        metric_scores_dict[metric] = metric_switch(m)(_qrels, _run, k)
 
     # Save results in Run ------------------------------------------------------
     if type(run) == Run and save_results_in_run:

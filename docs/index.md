@@ -26,8 +26,9 @@
 
 ## 🔥 News
 
-- [June 9, 2022] Added support for **24 fusion algorithms**, **six normalization strategies**, and an **automatic fusion optimization** functionality in `v.0.2.0`.  
-Check out the [official documentation](https://amenra.github.io/ranx) for further details on [fusion](https://amenra.github.io/ranx/fusion) and [normalization](https://amenra.github.io/ranx/normalization).
+- [June 28, 2022] Added support for [Bpref](https://amenra.github.io/ranx/metrics/#bpref) and [Rank-biased Precision (RBP)](https://amenra.github.io/ranx/metrics/#rank-biased-precision) metrics.
+- [June 9, 2022] Added support for **25 fusion algorithms**, **six normalization strategies**, and an **automatic fusion optimization** functionality in `v.0.2`.  
+Check out the [official documentation](https://amenra.github.io/ranx) and [Jupyter Notebook](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/5_fusion.ipynb) for further details on [fusion](https://amenra.github.io/ranx/fusion) and [normalization](https://amenra.github.io/ranx/normalization).
 - [May 18, 2022] Added support for loading qrels from [ir-datasets](https://ir-datasets.com) in `v.0.1.13`.  
 Usage example: `Qrels.from_ir_datasets("msmarco-document/dev")` for [MS MARCO](https://microsoft.github.io/msmarco/) document retrieval dev set.
 - [May 4, 2022] Added [Paired Student's t-Test](https://en.wikipedia.org/wiki/Student%27s_t-test) in `v.0.1.12`.
@@ -37,7 +38,7 @@ Usage example: `Qrels.from_ir_datasets("msmarco-document/dev")` for [MS MARCO](h
 [ranx](https://github.com/AmenRa/ranx) is a library of fast ranking evaluation metrics implemented in [Python](https://en.wikipedia.org/wiki/Python_(programming_language)), leveraging [Numba](https://github.com/numba/numba) for high-speed [vector operations](https://en.wikipedia.org/wiki/Automatic_vectorization) and [automatic parallelization](https://en.wikipedia.org/wiki/Automatic_parallelization).
 It offers a user-friendly interface to evaluate and compare [Information Retrieval](https://en.wikipedia.org/wiki/Information_retrieval) and [Recommender Systems](https://en.wikipedia.org/wiki/Recommender_system).
 [ranx](https://github.com/AmenRa/ranx) allows you to perform statistical tests and export [LaTeX](https://en.wikipedia.org/wiki/LaTeX) tables for your scientific publications.
-Moreover, [ranx](https://github.com/AmenRa/ranx) provides several [fusion algorithms](https://amenra.github.io/ranx/fusion) and [normalization strategies](https://amenra.github.io/ranx/normalization), and an automatic [fusion optimization](https://amenra.github.io/ranx/fusion/optimize-fusion) functionality.
+Moreover, [ranx](https://github.com/AmenRa/ranx) provides several [fusion algorithms](https://amenra.github.io/ranx/fusion) and [normalization strategies](https://amenra.github.io/ranx/normalization), and an automatic [fusion optimization](https://amenra.github.io/ranx/fusion/#optimize-fusion) functionality.
 [ranx](https://github.com/AmenRa/ranx) was featured in [ECIR 2022](https://ecir2022.org), the 44th European Conference on Information Retrieval. 
  
 If you use [ranx](https://github.com/AmenRa/ranx) to evaluate results or conducting experiments involving fusion for your scientific publication, please consider [citing it](https://dblp.org/rec/conf/ecir/Bassani22.html?view=bibtex).
@@ -56,6 +57,8 @@ For a in-depth overview, follow the [Examples](#-examples) section.
 * [Recall](https://amenra.github.io/ranx/metrics/#recall)
 * [F1](https://amenra.github.io/ranx/metrics/#f1)
 * [r-Precision](https://amenra.github.io/ranx/metrics/#r-precision)
+* [Bpref](https://amenra.github.io/ranx/metrics/#bpref)
+* [Rank-biased Precision (RBP)](https://amenra.github.io/ranx/metrics/#rank-biased-precision)
 * [Mean Reciprocal Rank (MRR)](https://amenra.github.io/ranx/metrics/#mean-reciprocal-rank)
 * [Mean Average Precision (MAP)](https://amenra.github.io/ranx/metrics/#mean-average-precision)
 * [Normalized Discounted Cumulative Gain (NDCG)](https://amenra.github.io/ranx/metrics/#ndcg)
@@ -77,25 +80,24 @@ A full list of the available qrels is provided [here](https://ir-datasets.com).
 
 ### Fusion Algorithms
 
-| **Name**                                                | **Name**                                                               | **Name**                                                    | **Name**                                                                      |
-| ------------------------------------------------------- | ---------------------------------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| [CombMIN](https://amenra.github.io/ranx/fusion/combmin) | [CombGMNZ](https://amenra.github.io/ranx/fusion/combgmnz)              | [PosFuse](https://amenra.github.io/ranx/fusion/posfuse)     | [BordaFuse](https://amenra.github.io/ranx/fusion/bordafuse)                   |
-| [CombMED](https://amenra.github.io/ranx/fusion/combmed) | [ISR](https://amenra.github.io/ranx/fusion/isr)                        | [ProbFuse](https://amenra.github.io/ranx/fusion/probfuse)   | [Weighted BordaFuse](https://amenra.github.io/ranx/fusion/weighted-bordafuse) |
-| [CombANZ](https://amenra.github.io/ranx/fusion/combanz) | [Log_ISR](https://amenra.github.io/ranx/fusion/log_isr)                | [SegFuse](https://amenra.github.io/ranx/fusion/segfuse)     | [Condorcet](https://amenra.github.io/ranx/fusion/condorcet)                   |
-| [CombMAX](https://amenra.github.io/ranx/fusion/combmax) | [LogN_ISR](https://amenra.github.io/ranx/fusion/logn_isr)              | [SlideFuse](https://amenra.github.io/ranx/fusion/slidefuse) | [Weighted Condorcet](https://amenra.github.io/ranx/fusion/weighted-condorcet) |
-| [CombSUM](https://amenra.github.io/ranx/fusion/combsum) | [RRF](https://amenra.github.io/ranx/fusion/reciprocal-rank-fusion-rrf) | [MAPFuse](https://amenra.github.io/ranx/fusion/mapfuse)     | [Mixed](https://amenra.github.io/ranx/fusion/mixed)                           |
-| [CombMNZ](https://amenra.github.io/ranx/fusion/combmnz) | [WMNZ](https://amenra.github.io/ranx/fusion/wmnz)                      | [BayesFuse](https://amenra.github.io/ranx/fusion/bayesfuse) | [Wighted Sum](https://amenra.github.io/ranx/fusion/wighted-sum)               |
+| **Name**                                                 | **Name**                                                   | **Name**                                                                | **Name**                                                     | **Name**                                                                       |
+| -------------------------------------------------------- | ---------------------------------------------------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| [CombMIN](https://amenra.github.io/ranx/fusion/#combmin) | [CombMNZ](https://amenra.github.io/ranx/fusion/#combmnz)   | [RRF](https://amenra.github.io/ranx/fusion/#reciprocal-rank-fusion-rrf) | [MAPFuse](https://amenra.github.io/ranx/fusion/#mapfuse)     | [BordaFuse](https://amenra.github.io/ranx/fusion/#bordafuse)                   |
+| [CombMED](https://amenra.github.io/ranx/fusion/#combmed) | [CombGMNZ](https://amenra.github.io/ranx/fusion/#combgmnz) | [RBC](https://amenra.github.io/ranx/fusion/#rank-biased-centroids-rbc)  | [PosFuse](https://amenra.github.io/ranx/fusion/#posfuse)     | [Weighted BordaFuse](https://amenra.github.io/ranx/fusion/#weighted-bordafuse) |
+| [CombANZ](https://amenra.github.io/ranx/fusion/#combanz) | [ISR](https://amenra.github.io/ranx/fusion/#isr)           | [WMNZ](https://amenra.github.io/ranx/fusion/#wmnz)                      | [ProbFuse](https://amenra.github.io/ranx/fusion/#probfuse)   | [Condorcet](https://amenra.github.io/ranx/fusion/#condorcet)                   |
+| [CombMAX](https://amenra.github.io/ranx/fusion/#combmax) | [Log_ISR](https://amenra.github.io/ranx/fusion/#log_isr)   | [Mixed](https://amenra.github.io/ranx/fusion/#mixed)                    | [SegFuse](https://amenra.github.io/ranx/fusion/#segfuse)     | [Weighted Condorcet](https://amenra.github.io/ranx/fusion/#weighted-condorcet) |
+| [CombSUM](https://amenra.github.io/ranx/fusion/#combsum) | [LogN_ISR](https://amenra.github.io/ranx/fusion/#logn_isr) | [BayesFuse](https://amenra.github.io/ranx/fusion/#bayesfuse)            | [SlideFuse](https://amenra.github.io/ranx/fusion/#slidefuse) | [Wighted Sum](https://amenra.github.io/ranx/fusion/#wighted-sum)               |
 
 Please, refer to the [documentation](https://amenra.github.io/ranx/fusion) for further details.
 
 ### Normalization Strategies
 
-* [Min-Max Norm](https://amenra.github.io/ranx/normalization/min-max-norm) 
-* [Max Norm](https://amenra.github.io/ranx/normalization/sum-norm)         
-* [Sum Norm](https://amenra.github.io/ranx/normalization/rank-norm)        
-* [ZMUV Norm](https://amenra.github.io/ranx/normalization/max-norm)   
-* [Rank Norm](https://amenra.github.io/ranx/normalization/zmuv-norm)  
-* [Borda Norm](https://amenra.github.io/ranx/normalization/borda-norm)
+* [Min-Max Norm](https://amenra.github.io/ranx/normalization/#min-max-norm) 
+* [Max Norm](https://amenra.github.io/ranx/normalization/#sum-norm)         
+* [Sum Norm](https://amenra.github.io/ranx/normalization/#rank-norm)        
+* [ZMUV Norm](https://amenra.github.io/ranx/normalization/#max-norm)   
+* [Rank Norm](https://amenra.github.io/ranx/normalization/#zmuv-norm)  
+* [Borda Norm](https://amenra.github.io/ranx/normalization/#borda-norm)
 
 Please, refer to the [documentation](https://amenra.github.io/ranx/fusion) for further details.
 
@@ -190,6 +192,7 @@ combined_test_run = fuse(
 | Qrels and Run         | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/2_qrels_and_run.ipynb)         |
 | Evaluation            | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/3_evaluation.ipynb)            |
 | Comparison and Report | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/4_comparison_and_report.ipynb) |
+| Fusion                | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/5_fusion.ipynb)                |
 
 
 ## 📚 Documentation

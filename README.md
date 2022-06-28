@@ -26,6 +26,7 @@
 
 ## 🔥 News
 
+- [June 28, 2022] Added support for [Bpref](https://amenra.github.io/ranx/metrics/#bpref) and [Rank-biased Precision (RBP)](https://amenra.github.io/ranx/metrics/#rank-biased-precision) metrics.
 - [June 9, 2022] Added support for **25 fusion algorithms**, **six normalization strategies**, and an **automatic fusion optimization** functionality in `v.0.2`.  
 Check out the [official documentation](https://amenra.github.io/ranx) and [Jupyter Notebook](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/5_fusion.ipynb) for further details on [fusion](https://amenra.github.io/ranx/fusion) and [normalization](https://amenra.github.io/ranx/normalization).
 - [May 18, 2022] Added support for loading qrels from [ir-datasets](https://ir-datasets.com) in `v.0.1.13`.  
@@ -56,6 +57,8 @@ For a in-depth overview, follow the [Examples](#-examples) section.
 * [Recall](https://amenra.github.io/ranx/metrics/#recall)
 * [F1](https://amenra.github.io/ranx/metrics/#f1)
 * [r-Precision](https://amenra.github.io/ranx/metrics/#r-precision)
+* [Bpref](https://amenra.github.io/ranx/metrics/#bpref)
+* [Rank-biased Precision (RBP)](https://amenra.github.io/ranx/metrics/#rank-biased-precision)
 * [Mean Reciprocal Rank (MRR)](https://amenra.github.io/ranx/metrics/#mean-reciprocal-rank)
 * [Mean Average Precision (MAP)](https://amenra.github.io/ranx/metrics/#mean-average-precision)
 * [Normalized Discounted Cumulative Gain (NDCG)](https://amenra.github.io/ranx/metrics/#ndcg)
