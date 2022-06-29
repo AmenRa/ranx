@@ -27,6 +27,7 @@ metric_labels = {
 stat_test_labels = {
     "fisher": "Fisher's randomization test",
     "student": "paired Student's t-test",
+    "tukey": "Tukey's HSD test",
 }
 
 
@@ -189,7 +190,7 @@ class Report(object):
             "% To change the table size, act on the resizebox argument `0.8`.\n"
             + """\\begin{table*}[ht]\n\centering\n\caption{\nOverall effectiveness of the models.\nThe best results are highlighted in boldface.\nSuperscripts denote significant differences in """
             + self.get_stat_test_label(self.stat_test)
-            + """with $p \le """
+            + """ with $p \le """
             + str(self.max_p)
             + "$.\n}\n\\resizebox{0.8\\textwidth}{!}{"
             + "\n\\begin{tabular}{c|c"

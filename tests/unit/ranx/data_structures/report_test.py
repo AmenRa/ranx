@@ -149,3 +149,8 @@ def test_stat_test(qrels, runs, metrics):
         == "paired Student's t-test"
     )
     assert report.get_stat_test_label(report.stat_test) in report.to_latex()
+
+    report = compare(qrels, runs, metrics, stat_test="tukey")
+    assert report.stat_test == "tukey"
+    assert report.get_stat_test_label(report.stat_test) == "Tukey's HSD test"
+    assert report.get_stat_test_label(report.stat_test) in report.to_latex()

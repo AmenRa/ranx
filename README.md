@@ -26,6 +26,7 @@
 
 ## 🔥 News
 
+- [June 29, 2022] Added support for Tukey's HSD Test.
 - [June 28, 2022] Added support for [Bpref](https://amenra.github.io/ranx/metrics/#bpref) and [Rank-biased Precision (RBP)](https://amenra.github.io/ranx/metrics/#rank-biased-precision) metrics.
 - [June 9, 2022] Added support for **25 fusion algorithms**, **six normalization strategies**, and an **automatic fusion optimization** functionality in `v.0.2`.  
 Check out the [official documentation](https://amenra.github.io/ranx) and [Jupyter Notebook](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/5_fusion.ipynb) for further details on [fusion](https://amenra.github.io/ranx/fusion) and [normalization](https://amenra.github.io/ranx/normalization).
@@ -68,8 +69,9 @@ The metrics have been tested against [TREC Eval](https://github.com/usnistgov/tr
 ### Statistical Tests
 * [Fisher's Randomization Test](https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/fishrand.htm)
 * [Paired Student's t-Test](https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/t_test.htm)
+* [Tukey's HSD Test](https://www.itl.nist.gov/div898/handbook/prc/section4/prc471.htm)
 
-Please, refer to [Smucker et al.](https://dl.acm.org/doi/10.1145/1321440.1321528) for additional information on statistical tests for Information Retrieval.
+Please, refer to [Smucker et al.](https://dl.acm.org/doi/10.1145/1321440.1321528), [Carterette](https://dl.acm.org/doi/10.1145/2094072.2094076), and  [Fuhr](http://www.sigir.org/wp-content/uploads/2018/01/p032.pdf) for additional information on statistical tests for Information Retrieval.
 
 ### Off-the-shelf Qrels
 You can load qrels from [ir-datasets](https://ir-datasets.com) as simply as:

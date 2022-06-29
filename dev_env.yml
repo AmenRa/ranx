@@ -16,6 +16,7 @@ dependencies:
   - pytest
   - python=3.7
   - scipy
+  - statsmodels
   - tabulate
   - tqdm
   - rich
