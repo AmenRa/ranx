@@ -26,6 +26,7 @@
 
 ## 🔥 News
 
+- [July 27, 2022] `ranx` will be featured in [CIKM 2022, the 31st ACM International Conference on Information and Knowledge Management](https://www.cikm2022.org)!
 - [June 29, 2022] Added support for Tukey's HSD Test.
 - [June 28, 2022] Added support for [Bpref](https://amenra.github.io/ranx/metrics/#bpref) and [Rank-biased Precision (RBP)](https://amenra.github.io/ranx/metrics/#rank-biased-precision) metrics.
 - [June 9, 2022] Added support for **25 fusion algorithms**, **six normalization strategies**, and an **automatic fusion optimization** functionality in `v.0.2`.  
