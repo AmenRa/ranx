@@ -196,7 +196,7 @@ class Report(object):
             + """ with $p \le """
             + str(self.max_p)
             + "$.\n}\n\\resizebox{0.8\\textwidth}{!}{"
-            + "\n\\begin{tabular}{c|c"
+            + "\n\\begin{tabular}{c|l"
             + "|c" * len(self.metrics)
             + "}"
             + "\n\\toprule"
