@@ -12,7 +12,7 @@ def compare(
     qrels: Qrels,
     runs: List[Run],
     metrics: Union[List[str], str],
-    stat_test: str = "fisher",
+    stat_test: str = "student",
     n_permutations: int = 1000,
     max_p: float = 0.01,
     random_seed: int = 42,
@@ -25,7 +25,7 @@ def compare(
     Usage example:
     ```python
     from ranx import compare
-    
+
     # Compare different runs and perform statistical tests
     report = compare(
         qrels=qrels,
@@ -128,4 +128,3 @@ def compare(
         show_percentages=show_percentages,
         stat_test=stat_test,
     )
-

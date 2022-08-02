@@ -127,18 +127,10 @@ def test_to_dict(qrels, runs, metrics):
 
 def test_stat_test(qrels, runs, metrics):
     report = compare(qrels, runs, metrics)
-    assert report.stat_test == "fisher"
+    assert report.stat_test == "student"
     assert (
         report.get_stat_test_label(report.stat_test)
-        == "Fisher's randomization test"
-    )
-    assert report.get_stat_test_label(report.stat_test) in report.to_latex()
-
-    report = compare(qrels, runs, metrics, stat_test="fisher")
-    assert report.stat_test == "fisher"
-    assert (
-        report.get_stat_test_label(report.stat_test)
-        == "Fisher's randomization test"
+        == "paired Student's t-test"
     )
     assert report.get_stat_test_label(report.stat_test) in report.to_latex()
 
@@ -147,6 +139,14 @@ def test_stat_test(qrels, runs, metrics):
     assert (
         report.get_stat_test_label(report.stat_test)
         == "paired Student's t-test"
+    )
+    assert report.get_stat_test_label(report.stat_test) in report.to_latex()
+
+    report = compare(qrels, runs, metrics, stat_test="fisher")
+    assert report.stat_test == "fisher"
+    assert (
+        report.get_stat_test_label(report.stat_test)
+        == "Fisher's randomization test"
     )
     assert report.get_stat_test_label(report.stat_test) in report.to_latex()
 
