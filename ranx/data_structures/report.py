@@ -3,7 +3,6 @@
 import json
 from typing import Dict, List, Tuple
 
-import numpy as np
 from tabulate import tabulate
 
 from .frozenset_dict import FrozensetDict
@@ -12,16 +11,20 @@ chars = list("abcdefghijklmnopqrstuvwxyz")
 super_chars = list("ᵃᵇᶜᵈᵉᶠᵍʰᶦʲᵏˡᵐⁿᵒᵖ۹ʳˢᵗᵘᵛʷˣʸᶻ")
 
 metric_labels = {
-    "hits": "Hits",
-    "hit_rate": "Hit_Rate",
-    "precision": "P",
-    "recall": "Recall",
-    "f1": "F1",
-    "r-precision": "R-Prec",
-    "mrr": "MRR",
-    "map": "MAP",
-    "ndcg": "NDCG",
-    "ndcg_burges": "NDCG_Burges",
+    **{
+        "hits": "Hits",
+        "hit_rate": "Hit_Rate",
+        "precision": "P",
+        "recall": "Recall",
+        "f1": "F1",
+        "r-precision": "R-Prec",
+        "mrr": "MRR",
+        "map": "MAP",
+        "ndcg": "NDCG",
+        "ndcg_burges": "NDCG_Burges",
+        "bpref": "BPref",
+    },
+    **{f"rbp.{i}": f"RBP.{i}" for i in range(1, 100)},
 }
 
 stat_test_labels = {
