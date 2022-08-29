@@ -13,7 +13,7 @@ super_chars = list("ᵃᵇᶜᵈᵉᶠᵍʰᶦʲᵏˡᵐⁿᵒᵖ۹ʳˢᵗᵘᵛ
 metric_labels = {
     **{
         "hits": "Hits",
-        "hit_rate": "Hit_Rate",
+        "hit_rate": "Hit Rate",
         "precision": "P",
         "recall": "Recall",
         "f1": "F1",
@@ -21,7 +21,7 @@ metric_labels = {
         "mrr": "MRR",
         "map": "MAP",
         "ndcg": "NDCG",
-        "ndcg_burges": "NDCG_Burges",
+        "ndcg_burges": "NDCG Burges",
         "bpref": "BPref",
     },
     **{f"rbp.{i}": f"RBP.{i}" for i in range(1, 100)},
