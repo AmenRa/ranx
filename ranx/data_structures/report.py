@@ -74,7 +74,7 @@ class Report(object):
         win_tie_loss: Dict[Tuple[str], Dict[str, Dict[str, int]]],
         rounding_digits: int = 3,
         show_percentages: bool = False,
-        stat_test: str = "fisher",
+        stat_test: str = "student",
     ):
         self.model_names = model_names
         self.results = results
