@@ -10,11 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `SciPy` version explicitly stated in `setup.py` to avoid errors.
 
 ### Changed
-- `Qrels`'s `save` and `from_file` functions automatically infer file extension. `kind` parameter can be used to override default behavior.
+- `Qrels`'s `save` and `from_file` functions now automatically infer file extension. `kind` parameter can be used to override default behavior.
 - `Qrels`'s `save` and `from_file` functions are now much faster with `json` files thanks to [`orjson`](https://github.com/ijl/orjson).
-- `Run`'s `save` and `from_file` functions automatically infer file extension. `kind` parameter can be used to override default behavior.
+- `Run`'s `save` and `from_file` functions now automatically infer file extension. `kind` parameter can be used to override default behavior.
 - `Run`'s `save` and `from_file` functions are now much faster with `json` files thanks to [`orjson`](https://github.com/ijl/orjson).
-- `Two-sided Paired Student's t-Test` is now the default statistical test used when calling `compare`. It is much faster than `Fisher's` and usually agree with it.
+- `Two-sided Paired Student's t-Test` is now the default statistical test used when calling `compare`. It is much faster than `Fisher's` and usually agrees with it.
 
 ## [0.2.x] - 2022
 
