@@ -24,9 +24,16 @@ run = Run(run_dict, name="bm25")
 `Runs` can also be loaded from TREC-style and JSON files, and from Pandas DataFrames.
 
 ## Load from Files
+Parse a run file into `ranx.Run`.  
+Supported formats are JSON and TREC run format.  
+Correct import behavior is inferred from the file extension: `.json` → `json`, `.trec` → `trec`, `.txt` → `trec`.  
+Use the `kind` argument to override the default behavior.
+
 ```python
-run = Run.from_file("path/to/json_file")
-run = Run.from_file("path/to/trec_file", kind="trec")
+run = Run.from_file("path/to/run.json")  # JSON file
+run = Run.from_file("path/to/run.trec")  # TREC-Style file
+run = Run.from_file("path/to/run.txt")   # TREC-Style file with txt extension
+run = Run.from_file("path/to/run.custom", kind="json")  # Loaded as JSON file
 ```
 
 ## Load from Pandas DataFrames
@@ -45,4 +52,16 @@ run = Runs.from_df(
     doc_id_col="doc_id",
     score_col="score",
 )
+```
+
+## Save
+Write `run` to `path` as JSON file or TREC run format.  
+File type is automatically inferred form the filename extension: `.json` → `json`, `.trec` → `trec`, `.txt` → `trec`.  
+Use the `kind` argument to override the default behavior.
+
+```python
+run.save("path/to/run.json")  # Save as JSON file
+run.save("path/to/run.trec")  # Save as TREC-Style file
+run.save("path/to/run.txt")   # Save as TREC-Style file with txt extension
+run.save("path/to/run.custom", kind="json")  # Save as JSON file
 ```

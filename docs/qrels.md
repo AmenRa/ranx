@@ -24,9 +24,17 @@ qrels = Qrels(qrels_dict, name="MSMARCO")
 Qrels can also be loaded from TREC-style and JSON files, from [ir-datasets](https://ir-datasets.com), and from Pandas DataFrames.
 
 ## Load from files
+Parse a qrels file into `ranx.Qrels`.  
+Supported formats are JSON and TREC qrels format.  
+Correct import behavior is inferred from the file extension: `.json` → `json`, `.trec` → `trec`, `.txt` → `trec`.  
+Use the `kind` argument to override the default behavior.
+
+
 ```python
-qrels = Qrels.from_file("path/to/json_file")
-qrels = Qrels.from_file("path/to/trec_file", kind="trec")
+qrels = Qrels.from_file("path/to/qrels.json")  # JSON file
+qrels = Qrels.from_file("path/to/qrels.trec")  # TREC-Style file
+qrels = Qrels.from_file("path/to/qrels.txt")   # TREC-Style file with txt extension
+qrels = Qrels.from_file("path/to/qrels.custom", kind="json")  # Loaded as JSON file
 ```
 
 ## Load from ir-datasets
@@ -52,4 +60,16 @@ qrels = Qrels.from_df(
     doc_id_col="doc_id",
     score_col="score",
 )
+```
+
+## Save
+Write `qrels` to `path` as JSON file or TREC qrels format.  
+File type is automatically inferred form the filename extension: `.json` → `json`, `.trec` → `trec`, `.txt` → `trec`.  
+Use the `kind` argument to override the default behavior.
+
+```python
+qrels.save("path/to/qrels.json")  # Save as JSON file
+qrels.save("path/to/qrels.trec")  # Save as TREC-Style file
+qrels.save("path/to/qrels.txt")   # Save as TREC-Style file with txt extension
+qrels.save("path/to/qrels.custom", kind="json")  # Save as JSON file
 ```
