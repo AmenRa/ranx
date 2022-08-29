@@ -1,9 +1,11 @@
 import json
+import os
 from collections import defaultdict
 from typing import Dict, List
 
 import ir_datasets
 import numpy as np
+import orjson
 import pandas as pd
 from numba import types
 from numba.typed import Dict as TypedDict
@@ -84,7 +86,8 @@ class Qrels(object):
         """
         if self.qrels.get(q_id) is None:
             self.qrels[q_id] = TypedDict.empty(
-                key_type=types.unicode_type, value_type=types.int64,
+                key_type=types.unicode_type,
+                value_type=types.int64,
             )
         self.qrels[q_id][doc_id] = int(score)
         self.sorted = False
@@ -151,22 +154,24 @@ class Qrels(object):
             d[q_id] = dict(self[q_id])
         return d
 
-    def save(self, path: str = "qrels.json", kind: str = "json"):
-        """Write `qrels` to `path` as JSON file or TREC qrels format.
+    def save(self, path: str = "qrels.json", kind: str = None):
+        """Write `qrels` to `path` as JSON file or TREC qrels format.        File type is automatically inferred form the filename extension: ".json" -> "json", ".trec" -> "trec", ".txt" -> "trec". Use the "kind" argument to override this behavior.
 
         Args:
             path (str, optional): Saving path. Defaults to "qrels.json".
-            kind (str, optional): Kind of file to save, must be either "json" or "trec". Defaults to "json".
+            kind (str, optional): Kind of file to save, must be either "json" or "trec". If None, it will be automatically inferred from the filename extension.
         """
-        assert kind in {
-            "json",
-            "trec",
-        }, "Error `kind` must be 'json' or 'trec'"
+        # Infer file extension -------------------------------------------------
+        kind = get_file_kind(path, kind)
 
-        with open(path, "w") as f:
-            if kind == "json":
-                f.write(json.dumps(self.to_dict(), indent=4))
-            else:
+        # Save Qrels -----------------------------------------------------------
+        if kind == "json":
+            with open(path, "wb") as f:
+                f.write(
+                    orjson.dumps(self.to_dict(), option=orjson.OPT_INDENT_2)
+                )
+        else:
+            with open(path, "w") as f:
                 for i, q_id in enumerate(self.qrels.keys()):
                     for j, doc_id in enumerate(self.qrels[q_id].keys()):
                         score = self.qrels[q_id][doc_id]
@@ -209,23 +214,22 @@ class Qrels(object):
         return qrels
 
     @staticmethod
-    def from_file(path: str, kind: str = "json"):
-        """Parse a qrels file into ranx.Qrels. Supported formats are JSON and TREC qrels format.
+    def from_file(path: str, kind: str = None):
+        """Parse a qrels file into ranx.Qrels. Supported formats are JSON and TREC qrels format. Correct import behavior is inferred from the file extension: ".json" -> "json", ".trec" -> "trec", ".txt" -> "trec". Use the "kind" argument to override this behavior.
 
         Args:
             path (str): File path.
-            kind (str, optional): Kind of file to load, must be either "json" or "trec". Defaults to "json".
+            kind (str, optional): Kind of file to load, must be either "json" or "trec".
 
         Returns:
             Qrels: ranx.Qrels
         """
-        assert kind in {
-            "json",
-            "trec",
-        }, "Error `kind` must be 'json' or 'trec'"
+        # Infer file extension -------------------------------------------------
+        kind = get_file_kind(path, kind)
 
+        # Load Qrels -----------------------------------------------------------
         if kind == "json":
-            qrels = json.loads(open(path, "r").read())
+            qrels = orjson.loads(open(path, "rb").read())
         else:
             qrels = defaultdict(dict)
             with open(path) as f:
@@ -298,3 +302,18 @@ class Qrels(object):
 
     def __str__(self):
         return self.qrels.__str__()
+
+
+def get_file_kind(path: str = "qrels.json", kind: str = None) -> str:
+    # Infer file extension
+    if kind is None:
+        kind = os.path.splitext(path)[1][1:]
+        kind = "trec" if kind == "txt" else kind
+
+    # Sanity check
+    assert kind in {
+        "json",
+        "trec",
+    }, "Error `kind` must be 'json' or 'trec'"
+
+    return kind
