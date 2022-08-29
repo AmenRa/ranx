@@ -4,14 +4,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.2.9] - 2022-08-29
+### Fixed
+- Fixed a bug in `report.py:Report`: some metric labels were missing.
+- `SciPy` version explicitly stated in `setup.py` to avoid errors.
 
-- Experimental `Fusion` functionalities (_undocumented_).
-- Experimental `Normalization` functionalities (_undocumented_).
+### Changed
+- `Qrels`'s `save` and `from_file` functions automatically infer file extension. `kind` parameter can be used to override default behavior.
+- `Qrels`'s `save` and `from_file` functions are now much faster with `json` files thanks to [`orjson`](https://github.com/ijl/orjson).
+- `Run`'s `save` and `from_file` functions automatically infer file extension. `kind` parameter can be used to override default behavior.
+- `Run`'s `save` and `from_file` functions are now much faster with `json` files thanks to [`orjson`](https://github.com/ijl/orjson).
+- `Two-sided Paired Student's t-Test` is now the default statistical test used when calling `compare`. It is much faster than `Fisher's` and usually agree with it.
+
+## [0.2.x] - 2022
+
+Sorry, I have been lazy.
 
 ## [0.1.14] - 2022-04-19
 ### Fixed
-- Fixed a bug in in `report.py:Report.to_dict`.
+- Fixed a bug in `report.py:Report.to_dict`.
   
 ## [0.1.13] - 2022-04-18
 ### Added
@@ -24,9 +35,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `stat_test` parameter to `report`. Defaults to `fisher`.
 
 ### Changed
-- `Report`'s `to_latex` function now takes into account the newly introduce `stat_test` parameter to correctly generating LaTeX tables' captions.
-- `Report`'s `to_dict` function now takes into account the newly introduce `stat_test` parameter and adds it to the output dictionary.
-- `Report`'s `save` function now takes into account the newly introduce `stat_test` parameter and adds it to the output JSON file.
+- `Report`'s `to_latex` function now takes into account the newly introduced `stat_test` parameter to correctly generating LaTeX tables' captions.
+- `Report`'s `to_dict` function now takes into account the newly introduced `stat_test` parameter and adds it to the output dictionary.
+- `Report`'s `save` function now takes into account the newly introduced `stat_test` parameter and adds it to the output JSON file.
 
 ## [0.1.11] - 2022-02-15
 ### Added
