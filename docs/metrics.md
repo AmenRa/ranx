@@ -13,8 +13,8 @@ Aliases to use with `ranx.evaluate` and `ranx.compare`.
 | [Recall][recall]                                 | recall      |  Yes   |   No   |
 | [F1][f1]                                         | f1          |  Yes   |   No   |
 | [R-Precision][r-precision]                       | r_precision |   No   |   No   |
-| [Bpref][bpref]                                   | bpref       |   No   |  Yes   |
-| [Rank-biased Precision][rank-biased-precision]   | rbp         |   No   |   No   |
+| [Bpref][bpref]                                   | bpref       |   No   |   No   |
+| [Rank-biased Precision][rank-biased-precision]   | rbp         |   No   |  Yes   |
 | [Mean Reciprocal Rank][mean-reciprocal-rank]     | mrr         |  Yes   |   No   |
 | [Mean Average Precision][mean-average-precision] | map         |  Yes   |   No   |
 | [NDCG][ndcg]                                     | ndcg        |  Yes   |   No   |
