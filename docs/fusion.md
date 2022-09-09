@@ -52,7 +52,7 @@ combined_test_run = fuse(
 | [CombMIN][combmin]                                         | min       |     No     | [CombMAX][combmax]                       | max         |     No     |
 | [CombMED][combmed]                                         | med       |     No     | [CombSUM][combsum]                       | sum         |     No     |
 | [CombANZ][combanz]                                         | anz       |     No     | [CombMNZ][combmnz]                       | mnz         |     No     |
-| [CombGMNZ][combgmnz]                                       | gmnz      |     No     | [ISR][isr]                               | isr         |     No     |
+| [CombGMNZ][combgmnz]                                       | gmnz      |    Yes     | [ISR][isr]                               | isr         |     No     |
 | [Log_ISR][log_isr]                                         | log_isr   |     No     | [LogN_ISR][logn_isr]                     | logn_isr    |    Yes     |
 | [Reciprocal Rank Fusion (RRF)][reciprocal-rank-fusion-rrf] | rrf       |    Yes     | [PosFuse][posfuse]                       | posfuse     |    Yes     |
 | [ProbFuse][probfuse]                                       | probfuse  |    Yes     | [SegFuse][segfuse]                       | segfuse     |    Yes     |
