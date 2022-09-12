@@ -36,7 +36,7 @@ def _condorcet(results, candidates, weights):
         key=cmp_to_key(lambda x, y: _compare(x, y, run_indices, weights)),
     )
 
-    doc_ids = candidates[sort_indices]
+    doc_ids = np.array(candidates)[sort_indices]
     max_score = len(doc_ids)
 
     for i, doc_id in enumerate(doc_ids):

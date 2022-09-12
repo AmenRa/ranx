@@ -37,14 +37,42 @@ def run_3():
     return Run(run_dict)
 
 
+@pytest.fixture
+def run_4():
+    run_dict = {
+        "q1": {"d1": 1, "d2": 2, "d3": 3},
+        "q2": {},
+    }
+
+    return Run(run_dict)
+
+
+@pytest.fixture
+def run_5():
+    run_dict = {
+        "q1": {"d1": 2, "d2": 3},
+        "q2": {},
+    }
+
+    return Run(run_dict)
+
+
+@pytest.fixture
+def run_6():
+    run_dict = {
+        "q1": {"d3": 3},
+        "q2": {},
+    }
+
+    return Run(run_dict)
+
+
 # TESTS ========================================================================
 def test_get_candidates(run_1, run_2, run_3):
     candidates = get_candidates(TypedList([run_1.run, run_2.run, run_3.run]))
 
-    assert type(candidates[0]) == np.ndarray
-    assert type(candidates[1]) == np.ndarray
-    assert set(candidates[0].tolist()) == {"d1", "d2", "d3"}
-    assert set(candidates[1].tolist()) == {"d1", "d2", "d3"}
+    assert set(candidates[0]) == {"d1", "d2", "d3"}
+    assert set(candidates[1]) == {"d1", "d2", "d3"}
 
 
 def test_get_results(run_1, run_2, run_3):
@@ -73,3 +101,17 @@ def test_condorcet(run_1, run_2, run_3):
     assert combined_run["q2"]["d1"] == 1
     assert combined_run["q2"]["d2"] == 2
     assert combined_run["q2"]["d3"] == 3
+
+
+def test_condorcet_no_result_query(run_4, run_5, run_6):
+    combined_run = condorcet([run_4, run_5, run_6])
+
+    assert combined_run.name == "condorcet"
+
+    assert len(combined_run) == 2
+    assert len(combined_run["q1"]) == 3
+    assert len(combined_run["q2"]) == 0
+
+    assert combined_run["q1"]["d1"] == 1
+    assert combined_run["q1"]["d2"] == 2
+    assert combined_run["q1"]["d3"] == 3

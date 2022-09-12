@@ -4,6 +4,7 @@ from typing import List
 import numpy as np
 from numba import njit, prange
 from numba.typed import List as TypedList
+from numba.types import unicode_type
 
 from ..data_structures import Run
 from .common import (
@@ -15,20 +16,51 @@ from .common import (
 
 def get_candidates(runs):
     candidates = TypedList()
-    for q_id in runs[0]:
-        candidates.append(
-            np.array(
-                list(
-                    {
-                        doc_id
-                        for run in runs
-                        for doc_id in list(run[q_id].keys())
-                    }
-                )
-            )
+    for q_id in runs[0].keys():
+        new_candidates = TypedList(
+            {doc_id for run in runs for doc_id in list(run[q_id].keys())}
         )
 
+        if len(new_candidates) > 0:
+            candidates.append(new_candidates)
+        else:
+            # Fixes Numba raising error if no runs have docs for a given query
+            candidates.append(TypedList.empty_list(unicode_type))
+
     return candidates
+
+
+# def get_candidates(runs):
+#     candidates = TypedList()
+#     for q_id in runs[0]:
+#         new_candidates = np.array(
+#             list({doc_id for run in runs for doc_id in list(run[q_id].keys())})
+#         )
+
+#         if len(new_candidates) > 0:
+#             candidates.append(new_candidates)
+#         else:
+#             # Fixes Numba raising error if no runs have docs for a given query
+#             candidates.append(np.array(["str"])[:0])
+
+#     return candidates
+
+# def get_candidates(runs):
+#     candidates = TypedList()
+#     for q_id in runs[0]:
+#         candidates.append(
+#             np.array(
+#                 list(
+#                     {
+#                         doc_id
+#                         for run in runs
+#                         for doc_id in list(run[q_id].keys())
+#                     }
+#                 )
+#             )
+#         )
+
+#     return candidates
 
 
 @njit(cache=True)
@@ -75,7 +107,7 @@ def _condorcet(results, candidates):
         key=cmp_to_key(lambda x, y: _compare(x, y, run_indices)),
     )
 
-    doc_ids = candidates[sort_indices]
+    doc_ids = np.array(candidates)[sort_indices]
     max_score = len(doc_ids)
 
     for i, doc_id in enumerate(doc_ids):

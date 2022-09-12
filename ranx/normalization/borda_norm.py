@@ -2,6 +2,7 @@ from typing import List
 
 from numba import njit, prange
 from numba.typed import List as TypedList
+from numba.types import unicode_type
 
 from ..data_structures import Run
 from .common import (
@@ -13,12 +14,17 @@ from .common import (
 
 def get_candidates(runs):
     candidates = TypedList()
-    for q_id in runs[0].run:
-        candidates.append(
-            TypedList(
-                {doc_id for run in runs for doc_id in list(run[q_id].keys())}
-            )
+    for q_id in runs[0].keys():
+        new_candidates = TypedList(
+            {doc_id for run in runs for doc_id in list(run[q_id].keys())}
         )
+
+        if len(new_candidates) > 0:
+            candidates.append(new_candidates)
+        else:
+            # Fixes Numba raising error if no runs have docs for a given query
+            candidates.append(TypedList.empty_list(unicode_type))
+
     return candidates
 
 
