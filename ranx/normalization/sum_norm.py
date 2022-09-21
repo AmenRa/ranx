@@ -7,6 +7,7 @@ from .common import (
     create_empty_results_dict,
     create_empty_results_dict_list,
     extract_scores,
+    safe_min,
 )
 
 
@@ -15,7 +16,7 @@ from .common import (
 def _sum_norm(results):
     """Apply `sum norm` to a given results dictionary."""
     scores = extract_scores(results)
-    min_score = min(scores)
+    min_score = safe_min(scores)
     sum_score = sum(scores)
     denominator = sum_score - min_score * len(results)
     denominator = max(denominator, 1e-9)
@@ -48,4 +49,3 @@ def sum_norm(run):
     normalized_run.name = run.name
     normalized_run.run = _sum_norm_parallel(run.run)
     return normalized_run
-

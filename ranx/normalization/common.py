@@ -7,7 +7,8 @@ from numba.typed import List as TypedList
 @njit(cache=True)
 def create_empty_results_dict():
     return TypedDict.empty(
-        key_type=types.unicode_type, value_type=types.float64,
+        key_type=types.unicode_type,
+        value_type=types.float64,
     )
 
 
@@ -33,3 +34,17 @@ def extract_scores(results):
     for i, v in enumerate(results.values()):
         scores[i] = v
     return scores
+
+
+@njit(cache=True)
+def safe_max(x):
+    if len(x) != 0:
+        return max(x)
+    return 0
+
+
+@njit(cache=True)
+def safe_min(x):
+    if len(x) != 0:
+        return min(x)
+    return 0

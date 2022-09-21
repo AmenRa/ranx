@@ -7,6 +7,8 @@ from .common import (
     create_empty_results_dict,
     create_empty_results_dict_list,
     extract_scores,
+    safe_max,
+    safe_min,
 )
 
 
@@ -15,8 +17,8 @@ from .common import (
 def _min_max_norm(results):
     """Apply `min-max norm` to a given results dictionary."""
     scores = extract_scores(results)
-    min_score = min(scores)
-    max_score = max(scores)
+    min_score = safe_min(scores)
+    max_score = safe_max(scores)
     denominator = max_score - min_score
     denominator = max(denominator, 1e-9)
 
@@ -55,4 +57,3 @@ def min_max_norm(run: Run) -> Run:
     normalized_run.name = run.name
     normalized_run.run = _min_max_norm_parallel(run.run)
     return normalized_run
-

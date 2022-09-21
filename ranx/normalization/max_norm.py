@@ -7,6 +7,7 @@ from .common import (
     create_empty_results_dict,
     create_empty_results_dict_list,
     extract_scores,
+    safe_max,
 )
 
 
@@ -15,7 +16,8 @@ from .common import (
 def _max_norm(results):
     """Apply `max norm` to a given results dictionary."""
     scores = extract_scores(results)
-    max_score = max(scores)
+    max_score = safe_max(scores)
+
     denominator = max(max_score, 1e-9)
 
     normalized_results = create_empty_results_dict()
