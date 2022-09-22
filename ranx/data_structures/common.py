@@ -67,7 +67,7 @@ def sort_dict_by_value(d):
     keys = TypedList(d.keys())
     values = TypedList(d.values())
 
-    for i in typed_list_argosrt(values)[::-1]:
+    for i in typed_list_argosrt([-v for v in values]):
         new_d[keys[i]] = values[i]
 
     return new_d

@@ -4,9 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.12] - 2022-09-22
+### Fixed
+- Fixed a bug in `data_structures/common.py:sort_dict_by_value` that was preventing result list sorting to be consistent for documents with the same score. 
+- Fixed a bug causing original runs to be modified by fusion methods.
+
 ## [0.2.11] - 2022-09-21
 ### Fixed
-- Fixed a bug in `max_norm.py`, `min_max_norm.py`, and `sum_norm.py`: `min` and `max` functions called on empty lists do not raise error in `Numba` causing downstream miscalculations
+- Fixed a bug in `max_norm.py`, `min_max_norm.py`, and `sum_norm.py`: `min` and `max` functions called on empty lists do not raise error in `Numba` causing downstream miscalculations.
   
 ## [0.2.10] - 2022-09-12
 ### Fixed

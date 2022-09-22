@@ -40,7 +40,10 @@ def _slide_score_parallel(run, probs, w):
 
 
 def slidefuse(
-    runs: List[Run], probs: List[np.ndarray], w: int, name: str = "slidefuse",
+    runs: List[Run],
+    probs: List[np.ndarray],
+    w: int,
+    name: str = "slidefuse",
 ) -> Run:
     r"""Computes SlideFuse as proposed by [Lillis et al.](https://link.springer.com/chapter/10.1007/978-3-540-78646-7_33).
 
@@ -81,12 +84,14 @@ def slidefuse(
         Run: Combined run.
 
     """
+    _runs = [None] * len(runs)
+
     for i, run in enumerate(runs):
         _run = Run()
         _run.run = _slide_score_parallel(run.run, probs[i], w)
-        runs[i] = _run
+        _runs[i] = _run
 
-    run = comb_sum(runs)
+    run = comb_sum(_runs)
     run.name = name
 
     return run

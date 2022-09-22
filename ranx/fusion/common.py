@@ -12,7 +12,8 @@ from ..metrics import get_hit_lists
 @njit(cache=True)
 def create_empty_results_dict():
     return TypedDict.empty(
-        key_type=types.unicode_type, value_type=types.float64,
+        key_type=types.unicode_type,
+        value_type=types.float64,
     )
 
 

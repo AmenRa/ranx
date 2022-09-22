@@ -49,17 +49,20 @@ def optimize_fusion(
         ), f"Run {i} and Qrels query ids do not match"
 
     # Normalization ------------------------------------------------------------
-    if norm is not None:
+    if norm is None:
+        norm_runs = runs
+    else:
+        norm_runs = [None] * len(runs)
         if norm != "borda":
             for i, run in enumerate(runs):
-                runs[i] = norm_switch(norm)(run)
+                norm_runs[i] = norm_switch(norm)(run)
         else:
-            runs = norm_switch(norm)(runs)
+            norm_runs = norm_switch(norm)(runs)
 
     # Optimize fusion ----------------------------------------------------------
     if return_optimization_report and has_hyperparams(method):
         best_params, optimization_report = optimization_switch(method)(
-            qrels, runs, **kwargs
+            qrels, norm_runs, **kwargs
         )
         return (
             best_params,
@@ -73,4 +76,4 @@ def optimize_fusion(
             ),
         )
     else:
-        return optimization_switch(method)(qrels, runs, **kwargs)
+        return optimization_switch(method)(qrels, norm_runs, **kwargs)

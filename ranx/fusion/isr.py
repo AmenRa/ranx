@@ -64,12 +64,13 @@ def isr(runs: List[Run], name: str = "isr") -> Run:
         Run: Combined run.
 
     """
+    _runs = [None] * len(runs)
     for i, run in enumerate(runs):
         _run = Run()
         _run.run = _isr_score_parallel(run.run)
-        runs[i] = _run
+        _runs[i] = _run
 
-    run = comb_mnz(runs)
+    run = comb_mnz(_runs)
     run.name = name
 
     return run

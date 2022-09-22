@@ -23,12 +23,15 @@ def fuse(
             ), f"Runs {i} and {j} query ids do not match"
 
     # Normalization ------------------------------------------------------------
-    if norm is not None:
+    if norm is None:
+        norm_runs = runs
+    else:
+        norm_runs = [None] * len(runs)
         if norm != "borda":
             for i, run in enumerate(runs):
-                runs[i] = norm_switch(norm)(run)
+                norm_runs[i] = norm_switch(norm)(run)
         else:
-            runs = norm_switch(norm)(runs)
+            norm_runs = norm_switch(norm)(runs)
 
     # Fusion -------------------------------------------------------------------
-    return fusion_switch(method)(runs, **params)
+    return fusion_switch(method)(norm_runs, **params)

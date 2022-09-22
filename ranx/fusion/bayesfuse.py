@@ -114,12 +114,13 @@ def bayesfuse(
         Run: Combined run.
 
     """
+    _runs = [None] * len(runs)
     for i, run in enumerate(runs):
         _run = Run()
         _run.run = _bayes_score_parallel(run.run, log_odds[i])
-        runs[i] = _run
+        _runs[i] = _run
 
-    run = comb_sum(runs)
+    run = comb_sum(_runs)
     run.name = name
 
     return run

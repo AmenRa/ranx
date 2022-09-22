@@ -46,12 +46,13 @@ def weighted_bordafuse(
     """
     candidates = get_candidates(runs)
 
+    _runs = [None] * len(runs)
     for i, run in enumerate(runs):
         _run = Run()
         _run.run = _borda_score_parallel(run.run, candidates)
-        runs[i] = _run
+        _runs[i] = _run
 
-    run = wsum(runs, weights)
+    run = wsum(_runs, weights)
     run.name = name
 
     return run

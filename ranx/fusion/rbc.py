@@ -18,7 +18,7 @@ def _rbc_score(results, phi):
     run_doc_ids = TypedList(results.keys())
 
     for i, doc_id in enumerate(run_doc_ids):
-        new_results[doc_id] = (1 - phi) * phi ** i
+        new_results[doc_id] = (1 - phi) * phi**i
 
     return new_results
 
@@ -73,12 +73,13 @@ def rbc(runs: List[Run], phi: float, name: str = "rbc"):
         Run: Combined run.
 
     """
+    _runs = [None] * len(runs)
     for i, run in enumerate(runs):
         _run = Run()
         _run.run = _rbc_score_parallel(run.run, phi)
-        runs[i] = _run
+        _runs[i] = _run
 
-    run = comb_sum(runs)
+    run = comb_sum(_runs)
     run.name = name
 
     return run
