@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.13] - 2022-09-30
+### Fixed
+- Fixed a bug in `posfuse.py`: `numba` does not raise out of bounds error in some specific cases, added a control to make sure ranking positions with no associated probability get 0 probability.
+- Fixed a bug in `baysfuse.py`: as it uses log odds, which can be negative, `comb_sum` cannot be used. Added a `odds_sum` function to combine the log odds.
+
 ## [0.2.12] - 2022-09-22
 ### Fixed
 - Fixed a bug in `data_structures/common.py:sort_dict_by_value` that was preventing result list sorting to be consistent for documents with the same score. 
