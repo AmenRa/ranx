@@ -79,7 +79,4 @@ def rbc(runs: List[Run], phi: float, name: str = "rbc"):
         _run.run = _rbc_score_parallel(run.run, phi)
         _runs[i] = _run
 
-    run = comb_sum(_runs)
-    run.name = name
-
-    return run
+    return comb_sum(_runs, name)

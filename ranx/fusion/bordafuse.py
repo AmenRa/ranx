@@ -6,8 +6,11 @@ from numba.types import unicode_type
 
 from ..data_structures import Run
 from .comb_sum import comb_sum
-from .common import (convert_results_dict_list_to_run,
-                     create_empty_results_dict, create_empty_results_dict_list)
+from .common import (
+    convert_results_dict_list_to_run,
+    create_empty_results_dict,
+    create_empty_results_dict_list,
+)
 
 
 def get_candidates(runs):
@@ -96,7 +99,4 @@ def bordafuse(runs: List[Run], name: str = "bordafuse"):
         _run.run = _borda_score_parallel(run.run, candidates)
         _runs[i] = _run
 
-    run = comb_sum(_runs)
-    run.name = name
-
-    return run
+    return comb_sum(_runs, name)

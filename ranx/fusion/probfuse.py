@@ -8,8 +8,11 @@ from numba.typed import List as TypedList
 from ..data_structures import Qrels, Run
 from ..metrics import get_hit_lists
 from .comb_sum import comb_sum
-from .common import (convert_results_dict_list_to_run,
-                     create_empty_results_dict, create_empty_results_dict_list)
+from .common import (
+    convert_results_dict_list_to_run,
+    create_empty_results_dict,
+    create_empty_results_dict_list,
+)
 
 
 @njit(cache=True)
@@ -129,10 +132,7 @@ def probfuse(runs: List[Run], probs: List[np.ndarray], name: str = "probfuse"):
         _run.run = _prob_score_parallel(run.run, probs[i])
         _runs[i] = _run
 
-    run = comb_sum(_runs)
-    run.name = name
-
-    return run
+    return comb_sum(_runs, name)
 
 
 def probfuse_train(

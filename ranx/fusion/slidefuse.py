@@ -91,10 +91,7 @@ def slidefuse(
         _run.run = _slide_score_parallel(run.run, probs[i], w)
         _runs[i] = _run
 
-    run = comb_sum(_runs)
-    run.name = name
-
-    return run
+    return comb_sum(_runs, name)
 
 
 def slidefuse_train(qrels: Qrels, runs: List[Run]) -> List[np.ndarray]:
