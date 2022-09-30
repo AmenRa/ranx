@@ -17,9 +17,10 @@ from .common import (
 @njit(cache=True)
 def _pos_score(results, probs):
     new_results = create_empty_results_dict()
+    len_probs = len(probs)
 
     for i, doc_id in enumerate(results.keys()):
-        new_results[doc_id] = probs[i]
+        new_results[doc_id] = probs[i] if i < len_probs else 0.0
 
     return new_results
 
@@ -82,10 +83,7 @@ def posfuse(
         _run.run = _pos_score_parallel(run.run, probs[i])
         _runs[i] = _run
 
-    run = comb_sum(_runs)
-    run.name = name
-
-    return run
+    return comb_sum(_runs, name)
 
 
 def posfuse_train(qrels: Qrels, runs: List[Run]) -> List[np.ndarray]:
