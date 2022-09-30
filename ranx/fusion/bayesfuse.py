@@ -6,13 +6,47 @@ from numba.typed import List as TypedList
 from ranx.metrics import get_hit_lists
 
 from ..data_structures import Qrels, Run
-from ..meta import evaluate
-from .comb_sum import comb_sum
 from .common import (
     convert_results_dict_list_to_run,
     create_empty_results_dict,
     create_empty_results_dict_list,
 )
+
+
+@njit(cache=True)
+def _sum_odds(
+    results,
+):
+    combined_results = create_empty_results_dict()
+    min_odd = np.log(0.001 / 0.999)
+
+    for res in results:
+        for doc_id in res.keys():
+            if combined_results.get(doc_id, False) == False:
+                combined_results[doc_id] = sum(
+                    [res.get(doc_id, min_odd) for res in results]
+                )
+
+    return combined_results
+
+
+@njit(cache=True, parallel=True)
+def _sum_odds_parallel(runs):
+    q_ids = TypedList(runs[0].keys())
+    combined_results = create_empty_results_dict_list(len(q_ids))
+
+    for i in prange(len(q_ids)):
+        q_id = q_ids[i]
+        combined_results[i] = _sum_odds([run[q_id] for run in runs])
+
+    return convert_results_dict_list_to_run(q_ids, combined_results)
+
+
+def sum_odds(runs: List[Run]) -> Run:
+    run = Run()
+    run.run = _sum_odds_parallel(TypedList([run.run for run in runs]))
+    run.sort()
+    return run
 
 
 @njit(cache=True)
@@ -120,7 +154,7 @@ def bayesfuse(
         _run.run = _bayes_score_parallel(run.run, log_odds[i])
         _runs[i] = _run
 
-    run = comb_sum(_runs)
+    run = sum_odds(_runs)
     run.name = name
 
     return run
