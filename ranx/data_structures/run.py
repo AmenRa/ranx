@@ -9,6 +9,7 @@ from numba import types
 from numba.typed import Dict as TypedDict
 from numba.typed import List as TypedList
 
+from ..io import download
 from .common import (
     add_and_sort,
     create_and_sort,
@@ -68,6 +69,7 @@ class Run(object):
             self.sorted = True
 
         self.name = name
+        self.metadata = {}
         self.scores = defaultdict(dict)
         self.mean_scores = {}
 
@@ -287,6 +289,24 @@ class Run(object):
         )
 
         return Run.from_dict(run_py)
+
+    @staticmethod
+    def from_ranxhub(id: str):
+        """Download and load a ranx.Run from ranxhub.
+
+        Args:
+            path (str): Run ID.
+
+        Returns:
+            Run: ranx.Run
+        """
+        content = download(id)
+
+        run = Run.from_dict(content["run"])
+        run.name = content["metadata"]["run"]["name"]
+        run.metadata = content["metadata"]
+
+        return run
 
     @property
     def size(self):
