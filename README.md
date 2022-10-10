@@ -30,7 +30,7 @@
 
 - [October 10, 2022] `ranx` `0.3` is out!  
 This release adds full integration with [RanxHub](https://amenra.github.io/ranxhub/), a new sharing platform for pre-computed runs.  
-Click [here](#-off-the-shelf-runs) for a quick example.
+Click [here](#off-the-shelf-runs) for a quick example.
 
 ## ⚡️ Introduction
 
