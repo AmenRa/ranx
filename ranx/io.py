@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 import cbor2
@@ -53,6 +54,8 @@ def download(id: str):
 
 
 def save_lz4(path: str, content: dict) -> None:
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
     with lz4.frame.open(path, mode="wb") as f:
         f.write(lz4.frame.compress(cbor2.dumps(content), compression_level=16))
 
