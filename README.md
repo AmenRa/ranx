@@ -29,7 +29,7 @@
 - 📌 [July 27, 2022] `ranx` will be featured in [CIKM 2022, the 31st ACM International Conference on Information and Knowledge Management](https://www.cikm2022.org)!
 
 - [October 10, 2022] `ranx` `0.3` is out!  
-This release adds full integration with [RanxHub](https://amenra.github.io/ranxhub), a new sharing platform for pre-computed runs.  
+This release adds integration with [RanxHub](https://amenra.github.io/ranxhub), a new sharing platform for pre-computed runs.  
 Click [here](#off-the-shelf-runs) for a quick example.  
 Click [here](https://amenra.github.io/ranxhub) to learn how to share your own runs with the community and lead by example!
 
