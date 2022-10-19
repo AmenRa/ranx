@@ -29,8 +29,9 @@
 - 📌 [July 27, 2022] `ranx` will be featured in [CIKM 2022, the 31st ACM International Conference on Information and Knowledge Management](https://www.cikm2022.org)!
 
 - [October 10, 2022] `ranx` `0.3` is out!  
-This release adds full integration with [RanxHub](https://amenra.github.io/ranxhub/), a new sharing platform for pre-computed runs.  
+This release adds full integration with [RanxHub](https://amenra.github.io/ranxhub), a new sharing platform for pre-computed runs.  
 Click [here](#off-the-shelf-runs) for a quick example.
+Click [here](https://amenra.github.io/ranxhub) to learn how to share your own runs with the community and lead by example!
 
 ## ⚡️ Introduction
 
@@ -193,13 +194,14 @@ combined_test_run = fuse(
 
 ## 📖 Examples
 
-| Name                  | Link                                                                                                                                                                                   |
-| --------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Overview              | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/1_overview.ipynb)              |
-| Qrels and Run         | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/2_qrels_and_run.ipynb)         |
-| Evaluation            | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/3_evaluation.ipynb)            |
-| Comparison and Report | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/4_comparison_and_report.ipynb) |
-| Fusion                | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/5_fusion.ipynb)                |
+| Name                                                             | Link                                                                                                                                                                                   |
+| ---------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Overview                                                         | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/1_overview.ipynb)              |
+| Qrels and Run                                                    | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/2_qrels_and_run.ipynb)         |
+| Evaluation                                                       | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/3_evaluation.ipynb)            |
+| Comparison and Report                                            | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/4_comparison_and_report.ipynb) |
+| Fusion                                                           | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/5_fusion.ipynb)                |
+| Share your runs with [ranxhub](https://amenra.github.io/ranxhub) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/6_ranxhub.ipynb)               |
 
 
 ## 📚 Documentation
