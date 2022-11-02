@@ -6,13 +6,13 @@ from numba import config, njit, prange
 
 config.THREADING_LAYER = "workqueue"
 
-from .common import _clean_qrels, fix_k
+from .common import clean_qrels, fix_k
 
 
 # LOW LEVEL FUNCTIONS ==========================================================
 @njit(cache=True)
-def _reciprocal_rank(qrels, run, k):
-    qrels = _clean_qrels(qrels.copy())
+def _reciprocal_rank(qrels, run, k, rel_lvl):
+    qrels = clean_qrels(qrels, rel_lvl)
     if len(qrels) == 0:
         return 0.0
 
@@ -25,10 +25,10 @@ def _reciprocal_rank(qrels, run, k):
 
 
 @njit(cache=True, parallel=True)
-def _reciprocal_rank_parallel(qrels, run, k):
+def _reciprocal_rank_parallel(qrels, run, k, rel_lvl):
     scores = np.zeros((len(qrels)), dtype=np.float64)
     for i in prange(len(qrels)):
-        scores[i] = _reciprocal_rank(qrels[i], run[i], k)
+        scores[i] = _reciprocal_rank(qrels[i], run[i], k, rel_lvl)
     return scores
 
 
@@ -37,6 +37,7 @@ def reciprocal_rank(
     qrels: Union[np.ndarray, numba.typed.List],
     run: Union[np.ndarray, numba.typed.List],
     k: int = 0,
+    rel_lvl: int = 1,
 ) -> np.ndarray:
     r"""Compute Reciprocal Rank (at k).
 
@@ -58,6 +59,8 @@ def reciprocal_rank(
 
         k (int, optional): This argument is ignored. It was added to standardize metrics' input. Defaults to 0.
 
+        rel_lvl (int, optional): Minimum relevance judgment score to consider a document to be relevant. E.g., rel_lvl=1 means all documents with relevance judgment scores greater or equal to 1 will be considered relevant. Defaults to 1.
+
     Returns:
         Reciprocal Rank (at k) scores.
 
@@ -65,4 +68,4 @@ def reciprocal_rank(
 
     assert k >= 0, "k must be grater or equal to 0"
 
-    return _reciprocal_rank_parallel(qrels, run, k)
+    return _reciprocal_rank_parallel(qrels, run, k, rel_lvl)

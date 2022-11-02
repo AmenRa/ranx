@@ -26,10 +26,14 @@
 
 ## 🔥 News
 
-- 📌 [July 27, 2022] `ranx` will be featured in [CIKM 2022, the 31st ACM International Conference on Information and Knowledge Management](https://www.cikm2022.org)!
+- 📌 [October 10, 2022] I released a new sharing platform for pre-computed runs called [ranxhub](https://amenra.github.io/ranxhub), click [here](https://amenra.github.io/ranxhub) to learn more!
+
+- [November 2, 2022] `ranx` `0.3.3` is out!  
+This release adds support for changing Qrels relevance level, i.e, the minimum relevance judgement score to consider a document to be relevant.  
+You can now define metric-wise relevance levels by appending `-l<num>` to metric names (e.g., `evaluate(qrels, run, ["map@100-l2", "ndcg-l3])`), or setting the Qrels relevance level qrels-wise as `qrels.set_relevance_level(2)`.
 
 - [October 10, 2022] `ranx` `0.3` is out!  
-This release adds integration with [RanxHub](https://amenra.github.io/ranxhub), a new sharing platform for pre-computed runs.  
+This release adds integration with [ranxhub](https://amenra.github.io/ranxhub), a new sharing platform for pre-computed runs.  
 Click [here](#off-the-shelf-runs) for a quick example.  
 Click [here](https://amenra.github.io/ranxhub) to learn how to share your own runs with the community and lead by example!
 
@@ -39,9 +43,9 @@ Click [here](https://amenra.github.io/ranxhub) to learn how to share your own ru
 It offers a user-friendly interface to evaluate and compare [Information Retrieval](https://en.wikipedia.org/wiki/Information_retrieval) and [Recommender Systems](https://en.wikipedia.org/wiki/Recommender_system).
 [ranx](https://github.com/AmenRa/ranx) allows you to perform statistical tests and export [LaTeX](https://en.wikipedia.org/wiki/LaTeX) tables for your scientific publications.
 Moreover, [ranx](https://github.com/AmenRa/ranx) provides several [fusion algorithms](https://amenra.github.io/ranx/fusion) and [normalization strategies](https://amenra.github.io/ranx/normalization), and an automatic [fusion optimization](https://amenra.github.io/ranx/fusion/#optimize-fusion) functionality.
-[ranx](https://github.com/AmenRa/ranx) was featured in [ECIR 2022](https://ecir2022.org), the 44th European Conference on Information Retrieval. 
+[ranx](https://github.com/AmenRa/ranx) was featured in [ECIR 2022](https://ecir2022.org) and [CIKM 2022](https://www.cikm2022.org). 
  
-If you use [ranx](https://github.com/AmenRa/ranx) to evaluate results or conducting experiments involving fusion for your scientific publication, please consider [citing it](https://dblp.org/rec/conf/ecir/Bassani22.html?view=bibtex).
+If you use [ranx](https://github.com/AmenRa/ranx) to evaluate results or conducting experiments involving fusion for your scientific publication, please consider it: [evaluation bibtex](https://dblp.org/rec/conf/ecir/Bassani22.html?view=bibtex), [fusion bibtex](https://dblp.org/rec/conf/cikm/BassaniR22.html?view=bibtex).
 
 For a quick overview, follow the [Usage](#-usage) section.
 
@@ -80,7 +84,7 @@ qrels = Qrels.from_ir_datasets("msmarco-document/dev")
 A full list of the available qrels is provided [here](https://ir-datasets.com).
 
 ### Off-the-shelf Runs
-You can load runs from [RanxHub](https://amenra.github.io/ranxhub/) as simply as:
+You can load runs from [ranxhub](https://amenra.github.io/ranxhub/) as simply as:
 ```python
 run = Run.from_ranxhub("run-id")
 ```
@@ -209,20 +213,40 @@ Browse the [documentation](https://amenra.github.io/ranx) for more details and e
 
 
 ## 🎓 Citation
-If you use [ranx](https://github.com/AmenRa/ranx) to evaluate results for your scientific publication, please consider citing it:
-```
-@inproceedings{bassani2022ranx,
-  author    = {Elias Bassani},
-  title     = {ranx: {A} Blazing-Fast Python Library for Ranking Evaluation and Comparison},
-  booktitle = {{ECIR} {(2)}},
-  series    = {Lecture Notes in Computer Science},
-  volume    = {13186},
-  pages     = {259--264},
-  publisher = {Springer},
-  year      = {2022}
-}
-```
+If you use [ranx](https://github.com/AmenRa/ranx) to evaluate results for your scientific publication, please consider citing our [ECIR 2022](https://ecir2022.org) paper:
+<details>
+  <summary>BibTeX</summary>
+  
+  ```bibtex
+  @inproceedings{DBLP:conf/ecir/Bassani22,
+    author    = {Elias Bassani},
+    title     = {ranx: {A} Blazing-Fast Python Library for Ranking Evaluation and Comparison},
+    booktitle = {{ECIR} {(2)}},
+    series    = {Lecture Notes in Computer Science},
+    volume    = {13186},
+    pages     = {259--264},
+    publisher = {Springer},
+    year      = {2022}
+  }
+  ```
+</details>  
 
+If you use the fusion functionalities provided by [ranx](https://github.com/AmenRa/ranx) for conducting the experiments of your scientific publication, please consider citing our [CIKM 2022](https://www.cikm2022.org) paper:
+<details>
+  <summary>BibTeX</summary>
+  
+  ```bibtex
+  @inproceedings{DBLP:conf/cikm/BassaniR22,
+    author    = {Elias Bassani and
+                Luca Romelli},
+    title     = {ranx.fuse: {A} Python Library for Metasearch},
+    booktitle = {{CIKM}},
+    pages     = {4808--4812},
+    publisher = {{ACM}},
+    year      = {2022}
+  }
+  ```
+</details>
 
 ## 🎁 Feature Requests
 Would you like to see other features implemented? Please, open a [feature request](https://github.com/AmenRa/ranx/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=%5BFeature+Request%5D+title).

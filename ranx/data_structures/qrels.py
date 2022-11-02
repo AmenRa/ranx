@@ -7,7 +7,7 @@ import ir_datasets
 import numpy as np
 import orjson
 import pandas as pd
-from numba import types
+from numba import njit, prange, types
 from numba.typed import Dict as TypedDict
 from numba.typed import List as TypedList
 
@@ -18,6 +18,21 @@ from .common import (
     sort_dict_of_dict_by_value,
     to_typed_list,
 )
+
+
+@njit(cache=True, parallel=True)
+def _set_relevance_level(qrels, rel_lvl):
+    q_ids = TypedList(qrels.keys())
+    results = TypedList(qrels.values())
+
+    for i in prange(len(q_ids)):
+        doc_ids = TypedList(results[i].keys())
+        scores = TypedList(results[i].values())
+
+        for j in range(len(doc_ids)):
+            qrels[q_ids[i]][doc_ids[j]] = scores[j] - (rel_lvl - 1)
+
+    return qrels
 
 
 class Qrels(object):
@@ -121,6 +136,10 @@ class Qrels(object):
 
         self.qrels = add_and_sort(self.qrels, q_ids, doc_ids, scores)
         self.sorted = True
+
+    def set_relevance_level(self, rel_lvl: int = 1):
+        """Sets relevance level."""
+        self.qrels = _set_relevance_level(self.qrels, rel_lvl)
 
     def get_query_ids(self):
         """Returns query ids."""

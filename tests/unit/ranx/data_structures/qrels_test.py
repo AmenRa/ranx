@@ -1,7 +1,6 @@
 import pandas as pd
 import pytest
 from numba.typed import List
-
 from ranx import Qrels
 
 
@@ -232,3 +231,29 @@ def test_from_dataframe():
     assert qrels.qrels["q1"]["d3"] == 3
     assert qrels.qrels["q2"]["d1"] == 1
     assert qrels.qrels["q2"]["d2"] == 2
+
+
+def test_set_relevance_level():
+    qrels_py = {
+        "q1": {
+            "d1": 1,
+            "d2": 2,
+            "d3": 3,
+        },
+        "q2": {
+            "d1": 1,
+            "d2": 2,
+        },
+    }
+
+    qrels = Qrels.from_dict(qrels_py)
+    qrels.set_relevance_level(2)
+
+    assert len(qrels.qrels) == 2
+    assert len(qrels.qrels["q1"]) == 3
+    assert len(qrels.qrels["q2"]) == 2
+    assert qrels.qrels["q1"]["d1"] == 0
+    assert qrels.qrels["q1"]["d2"] == 1
+    assert qrels.qrels["q1"]["d3"] == 2
+    assert qrels.qrels["q2"]["d1"] == 0
+    assert qrels.qrels["q2"]["d2"] == 1

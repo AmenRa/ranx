@@ -26,16 +26,16 @@
 
 ## 🔥 News
 
-- 📌 [July 27, 2022] `ranx` will be featured in [CIKM 2022, the 31st ACM International Conference on Information and Knowledge Management](https://www.cikm2022.org)!
+- 📌 [October 10, 2022] I released a new sharing platform for pre-computed runs called [ranxhub](https://amenra.github.io/ranxhub), click [here](https://amenra.github.io/ranxhub) to learn more!
 
-- [August 29, 2022] `ranx` `0.2.9` is out.  
-Filetypes are now automatically inferred from file extensions (`.json` → `json`, `.trec` → `trec`, `.txt` → `trec`). Default behavior can be overridden with the `kind` parameter (this should allow for backward compatibility).  
-`Two-sided Paired Student's t-Test` is now the default statistical test used when calling `compare` (it is much faster than `Fisher's` and they usually agree).  
-Loading / saving `Qrels` and `Run` from / to `json` files is now much faster thanks to [orjson](https://github.com/ijl/orjson).
-- [June 29, 2022] Added support for [Tukey's HSD Test](https://www.itl.nist.gov/div898/handbook/prc/section4/prc471.htm).
-- [June 28, 2022] Added support for [Bpref](https://amenra.github.io/ranx/metrics/#bpref) and [Rank-biased Precision (RBP)](https://amenra.github.io/ranx/metrics/#rank-biased-precision) metrics.
-- [June 9, 2022] Added support for **25 fusion algorithms**, **six normalization strategies**, and an **automatic fusion optimization** functionality in `v.0.2`.  
-Check out the [official documentation](https://amenra.github.io/ranx) and [Jupyter Notebook](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/5_fusion.ipynb) for further details on [fusion](https://amenra.github.io/ranx/fusion) and [normalization](https://amenra.github.io/ranx/normalization).
+- [November 2, 2022] `ranx` `0.3.3` is out!  
+This release adds support for changing Qrels relevance level, i.e, the minimum relevance judgement score to consider a document to be relevant.  
+You can now define metric-wise relevance levels by appending `-l<num>` to metric names (e.g., `evaluate(qrels, run, ["map@100-l2", "ndcg-l3])`), or setting the Qrels relevance level qrels-wise as `qrels.set_relevance_level(2)`.
+
+- [October 10, 2022] `ranx` `0.3` is out!  
+This release adds integration with [ranxhub](https://amenra.github.io/ranxhub), a new sharing platform for pre-computed runs.  
+Click [here](#off-the-shelf-runs) for a quick example.  
+Click [here](https://amenra.github.io/ranxhub) to learn how to share your own runs with the community and lead by example!
 
 ## ⚡️ Introduction
 
@@ -43,9 +43,9 @@ Check out the [official documentation](https://amenra.github.io/ranx) and [Jupyt
 It offers a user-friendly interface to evaluate and compare [Information Retrieval](https://en.wikipedia.org/wiki/Information_retrieval) and [Recommender Systems](https://en.wikipedia.org/wiki/Recommender_system).
 [ranx](https://github.com/AmenRa/ranx) allows you to perform statistical tests and export [LaTeX](https://en.wikipedia.org/wiki/LaTeX) tables for your scientific publications.
 Moreover, [ranx](https://github.com/AmenRa/ranx) provides several [fusion algorithms](https://amenra.github.io/ranx/fusion) and [normalization strategies](https://amenra.github.io/ranx/normalization), and an automatic [fusion optimization](https://amenra.github.io/ranx/fusion/#optimize-fusion) functionality.
-[ranx](https://github.com/AmenRa/ranx) was featured in [ECIR 2022](https://ecir2022.org), the 44th European Conference on Information Retrieval. 
+[ranx](https://github.com/AmenRa/ranx) was featured in [ECIR 2022](https://ecir2022.org) and [CIKM 2022](https://www.cikm2022.org). 
  
-If you use [ranx](https://github.com/AmenRa/ranx) to evaluate results or conducting experiments involving fusion for your scientific publication, please consider [citing it](https://dblp.org/rec/conf/ecir/Bassani22.html?view=bibtex).
+If you use [ranx](https://github.com/AmenRa/ranx) to evaluate results or conducting experiments involving fusion for your scientific publication, please consider it: [evaluation bibtex](https://dblp.org/rec/conf/ecir/Bassani22.html?view=bibtex), [fusion bibtex](https://dblp.org/rec/conf/cikm/BassaniR22.html?view=bibtex).
 
 For a quick overview, follow the [Usage](#-usage) section.
 
@@ -82,6 +82,13 @@ You can load qrels from [ir-datasets](https://ir-datasets.com) as simply as:
 qrels = Qrels.from_ir_datasets("msmarco-document/dev")
 ```
 A full list of the available qrels is provided [here](https://ir-datasets.com).
+
+### Off-the-shelf Runs
+You can load runs from [ranxhub](https://amenra.github.io/ranxhub/) as simply as:
+```python
+run = Run.from_ranxhub("run-id")
+```
+A full list of the available runs is provided [here](https://amenra.github.io/ranxhub//browse).
 
 ### Fusion Algorithms
 
@@ -191,13 +198,14 @@ combined_test_run = fuse(
 
 ## 📖 Examples
 
-| Name                  | Link                                                                                                                                                                                   |
-| --------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Overview              | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/1_overview.ipynb)              |
-| Qrels and Run         | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/2_qrels_and_run.ipynb)         |
-| Evaluation            | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/3_evaluation.ipynb)            |
-| Comparison and Report | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/4_comparison_and_report.ipynb) |
-| Fusion                | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/5_fusion.ipynb)                |
+| Name                                                             | Link                                                                                                                                                                                   |
+| ---------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Overview                                                         | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/1_overview.ipynb)              |
+| Qrels and Run                                                    | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/2_qrels_and_run.ipynb)         |
+| Evaluation                                                       | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/3_evaluation.ipynb)            |
+| Comparison and Report                                            | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/4_comparison_and_report.ipynb) |
+| Fusion                                                           | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/5_fusion.ipynb)                |
+| Share your runs with [ranxhub](https://amenra.github.io/ranxhub) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/6_ranxhub.ipynb)               |
 
 
 ## 📚 Documentation

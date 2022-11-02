@@ -5,13 +5,10 @@ config.THREADING_LAYER = "workqueue"
 
 
 @njit(cache=True)
-def _clean_qrels(qrels):
-    return qrels[np.nonzero(qrels[:, 1])]
+def clean_qrels(qrels, rel_lvl):
+    return qrels[np.argwhere(qrels[:, 1] >= rel_lvl).flatten()]
 
 
 @njit(cache=True)
 def fix_k(k, run):
-    if k == 0 or k > run.shape[0]:
-        return run.shape[0]
-    else:
-        return k
+    return run.shape[0] if k == 0 or k > run.shape[0] else k

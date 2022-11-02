@@ -7,13 +7,13 @@ from numba.typed import List as TypedList
 
 config.THREADING_LAYER = "workqueue"
 
-from .common import _clean_qrels, fix_k
+from .common import clean_qrels, fix_k
 
 
 # LOW LEVEL FUNCTIONS ==========================================================
 @njit(cache=True)
-def _get_hit_list(qrels, run, k):
-    qrels = _clean_qrels(qrels.copy())
+def _get_hit_list(qrels, run, k, rel_lvl):
+    qrels = clean_qrels(qrels, rel_lvl)
     k = fix_k(k, run)
 
     hit_list = np.full(k, 0.0)
@@ -38,12 +38,12 @@ def _get_hit_list(qrels, run, k):
 
 
 @njit(cache=True, parallel=True)
-def _get_hit_list_parallel(qrels, run, k):
+def _get_hit_list_parallel(qrels, run, k, rel_lvl):
     hit_lists = TypedList(
         [np.ones(1, dtype=np.float64) for _ in range(len(qrels))]
     )
     for i in prange(len(qrels)):
-        hit_lists[i] = _get_hit_list(qrels[i], run[i], k)
+        hit_lists[i] = _get_hit_list(qrels[i], run[i], k, rel_lvl)
     return hit_lists
 
 
@@ -52,6 +52,7 @@ def get_hit_lists(
     qrels: Union[np.ndarray, numba.typed.List],
     run: Union[np.ndarray, numba.typed.List],
     k: int = 0,
+    rel_lvl: int = 1,
 ) -> np.ndarray:
     """Compute the hit lists (at k).
 
@@ -65,10 +66,12 @@ def get_hit_lists(
 
         k (int, optional): Number of retrieved documents to consider. k=0 means all retrieved documents will be considered. Defaults to 0.
 
+        rel_lvl (int, optional): Minimum relevance judgment score to consider a document to be relevant. E.g., rel_lvl=1 means all documents with relevance judgment scores greater or equal to 1 will be considered relevant. Defaults to 1.
+
     Returns:
         Hit lists (at k).
     """
 
     assert k >= 0, "k must be grater or equal to 0"
 
-    return _get_hit_list_parallel(qrels, run, k)
+    return _get_hit_list_parallel(qrels, run, k, rel_lvl)

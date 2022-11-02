@@ -104,12 +104,22 @@ class Report(object):
         return ("").join(superscript)
 
     def get_metric_label(self, m):
-        if "@" in m:
-            m_splitted = m.split("@")
-            label = metric_labels[m_splitted[0]]
-            cutoff = m_splitted[1]
-            return f"{label}@{cutoff}"
-        return f"{metric_labels[m]}"
+        if "-l" in m:
+            m, rel_lvl = m.split("-l")
+            if "@" in m:
+                m_splitted = m.split("@")
+                label = metric_labels[m_splitted[0]]
+                cutoff = m_splitted[1]
+                return f"{label}@{cutoff}-l{rel_lvl}"
+            return f"{metric_labels[m]}-l{rel_lvl}"
+
+        else:
+            if "@" in m:
+                m_splitted = m.split("@")
+                label = metric_labels[m_splitted[0]]
+                cutoff = m_splitted[1]
+                return f"{label}@{cutoff}"
+            return f"{metric_labels[m]}"
 
     def get_stat_test_label(self, stat_test: str):
         return stat_test_labels[stat_test]

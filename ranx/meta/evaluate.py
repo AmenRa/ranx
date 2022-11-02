@@ -6,6 +6,7 @@ import numpy as np
 from numba import set_num_threads
 
 from ..data_structures import Qrels, Run
+from ..data_structures.common import set_relevance_level
 from ..metrics import metric_switch
 from ..utils import python_dict_to_typed_list
 
@@ -16,7 +17,12 @@ def format_metrics(metrics: Union[List[str], str]) -> List[str]:
     return metrics
 
 
-def extract_metric_and_k(metric):
+def extract_metric_and_params(metric):
+    rel_lvl = 1
+
+    if "-l" in metric:
+        metric, rel_lvl = metric.split("-l")
+
     if "rbp" in metric:
         if "." in metric:
             metric_splitted = metric.split(".")
@@ -34,7 +40,7 @@ def extract_metric_and_k(metric):
         m = metric_splitted[0]
         k = int(metric_splitted[1]) if len(metric_splitted) > 1 else 0
 
-    return m, k
+    return m, k, int(rel_lvl)
 
 
 def convert_qrels(qrels):
@@ -65,7 +71,10 @@ def evaluate(
         np.ndarray,
     ],
     run: Union[
-        Run, Dict[str, Dict[str, Number]], nb.typed.typedlist.List, np.ndarray,
+        Run,
+        Dict[str, Dict[str, Number]],
+        nb.typed.typedlist.List,
+        np.ndarray,
     ],
     metrics: Union[List[str], str],
     return_mean: bool = True,
@@ -78,7 +87,7 @@ def evaluate(
 
     ```python
     from ranx import evaluate
-    
+
     # Compute score for a single metric
     evaluate(qrels, run, "ndcg@5")
     >>> 0.7861
@@ -126,8 +135,8 @@ def evaluate(
     # Compute metrics ----------------------------------------------------------
     metric_scores_dict = {}
     for metric in metrics:
-        m, k = extract_metric_and_k(metric)
-        metric_scores_dict[metric] = metric_switch(m)(_qrels, _run, k)
+        m, k, rel_lvl = extract_metric_and_params(metric)
+        metric_scores_dict[metric] = metric_switch(m)(_qrels, _run, k, rel_lvl)
 
     # Save results in Run ------------------------------------------------------
     if type(run) == Run and save_results_in_run:
@@ -140,7 +149,5 @@ def evaluate(
     if return_mean:
         for m, scores in metric_scores_dict.items():
             metric_scores_dict[m] = np.mean(scores)
-    if len(metrics) == 1:
-        return metric_scores_dict[m]
 
-    return metric_scores_dict
+    return metric_scores_dict[m] if len(metrics) == 1 else metric_scores_dict

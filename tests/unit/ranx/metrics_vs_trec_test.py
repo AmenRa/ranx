@@ -7,7 +7,6 @@ import pytrec_eval
 
 from ranx import Qrels, Run, evaluate
 
-REL_TOL = 1e-09  # Default value 1e-09
 
 # Wrapper for pytrec_eval
 def run_trec_metrics(qrels, run, metrics):
@@ -58,79 +57,79 @@ def test_precision():
     trec_score = run_single_trec_metric(trec_qrels, trec_run, "P_5")
     re_score = evaluate(re_qrels, re_run, "precision@5")
 
-    assert isclose(re_score, trec_score, rel_tol=REL_TOL)
+    assert isclose(re_score, trec_score)
 
     trec_score = run_single_trec_metric(trec_qrels, trec_run, "P_10")
     re_score = evaluate(re_qrels, re_run, "precision@10")
 
-    assert isclose(re_score, trec_score, rel_tol=REL_TOL)
+    assert isclose(re_score, trec_score)
 
     trec_score = run_single_trec_metric(trec_qrels, trec_run, "P_100")
     re_score = evaluate(re_qrels, re_run, "precision@100")
 
-    assert isclose(re_score, trec_score, rel_tol=REL_TOL)
+    assert isclose(re_score, trec_score)
 
 
 def test_recall():
     trec_score = run_single_trec_metric(trec_qrels, trec_run, "recall_5")
     re_score = evaluate(re_qrels, re_run, "recall@5")
 
-    assert isclose(re_score, trec_score, rel_tol=REL_TOL)
+    assert isclose(re_score, trec_score)
 
     trec_score = run_single_trec_metric(trec_qrels, trec_run, "recall_10")
     re_score = evaluate(re_qrels, re_run, "recall@10")
 
-    assert isclose(re_score, trec_score, rel_tol=REL_TOL)
+    assert isclose(re_score, trec_score)
 
     trec_score = run_single_trec_metric(trec_qrels, trec_run, "recall_100")
     re_score = evaluate(re_qrels, re_run, "recall@100")
 
-    assert isclose(re_score, trec_score, rel_tol=REL_TOL)
+    assert isclose(re_score, trec_score)
 
 
 def test_r_precision():
     trec_score = run_single_trec_metric(trec_qrels, trec_run, "Rprec")
     re_score = evaluate(re_qrels, re_run, "r-precision")
 
-    assert isclose(re_score, trec_score, rel_tol=REL_TOL)
+    assert isclose(re_score, trec_score)
 
 
 def test_mrr():
     trec_score = run_single_trec_metric(trec_qrels, trec_run, "recip_rank")
     re_score = evaluate(re_qrels, re_run, "mrr@100")
 
-    assert isclose(re_score, trec_score, rel_tol=REL_TOL)
+    assert isclose(re_score, trec_score)
 
 
 def test_map():
     trec_score = run_single_trec_metric(trec_qrels, trec_run, "map_cut_5")
     re_score = evaluate(re_qrels, re_run, "map@5")
 
-    assert isclose(re_score, trec_score, rel_tol=REL_TOL)
+    assert isclose(re_score, trec_score)
 
     trec_score = run_single_trec_metric(trec_qrels, trec_run, "map_cut_10")
     re_score = evaluate(re_qrels, re_run, "map@10")
 
-    assert isclose(re_score, trec_score, rel_tol=REL_TOL)
+    assert isclose(re_score, trec_score)
 
     trec_score = run_single_trec_metric(trec_qrels, trec_run, "map_cut_100")
     re_score = evaluate(re_qrels, re_run, "map@100")
 
-    assert isclose(re_score, trec_score, rel_tol=REL_TOL)
+    assert isclose(re_score, trec_score)
 
 
 def test_ndcg():
     trec_score = run_single_trec_metric(trec_qrels, trec_run, "ndcg_cut_5")
     re_score = evaluate(re_qrels, re_run, "ndcg@5")
 
-    assert isclose(re_score, trec_score, rel_tol=REL_TOL)
+    assert isclose(re_score, trec_score)
 
     trec_score = run_single_trec_metric(trec_qrels, trec_run, "ndcg_cut_10")
     re_score = evaluate(re_qrels, re_run, "ndcg@10")
 
-    assert isclose(re_score, trec_score, rel_tol=REL_TOL)
+    assert isclose(re_score, trec_score)
 
     trec_score = run_single_trec_metric(trec_qrels, trec_run, "ndcg_cut_100")
     re_score = evaluate(re_qrels, re_run, "ndcg@100")
 
-    assert isclose(re_score, trec_score, rel_tol=REL_TOL)
+    assert isclose(re_score, trec_score)

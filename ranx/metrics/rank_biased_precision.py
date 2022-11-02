@@ -11,8 +11,8 @@ from .get_hit_lists import _get_hit_list
 
 # LOW LEVEL FUNCTIONS ==========================================================
 @njit(cache=True)
-def _rank_biased_precision(qrels, run, p):
-    hit_list = _get_hit_list(qrels, run, k=0)
+def _rank_biased_precision(qrels, run, p, rel_lvl):
+    hit_list = _get_hit_list(qrels, run, k=0, rel_lvl=rel_lvl)
     p_values = p ** np.arange(len(hit_list))
     p_values_sum = sum(hit_list * p_values)
 
@@ -20,10 +20,10 @@ def _rank_biased_precision(qrels, run, p):
 
 
 @njit(cache=True, parallel=True)
-def _rank_biased_precision_parallel(qrels, run, p):
+def _rank_biased_precision_parallel(qrels, run, p, rel_lvl):
     scores = np.zeros((len(qrels)), dtype=np.float64)
     for i in prange(len(qrels)):
-        scores[i] = _rank_biased_precision(qrels[i], run[i], p)
+        scores[i] = _rank_biased_precision(qrels[i], run[i], p, rel_lvl)
     return scores
 
 
@@ -32,6 +32,7 @@ def rank_biased_precision(
     qrels: Union[np.ndarray, numba.typed.List],
     run: Union[np.ndarray, numba.typed.List],
     p: float,
+    rel_lvl: int = 1,
 ) -> np.ndarray:
     r"""Compute Rank-biased Precision (RBP).
 
@@ -53,8 +54,10 @@ def rank_biased_precision(
 
         p (float): Persistence value.
 
+        rel_lvl (int, optional): Minimum relevance judgment score to consider a document to be relevant. E.g., rel_lvl=1 means all documents with relevance judgment scores greater or equal to 1 will be considered relevant. Defaults to 1.
+
     Returns:
         Rank-biased Precision scores.
     """
 
-    return _rank_biased_precision_parallel(qrels, run, p)
+    return _rank_biased_precision_parallel(qrels, run, p, rel_lvl)

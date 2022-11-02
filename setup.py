@@ -5,10 +5,10 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="ranx",
-    version="0.3.2",
+    version="0.3.3",
     author="Elias Bassani",
     author_email="elias.bssn@gmail.com",
-    description="ranx: A Blazing Fast Python Library for Ranking Evaluation and Comparison",
+    description="ranx: A Blazing-Fast Python Library for Ranking Evaluation, Comparison, and Fusion",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/AmenRa/ranx",
@@ -37,8 +37,11 @@ setuptools.setup(
     keywords=[
         "trec_eval",
         "information retrieval",
+        "recommender systems",
         "evaluation",
         "ranking",
+        "fusion",
+        "metasearch",
         "numba",
     ],
     python_requires=">=3.7",

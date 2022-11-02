@@ -30,6 +30,23 @@ def to_typed_list(d):
     return typed_list
 
 
+@njit(cache=True, parallel=True)
+def set_relevance_level(typed_list, relevance_level):
+    new_typed_list = TypedList(
+        [np.empty((1, 2), dtype=np.float64)] * len(typed_list)
+    )
+
+    for i in range(len(typed_list)):
+        new_typed_list[i] = np.column_stack(
+            (
+                typed_list[i][:, 0],
+                typed_list[i][:, 1] - relevance_level,
+            )
+        )
+
+    return new_typed_list
+
+
 @njit(cache=True)
 def create_dict_from_lists(keys, values):
     d = TypedDict()

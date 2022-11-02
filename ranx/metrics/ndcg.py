@@ -6,13 +6,13 @@ from numba import config, njit, prange
 
 config.THREADING_LAYER = "workqueue"
 
-from .common import _clean_qrels, fix_k
+from .common import clean_qrels, fix_k
 
 
 # LOW LEVEL FUNCTIONS ==========================================================
 @njit(cache=True)
-def _dcg(qrels, run, k, jarvelin):
-    qrels = _clean_qrels(qrels.copy())
+def _dcg(qrels, run, k, rel_lvl, jarvelin):
+    qrels = clean_qrels(qrels, rel_lvl)
     if len(qrels) == 0:
         return 0.0
 
@@ -40,19 +40,19 @@ def _dcg(qrels, run, k, jarvelin):
     else:
         # Burges et al. formulation (see https://doi.org/10.1145/1102351.1102363)
         return np.sum(
-            (2 ** weighted_hit_list - 1) / np.log2(np.arange(1, k + 1) + 1)
+            (2**weighted_hit_list - 1) / np.log2(np.arange(1, k + 1) + 1)
         )
 
 
 @njit(cache=True)
-def _idcg(qrels, k, jarvelin):
-    return _dcg(qrels, qrels, k, jarvelin)
+def _idcg(qrels, k, rel_lvl, jarvelin):
+    return _dcg(qrels, qrels, k, rel_lvl, jarvelin)
 
 
 @njit(cache=True)
-def _ndcg(qrels, run, k, jarvelin):
-    dcg_score = _dcg(qrels, run, k, jarvelin)
-    idcg_score = _idcg(qrels, k, jarvelin)
+def _ndcg(qrels, run, k, rel_lvl, jarvelin):
+    dcg_score = _dcg(qrels, run, k, rel_lvl, jarvelin)
+    idcg_score = _idcg(qrels, k, rel_lvl, jarvelin)
 
     # For numerical stability
     if idcg_score == 0.0:
@@ -62,10 +62,10 @@ def _ndcg(qrels, run, k, jarvelin):
 
 
 @njit(cache=True, parallel=True)
-def _ndcg_parallel(qrels, run, k, jarvelin):
+def _ndcg_parallel(qrels, run, k, rel_lvl, jarvelin):
     scores = np.zeros((len(qrels)), dtype=np.float64)
     for i in prange(len(qrels)):
-        scores[i] = _ndcg(qrels[i], run[i], k, jarvelin)
+        scores[i] = _ndcg(qrels[i], run[i], k, rel_lvl, jarvelin)
     return scores
 
 
@@ -74,6 +74,7 @@ def ndcg(
     qrels: Union[np.ndarray, numba.typed.List],
     run: Union[np.ndarray, numba.typed.List],
     k: int = 0,
+    rel_lvl: int = 1,
 ) -> np.ndarray:
     r"""Compute Normalized Discounted Cumulative Gain (NDCG) as proposed by [Järvelin et al.](http://doi.acm.org/10.1145/582415.582418).<br />
     If k > 0, only the top-k retrieved documents are considered.
@@ -120,6 +121,8 @@ def ndcg(
 
         k (int, optional): This argument is ignored. It was added to standardize metrics' input. Defaults to 0.
 
+        rel_lvl (int, optional): Minimum relevance judgment score to consider a document to be relevant. E.g., rel_lvl=1 means all documents with relevance judgment scores greater or equal to 1 will be considered relevant. Defaults to 1.
+
     Returns:
         Normalized Discounted Cumulative Gain (at k) scores.
 
@@ -127,13 +130,14 @@ def ndcg(
 
     assert k >= 0, "k must be grater or equal to 0"
 
-    return _ndcg_parallel(qrels, run, k, jarvelin=True)
+    return _ndcg_parallel(qrels, run, k, rel_lvl, jarvelin=True)
 
 
 def ndcg_burges(
     qrels: Union[np.ndarray, numba.typed.List],
     run: Union[np.ndarray, numba.typed.List],
     k: int = 0,
+    rel_lvl: int = 1,
 ) -> np.ndarray:
     r"""Compute Normalized Discounted Cumulative Gain (NDCG) at k as proposed by [Burges et al.](https://doi.org/10.1145/1102351.1102363).<br />
     If k > 0, only the top-k retrieved documents are considered.
@@ -186,6 +190,8 @@ def ndcg_burges(
 
         k (int, optional): This argument is ignored. It was added to standardize metrics' input. Defaults to 0.
 
+        rel_lvl (int, optional): Minimum relevance judgment score to consider a document to be relevant. E.g., rel_lvl=1 means all documents with relevance judgment scores greater or equal to 1 will be considered relevant. Defaults to 1.
+
     Returns:
         Normalized Discounted Cumulative Gain (at k) scores.
 
@@ -193,4 +199,4 @@ def ndcg_burges(
 
     assert k >= 0, "k must be grater or equal to 0"
 
-    return _ndcg_parallel(qrels, run, k, jarvelin=False)
+    return _ndcg_parallel(qrels, run, k, rel_lvl, jarvelin=False)
