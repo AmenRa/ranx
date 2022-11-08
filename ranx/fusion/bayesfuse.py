@@ -3,9 +3,9 @@ from typing import List
 import numpy as np
 from numba import njit, prange
 from numba.typed import List as TypedList
-from ranx.metrics import get_hit_lists
 
 from ..data_structures import Qrels, Run
+from ..metrics import get_hit_lists
 from .common import (
     convert_results_dict_list_to_run,
     create_empty_results_dict,

@@ -6,7 +6,6 @@ import numpy as np
 from numba import set_num_threads
 
 from ..data_structures import Qrels, Run
-from ..data_structures.common import set_relevance_level
 from ..metrics import metric_switch
 from ..utils import python_dict_to_typed_list
 
