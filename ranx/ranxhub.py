@@ -1,6 +1,8 @@
 import yaml
 
-from .data_structures import Qrels, Run
+from ranx.data_structures.qrels import Qrels
+
+from .data_structures import Run
 from .io import save_lz4
 from .meta import evaluate
 

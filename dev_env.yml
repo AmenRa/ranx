@@ -1,7 +1,6 @@
 name: ranx
 dependencies:
   - black
-  - isort
   - ipykernel
   - ipywidgets
   - conda-forge::mkdocs-material
