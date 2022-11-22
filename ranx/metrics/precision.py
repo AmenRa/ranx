@@ -14,6 +14,8 @@ from .hits import _hits
 @njit(cache=True)
 def _precision(qrels, run, k, rel_lvl):
     k = k if k != 0 else run.shape[0]
+    if k == 0:
+        return 0.0
 
     return _hits(qrels, run, k, rel_lvl) / k
 

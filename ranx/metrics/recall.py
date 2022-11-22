@@ -18,6 +18,8 @@ def _recall(qrels, run, k, rel_lvl):
         return 0.0
 
     k = k if k != 0 else run.shape[0]
+    if k == 0:
+        return 0.0
 
     return _hits(qrels, run, k, rel_lvl) / qrels.shape[0]
 

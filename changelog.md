@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.4] - 2022-11-22
+- Fixed a bug affecting `precision.py`, `recall.py`, and `f1.py`: `numba` does not raise ZeroDivisionError, added a control to make sure zero is returned when no retrieved results are provided for a specific query.
+- Fixed a bug in `f1.py`: missing argument in function call.
+
+## [0.3.x] - 2022
+
+Sorry, I have been lazy.
+
 ## [0.2.13] - 2022-09-30
 ### Fixed
 - Fixed a bug in `posfuse.py`: `numba` does not raise out of bounds error in some specific cases, added a control to make sure ranking positions with no associated probability get 0 probability.

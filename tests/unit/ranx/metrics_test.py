@@ -234,10 +234,10 @@ def test_ndcg_burges():
     )  # rel = 0, 0, 0, 0, 0
 
     idcg = (
-        (2 ** 5 - 1) / np.log2(2)
-        + (2 ** 4 - 1) / np.log2(3)
-        + (2 ** 3 - 1) / np.log2(4)
-        + (2 ** 2 - 1) / np.log2(5)
+        (2**5 - 1) / np.log2(2)
+        + (2**4 - 1) / np.log2(3)
+        + (2**3 - 1) / np.log2(4)
+        + (2**2 - 1) / np.log2(5)
     )
 
     k = 10
@@ -245,9 +245,9 @@ def test_ndcg_burges():
     assert np.allclose(
         rm.ndcg_burges(y_true, y_pred_1, k)[0],
         (
-            (2 ** 5 - 1) / np.log2(3)
-            + (2 ** 4 - 1) / np.log2(5)
-            + (2 ** 3 - 1) / np.log2(6)
+            (2**5 - 1) / np.log2(3)
+            + (2**4 - 1) / np.log2(5)
+            + (2**3 - 1) / np.log2(6)
         )
         / idcg,
     )
@@ -255,10 +255,10 @@ def test_ndcg_burges():
     assert np.allclose(
         rm.ndcg_burges(y_true, y_pred_2, k)[0],
         (
-            (2 ** 2 - 1) / np.log2(2)
-            + (2 ** 3 - 1) / np.log2(3)
-            + (2 ** 5 - 1) / np.log2(4)
-            + (2 ** 4 - 1) / np.log2(5)
+            (2**2 - 1) / np.log2(2)
+            + (2**3 - 1) / np.log2(3)
+            + (2**5 - 1) / np.log2(4)
+            + (2**4 - 1) / np.log2(5)
         )
         / idcg,
     )
