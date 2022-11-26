@@ -4,24 +4,19 @@
 
 <p align="center">
   <!-- Python -->
-  <a href="https://www.python.org" alt="Python">
-      <img src="https://badges.aleen42.com/src/python.svg" />
-  </a>
+  <a href="https://www.python.org" alt="Python"><img src="https://badges.aleen42.com/src/python.svg"></a>
   <!-- Version -->
-  <!-- <a href="https://pypi.python.org/pypi/ranx"><img src="https://img.shields.io/pypi/v/ranx.svg" alt="PyPI version"></a> -->
-  <a href="https://badge.fury.io/py/ranx"><img src="https://badge.fury.io/py/ranx.svg" alt="PyPI version" height="18"></a>
+  <a href="https://pypi.org/project/ranx/"><img src="https://img.shields.io/pypi/v/ranx?color=light-green" alt="PyPI version"></a>
+  <!-- Downloads -->
+  <a href="https://pepy.tech/project/ranx"><img src="https://static.pepy.tech/personalized-badge/ranx?period=total&units=international_system&left_color=grey&right_color=blue&left_text=downloads" alt="Download counter"></a>
   <!-- Docs -->
   <a href="https://amenra.github.io/ranx"><img src="https://img.shields.io/badge/docs-passing-<COLOR>.svg" alt="Documentation Status"></a>
   <!-- Black -->
-  <a href="https://github.com/psf/black" alt="Code style: black">
-      <img src="https://img.shields.io/badge/code%20style-black-000000.svg" />
-  </a>
+  <a href="https://github.com/psf/black" alt="Code style: black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
   <!-- License -->
-  <a href="https://lbesson.mit-license.org/"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
+  <a href="https://lbesson.mit-license.org/"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></a>
   <!-- Google Colab -->
-  <a href="https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/1_overview.ipynb">
-      <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
-  </a>
+  <a href="https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/1_overview.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab"/></a>
 </p>
 
 ## 🔥 News
