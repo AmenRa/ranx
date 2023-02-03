@@ -53,7 +53,7 @@ def compare(
         metrics (Union[List[str], str]): Metric or list of metrics.
         n_permutations (int, optional): Number of permutation to perform during statistical testing (Fisher's Randomization Test is used by default). Defaults to 1000.
         max_p (float, optional): Maximum p-value to consider an increment as statistically significant. Defaults to 0.01.
-        stat_test (str, optional): Statistical test to perform. Use "fisher" for _Fisher's Randomization Test_, "student" for _Two-sided Paired Student's t-Test_, or "Tukey" for _Tukey's HSD test_. Defaults to "fisher".
+        stat_test (str, optional): Statistical test to perform. Use "fisher" for _Fisher's Randomization Test_, "student" for _Two-sided Paired Student's t-Test_, or "Tukey" for _Tukey's HSD test_. Defaults to "student".
         random_seed (int, optional): Random seed to use for generating the permutations. Defaults to 42.
         threads (int, optional): Number of threads to use, zero means all the available threads. Defaults to 0.
         rounding_digits (int, optional): Number of digits to round to and to show in the Report. Defaults to 3.
