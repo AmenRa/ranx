@@ -10,6 +10,6 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
-          python-version: 3.x
+          python-version: 3.8
       - run: pip install mkdocs-material mkdocs-autorefs mkdocstrings mkdocstrings-python-legacy mkdocstrings-python numpy numba pandas tabulate tqdm scipy ir_datasets rich orjson lz4 cbor2
       - run: mkdocs gh-deploy --force
