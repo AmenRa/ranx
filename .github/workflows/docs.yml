@@ -11,5 +11,5 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: 3.x
-      - run: pip install mkdocs-material mkdocs-autorefs mkdocstrings mkdocstrings-python-legacy mkdocstrings-python numba pandas tabulate tqdm scipy statsmodels ir_datasets rich orjson
+      - run: pip install mkdocs-material mkdocs-autorefs mkdocstrings mkdocstrings-python-legacy mkdocstrings-python numpy numba=0.54.1 pandas tabulate tqdm scipy ir_datasets rich orjson lz4 cbor2
       - run: mkdocs gh-deploy --force
