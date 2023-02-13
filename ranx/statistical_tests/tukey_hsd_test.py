@@ -2,30 +2,30 @@ from typing import List
 
 import numpy as np
 import pandas as pd
-from statsmodels.stats.multicomp import pairwise_tukeyhsd
+from scipy.stats import tukey_hsd
 
 
 def tukey_hsd_test(
-    model_names: List[str], scores: List[np.ndarray], max_p: float,
+    model_names: List[str],
+    scores: List[np.ndarray],
+    max_p: float,
 ):
     """
     Performs Tukey's Honestly Significant Difference (HSD) Test.
     """
-    n_queries = len(scores[0])
+    p_values = tukey_hsd(*scores).pvalue
 
-    results = pairwise_tukeyhsd(
-        endog=np.concatenate(scores),
-        groups=np.array(
-            [x for name in model_names for x in [name] * n_queries]
-        ),
-        alpha=max_p,
-    )
+    res = []
 
-    # Convert results to Pandas DataFrame
-    df = pd.DataFrame(
-        data=np.array(results._results_table.data[1:])[:, [0, 1, 3, -1]],
-        columns=["control", "treatment", "p-value", "significant"],
-    )
+    for i, model_i in enumerate(model_names):
+        for j, model_j in enumerate(model_names):
+            res.append(
+                {
+                    "control": model_i,
+                    "treatment": model_j,
+                    "p-value": p_values[i, j],
+                    "significant": p_values[i, j] <= max_p,
+                }
+            )
 
-    # Extract data as Python Dictionaries
-    return df.to_dict(orient="records")
+    return res

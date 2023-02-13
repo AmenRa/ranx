@@ -65,11 +65,11 @@ For a in-depth overview, follow the [Examples](#-examples) section.
 The metrics have been tested against [TREC Eval](https://github.com/usnistgov/trec_eval) for correctness.
 
 ### Statistical Tests
-* [Fisher's Randomization Test](https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/fishrand.htm)
 * [Paired Student's t-Test](https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/t_test.htm) (default)
+* [Fisher's Randomization Test](https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/fishrand.htm)
 * [Tukey's HSD Test](https://www.itl.nist.gov/div898/handbook/prc/section4/prc471.htm)
 
-Please, refer to [Smucker et al.](https://dl.acm.org/doi/10.1145/1321440.1321528), [Carterette](https://dl.acm.org/doi/10.1145/2094072.2094076), and  [Fuhr](http://www.sigir.org/wp-content/uploads/2018/01/p032.pdf) for additional information on statistical tests for Information Retrieval.
+Please, refer to [Smucker et al.](https://dl.acm.org/doi/10.1145/1321440.1321528), [Carterette](https://dl.acm.org/doi/10.1145/2094072.2094076), and [Fuhr](http://www.sigir.org/wp-content/uploads/2018/01/p032.pdf) for additional information on statistical tests for Information Retrieval.
 
 ### Off-the-shelf Qrels
 You can load qrels from [ir-datasets](https://ir-datasets.com) as simply as:
@@ -109,7 +109,15 @@ Please, refer to the [documentation](https://amenra.github.io/ranx/fusion) for f
 Please, refer to the [documentation](https://amenra.github.io/ranx/fusion) for further details.
 
 
-## 🔌 Installation
+
+## 🔌 Requirements
+```bash
+python>=3.8
+```
+As of `v.0.3.5`, [ranx](https://github.com/AmenRa/ranx) requires `python>=3.8`.
+
+## 💾 Installation 
+
 ```bash
 pip install ranx
 ```

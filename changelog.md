@@ -4,7 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.5] - 2022-02-013
+### Fixed
+- Fixed a bug affecting `Tukey's HSD Test`: results from the test were not converted to proper dtypes from strings, causing the superscript reporting statistical significance differences in `report.py` to be wrong.
+
+### Changed
+- Changed `tukey_hsd_test.py` to use `tukey_hsd` provided by `scipy`.
+- `ranx` now requires `python>=3.8`.
+- `ranx` now requires `scipy>=1.8`.
+
+### Removed
+- Removed dependance from `statsmodels`.
+ 
 ## [0.3.4] - 2022-11-22
+### Fixed
 - Fixed a bug affecting `precision.py`, `recall.py`, and `f1.py`: `numba` does not raise ZeroDivisionError, added a control to make sure zero is returned when no retrieved results are provided for a specific query.
 - Fixed a bug in `f1.py`: missing argument in function call.
 
