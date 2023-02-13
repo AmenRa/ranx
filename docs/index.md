@@ -4,24 +4,19 @@
 
 <p align="center">
   <!-- Python -->
-  <a href="https://www.python.org" alt="Python">
-      <img src="https://badges.aleen42.com/src/python.svg" />
-  </a>
+  <a href="https://www.python.org" alt="Python"><img src="https://badges.aleen42.com/src/python.svg"></a>
   <!-- Version -->
-  <!-- <a href="https://pypi.python.org/pypi/ranx"><img src="https://img.shields.io/pypi/v/ranx.svg" alt="PyPI version"></a> -->
-  <a href="https://badge.fury.io/py/ranx"><img src="https://badge.fury.io/py/ranx.svg" alt="PyPI version" height="18"></a>
+  <a href="https://pypi.org/project/ranx/"><img src="https://img.shields.io/pypi/v/ranx?color=light-green" alt="PyPI version"></a>
+  <!-- Downloads -->
+  <a href="https://pepy.tech/project/ranx"><img src="https://static.pepy.tech/personalized-badge/ranx?period=total&units=international_system&left_color=grey&right_color=blue&left_text=downloads" alt="Download counter"></a>
   <!-- Docs -->
   <a href="https://amenra.github.io/ranx"><img src="https://img.shields.io/badge/docs-passing-<COLOR>.svg" alt="Documentation Status"></a>
   <!-- Black -->
-  <a href="https://github.com/psf/black" alt="Code style: black">
-      <img src="https://img.shields.io/badge/code%20style-black-000000.svg" />
-  </a>
+  <a href="https://github.com/psf/black" alt="Code style: black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
   <!-- License -->
-  <a href="https://lbesson.mit-license.org/"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
+  <a href="https://lbesson.mit-license.org/"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></a>
   <!-- Google Colab -->
-  <a href="https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/1_overview.ipynb">
-      <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
-  </a>
+  <a href="https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/1_overview.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab"/></a>
 </p>
 
 ## 🔥 News
@@ -39,13 +34,13 @@ Click [here](https://amenra.github.io/ranxhub) to learn how to share your own ru
 
 ## ⚡️ Introduction
 
-[ranx](https://github.com/AmenRa/ranx) is a library of fast ranking evaluation metrics implemented in [Python](https://en.wikipedia.org/wiki/Python_(programming_language)), leveraging [Numba](https://github.com/numba/numba) for high-speed [vector operations](https://en.wikipedia.org/wiki/Automatic_vectorization) and [automatic parallelization](https://en.wikipedia.org/wiki/Automatic_parallelization).
+[ranx](https://github.com/AmenRa/ranx) ([raŋks]) is a library of fast ranking evaluation metrics implemented in [Python](https://en.wikipedia.org/wiki/Python_(programming_language)), leveraging [Numba](https://github.com/numba/numba) for high-speed [vector operations](https://en.wikipedia.org/wiki/Automatic_vectorization) and [automatic parallelization](https://en.wikipedia.org/wiki/Automatic_parallelization).
 It offers a user-friendly interface to evaluate and compare [Information Retrieval](https://en.wikipedia.org/wiki/Information_retrieval) and [Recommender Systems](https://en.wikipedia.org/wiki/Recommender_system).
 [ranx](https://github.com/AmenRa/ranx) allows you to perform statistical tests and export [LaTeX](https://en.wikipedia.org/wiki/LaTeX) tables for your scientific publications.
 Moreover, [ranx](https://github.com/AmenRa/ranx) provides several [fusion algorithms](https://amenra.github.io/ranx/fusion) and [normalization strategies](https://amenra.github.io/ranx/normalization), and an automatic [fusion optimization](https://amenra.github.io/ranx/fusion/#optimize-fusion) functionality.
 [ranx](https://github.com/AmenRa/ranx) was featured in [ECIR 2022](https://ecir2022.org) and [CIKM 2022](https://www.cikm2022.org). 
  
-If you use [ranx](https://github.com/AmenRa/ranx) to evaluate results or conducting experiments involving fusion for your scientific publication, please consider it: [evaluation bibtex](https://dblp.org/rec/conf/ecir/Bassani22.html?view=bibtex), [fusion bibtex](https://dblp.org/rec/conf/cikm/BassaniR22.html?view=bibtex).
+If you use [ranx](https://github.com/AmenRa/ranx) to evaluate results or conducting experiments involving fusion for your scientific publication, please consider citing it: [evaluation bibtex](https://dblp.org/rec/conf/ecir/Bassani22.html?view=bibtex), [fusion bibtex](https://dblp.org/rec/conf/cikm/BassaniR22.html?view=bibtex).
 
 For a quick overview, follow the [Usage](#-usage) section.
 
@@ -70,11 +65,11 @@ For a in-depth overview, follow the [Examples](#-examples) section.
 The metrics have been tested against [TREC Eval](https://github.com/usnistgov/trec_eval) for correctness.
 
 ### Statistical Tests
-* [Fisher's Randomization Test](https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/fishrand.htm)
 * [Paired Student's t-Test](https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/t_test.htm) (default)
+* [Fisher's Randomization Test](https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/fishrand.htm)
 * [Tukey's HSD Test](https://www.itl.nist.gov/div898/handbook/prc/section4/prc471.htm)
 
-Please, refer to [Smucker et al.](https://dl.acm.org/doi/10.1145/1321440.1321528), [Carterette](https://dl.acm.org/doi/10.1145/2094072.2094076), and  [Fuhr](http://www.sigir.org/wp-content/uploads/2018/01/p032.pdf) for additional information on statistical tests for Information Retrieval.
+Please, refer to [Smucker et al.](https://dl.acm.org/doi/10.1145/1321440.1321528), [Carterette](https://dl.acm.org/doi/10.1145/2094072.2094076), and [Fuhr](http://www.sigir.org/wp-content/uploads/2018/01/p032.pdf) for additional information on statistical tests for Information Retrieval.
 
 ### Off-the-shelf Qrels
 You can load qrels from [ir-datasets](https://ir-datasets.com) as simply as:
@@ -114,7 +109,15 @@ Please, refer to the [documentation](https://amenra.github.io/ranx/fusion) for f
 Please, refer to the [documentation](https://amenra.github.io/ranx/fusion) for further details.
 
 
-## 🔌 Installation
+
+## 🔌 Requirements
+```bash
+python>=3.8
+```
+As of `v.0.3.5`, [ranx](https://github.com/AmenRa/ranx) requires `python>=3.8`.
+
+## 💾 Installation 
+
 ```bash
 pip install ranx
 ```
@@ -213,20 +216,40 @@ Browse the [documentation](https://amenra.github.io/ranx) for more details and e
 
 
 ## 🎓 Citation
-If you use [ranx](https://github.com/AmenRa/ranx) to evaluate results for your scientific publication, please consider citing it:
-```
-@inproceedings{bassani2022ranx,
-  author    = {Elias Bassani},
-  title     = {ranx: {A} Blazing-Fast Python Library for Ranking Evaluation and Comparison},
-  booktitle = {{ECIR} {(2)}},
-  series    = {Lecture Notes in Computer Science},
-  volume    = {13186},
-  pages     = {259--264},
-  publisher = {Springer},
-  year      = {2022}
-}
-```
+If you use [ranx](https://github.com/AmenRa/ranx) to evaluate results for your scientific publication, please consider citing our [ECIR 2022](https://ecir2022.org) paper:
+<details>
+  <summary>BibTeX</summary>
+  
+  ```bibtex
+  @inproceedings{DBLP:conf/ecir/Bassani22,
+    author    = {Elias Bassani},
+    title     = {ranx: {A} Blazing-Fast Python Library for Ranking Evaluation and Comparison},
+    booktitle = {{ECIR} {(2)}},
+    series    = {Lecture Notes in Computer Science},
+    volume    = {13186},
+    pages     = {259--264},
+    publisher = {Springer},
+    year      = {2022}
+  }
+  ```
+</details>  
 
+If you use the fusion functionalities provided by [ranx](https://github.com/AmenRa/ranx) for conducting the experiments of your scientific publication, please consider citing our [CIKM 2022](https://www.cikm2022.org) paper:
+<details>
+  <summary>BibTeX</summary>
+  
+  ```bibtex
+  @inproceedings{DBLP:conf/cikm/BassaniR22,
+    author    = {Elias Bassani and
+                Luca Romelli},
+    title     = {ranx.fuse: {A} Python Library for Metasearch},
+    booktitle = {{CIKM}},
+    pages     = {4808--4812},
+    publisher = {{ACM}},
+    year      = {2022}
+  }
+  ```
+</details>
 
 ## 🎁 Feature Requests
 Would you like to see other features implemented? Please, open a [feature request](https://github.com/AmenRa/ranx/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=%5BFeature+Request%5D+title).
