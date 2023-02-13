@@ -14,9 +14,10 @@ dependencies:
   - pandas
   - pip
   - pytest
-  - python=3.7
-  - scipy
-  - statsmodels
+  - python>=3.8
+  - scipy>=1.8
+  - orjson
+  - lz4
   - tabulate
   - tqdm
   - rich
@@ -24,3 +25,4 @@ dependencies:
     - pytrec_eval
     - twine
     - ir_datasets
+    - cbor2
