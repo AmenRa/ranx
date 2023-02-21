@@ -5,6 +5,16 @@ from numba.typed import List
 from ranx import Run
 
 
+# FIXTURES =====================================================================
+@pytest.fixture
+def run():
+    return {
+        "q1": {"d1": 0.1, "d2": 0.2, "d3": 0.3},
+        "q2": {"d1": 0.1, "d2": 0.2},
+    }
+
+
+# TEST =========================================================================
 def test_init():
     run_dict = {
         "q1": {
@@ -162,6 +172,48 @@ def test_to_typed_list():
     assert run_list[1].shape == (2, 2)
 
 
+def test_save_load_json(run):
+    Run(run).save("tests/unit/ranx/test_data/run.json")
+    run = Run.from_file("tests/unit/ranx/test_data/run.json")
+
+    assert len(run.run) == 2
+    assert len(run.run["q1"]) == 3
+    assert len(run.run["q2"]) == 2
+    assert run.run["q1"]["d1"] == 0.1
+    assert run.run["q1"]["d2"] == 0.2
+    assert run.run["q1"]["d3"] == 0.3
+    assert run.run["q2"]["d1"] == 0.1
+    assert run.run["q2"]["d2"] == 0.2
+
+
+def test_save_load_trec(run):
+    Run(run).save("tests/unit/ranx/test_data/run.trec")
+    run = Run.from_file("tests/unit/ranx/test_data/run.trec")
+
+    assert len(run.run) == 2
+    assert len(run.run["q1"]) == 3
+    assert len(run.run["q2"]) == 2
+    assert run.run["q1"]["d1"] == 0.1
+    assert run.run["q1"]["d2"] == 0.2
+    assert run.run["q1"]["d3"] == 0.3
+    assert run.run["q2"]["d1"] == 0.1
+    assert run.run["q2"]["d2"] == 0.2
+
+
+def test_save_load_lz4(run):
+    Run(run).save("tests/unit/ranx/test_data/run.lz4")
+    run = Run.from_file("tests/unit/ranx/test_data/run.lz4")
+
+    assert len(run.run) == 2
+    assert len(run.run["q1"]) == 3
+    assert len(run.run["q2"]) == 2
+    assert run.run["q1"]["d1"] == 0.1
+    assert run.run["q1"]["d2"] == 0.2
+    assert run.run["q1"]["d3"] == 0.3
+    assert run.run["q2"]["d1"] == 0.1
+    assert run.run["q2"]["d2"] == 0.2
+
+
 def test_from_dict():
     run_py = {
         "q1": {
@@ -185,33 +237,6 @@ def test_from_dict():
     assert run.run["q1"]["d3"] == 3
     assert run.run["q2"]["d1"] == 1
     assert run.run["q2"]["d2"] == 2
-
-
-def test_from_trec_file():
-    run = Run.from_file("tests/unit/ranx/test_data/run.trec", kind="trec")
-
-    assert len(run.run) == 2
-    assert len(run.run["q1"]) == 3
-    assert len(run.run["q2"]) == 2
-    assert run.run["q1"]["d1"] == 0.1
-    assert run.run["q1"]["d2"] == 0.2
-    assert run.run["q1"]["d3"] == 0.3
-    assert run.run["q2"]["d1"] == 0.1
-    assert run.run["q2"]["d2"] == 0.2
-    assert run.name == "example"
-
-
-def test_from_json_file():
-    run = Run.from_file("tests/unit/ranx/test_data/run.json")
-
-    assert len(run.run) == 2
-    assert len(run.run["q1"]) == 3
-    assert len(run.run["q2"]) == 2
-    assert run.run["q1"]["d1"] == 0.1
-    assert run.run["q1"]["d2"] == 0.2
-    assert run.run["q1"]["d3"] == 0.3
-    assert run.run["q2"]["d1"] == 0.1
-    assert run.run["q2"]["d2"] == 0.2
 
 
 def test_from_dataframe():

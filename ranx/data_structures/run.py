@@ -3,13 +3,12 @@ from collections import defaultdict
 from typing import Dict, List
 
 import numpy as np
-import orjson
 import pandas as pd
 from numba import types
 from numba.typed import Dict as TypedDict
 from numba.typed import List as TypedList
 
-from ..io import download
+from ..io import download, load_json, load_lz4, save_json, save_lz4
 from .common import (
     add_and_sort,
     create_and_sort,
@@ -156,11 +155,11 @@ class Run(object):
         return d
 
     def save(self, path: str = "run.json", kind: str = None):
-        """Write `run` to `path` as JSON file or TREC run format. File type is automatically inferred form the filename extension: ".json" -> "json", ".trec" -> "trec", ".txt" -> "trec". Use the "kind" argument to override this behavior.
+        """Write `run` to `path` as JSON file, TREC run, or LZ4 file. File type is automatically inferred form the filename extension: ".json" -> "json", ".trec" -> "trec", ".txt" -> "trec", and ".lz4" -> "lz4". Use the "kind" argument to override this behavior.
 
         Args:
             path (str, optional): Saving path. Defaults to "run.json".
-            kind (str, optional): Kind of file to save, must be either "json" or "trec". If None, it will be automatically inferred from the filename extension.
+            kind (str, optional): Kind of file to save, must be either "json", "trec", or "ranxhub". If None, it will be automatically inferred from the filename extension.
         """
         # Infer file extension -------------------------------------------------
         kind = get_file_kind(path, kind)
@@ -170,10 +169,9 @@ class Run(object):
             self.sort()
 
         if kind == "json":
-            with open(path, "wb") as f:
-                f.write(
-                    orjson.dumps(self.to_dict(), option=orjson.OPT_INDENT_2)
-                )
+            save_json(self.to_dict(), path)
+        elif kind == "lz4":
+            save_lz4(self.to_dict(), path)
         else:
             with open(path, "w") as f:
                 for i, q_id in enumerate(self.run.keys()):
@@ -222,7 +220,7 @@ class Run(object):
 
     @staticmethod
     def from_file(path: str, kind: str = None):
-        """Parse a run file into ranx.Run. Supported formats are JSON and TREC run format. Correct import behavior is inferred from the file extension: ".json" -> "json", ".trec" -> "trec", ".txt" -> "trec". Use the "kind" argument to override this behavior.
+        """Parse a run file into ranx.Run. Supported formats are JSON, TREC run, and LZ4. Correct import behavior is inferred from the file extension: ".json" -> "json", ".trec" -> "trec", ".txt" -> "trec", ".lz4" -> "lz4". Use the "kind" argument to override this behavior.
 
         Args:
             path (str): File path.
@@ -234,9 +232,12 @@ class Run(object):
         # Infer file extension -------------------------------------------------
         kind = get_file_kind(path, kind)
 
+
         # Load Run -------------------------------------------------------------
         if kind == "json":
-            run = orjson.loads(open(path, "rb").read())
+            run = load_json(path)
+        elif kind == "lz4":
+            run = load_lz4(path)
         else:
             run = defaultdict(dict)
             name = ""
@@ -325,7 +326,7 @@ class Run(object):
         return self.run.__str__()
 
 
-def get_file_kind(path: str = "qrels.json", kind: str = None) -> str:
+def get_file_kind(path: str = "run.json", kind: str = None) -> str:
     # Infer file extension
     if kind is None:
         kind = os.path.splitext(path)[1][1:]
@@ -335,6 +336,7 @@ def get_file_kind(path: str = "qrels.json", kind: str = None) -> str:
     assert kind in {
         "json",
         "trec",
-    }, "Error `kind` must be 'json' or 'trec'"
+        "lz4",
+    }, "Error `kind` must be 'json', 'trec', or 'lz4'"
 
     return kind

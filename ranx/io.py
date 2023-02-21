@@ -3,6 +3,7 @@ from pathlib import Path
 
 import cbor2
 import lz4.frame
+import orjson
 
 from .downloader import download_file
 
@@ -53,7 +54,7 @@ def download(id: str):
     return load_lz4(path)
 
 
-def save_lz4(path: str, content: dict) -> None:
+def save_lz4(content: dict, path: str) -> None:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     with lz4.frame.open(path, mode="wb") as f:
@@ -65,3 +66,12 @@ def load_lz4(path: str) -> dict:
         content = cbor2.loads(lz4.frame.decompress(f.read()))
 
     return content
+
+
+def save_json(x: dict, path: str) -> None:
+    with open(path, "wb") as f:
+        f.write(orjson.dumps(x, option=orjson.OPT_INDENT_2))
+
+
+def load_json(path: str) -> None:
+    return orjson.loads(open(path, "rb").read())
