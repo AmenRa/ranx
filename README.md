@@ -21,16 +21,11 @@
 
 ## 🔥 News
 
-- 📌 [October 10, 2022] I released a new sharing platform for pre-computed runs called [ranxhub](https://amenra.github.io/ranxhub), click [here](https://amenra.github.io/ranxhub) to learn more!
+- [February 23, 2023] I released new pre-computed runs for [MSMARCO Passage Ranking](https://arxiv.org/abs/1611.09268) on [ranxhub](https://amenra.github.io/ranxhub). You can find them [here](https://amenra.github.io/ranxhub/browse/msmarco-passage).
 
 - [November 2, 2022] `ranx` `0.3.3` is out!  
 This release adds support for changing Qrels relevance level, i.e, the minimum relevance judgement score to consider a document to be relevant.  
 You can now define metric-wise relevance levels by appending `-l<num>` to metric names (e.g., `evaluate(qrels, run, ["map@100-l2", "ndcg-l3])`), or setting the Qrels relevance level qrels-wise as `qrels.set_relevance_level(2)`.
-
-- [October 10, 2022] `ranx` `0.3` is out!  
-This release adds integration with [ranxhub](https://amenra.github.io/ranxhub), a new sharing platform for pre-computed runs.  
-Click [here](#off-the-shelf-runs) for a quick example.  
-Click [here](https://amenra.github.io/ranxhub) to learn how to share your own runs with the community and lead by example!
 
 ## ⚡️ Introduction
 
