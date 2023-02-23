@@ -21,7 +21,8 @@
 
 ## 🔥 News
 
-- [February 23, 2023] I released new pre-computed runs for [MSMARCO Passage Ranking](https://arxiv.org/abs/1611.09268) on [ranxhub](https://amenra.github.io/ranxhub). You can find them [here](https://amenra.github.io/ranxhub/browse/msmarco-passage).
+- [February 23, 2023] I released new pre-computed runs for [MSMARCO Passage Ranking](https://arxiv.org/abs/1611.09268) on [ranxhub](https://amenra.github.io/ranxhub).   
+You can find them [here](https://amenra.github.io/ranxhub/browse/msmarco-passage).
 
 - [November 2, 2022] `ranx` `0.3.3` is out!  
 This release adds support for changing Qrels relevance level, i.e, the minimum relevance judgement score to consider a document to be relevant.  
