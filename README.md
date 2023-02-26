@@ -21,7 +21,7 @@
 
 ## 🔥 News
 
-- [February 23, 2023] I released new pre-computed runs for [MSMARCO Passage Ranking](https://arxiv.org/abs/1611.09268) on [ranxhub](https://amenra.github.io/ranxhub).   
+- [February 23, 2023] New pre-computed runs for [MSMARCO Passage Ranking](https://arxiv.org/abs/1611.09268) are available on [ranxhub](https://amenra.github.io/ranxhub).   
 You can find them [here](https://amenra.github.io/ranxhub/browse/msmarco-passage).
 
 - [November 2, 2022] `ranx` `0.3.3` is out!  
