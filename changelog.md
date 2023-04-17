@@ -4,7 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.3.5] - 2022-02-013
+## [0.3.7] - 2022-04-17
+### Added
+- Added `make_comparable` to `run.py`. It makes a run comparable to a given qrels whether the run misses results for queries appearing in the qrels or have results for additional queries, which are removed.
+- Added  `make_comparable` parameter to `evaluate.py`.
+- Added  `make_comparable` parameter to `compare.py`.
+  
+## [0.3.5] - 2022-02-13
 ### Fixed
 - Fixed a bug affecting `Tukey's HSD Test`: results from the test were not converted to proper dtypes from strings, causing the superscript reporting statistical significance differences in `report.py` to be wrong.
 

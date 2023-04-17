@@ -1,20 +1,14 @@
 import pandas as pd
 import pytest
 from numba.typed import List
+
 from ranx import Qrels
 
 
 def test_init():
     qrels_dict = {
-        "q1": {
-            "d1": 1,
-            "d2": 2,
-            "d3": 3,
-        },
-        "q2": {
-            "d1": 1,
-            "d2": 2,
-        },
+        "q1": {"d1": 1, "d2": 2, "d3": 3},
+        "q2": {"d1": 1, "d2": 2},
     }
 
     qrels = Qrels(qrels_dict, name="rocco")

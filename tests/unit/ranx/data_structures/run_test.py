@@ -2,7 +2,7 @@ import pandas as pd
 import pytest
 from numba.typed import List
 
-from ranx import Run
+from ranx import Qrels, Run
 
 
 # FIXTURES =====================================================================
@@ -258,3 +258,33 @@ def test_from_dataframe():
     assert run.run["q1"]["d3"] == 3.1
     assert run.run["q2"]["d1"] == 1.1
     assert run.run["q2"]["d2"] == 2.1
+
+
+def test_make_comparable():
+    qrels = Qrels(
+        {
+            "q1": {"d1": 1, "d2": 2, "d3": 3},
+            "q2": {"d1": 1, "d2": 2},
+            "q3": {"d1": 1, "d2": 2},
+        }
+    )
+
+    run = Run(
+        {
+            "q1": {"d1": 0.3, "d2": 0.1, "d3": 0.2},
+            "q2": {"d1": 0.1, "d2": 0.2},
+            "q4": {"d1": 0.1, "d2": 0.2},
+        }
+    )
+
+    run = run.make_comparable(qrels)
+
+    assert len(run.run) == 3
+    assert len(run.run["q1"]) == 3
+    assert len(run.run["q2"]) == 2
+    assert len(run.run["q3"]) == 0
+    assert run.run["q1"]["d1"] == 0.3
+    assert run.run["q1"]["d2"] == 0.1
+    assert run.run["q1"]["d3"] == 0.2
+    assert run.run["q2"]["d1"] == 0.1
+    assert run.run["q2"]["d2"] == 0.2

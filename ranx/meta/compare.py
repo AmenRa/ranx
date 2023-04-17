@@ -19,6 +19,7 @@ def compare(
     threads: int = 0,
     rounding_digits: int = 3,
     show_percentages: bool = False,
+    make_comparable: bool = False,
 ) -> Report:
     """Evaluate multiple `runs` and compute statistical tests.
 
@@ -58,6 +59,7 @@ def compare(
         threads (int, optional): Number of threads to use, zero means all the available threads. Defaults to 0.
         rounding_digits (int, optional): Number of digits to round to and to show in the Report. Defaults to 3.
         show_percentages (bool, optional): Whether to show percentages instead of floats in the Report. Defaults to False.
+        make_comparable (bool, optional): Adds empty results for queries missing from the runs and removes those not appearing in qrels. Defaults to False.
 
     Returns:
         Report: See report.
@@ -67,7 +69,6 @@ def compare(
 
     model_names = []
     results = defaultdict(dict)
-    # comparisons = FrozensetDict()
 
     metric_scores = {}
 
@@ -82,6 +83,7 @@ def compare(
             metrics=metrics,
             return_mean=False,
             threads=threads,
+            make_comparable=make_comparable,
         )
 
         if len(metrics) == 1:

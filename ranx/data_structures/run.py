@@ -16,6 +16,8 @@ from .common import (
     sort_dict_of_dict_by_value,
     to_typed_list,
 )
+from .generic import create_empty_results_dict
+from .qrels import Qrels
 
 
 class Run(object):
@@ -137,6 +139,20 @@ class Run(object):
         self.run = sort_dict_of_dict_by_value(self.run)
         self.sorted = True
 
+    def make_comparable(self, qrels: Qrels):
+        """Adds empty results for queries missing from the run and removes those not appearing in qrels."""
+        # Adds empty results for missing queries
+        for q_id in qrels.qrels:
+            if q_id not in self.run:
+                self.run[q_id] = create_empty_results_dict()
+
+        # Remove results for additional queries
+        for q_id in self.run:
+            if q_id not in qrels.qrels:
+                del self.run[q_id]
+
+        return self
+
     def to_typed_list(self):
         """Convert Run to Numba Typed List. Used internally."""
         if self.sorted == False:
@@ -231,7 +247,6 @@ class Run(object):
         """
         # Infer file extension -------------------------------------------------
         kind = get_file_kind(path, kind)
-
 
         # Load Run -------------------------------------------------------------
         if kind == "json":

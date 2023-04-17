@@ -60,7 +60,9 @@ def convert_run(run):
 
 
 def check_keys(qrels, run):
-    assert qrels.keys() == run.keys(), "Qrels and Run query ids do not match"
+    assert (
+        qrels.keys() == run.keys()
+    ), "Qrels and Run query ids do not match. Pass `make_comparable=True` to add empty results for queries missing from the run and remove those not appearing in qrels."
 
 
 def evaluate(
@@ -79,7 +81,8 @@ def evaluate(
     metrics: Union[List[str], str],
     return_mean: bool = True,
     threads: int = 0,
-    save_results_in_run=True,
+    save_results_in_run: bool = True,
+    make_comparable: bool = False,
 ) -> Union[Dict[str, float], float]:
     """Compute the performance scores for the provided `qrels` and `run` for all the specified metrics.
 
@@ -114,6 +117,7 @@ def evaluate(
         return_mean (bool, optional): Wether to return the metric scores averaged over the query set or the scores for individual queries. Defaults to True.
         threads (int, optional): Number of threads to use, zero means all the available threads. Defaults to 0.
         save_results_in_run (bool, optional): Save metric scores for each query in the input `run`. Defaults to True.
+        make_comparable (bool, optional): Adds empty results for queries missing from the run and removes those not appearing in qrels. Defaults to False.
 
     Returns:
         Union[Dict[str, float], float]: Results.
@@ -123,6 +127,9 @@ def evaluate(
         set_num_threads(1)
     elif threads != 0:
         set_num_threads(threads)
+
+    if make_comparable and type(qrels) == Qrels and type(run) == Run:
+        run = run.make_comparable(qrels)
 
     if type(qrels) in [Qrels, dict] and type(run) in [Run, dict]:
         check_keys(qrels, run)

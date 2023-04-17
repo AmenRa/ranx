@@ -65,3 +65,10 @@ run.save("path/to/run.trec")  # Save as TREC-Style file
 run.save("path/to/run.txt")   # Save as TREC-Style file with txt extension
 run.save("path/to/run.custom", kind="json")  # Save as JSON file
 ```
+
+## Make comparable
+It adds empty results for queries missing from the run and removes those not appearing in qrels.
+
+```python
+run.make_comparable(qrels)
+```
