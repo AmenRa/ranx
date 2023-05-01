@@ -12,6 +12,7 @@ __all__ = [
     "rank_biased_precision",
     "recall",
     "reciprocal_rank",
+    "interpolated_precision_at_recall",
 ]
 
 from .average_precision import average_precision
@@ -20,6 +21,7 @@ from .f1 import f1
 from .get_hit_lists import get_hit_lists
 from .hit_rate import hit_rate
 from .hits import hits
+from .interpolated_precision_at_recall import interpolated_precision_at_recall
 from .ndcg import ndcg, ndcg_burges
 from .precision import precision
 from .r_precision import r_precision

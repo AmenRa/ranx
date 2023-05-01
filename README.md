@@ -21,12 +21,13 @@
 
 ## 🔥 News
 
-- [April 4, 2023] [ranxhub](https://amenra.github.io/ranxhub), the [ranx](https://github.com/AmenRa/ranx)'s companion repository, will be featured in [SIGIR 2023](https://sigir.org/sigir2023)!  
+- 📌 [April 4, 2023] [ranxhub](https://amenra.github.io/ranxhub), the [ranx](https://github.com/AmenRa/ranx)'s companion repository, will be featured in [SIGIR 2023](https://sigir.org/sigir2023)!  
 On [ranxhub](https://amenra.github.io/ranxhub), you can download and share pre-computed runs for Information Retrieval datasets, such as [MSMARCO Passage Ranking](https://arxiv.org/abs/1611.09268).
 
-- [November 2, 2022] `ranx` `0.3.3` is out!  
-This release adds support for changing Qrels relevance level, i.e, the minimum relevance judgement score to consider a document to be relevant.  
-You can now define metric-wise relevance levels by appending `-l<num>` to metric names (e.g., `evaluate(qrels, run, ["map@100-l2", "ndcg-l3])`), or setting the Qrels relevance level qrels-wise as `qrels.set_relevance_level(2)`.
+- [May 1 2023] `ranx` `0.3.8` is out!  
+This release adds early support for results plotting. Specifically, it is now possible to plot Interpolated Precision-Recall Curve. Click [here]() for further details.
+<!-- This release adds support for changing Qrels relevance level, i.e, the minimum relevance judgement score to consider a document to be relevant.   -->
+<!-- You can now define metric-wise relevance levels by appending `-l<num>` to metric names (e.g., `evaluate(qrels, run, ["map@100-l2", "ndcg-l3])`), or setting the Qrels relevance level qrels-wise as `qrels.set_relevance_level(2)`. -->
 
 ## ⚡️ Introduction
 
@@ -204,6 +205,7 @@ combined_test_run = fuse(
 | Evaluation                                                       | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/3_evaluation.ipynb)            |
 | Comparison and Report                                            | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/4_comparison_and_report.ipynb) |
 | Fusion                                                           | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/5_fusion.ipynb)                |
+| Plot                                                             | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/7_plot.ipynb)                  |
 | Share your runs with [ranxhub](https://amenra.github.io/ranxhub) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/6_ranxhub.ipynb)               |
 
 
