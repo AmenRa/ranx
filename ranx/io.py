@@ -1,5 +1,5 @@
-import os
 from pathlib import Path
+from urllib.parse import quote
 
 import cbor2
 import lz4.frame
@@ -39,7 +39,7 @@ def get_tmp_path(id: str):
 
 
 def get_url(id: str):
-    return f"{base_url}/{id}.rh"
+    return f"{base_url}/{quote(id)}.rh"
 
 
 def download(id: str):

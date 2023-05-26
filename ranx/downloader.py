@@ -1,5 +1,3 @@
-import os
-
 import requests
 from rich.progress import (
     BarColumn,
@@ -11,9 +9,7 @@ from rich.progress import (
 )
 
 
-def downloader(
-    url: str, path: str, file_size: int, resume_byte_pos: int = None
-):
+def downloader(url: str, path: str, file_size: int, resume_byte_pos: int = None):
     with Progress(
         TextColumn("[bold blue]{task.description}", justify="right"),
         BarColumn(bar_width=None),
