@@ -43,9 +43,7 @@ class Run(object):
     ```
     """
 
-    def __init__(
-        self, run: Dict[str, Dict[str, float]] = None, name: str = None
-    ):
+    def __init__(self, run: Dict[str, Dict[str, float]] = None, name: str = None):
         if run is None:
             self.run = TypedDict.empty(
                 key_type=types.unicode_type,
@@ -151,6 +149,8 @@ class Run(object):
             if q_id not in qrels.qrels:
                 del self.run[q_id]
 
+        self.sort()
+
         return self
 
     def to_typed_list(self):
@@ -193,9 +193,7 @@ class Run(object):
                 for i, q_id in enumerate(self.run.keys()):
                     for rank, doc_id in enumerate(self.run[q_id].keys()):
                         score = self.run[q_id][doc_id]
-                        f.write(
-                            f"{q_id} Q0 {doc_id} {rank+1} {score} {self.name}"
-                        )
+                        f.write(f"{q_id} Q0 {doc_id} {rank+1} {score} {self.name}")
 
                         if (
                             i != len(self.run.keys()) - 1

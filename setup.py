@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="ranx",
-    version="0.3.8",
+    version="0.3.9",
     author="Elias Bassani",
     author_email="elias.bssn@gmail.com",
     description="ranx: A Blazing-Fast Python Library for Ranking Evaluation, Comparison, and Fusion",

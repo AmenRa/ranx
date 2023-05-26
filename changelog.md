@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.9] - 2022-05-26
+### Changed
+- Changed `save` in `ranxhub.py` to automatically save average metric scores.
+
+### Fixed
+- Fixed a bug affecting `make_comparable` in `run.py`: runs were not sorted after this operation, resulting in wrong metrics computation afterwards.
+
 ## [0.3.7] - 2022-04-17
 ### Added
 - Added `make_comparable` to `run.py`. It makes a run comparable to a given qrels whether the run misses results for queries appearing in the qrels or have results for additional queries, which are removed.
