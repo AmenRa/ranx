@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.12] - 2022-06-07
+### Fixed
+- Fixed missing dependency `seaborn`.
+
 ## [0.3.10] - 2022-05-26
 ### Fixed
 - Fixed a bug affecting the download of ranxhub runs with special symbols in their ids, such as `+`.
