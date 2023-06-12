@@ -1,0 +1,12 @@
+cbor2
+ir_datasets
+lz4
+numba>=0.54.1
+numpy
+orjson
+pandas
+rich
+scipy>=1.8.0
+seaborn
+tabulate
+tqdm
