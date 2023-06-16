@@ -165,8 +165,7 @@ class Report(object):
                 model != _model
                 and (
                     not self.comparisons[model, _model][metric]["significant"]
-                    or not self.results[model][metric]
-                    > self.results[_model][metric]
+                    or not self.results[model][metric] > self.results[_model][metric]
                 )
             )
         ]
@@ -188,12 +187,8 @@ class Report(object):
             best_model = None
             best_score = 0.0
             for model in self.model_names:
-                if best_score < round(
-                    self.results[model][m], self.rounding_digits
-                ):
-                    best_score = round(
-                        self.results[model][m], self.rounding_digits
-                    )
+                if best_score < round(self.results[model][m], self.rounding_digits):
+                    best_score = round(self.results[model][m], self.rounding_digits)
                     best_model = model
             best_scores[m] = best_model
 
@@ -213,10 +208,7 @@ class Report(object):
             + "\n\\textbf{\#}"
             + "\n& \\textbf{Model}"
             + "".join(
-                [
-                    f"\n& \\textbf{{{self.get_metric_label(m)}}}"
-                    for m in self.metrics
-                ]
+                [f"\n& \\textbf{{{self.get_metric_label(m)}}}" for m in self.metrics]
             )
             + " \\\\ \n\midrule"
         )
@@ -230,9 +222,7 @@ class Report(object):
             for m in self.metrics:
                 score = self.format_score(self.results[model][m])
                 score = (
-                    f"\\textbf{{{score}}}"
-                    if best_scores[m] == model
-                    else f"{score}"
+                    f"\\textbf{{{score}}}" if best_scores[m] == model else f"{score}"
                 )
                 superscript = self.get_superscript_for_latex(model, m)
                 phantoms = self.get_phantoms_for_latex(model, m)
@@ -254,13 +244,7 @@ class Report(object):
         )
 
         return (
-            preamble
-            + "\n"
-            + table_prefix
-            + "\n"
-            + table_content
-            + "\n"
-            + table_suffix
+            preamble + "\n" + table_prefix + "\n" + table_content + "\n" + table_suffix
         )
 
     def to_dict(self) -> Dict:
@@ -324,12 +308,12 @@ class Report(object):
                     d[m1]["win_tie_loss"][m2] = {}
 
                     for metric in self.metrics:
-                        d[m1]["comparisons"][m2][metric] = self.comparisons[
-                            {m1, m2}
-                        ][metric]["p_value"]
-                        d[m1]["win_tie_loss"][m2][metric] = self.win_tie_loss[
-                            (m1, m2)
-                        ][metric]
+                        d[m1]["comparisons"][m2][metric] = self.comparisons[{m1, m2}][
+                            metric
+                        ]["p_value"]
+                        d[m1]["win_tie_loss"][m2][metric] = self.win_tie_loss[(m1, m2)][
+                            metric
+                        ]
 
         return d
 

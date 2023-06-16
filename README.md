@@ -24,6 +24,9 @@
 - 📌 [April 4, 2023] [ranxhub](https://amenra.github.io/ranxhub), the [ranx](https://github.com/AmenRa/ranx)'s companion repository, will be featured in [SIGIR 2023](https://sigir.org/sigir2023)!  
 On [ranxhub](https://amenra.github.io/ranxhub), you can download and share pre-computed runs for Information Retrieval datasets, such as [MSMARCO Passage Ranking](https://arxiv.org/abs/1611.09268).
 
+- [June 16 2023] `ranx` `0.3.13` is out!  
+This release exposes `DCG` among the available metrics.
+
 - [May 1 2023] `ranx` `0.3.8` is out!  
 This release adds early support for results plotting. Specifically, it is now possible to plot Interpolated Precision-Recall Curve. Click [here](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/7_plot.ipynb) for further details.
 <!-- This release adds support for changing Qrels relevance level, i.e, the minimum relevance judgement score to consider a document to be relevant.   -->
@@ -57,6 +60,7 @@ For a in-depth overview, follow the [Examples](#-examples) section.
 * [Rank-biased Precision (RBP)](https://amenra.github.io/ranx/metrics/#rank-biased-precision)
 * [Mean Reciprocal Rank (MRR)](https://amenra.github.io/ranx/metrics/#mean-reciprocal-rank)
 * [Mean Average Precision (MAP)](https://amenra.github.io/ranx/metrics/#mean-average-precision)
+* [Discounted Cumulative Gain (DCG)](https://amenra.github.io/ranx/metrics/#dcg)
 * [Normalized Discounted Cumulative Gain (NDCG)](https://amenra.github.io/ranx/metrics/#ndcg)
 
 The metrics have been tested against [TREC Eval](https://github.com/usnistgov/trec_eval) for correctness.

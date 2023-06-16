@@ -2,11 +2,12 @@
 import numpy as np
 import pytest
 from numba.typed import List
+
 from ranx import Qrels, Run, evaluate
 
 
 # BINARY RELEVANCE =============================================================
-# hits --------------------------------------------------------------------
+# hits -------------------------------------------------------------------------
 def test_hits_single():  # OK
     y_true = np.array([[[1, 1], [4, 1], [5, 1], [6, 1]]])
     y_pred = np.array([[[1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [7, 1]]])
@@ -34,7 +35,7 @@ def test_hits_parallel():  # OK
     assert evaluate(y_true, y_pred, f"hits@{k}") == 2.5
 
 
-# hit_rate --------------------------------------------------------------------
+# hit_rate ---------------------------------------------------------------------
 def test_hit_rate_single():  # OK
     y_true = np.array([[[1, 1], [2, 1], [4, 1]]])
     y_pred = np.array([[[1, 1], [2, 1], [4, 1], [3, 1], [5, 1], [7, 1]]])
@@ -62,7 +63,7 @@ def test_hit_rate_parallel():  # OK
     assert evaluate(y_true, y_pred, f"hit_rate@{k}") == 0.5
 
 
-# precision ---------------------------------------------------------------
+# precision --------------------------------------------------------------------
 def test_precision_single():
     y_true = np.array([[[1, 1], [4, 1], [5, 1], [6, 1]]])
     y_pred = np.array([[[1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [7, 1]]])
@@ -94,9 +95,7 @@ def test_precision_parallel():
 
     mean_precision_score = sum([p_1, p_2, p_3]) / 3
 
-    assert np.allclose(
-        evaluate(y_true, y_pred, f"precision@{k}"), mean_precision_score
-    )
+    assert np.allclose(evaluate(y_true, y_pred, f"precision@{k}"), mean_precision_score)
 
 
 # average_precision ------------------------------------------------------------
@@ -109,7 +108,7 @@ def test_average_precision():
     assert np.allclose(evaluate(y_true, y_pred, f"map@{k}"), 0.525)
 
 
-# average_precision -------------------------------------------------------
+# average_precision ------------------------------------------------------------
 def test_average_precision_parallel():
     y_true = List()
     y_true.append(np.array([[1, 1], [2, 1], [3, 1]]))
@@ -134,7 +133,7 @@ def test_average_precision_parallel():
     )
 
 
-# reciprocal_rank --------------------------------------------------------
+# reciprocal_rank --------------------------------------------------------------
 def test_reciprocal_rank_single():
     y_true = np.array([[[3, 1]]])
     y_pred = np.array([[[2, 1], [3, 1], [1, 1], [4, 1], [5, 1]]])
@@ -174,16 +173,17 @@ def test_reciprocal_rank_parallel():
 # r_precision ------------------------------------------------------------------
 def test_r_precision_single():
     y_true = np.array([[[1, 1], [2, 1], [3, 1]]])
-    y_pred = np.array(
-        [[[2, 1], [4, 1], [3, 1], [1, 1], [5, 1], [6, 1], [7, 1]]]
-    )
+    y_pred = np.array([[[2, 1], [4, 1], [3, 1], [1, 1], [5, 1], [6, 1], [7, 1]]])
 
     assert np.allclose(evaluate(y_true, y_pred, "r-precision"), 2 / 3)
 
 
 def test_r_precision_parallel():
     y_true = List(
-        [np.array([[1, 1], [2, 1], [3, 1]]), np.array([[1, 1], [2, 1]]),]
+        [
+            np.array([[1, 1], [2, 1], [3, 1]]),
+            np.array([[1, 1], [2, 1]]),
+        ]
     )
     y_pred = List(
         [
@@ -192,17 +192,13 @@ def test_r_precision_parallel():
         ]
     )
 
-    assert np.allclose(
-        evaluate(y_true, y_pred, "r-precision"), (2 / 3 + 1 / 2) / 2
-    )
+    assert np.allclose(evaluate(y_true, y_pred, "r-precision"), (2 / 3 + 1 / 2) / 2)
 
 
-# recall ------------------------------------------------------------------
+# recall -----------------------------------------------------------------------
 def test_recall_single():
     y_true = np.array([[[1, 1], [2, 1], [3, 1]]])
-    y_pred = np.array(
-        [[[2, 1], [4, 1], [3, 1], [1, 1], [5, 1], [6, 1], [7, 1]]]
-    )
+    y_pred = np.array([[[2, 1], [4, 1], [3, 1], [1, 1], [5, 1], [6, 1], [7, 1]]])
     k = 2
 
     assert np.allclose(evaluate(y_true, y_pred, f"recall@{k}"), 1 / 3)
@@ -220,12 +216,39 @@ def test_recall_parallel():
     )
     k = 2
 
+    assert np.allclose(evaluate(y_true, y_pred, f"recall@{k}"), (1 / 3 + 1 / 2) / 2)
+
+
+# # NON-BINARY RELEVANCE =======================================================
+def test_dcg_jarvelin():
+    # List of IDs ordered by descending order of true relevance
+    y_true = np.array([[[2, 5], [4, 4], [5, 3], [10, 2]]])
+    # List of IDs orderd by descending order of predicted relevance
+    y_pred_1 = np.array(
+        [[[1, 1], [2, 1], [3, 1], [4, 1], [5, 1]]]
+    )  # rel = 0, 5, 0, 4, 3
+    y_pred_2 = np.array(
+        [[[10, 1], [5, 1], [2, 1], [4, 1], [3, 1]]]
+    )  # rel = 2, 3, 5, 4, 0
+    y_pred_3 = np.array(
+        [[[1, 1], [3, 1], [6, 1], [7, 1], [8, 1]]]
+    )  # rel = 0, 0, 0, 0, 0
+
+    k = 10
+
     assert np.allclose(
-        evaluate(y_true, y_pred, f"recall@{k}"), (1 / 3 + 1 / 2) / 2
+        evaluate(y_true, y_pred_1, f"dcg@{k}"),
+        (5 / np.log2(3) + 4 / np.log2(5) + 3 / np.log2(6)),
     )
 
+    assert np.allclose(
+        evaluate(y_true, y_pred_2, f"dcg@{k}"),
+        (2 / np.log2(2) + 3 / np.log2(3) + 5 / np.log2(4) + 4 / np.log2(5)),
+    )
 
-# # NON-BINARY RELEVANCE rm =================================================
+    assert np.allclose(evaluate(y_true, y_pred_3, f"dcg@{k}"), 0.0)
+
+
 def test_ndcg_jarvelin():
     # List of IDs ordered by descending order of true relevance
     y_true = np.array([[[2, 5], [4, 4], [5, 3], [10, 2]]])
@@ -251,11 +274,48 @@ def test_ndcg_jarvelin():
 
     assert np.allclose(
         evaluate(y_true, y_pred_2, f"ndcg@{k}"),
-        (2 / np.log2(2) + 3 / np.log2(3) + 5 / np.log2(4) + 4 / np.log2(5))
-        / idcg,
+        (2 / np.log2(2) + 3 / np.log2(3) + 5 / np.log2(4) + 4 / np.log2(5)) / idcg,
     )
 
     assert np.allclose(evaluate(y_true, y_pred_3, f"ndcg@{k}"), 0.0)
+
+
+def test_dcg_burges():
+    # List of IDs ordered by descending order of true relevance
+    y_true = np.array([[[2, 5], [4, 4], [5, 3], [10, 2]]])
+    # List of IDs orderd by descending order of predicted relevance
+    y_pred_1 = np.array(
+        [[[1, 1], [2, 1], [3, 1], [4, 1], [5, 1]]]
+    )  # rel = 0, 5, 0, 4, 3
+    y_pred_2 = np.array(
+        [[[10, 1], [5, 1], [2, 1], [4, 1], [3, 1]]]
+    )  # rel = 2, 3, 5, 4, 0
+    y_pred_3 = np.array(
+        [[[1, 1], [3, 1], [6, 1], [7, 1], [8, 1]]]
+    )  # rel = 0, 0, 0, 0, 0
+
+    k = 10
+
+    assert np.allclose(
+        evaluate(y_true, y_pred_1, f"dcg_burges@{k}"),
+        (
+            (2**5 - 1) / np.log2(3)
+            + (2**4 - 1) / np.log2(5)
+            + (2**3 - 1) / np.log2(6)
+        ),
+    )
+
+    assert np.allclose(
+        evaluate(y_true, y_pred_2, f"dcg_burges@{k}"),
+        (
+            (2**2 - 1) / np.log2(2)
+            + (2**3 - 1) / np.log2(3)
+            + (2**5 - 1) / np.log2(4)
+            + (2**4 - 1) / np.log2(5)
+        ),
+    )
+
+    assert np.allclose(evaluate(y_true, y_pred_3, f"dcg_burges@{k}"), 0.0)
 
 
 def test_ndcg_burges():
@@ -273,10 +333,10 @@ def test_ndcg_burges():
     )  # rel = 0, 0, 0, 0, 0
 
     idcg = (
-        (2 ** 5 - 1) / np.log2(2)
-        + (2 ** 4 - 1) / np.log2(3)
-        + (2 ** 3 - 1) / np.log2(4)
-        + (2 ** 2 - 1) / np.log2(5)
+        (2**5 - 1) / np.log2(2)
+        + (2**4 - 1) / np.log2(3)
+        + (2**3 - 1) / np.log2(4)
+        + (2**2 - 1) / np.log2(5)
     )
 
     k = 10
@@ -284,9 +344,9 @@ def test_ndcg_burges():
     assert np.allclose(
         evaluate(y_true, y_pred_1, f"ndcg_burges@{k}"),
         (
-            (2 ** 5 - 1) / np.log2(3)
-            + (2 ** 4 - 1) / np.log2(5)
-            + (2 ** 3 - 1) / np.log2(6)
+            (2**5 - 1) / np.log2(3)
+            + (2**4 - 1) / np.log2(5)
+            + (2**3 - 1) / np.log2(6)
         )
         / idcg,
     )
@@ -294,10 +354,10 @@ def test_ndcg_burges():
     assert np.allclose(
         evaluate(y_true, y_pred_2, f"ndcg_burges@{k}"),
         (
-            (2 ** 2 - 1) / np.log2(2)
-            + (2 ** 3 - 1) / np.log2(3)
-            + (2 ** 5 - 1) / np.log2(4)
-            + (2 ** 4 - 1) / np.log2(5)
+            (2**2 - 1) / np.log2(2)
+            + (2**3 - 1) / np.log2(3)
+            + (2**5 - 1) / np.log2(4)
+            + (2**4 - 1) / np.log2(5)
         )
         / idcg,
     )
@@ -343,8 +403,14 @@ def test_with_Qrels_and_Run_control():
 
 def test_python_dict():
     qrels = {
-        "q_1": {"doc_12": 5, "doc_25": 3,},
-        "q_2": {"doc_11": 6, "doc_2": 1,},
+        "q_1": {
+            "doc_12": 5,
+            "doc_25": 3,
+        },
+        "q_2": {
+            "doc_11": 6,
+            "doc_2": 1,
+        },
     }
     run = {
         "q_1": {
@@ -369,7 +435,6 @@ def test_python_dict():
 
 
 def test_python_dict_2():
-
     # Create empty Qrels
     qrels = Qrels()
     # Add queries to qrels
@@ -405,8 +470,14 @@ def test_python_dict_2():
     x = evaluate(qrels, run, "ndcg@5")
 
     qrels = {
-        "q_1": {"doc_12": 5, "doc_25": 3,},
-        "q_2": {"doc_11": 6, "doc_2": 1,},
+        "q_1": {
+            "doc_12": 5,
+            "doc_25": 3,
+        },
+        "q_2": {
+            "doc_11": 6,
+            "doc_2": 1,
+        },
     }
     run = {
         "q_1": {

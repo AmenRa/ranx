@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.13] - 2022-06-16
+### Added
+- Added `dcg` and `dcg_burges` among the available metrics.
+
 ## [0.3.12] - 2022-06-07
 ### Fixed
 - Fixed missing dependency `seaborn`.
@@ -18,6 +22,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fixed a bug affecting `make_comparable` in `run.py`: runs were not sorted after this operation, resulting in wrong metrics computation afterwards.
+
+## [0.3.8] - 2022-05-01
+### Added
+- It is now possible to plot Interpolated Precision-Recall Curve. Click [here](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/7_plot.ipynb) for further details.
 
 ## [0.3.7] - 2022-04-17
 ### Added

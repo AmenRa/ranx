@@ -17,6 +17,8 @@ Aliases to use with `ranx.evaluate` and `ranx.compare`.
 | [Rank-biased Precision][rank-biased-precision]   | rbp         |   No   |  Yes   |
 | [Mean Reciprocal Rank][mean-reciprocal-rank]     | mrr         |  Yes   |   No   |
 | [Mean Average Precision][mean-average-precision] | map         |  Yes   |   No   |
+| [DCG][dcg]                                       | dcg         |  Yes   |   No   |
+| [DCG Burges][dcg-burges]                         | dcg_burges  |  Yes   |   No   |
 | [NDCG][ndcg]                                     | ndcg        |  Yes   |   No   |
 | [NDCG Burges][ndcg-burges]                       | ndcg_burges |  Yes   |   No   |
 
@@ -123,6 +125,68 @@ where,
 
 - $r$ is the position of a relevant document;
 - $R$ is the total number of relevant documents.
+
+## DCG
+---
+Compute **Discounted Cumulative Gain** (DCG) as proposed by [Järvelin et al.](http://doi.acm.org/10.1145/582415.582418).
+
+<details>
+    <summary>BibTeX</summary>
+    ```bibtex
+    @article{DBLP:journals/tois/JarvelinK02,
+        author    = {Kalervo J{\"{a}}rvelin and
+                    Jaana Kek{\"{a}}l{\"{a}}inen},
+        title     = {Cumulated gain-based evaluation of {IR} techniques},
+        journal   = {{ACM} Trans. Inf. Syst.},
+        volume    = {20},
+        number    = {4},
+        pages     = {422--446},
+        year      = {2002}
+    }
+    ```
+</details>
+
+$$
+\operatorname{DCG} = \frac{\operatorname{rel}_i}{\log_2(i+1)}
+$$
+
+where,
+
+- $\operatorname{rel}_i$ is the relevance value of the result at position i.
+
+## DCG Burges
+---
+Compute **Discounted Cumulative Gain** (DCG) at k as proposed by [Burges et al.](https://doi.org/10.1145/1102351.1102363).
+
+<details>
+    <summary>BibTeX</summary>
+    ```bibtex
+    @inproceedings{DBLP:conf/icml/BurgesSRLDHH05,
+        author    = {Christopher J. C. Burges and
+                    Tal Shaked and
+                    Erin Renshaw and
+                    Ari Lazier and
+                    Matt Deeds and
+                    Nicole Hamilton and
+                    Gregory N. Hullender},
+        title     = {Learning to rank using gradient descent},
+        booktitle = {{ICML}},
+        series    = {{ACM} International Conference Proceeding Series},
+        volume    = {119},
+        pages     = {89--96},
+        publisher = {{ACM}},
+        year      = {2005}
+    }
+    ```
+</details>
+
+$$
+\operatorname{DCG} = \frac{2^{\operatorname{rel}_i-1}}{\log_2(i+1)}
+$$
+
+where,
+
+- $\operatorname{rel}_i$ is the relevance value of the result at position i.
 
 ## NDCG
 ---

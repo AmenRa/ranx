@@ -5,6 +5,8 @@ __all__ = [
     "get_hit_lists",
     "hit_rate",
     "hits",
+    "dcg_burges",
+    "dcg",
     "ndcg_burges",
     "ndcg",
     "precision",
@@ -22,7 +24,7 @@ from .get_hit_lists import get_hit_lists
 from .hit_rate import hit_rate
 from .hits import hits
 from .interpolated_precision_at_recall import interpolated_precision_at_recall
-from .ndcg import ndcg, ndcg_burges
+from .ndcg import dcg, dcg_burges, ndcg, ndcg_burges
 from .precision import precision
 from .r_precision import r_precision
 from .rank_biased_precision import rank_biased_precision
@@ -47,6 +49,10 @@ def metric_switch(metric):
         return reciprocal_rank
     elif metric == "map":
         return average_precision
+    elif metric == "dcg":
+        return dcg
+    elif metric == "dcg_burges":
+        return dcg_burges
     elif metric == "ndcg":
         return ndcg
     elif metric == "ndcg_burges":

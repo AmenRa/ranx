@@ -39,9 +39,15 @@ def _dcg(qrels, run, k, rel_lvl, jarvelin):
 
     else:
         # Burges et al. formulation (see https://doi.org/10.1145/1102351.1102363)
-        return np.sum(
-            (2**weighted_hit_list - 1) / np.log2(np.arange(1, k + 1) + 1)
-        )
+        return np.sum((2**weighted_hit_list - 1) / np.log2(np.arange(1, k + 1) + 1))
+
+
+@njit(cache=True, parallel=True)
+def _dcg_parallel(qrels, run, k, rel_lvl, jarvelin):
+    scores = np.zeros((len(qrels)), dtype=np.float64)
+    for i in prange(len(qrels)):
+        scores[i] = _dcg(qrels[i], run[i], k, rel_lvl, jarvelin)
+    return scores
 
 
 @njit(cache=True)
@@ -70,6 +76,55 @@ def _ndcg_parallel(qrels, run, k, rel_lvl, jarvelin):
 
 
 # HIGH LEVEL FUNCTIONS =========================================================
+def dcg(
+    qrels: Union[np.ndarray, numba.typed.List],
+    run: Union[np.ndarray, numba.typed.List],
+    k: int = 0,
+    rel_lvl: int = 1,
+) -> np.ndarray:
+    r"""Compute Discounted Cumulative Gain (DCG) as proposed by [Järvelin et al.](http://doi.acm.org/10.1145/582415.582418).<br />
+    If k > 0, only the top-k retrieved documents are considered.
+
+    $$
+    \operatorname{DCG} = \frac{\operatorname{rel}_i}{\log_2(i+1)}
+    $$
+
+    where,
+
+    - $\operatorname{rel}_i$ is the relevance value of the result at position i.
+
+    ```bibtex
+        @article{DBLP:journals/tois/JarvelinK02,
+            author    = {Kalervo J{\"{a}}rvelin and
+                        Jaana Kek{\"{a}}l{\"{a}}inen},
+            title     = {Cumulated gain-based evaluation of {IR} techniques},
+            journal   = {{ACM} Trans. Inf. Syst.},
+            volume    = {20},
+            number    = {4},
+            pages     = {422--446},
+            year      = {2002}
+        }
+    ```
+
+    Args:
+        qrels (Union[np.ndarray, numba.typed.List]): IDs and relevance scores of _relevant_ documents.
+
+        run (Union[np.ndarray, numba.typed.List]): IDs and relevance scores of _retrieved_ documents.
+
+        k (int, optional): Number of retrieved documents to consider. k=0 means all retrieved documents will be considered. Defaults to 0.
+
+        rel_lvl (int, optional): Minimum relevance judgment score to consider a document to be relevant. E.g., rel_lvl=1 means all documents with relevance judgment scores greater or equal to 1 will be considered relevant. Defaults to 1.
+
+    Returns:
+        Discounted Cumulative Gain (at k) scores.
+
+    """
+
+    assert k >= 0, "k must be grater or equal to 0"
+
+    return _dcg_parallel(qrels, run, k, rel_lvl, jarvelin=True)
+
+
 def ndcg(
     qrels: Union[np.ndarray, numba.typed.List],
     run: Union[np.ndarray, numba.typed.List],
@@ -119,7 +174,7 @@ def ndcg(
 
         run (Union[np.ndarray, numba.typed.List]): IDs and relevance scores of _retrieved_ documents.
 
-        k (int, optional): This argument is ignored. It was added to standardize metrics' input. Defaults to 0.
+        k (int, optional): Number of retrieved documents to consider. k=0 means all retrieved documents will be considered. Defaults to 0.
 
         rel_lvl (int, optional): Minimum relevance judgment score to consider a document to be relevant. E.g., rel_lvl=1 means all documents with relevance judgment scores greater or equal to 1 will be considered relevant. Defaults to 1.
 
@@ -131,6 +186,61 @@ def ndcg(
     assert k >= 0, "k must be grater or equal to 0"
 
     return _ndcg_parallel(qrels, run, k, rel_lvl, jarvelin=True)
+
+
+def dcg_burges(
+    qrels: Union[np.ndarray, numba.typed.List],
+    run: Union[np.ndarray, numba.typed.List],
+    k: int = 0,
+    rel_lvl: int = 1,
+) -> np.ndarray:
+    r"""Compute Discounted Cumulative Gain (DCG) at k as proposed by [Burges et al.](https://doi.org/10.1145/1102351.1102363).<br />
+    If k > 0, only the top-k retrieved documents are considered.
+
+    $$
+    \operatorname{DCG} = \frac{2^{\operatorname{rel}_i-1}}{\log_2(i+1)}
+    $$
+
+    where,
+
+    - $\operatorname{rel}_i$ is the relevance value of the result at position i.
+
+    ```bibtex
+        @inproceedings{DBLP:conf/icml/BurgesSRLDHH05,
+            author    = {Christopher J. C. Burges and
+                        Tal Shaked and
+                        Erin Renshaw and
+                        Ari Lazier and
+                        Matt Deeds and
+                        Nicole Hamilton and
+                        Gregory N. Hullender},
+            title     = {Learning to rank using gradient descent},
+            booktitle = {{ICML}},
+            series    = {{ACM} International Conference Proceeding Series},
+            volume    = {119},
+            pages     = {89--96},
+            publisher = {{ACM}},
+            year      = {2005}
+        }
+    ```
+
+    Args:
+        qrels (Union[np.ndarray, numba.typed.List]): IDs and relevance scores of _relevant_ documents.
+
+        run (Union[np.ndarray, numba.typed.List]): IDs and relevance scores of _retrieved_ documents.
+
+        k (int, optional): Number of retrieved documents to consider. k=0 means all retrieved documents will be considered. Defaults to 0.
+
+        rel_lvl (int, optional): Minimum relevance judgment score to consider a document to be relevant. E.g., rel_lvl=1 means all documents with relevance judgment scores greater or equal to 1 will be considered relevant. Defaults to 1.
+
+    Returns:
+        Discounted Cumulative Gain (at k) scores.
+
+    """
+
+    assert k >= 0, "k must be grater or equal to 0"
+
+    return _dcg_parallel(qrels, run, k, rel_lvl, jarvelin=False)
 
 
 def ndcg_burges(
@@ -188,7 +298,7 @@ def ndcg_burges(
 
         run (Union[np.ndarray, numba.typed.List]): IDs and relevance scores of _retrieved_ documents.
 
-        k (int, optional): This argument is ignored. It was added to standardize metrics' input. Defaults to 0.
+        k (int, optional): Number of retrieved documents to consider. k=0 means all retrieved documents will be considered. Defaults to 0.
 
         rel_lvl (int, optional): Minimum relevance judgment score to consider a document to be relevant. E.g., rel_lvl=1 means all documents with relevance judgment scores greater or equal to 1 will be considered relevant. Defaults to 1.
 
