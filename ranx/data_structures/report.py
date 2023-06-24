@@ -20,6 +20,8 @@ metric_labels = {
         "r-precision": "R-Prec",
         "mrr": "MRR",
         "map": "MAP",
+        "dcg": "DCG",
+        "dcg_burges": "DCG Burges",
         "ndcg": "NDCG",
         "ndcg_burges": "NDCG Burges",
         "bpref": "BPref",
