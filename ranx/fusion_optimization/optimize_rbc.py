@@ -20,17 +20,14 @@ def optimize_rbc(
 ) -> List[float]:
     rounding_digits = str(step)[::-1].find(".")
     trials = [
-        round(x, rounding_digits)
-        for x in np.arange(min_phi, max_phi + step, step)
+        round(x, rounding_digits) for x in np.arange(min_phi, max_phi + step, step)
     ]
 
     best_score = 0.0
     best_phi = []
     optimization_report = {}
 
-    for phi in track(
-        trials, description="Optimizing RBC", disable=not show_progress
-    ):
+    for phi in track(trials, description="Optimizing RBC", disable=not show_progress):
         fused_run = rbc(runs, phi)
         score = evaluate(qrels, fused_run, metric, save_results_in_run=False)
         optimization_report[str(phi)] = score

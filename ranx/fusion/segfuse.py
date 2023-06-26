@@ -39,9 +39,7 @@ def estimate_segfuse_probs(qrels: Qrels, runs: List[Run]):
     _qrels = qrels.to_typed_list()
 
     # Hit lists of all the systems for all the queries
-    hit_lists = TypedList(
-        [get_hit_lists(_qrels, run.to_typed_list()) for run in runs]
-    )
+    hit_lists = TypedList([get_hit_lists(_qrels, run.to_typed_list()) for run in runs])
 
     return estimate_segment_probs_multi(hit_lists)
 

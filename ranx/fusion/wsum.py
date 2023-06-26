@@ -20,10 +20,7 @@ def _weighted_sum(results, weights):
         for doc_id in res.keys():
             if combined_results.get(doc_id, False) == False:
                 combined_results[doc_id] = sum(
-                    [
-                        weights[i] * res.get(doc_id, 0.0)
-                        for i, res in enumerate(results)
-                    ]
+                    [weights[i] * res.get(doc_id, 0.0) for i, res in enumerate(results)]
                 )
 
     return combined_results
@@ -36,17 +33,13 @@ def _weighted_sum_parallel(runs, weights):
 
     for i in prange(len(q_ids)):
         q_id = q_ids[i]
-        combined_results[i] = _weighted_sum(
-            [run[q_id] for run in runs], weights
-        )
+        combined_results[i] = _weighted_sum([run[q_id] for run in runs], weights)
 
     return convert_results_dict_list_to_run(q_ids, combined_results)
 
 
 # HIGH LEVEL FUNCTIONS =========================================================
-def wsum(
-    runs: List[Run], weights: List[float], name: str = "weighted_sum"
-) -> Run:
+def wsum(runs: List[Run], weights: List[float], name: str = "weighted_sum") -> Run:
     """Computes a weighted sum of the scores given to documents by a list of Runs.
 
     Args:

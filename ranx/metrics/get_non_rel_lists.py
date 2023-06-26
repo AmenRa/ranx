@@ -43,9 +43,7 @@ def _get_non_rel_list(qrels, run, k):
 
 @njit(parallel=True)
 def _get_non_rel_list_parallel(qrels, run, k):
-    non_rel_lists = TypedList(
-        [np.ones(1, dtype=np.float64) for _ in range(len(qrels))]
-    )
+    non_rel_lists = TypedList([np.ones(1, dtype=np.float64) for _ in range(len(qrels))])
     for i in prange(len(qrels)):
         non_rel_lists[i] = _get_non_rel_list(qrels[i], run[i], k)
     return non_rel_lists

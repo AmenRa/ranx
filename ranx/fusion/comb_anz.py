@@ -20,9 +20,7 @@ def _comb_anz(results):
     for res in results:
         for doc_id in res.keys():
             if combined_results.get(doc_id, False) == False:
-                scores = np.array(
-                    [res[doc_id] for res in results if doc_id in res]
-                )
+                scores = np.array([res[doc_id] for res in results if doc_id in res])
                 combined_results[doc_id] = sum(scores) / len(scores)
 
     return combined_results

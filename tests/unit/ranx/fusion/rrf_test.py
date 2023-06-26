@@ -1,6 +1,7 @@
 import pytest
-from ranx.fusion import rrf
+
 from ranx import Run
+from ranx.fusion import rrf
 
 
 # FIXTURES =====================================================================

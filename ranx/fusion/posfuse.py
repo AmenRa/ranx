@@ -36,9 +36,7 @@ def _pos_score_parallel(run, probs):
     return convert_results_dict_list_to_run(q_ids, new_results)
 
 
-def posfuse(
-    runs: List[Run], probs: List[np.ndarray], name: str = "posfuse"
-) -> Run:
+def posfuse(runs: List[Run], probs: List[np.ndarray], name: str = "posfuse") -> Run:
     r"""Computes PosFuse as proposed by [Lillis et al.](https://dl.acm.org/doi/10.1145/1835449.1835508).
 
     ```bibtex

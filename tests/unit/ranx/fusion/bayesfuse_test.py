@@ -3,6 +3,7 @@ from math import isclose
 import numpy as np
 import pytest
 from numba.typed import List as TypedList
+
 from ranx import Qrels, Run
 from ranx.fusion import bayesfuse
 from ranx.fusion.bayesfuse import _estimate_log_odds, bayesfuse_train

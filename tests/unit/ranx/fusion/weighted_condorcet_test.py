@@ -1,5 +1,6 @@
 import numpy as np
 import pytest
+
 from ranx import Run
 from ranx.fusion import weighted_condorcet
 

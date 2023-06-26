@@ -21,9 +21,7 @@ def _log_comb_mnz(results):
     for res in results:
         for doc_id in res.keys():
             if combined_results.get(doc_id, False) == False:
-                scores = np.array(
-                    [res[doc_id] for res in results if doc_id in res]
-                )
+                scores = np.array([res[doc_id] for res in results if doc_id in res])
                 combined_results[doc_id] = sum(scores) * np.log(len(scores))
 
     return combined_results

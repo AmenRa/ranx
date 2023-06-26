@@ -78,8 +78,6 @@ def mixed(runs: List[Run], weights: List[float], name: str = "mixed") -> Run:
     """
     run = Run()
     run.name = name
-    run.run = _mixed_parallel(
-        TypedList([run.run for run in runs]), TypedList(weights)
-    )
+    run.run = _mixed_parallel(TypedList([run.run for run in runs]), TypedList(weights))
     run.sort()
     return run

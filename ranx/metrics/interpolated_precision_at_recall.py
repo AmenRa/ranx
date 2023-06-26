@@ -16,9 +16,7 @@ def _interpolated_precision(qrels, run, rel_lvl):
         return np.zeros(11)
 
     # Compute cutoffs ----------------------------------------------------------
-    cutoff_percents = np.array(
-        [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
-    )
+    cutoff_percents = np.array([0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0])
     cutoffs = np.empty(cutoff_percents.shape[0], dtype=np.int64)
 
     # Transform percentage-based cutoffs to num of relevants

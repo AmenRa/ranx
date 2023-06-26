@@ -3,7 +3,7 @@ from typing import List, Union
 
 import numpy as np
 
-from ..data_structures import FrozensetDict, Qrels, Report, Run
+from ..data_structures import Qrels, Report, Run
 from ..statistical_tests import compute_statistical_significance
 from .evaluate import evaluate, format_metrics
 
@@ -90,9 +90,7 @@ def compare(
             metric_scores[model_name] = {metrics[0]: metric_scores[model_name]}
 
         for m in metrics:
-            results[model_name][m] = float(
-                np.mean(metric_scores[model_name][m])
-            )
+            results[model_name][m] = float(np.mean(metric_scores[model_name][m]))
 
     # Run statistical testing --------------------------------------------------
     comparisons = compute_statistical_significance(

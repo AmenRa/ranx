@@ -37,13 +37,9 @@ def _borda_norm(results, candidates):
     normalized_results = create_empty_results_dict()
     for doc_id in candidates:
         if doc_id in results:
-            normalized_results[doc_id] = 1 - (
-                doc_ids.index(doc_id) / n_candidates
-            )
+            normalized_results[doc_id] = 1 - (doc_ids.index(doc_id) / n_candidates)
         else:
-            normalized_results[doc_id] = 0.5 - (
-                (n_results - 1) / (2 * n_candidates)
-            )
+            normalized_results[doc_id] = 0.5 - ((n_results - 1) / (2 * n_candidates))
 
     return normalized_results
 

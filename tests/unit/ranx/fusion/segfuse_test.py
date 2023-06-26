@@ -1,8 +1,8 @@
 import numpy as np
 import pytest
+
+from ranx import Qrels, Run
 from ranx.fusion import segfuse, segfuse_train
-from ranx import Qrels
-from ranx import Run
 
 
 # FIXTURES =====================================================================
@@ -70,22 +70,22 @@ def test_segfuse(qrels, run_1, run_2, run_3):
     assert len(combined_run["q1"]) == 3
     assert len(combined_run["q2"]) == 3
 
-    assert combined_run["q1"]["d1"] == probs[0][0] * (
-        1 + run_1["q1"]["d1"]
-    ) + probs[1][0] * (1 + run_2["q1"]["d1"])
-    assert combined_run["q1"]["d2"] == probs[0][0] * (
-        1 + run_1["q1"]["d2"]
-    ) + probs[1][0] * (1 + run_2["q1"]["d2"])
-    assert combined_run["q1"]["d3"] == probs[0][0] * (
-        1 + run_1["q1"]["d3"]
-    ) + probs[2][0] * (1 + run_3["q1"]["d3"])
+    assert combined_run["q1"]["d1"] == probs[0][0] * (1 + run_1["q1"]["d1"]) + probs[1][
+        0
+    ] * (1 + run_2["q1"]["d1"])
+    assert combined_run["q1"]["d2"] == probs[0][0] * (1 + run_1["q1"]["d2"]) + probs[1][
+        0
+    ] * (1 + run_2["q1"]["d2"])
+    assert combined_run["q1"]["d3"] == probs[0][0] * (1 + run_1["q1"]["d3"]) + probs[2][
+        0
+    ] * (1 + run_3["q1"]["d3"])
 
-    assert combined_run["q2"]["d1"] == probs[0][0] * (
-        1 + run_1["q2"]["d1"]
-    ) + probs[1][0] * (1 + run_2["q2"]["d1"])
-    assert combined_run["q2"]["d2"] == probs[0][0] * (
-        1 + run_1["q2"]["d2"]
-    ) + probs[2][0] * (1 + run_3["q2"]["d2"])
-    assert combined_run["q2"]["d3"] == probs[1][0] * (
-        1 + run_2["q2"]["d3"]
-    ) + probs[2][0] * (1 + run_3["q2"]["d3"])
+    assert combined_run["q2"]["d1"] == probs[0][0] * (1 + run_1["q2"]["d1"]) + probs[1][
+        0
+    ] * (1 + run_2["q2"]["d1"])
+    assert combined_run["q2"]["d2"] == probs[0][0] * (1 + run_1["q2"]["d2"]) + probs[2][
+        0
+    ] * (1 + run_3["q2"]["d2"])
+    assert combined_run["q2"]["d3"] == probs[1][0] * (1 + run_2["q2"]["d3"]) + probs[2][
+        0
+    ] * (1 + run_3["q2"]["d3"])

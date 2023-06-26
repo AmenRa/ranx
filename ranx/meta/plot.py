@@ -36,8 +36,7 @@ def plot(
         names = [runs.name if runs.name is not None else "run"]
 
     results = [
-        interpolated_precision_at_recall(_qrels, run).mean(axis=0)
-        for run in _runs
+        interpolated_precision_at_recall(_qrels, run).mean(axis=0) for run in _runs
     ]
 
     recall = np.arange(0, 1.1, 0.1)
@@ -55,9 +54,7 @@ def plot(
 
     plt.figure(figsize=figsize)
 
-    ax = sns.lineplot(
-        data=df, x="recall", y="precision", hue="Model", **seaborn_kwargs
-    )
+    ax = sns.lineplot(data=df, x="recall", y="precision", hue="Model", **seaborn_kwargs)
 
     ax.set(
         title="Precision-Recall Curve",

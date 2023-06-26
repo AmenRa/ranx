@@ -24,9 +24,7 @@ def _min_max_norm(results):
 
     normalized_results = create_empty_results_dict()
     for doc_id in results.keys():
-        normalized_results[doc_id] = (results[doc_id] - min_score) / (
-            denominator
-        )
+        normalized_results[doc_id] = (results[doc_id] - min_score) / (denominator)
 
     return normalized_results
 

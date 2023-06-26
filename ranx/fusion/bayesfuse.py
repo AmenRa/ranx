@@ -3,6 +3,7 @@ from typing import List
 import numpy as np
 from numba import njit, prange
 from numba.typed import List as TypedList
+
 from ranx.metrics import get_hit_lists
 
 from ..data_structures import Qrels, Run
@@ -71,9 +72,7 @@ def _estimate_log_odds(hit_lists, cut_offs):
         if neg_avg_precision == 0:
             neg_avg_precision += 0.001
 
-        odds[start:end] = [np.log(avg_precision / neg_avg_precision)] * (
-            end - start
-        )
+        odds[start:end] = [np.log(avg_precision / neg_avg_precision)] * (end - start)
 
     return odds
 
@@ -111,9 +110,7 @@ def _bayes_score_parallel(run, log_odds):
     return convert_results_dict_list_to_run(q_ids, new_results)
 
 
-def bayesfuse(
-    runs: List[Run], log_odds: List[np.ndarray], name: str = "bayesfuse"
-):
+def bayesfuse(runs: List[Run], log_odds: List[np.ndarray], name: str = "bayesfuse"):
     r"""Computes BayesFuse as proposed by [Aslam et al.](https://dl.acm.org/doi/10.1145/383952.384007).
 
     ```bibtex

@@ -21,12 +21,8 @@ def _norm_log_comb_mnz(results, sigma):
     for res in results:
         for doc_id in res.keys():
             if combined_results.get(doc_id, False) == False:
-                scores = np.array(
-                    [res[doc_id] for res in results if doc_id in res]
-                )
-                combined_results[doc_id] = sum(scores) * np.log(
-                    len(scores) + sigma
-                )
+                scores = np.array([res[doc_id] for res in results if doc_id in res])
+                combined_results[doc_id] = sum(scores) * np.log(len(scores) + sigma)
 
     return combined_results
 
@@ -38,17 +34,13 @@ def _norm_log_comb_mnz_parallel(runs, sigma):
 
     for i in prange(len(q_ids)):
         q_id = q_ids[i]
-        combined_results[i] = _norm_log_comb_mnz(
-            [run[q_id] for run in runs], sigma
-        )
+        combined_results[i] = _norm_log_comb_mnz([run[q_id] for run in runs], sigma)
 
     return convert_results_dict_list_to_run(q_ids, combined_results)
 
 
 # HIGH LEVEL FUNCTIONS =========================================================
-def logn_isr(
-    runs: List[Run], sigma: float = 0.01, name: str = "logn_isr"
-) -> Run:
+def logn_isr(runs: List[Run], sigma: float = 0.01, name: str = "logn_isr") -> Run:
     r"""Computes Log_ISR as proposed by [Mourão et al.](https://www.sciencedirect.com/science/article/abs/pii/S0895611114000664).<br />
 
     ```bibtex

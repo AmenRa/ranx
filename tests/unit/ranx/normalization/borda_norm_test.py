@@ -1,6 +1,7 @@
 from math import isclose
 
 import pytest
+
 from ranx import Run
 from ranx.normalization import borda_norm
 

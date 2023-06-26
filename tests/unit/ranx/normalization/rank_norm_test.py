@@ -1,4 +1,5 @@
 import pytest
+
 from ranx import Run
 from ranx.normalization import rank_norm
 
@@ -40,4 +41,3 @@ def test_rank_norm(run):
     assert norm_run["q1"]["d3"] == 1 - (0 / 3)
     assert norm_run["q2"]["d1"] == 1 - (1 / 2)
     assert norm_run["q2"]["d2"] == 1 - (0 / 2)
-

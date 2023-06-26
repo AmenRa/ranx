@@ -1,6 +1,7 @@
 import pytest
-from ranx.fusion import comb_sum
+
 from ranx import Run
+from ranx.fusion import comb_sum
 
 
 # FIXTURES =====================================================================

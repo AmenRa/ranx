@@ -1,4 +1,5 @@
 import pytest
+
 from ranx import Run
 from ranx.normalization import max_norm
 
@@ -7,8 +8,15 @@ from ranx.normalization import max_norm
 @pytest.fixture
 def run():
     run_dict = {
-        "q1": {"d1": 1, "d2": 2, "d3": 3,},
-        "q2": {"d1": 1, "d2": 2,},
+        "q1": {
+            "d1": 1,
+            "d2": 2,
+            "d3": 3,
+        },
+        "q2": {
+            "d1": 1,
+            "d2": 2,
+        },
     }
 
     return Run(run_dict)

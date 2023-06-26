@@ -39,9 +39,7 @@ def _get_hit_list(qrels, run, k, rel_lvl):
 
 @njit(cache=True, parallel=True)
 def _get_hit_list_parallel(qrels, run, k, rel_lvl):
-    hit_lists = TypedList(
-        [np.ones(1, dtype=np.float64) for _ in range(len(qrels))]
-    )
+    hit_lists = TypedList([np.ones(1, dtype=np.float64) for _ in range(len(qrels))])
     for i in prange(len(qrels)):
         hit_lists[i] = _get_hit_list(qrels[i], run[i], k, rel_lvl)
     return hit_lists

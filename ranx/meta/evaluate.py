@@ -28,9 +28,7 @@ def extract_metric_and_params(metric):
         elif "@" in metric:
             metric_splitted = metric.split("@")
         else:
-            raise ValueError(
-                "RBP requires persistence value. Example: `rpb.95`"
-            )
+            raise ValueError("RBP requires persistence value. Example: `rpb.95`")
         m = metric_splitted[0]
         k = metric_splitted[1]
         k = float(f"0.{k}")

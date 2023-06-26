@@ -37,13 +37,13 @@ def _compute_statistical_significance(
 
         elif stat_test == "student":
             p_value, significant = paired_student_t_test(
-                control_metric_scores[m], treatment_metric_scores[m], max_p,
+                control_metric_scores[m],
+                treatment_metric_scores[m],
+                max_p,
             )
 
         else:
-            raise NotImplementedError(
-                f"Statistical test `{stat_test}` not supported."
-            )
+            raise NotImplementedError(f"Statistical test `{stat_test}` not supported.")
 
         metric_p_values[m] = {
             "p_value": p_value,
@@ -97,7 +97,9 @@ def compute_statistical_significance(
         for m in metrics:
             scores = [metric_scores[name][m] for name in model_names]
             results = tukey_hsd_test(
-                model_names=model_names, scores=scores, max_p=max_p,
+                model_names=model_names,
+                scores=scores,
+                max_p=max_p,
             )
 
             for res in results:
@@ -107,8 +109,6 @@ def compute_statistical_significance(
                 }
 
     else:
-        raise NotImplementedError(
-            f"Statistical test `{stat_test}` not supported."
-        )
+        raise NotImplementedError(f"Statistical test `{stat_test}` not supported.")
 
     return comparisons

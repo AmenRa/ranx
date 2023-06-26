@@ -1,4 +1,5 @@
 import pytest
+
 from ranx import Run
 from ranx.normalization import min_max_norm
 

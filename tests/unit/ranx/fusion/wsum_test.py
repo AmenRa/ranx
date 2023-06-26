@@ -1,6 +1,7 @@
 import pytest
-from ranx.fusion import wsum
+
 from ranx import Run
+from ranx.fusion import wsum
 
 
 # FIXTURES =====================================================================
@@ -74,4 +75,3 @@ def test_wsum(run_1, run_2, run_3):
         combined_run["q2"]["d3"]
         == weights[1] * run_2["q2"]["d3"] + weights[2] * run_3["q2"]["d3"]
     )
-

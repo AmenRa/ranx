@@ -1,4 +1,5 @@
 import pytest
+
 from ranx import Qrels, Run
 from ranx.metrics.rank_biased_precision import rank_biased_precision
 
@@ -7,7 +8,13 @@ from ranx.metrics.rank_biased_precision import rank_biased_precision
 @pytest.fixture
 def qrels_dict():
     return {
-        "q1": {"d1": 1, "d2": 1, "d6": 1, "d11": 1, "d17": 1,},
+        "q1": {
+            "d1": 1,
+            "d2": 1,
+            "d6": 1,
+            "d11": 1,
+            "d17": 1,
+        },
     }
 
 

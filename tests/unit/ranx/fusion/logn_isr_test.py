@@ -1,7 +1,8 @@
 import numpy as np
 import pytest
-from ranx.fusion import logn_isr
+
 from ranx import Run
+from ranx.fusion import logn_isr
 
 
 # FIXTURES =====================================================================
@@ -47,21 +48,21 @@ def test_logn_isr(run_1, run_2, run_3):
     assert len(combined_run["q1"]) == 3
     assert len(combined_run["q2"]) == 3
 
-    assert combined_run["q1"]["d1"] == (
-        (1 / (3 ** 2)) + (1 / (1 ** 2))
-    ) * np.log(2 + sigma)
-    assert combined_run["q1"]["d2"] == (
-        (1 / (2 ** 2)) + (1 / (2 ** 2))
-    ) * np.log(2 + sigma)
-    assert combined_run["q1"]["d3"] == (
-        (1 / (1 ** 2)) + (1 / (1 ** 2))
-    ) * np.log(2 + sigma)
-    assert combined_run["q2"]["d1"] == (
-        (1 / (2 ** 2)) + (1 / (2 ** 2))
-    ) * np.log(2 + sigma)
-    assert combined_run["q2"]["d2"] == (
-        (1 / (1 ** 2)) + (1 / (2 ** 2))
-    ) * np.log(2 + sigma)
-    assert combined_run["q2"]["d3"] == (
-        (1 / (1 ** 2)) + (1 / (1 ** 2))
-    ) * np.log(2 + sigma)
+    assert combined_run["q1"]["d1"] == ((1 / (3**2)) + (1 / (1**2))) * np.log(
+        2 + sigma
+    )
+    assert combined_run["q1"]["d2"] == ((1 / (2**2)) + (1 / (2**2))) * np.log(
+        2 + sigma
+    )
+    assert combined_run["q1"]["d3"] == ((1 / (1**2)) + (1 / (1**2))) * np.log(
+        2 + sigma
+    )
+    assert combined_run["q2"]["d1"] == ((1 / (2**2)) + (1 / (2**2))) * np.log(
+        2 + sigma
+    )
+    assert combined_run["q2"]["d2"] == ((1 / (1**2)) + (1 / (2**2))) * np.log(
+        2 + sigma
+    )
+    assert combined_run["q2"]["d3"] == ((1 / (1**2)) + (1 / (1**2))) * np.log(
+        2 + sigma
+    )

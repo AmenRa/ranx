@@ -1,7 +1,8 @@
 import numpy as np
 import pytest
-from ranx.fusion import comb_med
+
 from ranx import Run
+from ranx.fusion import comb_med
 
 
 # FIXTURES =====================================================================

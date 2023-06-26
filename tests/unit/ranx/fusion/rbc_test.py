@@ -1,4 +1,5 @@
 import pytest
+
 from ranx import Run
 from ranx.fusion import rbc
 
@@ -78,4 +79,3 @@ def test_rbc(run_1, run_2, run_3, run_4):
     assert round(combined_run["q1"]["G"], 2) == 0.23
     assert round(combined_run["q1"]["E"], 2) == 0.22
     assert round(combined_run["q1"]["F"], 2) == 0.18
-

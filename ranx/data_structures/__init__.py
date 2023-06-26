@@ -19,4 +19,3 @@ __all__ = [
     "create_empty_results_dict_list",
     "convert_results_dict_list_to_run",
 ]
-

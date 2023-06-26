@@ -20,8 +20,7 @@ def optimize_comb_gmnz(
 ) -> List[float]:
     rounding_digits = str(step)[::-1].find(".")
     trials = [
-        round(x, rounding_digits)
-        for x in np.arange(min_gamma, max_gamma + step, step)
+        round(x, rounding_digits) for x in np.arange(min_gamma, max_gamma + step, step)
     ]
 
     best_score = 0.0

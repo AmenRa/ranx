@@ -1,4 +1,5 @@
 import pytest
+
 from ranx import Run
 from ranx.fusion import wmnz
 
@@ -60,27 +61,26 @@ def test_wmnz(run_1, run_2, run_3):
     assert len(combined_run["q1"]) == 3
     assert len(combined_run["q2"]) == 3
 
-    assert combined_run["q1"]["d1"] == (
-        run_1["q1"]["d1"] + run_2["q1"]["d1"]
-    ) * (weights[0] + weights[1])
+    assert combined_run["q1"]["d1"] == (run_1["q1"]["d1"] + run_2["q1"]["d1"]) * (
+        weights[0] + weights[1]
+    )
 
-    assert combined_run["q1"]["d2"] == (
-        run_1["q1"]["d2"] + run_2["q1"]["d2"]
-    ) * (weights[0] + weights[1])
+    assert combined_run["q1"]["d2"] == (run_1["q1"]["d2"] + run_2["q1"]["d2"]) * (
+        weights[0] + weights[1]
+    )
 
-    assert combined_run["q1"]["d3"] == (
-        run_1["q1"]["d3"] + run_3["q1"]["d3"]
-    ) * (weights[0] + weights[2])
+    assert combined_run["q1"]["d3"] == (run_1["q1"]["d3"] + run_3["q1"]["d3"]) * (
+        weights[0] + weights[2]
+    )
 
-    assert combined_run["q2"]["d1"] == (
-        run_1["q2"]["d1"] + run_2["q2"]["d1"]
-    ) * (weights[0] + weights[1])
+    assert combined_run["q2"]["d1"] == (run_1["q2"]["d1"] + run_2["q2"]["d1"]) * (
+        weights[0] + weights[1]
+    )
 
-    assert combined_run["q2"]["d2"] == (
-        run_1["q2"]["d2"] + run_3["q2"]["d2"]
-    ) * (weights[0] + weights[2])
+    assert combined_run["q2"]["d2"] == (run_1["q2"]["d2"] + run_3["q2"]["d2"]) * (
+        weights[0] + weights[2]
+    )
 
-    assert combined_run["q2"]["d3"] == (
-        run_2["q2"]["d3"] + run_3["q2"]["d3"]
-    ) * (weights[1] + weights[2])
-
+    assert combined_run["q2"]["d3"] == (run_2["q2"]["d3"] + run_3["q2"]["d3"]) * (
+        weights[1] + weights[2]
+    )

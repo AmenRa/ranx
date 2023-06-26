@@ -32,9 +32,7 @@ def to_typed_list(d):
 
 @njit(cache=True, parallel=True)
 def set_relevance_level(typed_list, relevance_level):
-    new_typed_list = TypedList(
-        [np.empty((1, 2), dtype=np.float64)] * len(typed_list)
-    )
+    new_typed_list = TypedList([np.empty((1, 2), dtype=np.float64)] * len(typed_list))
 
     for i in range(len(typed_list)):
         new_typed_list[i] = np.column_stack(

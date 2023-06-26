@@ -23,9 +23,7 @@ def optimize_rrf(
     best_k = []
     optimization_report = {}
 
-    for k in track(
-        trials, description="Optimizing RRF", disable=not show_progress
-    ):
+    for k in track(trials, description="Optimizing RRF", disable=not show_progress):
         fused_run = rrf(runs, k)
         score = evaluate(qrels, fused_run, metric, save_results_in_run=False)
         optimization_report[str(k)] = score

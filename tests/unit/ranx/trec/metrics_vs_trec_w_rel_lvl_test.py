@@ -73,23 +73,17 @@ def test_precision():
 
 
 def test_recall():
-    trec_score = run_single_trec_metric(
-        trec_qrels, trec_run, "recall_5", rel_lvl
-    )
+    trec_score = run_single_trec_metric(trec_qrels, trec_run, "recall_5", rel_lvl)
     re_score = evaluate(re_qrels, re_run, f"recall@5-l{rel_lvl}")
 
     assert isclose(re_score, trec_score)
 
-    trec_score = run_single_trec_metric(
-        trec_qrels, trec_run, "recall_10", rel_lvl
-    )
+    trec_score = run_single_trec_metric(trec_qrels, trec_run, "recall_10", rel_lvl)
     re_score = evaluate(re_qrels, re_run, f"recall@10-l{rel_lvl}")
 
     assert isclose(re_score, trec_score)
 
-    trec_score = run_single_trec_metric(
-        trec_qrels, trec_run, "recall_100", rel_lvl
-    )
+    trec_score = run_single_trec_metric(trec_qrels, trec_run, "recall_100", rel_lvl)
     re_score = evaluate(re_qrels, re_run, f"recall@100-l{rel_lvl}")
 
     assert isclose(re_score, trec_score)
@@ -103,32 +97,24 @@ def test_r_precision():
 
 
 def test_mrr():
-    trec_score = run_single_trec_metric(
-        trec_qrels, trec_run, "recip_rank", rel_lvl
-    )
+    trec_score = run_single_trec_metric(trec_qrels, trec_run, "recip_rank", rel_lvl)
     re_score = evaluate(re_qrels, re_run, f"mrr@100-l{rel_lvl}")
 
     assert isclose(re_score, trec_score)
 
 
 def test_map():
-    trec_score = run_single_trec_metric(
-        trec_qrels, trec_run, "map_cut_5", rel_lvl
-    )
+    trec_score = run_single_trec_metric(trec_qrels, trec_run, "map_cut_5", rel_lvl)
     re_score = evaluate(re_qrels, re_run, f"map@5-l{rel_lvl}")
 
     assert isclose(re_score, trec_score)
 
-    trec_score = run_single_trec_metric(
-        trec_qrels, trec_run, "map_cut_10", rel_lvl
-    )
+    trec_score = run_single_trec_metric(trec_qrels, trec_run, "map_cut_10", rel_lvl)
     re_score = evaluate(re_qrels, re_run, f"map@10-l{rel_lvl}")
 
     assert isclose(re_score, trec_score)
 
-    trec_score = run_single_trec_metric(
-        trec_qrels, trec_run, "map_cut_100", rel_lvl
-    )
+    trec_score = run_single_trec_metric(trec_qrels, trec_run, "map_cut_100", rel_lvl)
     re_score = evaluate(re_qrels, re_run, f"map@100-l{rel_lvl}")
 
     assert isclose(re_score, trec_score)

@@ -1,6 +1,7 @@
 import pytest
-from ranx.fusion import isr
+
 from ranx import Run
+from ranx.fusion import isr
 
 
 # FIXTURES =====================================================================
@@ -44,9 +45,9 @@ def test_isr(run_1, run_2, run_3):
     assert len(combined_run["q1"]) == 3
     assert len(combined_run["q2"]) == 3
 
-    assert combined_run["q1"]["d1"] == ((1 / (3 ** 2)) + (1 / (1 ** 2))) * 2
-    assert combined_run["q1"]["d2"] == ((1 / (2 ** 2)) + (1 / (2 ** 2))) * 2
-    assert combined_run["q1"]["d3"] == ((1 / (1 ** 2)) + (1 / (1 ** 2))) * 2
-    assert combined_run["q2"]["d1"] == ((1 / (2 ** 2)) + (1 / (2 ** 2))) * 2
-    assert combined_run["q2"]["d2"] == ((1 / (1 ** 2)) + (1 / (2 ** 2))) * 2
-    assert combined_run["q2"]["d3"] == ((1 / (1 ** 2)) + (1 / (1 ** 2))) * 2
+    assert combined_run["q1"]["d1"] == ((1 / (3**2)) + (1 / (1**2))) * 2
+    assert combined_run["q1"]["d2"] == ((1 / (2**2)) + (1 / (2**2))) * 2
+    assert combined_run["q1"]["d3"] == ((1 / (1**2)) + (1 / (1**2))) * 2
+    assert combined_run["q2"]["d1"] == ((1 / (2**2)) + (1 / (2**2))) * 2
+    assert combined_run["q2"]["d2"] == ((1 / (1**2)) + (1 / (2**2))) * 2
+    assert combined_run["q2"]["d3"] == ((1 / (1**2)) + (1 / (1**2))) * 2

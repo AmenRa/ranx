@@ -1,5 +1,6 @@
 import numpy as np
 import pytest
+
 from ranx import Run
 from ranx.fusion import mixed
 
@@ -101,4 +102,3 @@ def test_mixed(run_1, run_2, run_3):
     assert combined_run["q2"]["d3"] == (
         weights[1] * run_2["q2"]["d3"] + weights[2] * run_3["q2"]["d3"]
     ) * np.sqrt(2)
-

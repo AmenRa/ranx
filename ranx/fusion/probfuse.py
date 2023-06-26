@@ -38,9 +38,7 @@ def estimate_segment_probs(hit_lists, n_segments) -> np.ndarray:
 
 
 @njit(cache=True, parallel=True)
-def estimate_segment_probs_multi(
-    hit_lists: List, n_segments: int
-) -> List[np.ndarray]:
+def estimate_segment_probs_multi(hit_lists: List, n_segments: int) -> List[np.ndarray]:
     probs = np.zeros((len(hit_lists), n_segments))
 
     for i in prange(len(hit_lists)):
@@ -53,9 +51,7 @@ def estimate_probfuse_probs(qrels: Qrels, runs: List[Run], n_segments: int):
     _qrels = qrels.to_typed_list()
 
     # Hit lists of all the systems for all the queries
-    hit_lists = TypedList(
-        [get_hit_lists(_qrels, run.to_typed_list()) for run in runs]
-    )
+    hit_lists = TypedList([get_hit_lists(_qrels, run.to_typed_list()) for run in runs])
 
     return estimate_segment_probs_multi(hit_lists, n_segments)
 
@@ -135,7 +131,5 @@ def probfuse(runs: List[Run], probs: List[np.ndarray], name: str = "probfuse"):
     return comb_sum(_runs, name)
 
 
-def probfuse_train(
-    qrels: Qrels, runs: List[Run], n_segments: int
-) -> List[np.ndarray]:
+def probfuse_train(qrels: Qrels, runs: List[Run], n_segments: int) -> List[np.ndarray]:
     return estimate_probfuse_probs(qrels, runs, n_segments)

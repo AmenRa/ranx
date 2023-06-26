@@ -1,8 +1,8 @@
 import numpy as np
 import pytest
+
+from ranx import Qrels, Run
 from ranx.fusion import posfuse, posfuse_train
-from ranx import Qrels
-from ranx import Run
 
 
 # FIXTURES =====================================================================

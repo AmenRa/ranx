@@ -58,9 +58,7 @@ class Qrels(object):
     ```
     """
 
-    def __init__(
-        self, qrels: Dict[str, Dict[str, int]] = None, name: str = None
-    ):
+    def __init__(self, qrels: Dict[str, Dict[str, int]] = None, name: str = None):
         if qrels is None:
             self.qrels = TypedDict.empty(
                 key_type=types.unicode_type,
@@ -186,9 +184,7 @@ class Qrels(object):
         # Save Qrels -----------------------------------------------------------
         if kind == "json":
             with open(path, "wb") as f:
-                f.write(
-                    orjson.dumps(self.to_dict(), option=orjson.OPT_INDENT_2)
-                )
+                f.write(orjson.dumps(self.to_dict(), option=orjson.OPT_INDENT_2))
         else:
             with open(path, "w") as f:
                 for i, q_id in enumerate(self.qrels.keys()):
@@ -282,9 +278,7 @@ class Qrels(object):
         assert (
             df[doc_id_col].dtype == "O"
         ), "DataFrame scores column dtype must be `object` (string)"
-        assert (
-            df[score_col].dtype == int
-        ), "DataFrame scores column dtype must be `int`"
+        assert df[score_col].dtype == int, "DataFrame scores column dtype must be `int`"
 
         qrels_dict = (
             df.groupby(q_id_col)[[doc_id_col, score_col]]

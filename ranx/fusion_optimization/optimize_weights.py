@@ -34,9 +34,7 @@ def optimize_weights(
     best_weights = []
     optimization_report = {}
 
-    for weights in track(
-        trials, description=description, disable=not show_progress
-    ):
+    for weights in track(trials, description=description, disable=not show_progress):
         fused_run = fusion_method(runs, weights)
         score = evaluate(qrels, fused_run, metric, save_results_in_run=False)
         optimization_report[str(weights)] = score

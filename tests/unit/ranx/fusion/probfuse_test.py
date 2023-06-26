@@ -1,5 +1,6 @@
 import numpy as np
 import pytest
+
 from ranx import Qrels, Run
 from ranx.fusion import probfuse, probfuse_train
 

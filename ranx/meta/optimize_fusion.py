@@ -44,9 +44,7 @@ def optimize_fusion(
                 run_i.keys() == run_j.keys()
             ), f"Runs {i} and {j} query ids do not match"
     for i, run in enumerate(runs):
-        assert (
-            run.keys() == qrels.keys()
-        ), f"Run {i} and Qrels query ids do not match"
+        assert run.keys() == qrels.keys(), f"Run {i} and Qrels query ids do not match"
 
     # Normalization ------------------------------------------------------------
     if norm is None:

@@ -25,9 +25,7 @@ def _f1(qrels, run, k, rel_lvl):
     precision_score = hits_score / k
     recall_score = hits_score / qrels.shape[0]
 
-    return 2 * (
-        (precision_score * recall_score) / (precision_score + recall_score)
-    )
+    return 2 * ((precision_score * recall_score) / (precision_score + recall_score))
 
 
 @njit(cache=True, parallel=True)

@@ -1,6 +1,7 @@
 import numpy as np
 import pytest
 from numba.typed import List as TypedList
+
 from ranx import Run
 from ranx.fusion import condorcet
 from ranx.fusion.condorcet import get_candidates, get_results
