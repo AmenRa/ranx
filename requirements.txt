@@ -1,7 +1,7 @@
 cbor2
 ir_datasets
 lz4
-numba>=0.54.1
+numba
 numpy
 orjson
 pandas
