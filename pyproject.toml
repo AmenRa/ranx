@@ -1,0 +1,7 @@
+[tool.ruff]
+# E501 ignore long comment lines (black should take care of that)
+# E712 ignore == False, needed for numba checks.
+ignore = ["E501", "E712"]
+
+[tool.isort]
+profile = "black"

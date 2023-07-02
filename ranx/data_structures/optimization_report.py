@@ -1,6 +1,5 @@
-import json
 from io import StringIO
-from typing import Dict, List, Tuple
+from typing import List
 
 import numpy as np
 from rich.console import Console
@@ -67,9 +66,9 @@ class OptimizationReport(object):
 
     def get_metric_label(self, m):
         if "@" in m:
-            m_splitted = m.split("@")
-            label = metric_labels[m_splitted[0]]
-            cutoff = m_splitted[1]
+            m_split = m.split("@")
+            label = metric_labels[m_split[0]]
+            cutoff = m_split[1]
             return f"{label}@{cutoff}"
         return f"{metric_labels[m]}"
 

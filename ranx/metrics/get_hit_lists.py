@@ -5,9 +5,9 @@ import numpy as np
 from numba import config, njit, prange
 from numba.typed import List as TypedList
 
-config.THREADING_LAYER = "workqueue"
-
 from .common import clean_qrels, fix_k
+
+config.THREADING_LAYER = "workqueue"
 
 
 # LOW LEVEL FUNCTIONS ==========================================================

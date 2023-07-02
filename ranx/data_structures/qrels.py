@@ -1,4 +1,3 @@
-import json
 import os
 from collections import defaultdict
 from typing import Dict, List
@@ -36,8 +35,9 @@ def _set_relevance_level(qrels, rel_lvl):
 
 
 class Qrels(object):
-    """`Qrels`, or _query relevance judgments_, stores the ground truth for conducting evaluations.<\br>
-    The preferred way for creating a `Qrels` istance is converting Python dictionary as follows:
+    """`Qrels`, or _query relevance judgments_, stores the ground truth for conducting evaluations.
+
+    The preferred way for creating a `Qrels` instance is converting Python dictionary as follows:
 
     ```python
     qrels_dict = {
@@ -156,7 +156,7 @@ class Qrels(object):
 
     def to_typed_list(self):
         """Convert Qrels to Numba Typed List. Used internally."""
-        if self.sorted == False:
+        if not self.sorted:
             self.sort()
         return to_typed_list(self.qrels)
 

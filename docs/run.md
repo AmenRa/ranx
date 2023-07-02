@@ -1,7 +1,7 @@
 # Run
 
 `Run` stores the relevance scores estimated by the model under evaluation.  
-The preferred way for creating a `Run` istance is converting a Python dictionary as follows:
+The preferred way for creating a `Run` instance is converting a Python dictionary as follows:
 
 ```python
 from ranx import Run

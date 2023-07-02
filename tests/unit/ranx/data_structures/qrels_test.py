@@ -1,5 +1,4 @@
 import pandas as pd
-import pytest
 from numba.typed import List
 
 from ranx import Qrels
@@ -123,11 +122,11 @@ def test_sort():
     qrels.add_score("q2", "d1", 2)
     qrels.add_score("q2", "d2", 1)
 
-    assert qrels.sorted == False
+    assert qrels.sorted is False
 
     qrels.sort()
 
-    assert qrels.sorted == True
+    assert qrels.sorted is True
 
     assert List(qrels.qrels["q1"].keys()) == List(["d3", "d2", "d1"])
     assert List(qrels.qrels["q1"].values()) == List([3, 2, 1])
@@ -136,7 +135,7 @@ def test_sort():
 
     qrels.add_score("q2", "d2", 3)
 
-    assert qrels.sorted == False
+    assert qrels.sorted is False
 
 
 def test_to_typed_list():

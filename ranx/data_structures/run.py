@@ -22,7 +22,7 @@ from .qrels import Qrels
 
 class Run(object):
     """`Run` stores the relevance scores estimated by the model under evaluation.<\br>
-    The preferred way for creating a `Run` istance is converting a Python dictionary as follows:
+    The preferred way for creating a `Run` instance is converting a Python dictionary as follows:
 
     ```python
     run_dict = {
@@ -155,7 +155,7 @@ class Run(object):
 
     def to_typed_list(self):
         """Convert Run to Numba Typed List. Used internally."""
-        if self.sorted == False:
+        if not self.sorted:
             self.sort()
         return to_typed_list(self.run)
 
@@ -181,7 +181,7 @@ class Run(object):
         kind = get_file_kind(path, kind)
 
         # Save Run -------------------------------------------------------------
-        if self.sorted == False:
+        if not self.sorted:
             self.sort()
 
         if kind == "json":

@@ -4,10 +4,10 @@ import numba
 import numpy as np
 from numba import config, njit, prange
 
-config.THREADING_LAYER = "workqueue"
-
 from .get_hit_lists import _get_hit_list
 from .get_unjudged_lists import _get_unjudged_list
+
+config.THREADING_LAYER = "workqueue"
 
 
 # LOW LEVEL FUNCTIONS ==========================================================

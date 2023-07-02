@@ -109,17 +109,17 @@ class Report(object):
         if "-l" in m:
             m, rel_lvl = m.split("-l")
             if "@" in m:
-                m_splitted = m.split("@")
-                label = metric_labels[m_splitted[0]]
-                cutoff = m_splitted[1]
+                m_split = m.split("@")
+                label = metric_labels[m_split[0]]
+                cutoff = m_split[1]
                 return f"{label}@{cutoff}-l{rel_lvl}"
             return f"{metric_labels[m]}-l{rel_lvl}"
 
         else:
             if "@" in m:
-                m_splitted = m.split("@")
-                label = metric_labels[m_splitted[0]]
-                cutoff = m_splitted[1]
+                m_split = m.split("@")
+                label = metric_labels[m_split[0]]
+                cutoff = m_split[1]
                 return f"{label}@{cutoff}"
             return f"{metric_labels[m]}"
 

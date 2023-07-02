@@ -19,7 +19,7 @@ def fisher_randomization_test(
     """
     Performs (approximated) Fisher's Randomization Test.
 
-    Null hypotesis: system A (control) and system B (treatment) are identical (i.e., system A has no effect compared to system B on the mean of a given performance metric)
+    Null hypothesis: system A (control) and system B (treatment) are identical (i.e., system A has no effect compared to system B on the mean of a given performance metric)
 
     For further details, see Smucker et al. A Comparison of Statistical Significance Tests for Information Retrieval Evaluation, CIKM '07.
 

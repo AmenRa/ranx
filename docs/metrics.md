@@ -99,7 +99,7 @@ $$
 where,
 
 - $p$ is the persistence value;
-- $r_i$ is either 0 or 1, whether the $i$-th ranked document is non-relevant or relevant, repsectively.
+- $r_i$ is either 0 or 1, whether the $i$-th ranked document is non-relevant or relevant, respectively.
 
 ## (Mean) Reciprocal Rank
 ---
@@ -215,7 +215,7 @@ $$
 where,
 
 - $\operatorname{DCG}$ is Discounted Cumulative Gain;
-- $\operatorname{IDCG}$ is Ideal Discounted Cumulative Gain (max possibile DCG).
+- $\operatorname{IDCG}$ is Ideal Discounted Cumulative Gain (max possible DCG).
 
 ## NDCG Burges
 ---
@@ -250,4 +250,4 @@ $$
 where,
 
 - $\operatorname{DCG}$ is Discounted Cumulative Gain;
-- $\operatorname{IDCG}$ is Ideal Discounted Cumulative Gain (max possibile DCG).
+- $\operatorname{IDCG}$ is Ideal Discounted Cumulative Gain (max possible DCG).

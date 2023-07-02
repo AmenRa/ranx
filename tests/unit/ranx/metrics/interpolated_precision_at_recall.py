@@ -1,8 +1,6 @@
 import random
-from math import isclose
 
 import numpy as np
-import pytest
 import pytrec_eval
 
 from ranx import Qrels, Run

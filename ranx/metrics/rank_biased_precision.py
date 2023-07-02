@@ -4,9 +4,9 @@ import numba
 import numpy as np
 from numba import config, njit, prange
 
-config.THREADING_LAYER = "workqueue"
-
 from .get_hit_lists import _get_hit_list
+
+config.THREADING_LAYER = "workqueue"
 
 
 # LOW LEVEL FUNCTIONS ==========================================================
@@ -45,7 +45,7 @@ def rank_biased_precision(
     where,
 
     - $p$ is the persistence value;
-    - $r_i$ is either 0 or 1, whether the $i$-th ranked document is non-relevant or relevant, repsectively.
+    - $r_i$ is either 0 or 1, whether the $i$-th ranked document is non-relevant or relevant, respectively.
 
     Args:
         qrels (Union[np.ndarray, numba.typed.List]): IDs and relevance scores of _relevant_ documents.

@@ -1,5 +1,4 @@
 import numpy as np
-import pytest
 from numba.typed import List
 
 import ranx.metrics as rm
@@ -182,7 +181,7 @@ def test_recall():
 def test_dcg_jarvelin():
     # List of IDs ordered by descending order of true relevance
     y_true = np.array([[[2, 5], [4, 4], [5, 3], [10, 2]]])
-    # List of IDs orderd by descending order of predicted relevance
+    # List of IDs ordered by descending order of predicted relevance
     y_pred_1 = np.array(
         [[[1, 1], [2, 1], [3, 1], [4, 1], [5, 1]]]
     )  # rel = 0, 5, 0, 4, 3
@@ -211,7 +210,7 @@ def test_dcg_jarvelin():
 def test_ndcg_jarvelin():
     # List of IDs ordered by descending order of true relevance
     y_true = np.array([[[2, 5], [4, 4], [5, 3], [10, 2]]])
-    # List of IDs orderd by descending order of predicted relevance
+    # List of IDs ordered by descending order of predicted relevance
     y_pred_1 = np.array(
         [[[1, 1], [2, 1], [3, 1], [4, 1], [5, 1]]]
     )  # rel = 0, 5, 0, 4, 3
@@ -242,7 +241,7 @@ def test_ndcg_jarvelin():
 def test_dcg_burges():
     # List of IDs ordered by descending order of true relevance
     y_true = np.array([[[2, 5], [4, 4], [5, 3], [10, 2]]])
-    # List of IDs orderd by descending order of predicted relevance
+    # List of IDs ordered by descending order of predicted relevance
     y_pred_1 = np.array(
         [[[1, 1], [2, 1], [3, 1], [4, 1], [5, 1]]]
     )  # rel = 0, 5, 0, 4, 3
@@ -280,7 +279,7 @@ def test_dcg_burges():
 def test_ndcg_burges():
     # List of IDs ordered by descending order of true relevance
     y_true = np.array([[[2, 5], [4, 4], [5, 3], [10, 2]]])
-    # List of IDs orderd by descending order of predicted relevance
+    # List of IDs ordered by descending order of predicted relevance
     y_pred_1 = np.array(
         [[[1, 1], [2, 1], [3, 1], [4, 1], [5, 1]]]
     )  # rel = 0, 5, 0, 4, 3

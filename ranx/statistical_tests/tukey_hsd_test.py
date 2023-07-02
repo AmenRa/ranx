@@ -1,7 +1,6 @@
 from typing import List
 
 import numpy as np
-import pandas as pd
 from scipy.stats import tukey_hsd
 
 
