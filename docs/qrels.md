@@ -1,7 +1,7 @@
 # Qrels
 
 `Qrels`, or _query relevance judgments_, stores the ground truth for conducting evaluations.  
-The preferred way for creating a `Qrels` istance is converting Python dictionary as follows:
+The preferred way for creating a `Qrels` instance is converting Python dictionary as follows:
 
 ```python
 from ranx import Qrels

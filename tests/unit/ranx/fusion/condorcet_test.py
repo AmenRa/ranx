@@ -1,4 +1,3 @@
-import numpy as np
 import pytest
 from numba.typed import List as TypedList
 

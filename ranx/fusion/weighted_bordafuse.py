@@ -1,7 +1,5 @@
 from typing import List
 
-from numba.typed import List as TypedList
-
 from ..data_structures import Run
 from .bordafuse import _borda_score_parallel, get_candidates
 from .wsum import wsum

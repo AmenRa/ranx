@@ -1,2 +1,8 @@
 black
+black[jupyter]
+blackdoc
+ruff
 pytest
+typos
+isort
+mypy

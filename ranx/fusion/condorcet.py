@@ -30,39 +30,6 @@ def get_candidates(runs):
     return candidates
 
 
-# def get_candidates(runs):
-#     candidates = TypedList()
-#     for q_id in runs[0]:
-#         new_candidates = np.array(
-#             list({doc_id for run in runs for doc_id in list(run[q_id].keys())})
-#         )
-
-#         if len(new_candidates) > 0:
-#             candidates.append(new_candidates)
-#         else:
-#             # Fixes Numba raising error if no runs have docs for a given query
-#             candidates.append(np.array(["str"])[:0])
-
-#     return candidates
-
-# def get_candidates(runs):
-#     candidates = TypedList()
-#     for q_id in runs[0]:
-#         candidates.append(
-#             np.array(
-#                 list(
-#                     {
-#                         doc_id
-#                         for run in runs
-#                         for doc_id in list(run[q_id].keys())
-#                     }
-#                 )
-#             )
-#         )
-
-#     return candidates
-
-
 @njit(cache=True)
 def get_results(runs):
     results = TypedList()
@@ -84,7 +51,8 @@ def _get_run_indices(results, candidates):
         for x in candidates:
             try:
                 _run_indices.append(run.index(str(x)))
-            except:
+            except Exception:
+                # TODO: log something here?
                 _run_indices.append(1_000_000)
 
         run_indices.append(_run_indices)

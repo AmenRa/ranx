@@ -23,6 +23,23 @@ requirements: .venv  ## Install/refresh all project requirements
 build: .venv  ## Compile and install ranx
 	source $(VENV_BIN)/activate
 
+
+.PHONY: fix-lint
+fix-lint: .venv  ## Fix linting
+	source $(VENV_BIN)/activate
+	$(VENV_BIN)/black .
+	$(VENV_BIN)/isort .
+
+.PHONY: lint
+lint: .venv  ## Check linting
+	source $(VENV_BIN)/activate
+	$(VENV_BIN)/isort --check .
+	$(VENV_BIN)/black --check .
+	$(VENV_BIN)/blackdoc .
+	$(VENV_BIN)/ruff .
+	$(VENV_BIN)/typos .
+#	$(VENV_BIN)/mypy ranx
+
 .PHONY: test
 test: .venv build  ## Run unittest
 	source $(VENV_BIN)/activate

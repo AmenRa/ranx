@@ -24,18 +24,18 @@ def extract_metric_and_params(metric):
 
     if "rbp" in metric:
         if "." in metric:
-            metric_splitted = metric.split(".")
+            metric_split = metric.split(".")
         elif "@" in metric:
-            metric_splitted = metric.split("@")
+            metric_split = metric.split("@")
         else:
             raise ValueError("RBP requires persistence value. Example: `rpb.95`")
-        m = metric_splitted[0]
-        k = metric_splitted[1]
+        m = metric_split[0]
+        k = metric_split[1]
         k = float(f"0.{k}")
     else:
-        metric_splitted = metric.split("@")
-        m = metric_splitted[0]
-        k = int(metric_splitted[1]) if len(metric_splitted) > 1 else 0
+        metric_split = metric.split("@")
+        m = metric_split[0]
+        k = int(metric_split[1]) if len(metric_split) > 1 else 0
 
     return m, k, int(rel_lvl)
 
@@ -85,7 +85,6 @@ def evaluate(
 
     Usage examples:
 
-    ```python
     from ranx import evaluate
 
     # Compute score for a single metric
@@ -102,16 +101,16 @@ def evaluate(
 
     # Access scores for each query
     dict(run.scores)
-    >>> {"ndcg@5": {"q_1": 0.9430, "q_2": 0.6292},
-          "map@5": {"q_1": 0.8333, "q_2": 0.4500},
-            "mrr": {"q_1": 1.0000, "q_2": 0.5000}}
-    ```
-
+    >>> {
+    ...     "ndcg@5": {"q_1": 0.9430, "q_2": 0.6292},
+    ...     "map@5": {"q_1": 0.8333, "q_2": 0.4500},
+    ...     "mrr": {"q_1": 1.0000, "q_2": 0.5000},
+    ... }
     Args:
         qrels (Union[ Qrels, Dict[str, Dict[str, Number]], nb.typed.typedlist.List, np.ndarray, ]): Qrels.
         run (Union[ Run, Dict[str, Dict[str, Number]], nb.typed.typedlist.List, np.ndarray, ]): Run.
         metrics (Union[List[str], str]): Metrics or list of metric to compute.
-        return_mean (bool, optional): Wether to return the metric scores averaged over the query set or the scores for individual queries. Defaults to True.
+        return_mean (bool, optional): Whether to return the metric scores averaged over the query set or the scores for individual queries. Defaults to True.
         threads (int, optional): Number of threads to use, zero means all the available threads. Defaults to 0.
         save_results_in_run (bool, optional): Save metric scores for each query in the input `run`. Defaults to True.
         make_comparable (bool, optional): Adds empty results for queries missing from the run and removes those not appearing in qrels. Defaults to False.

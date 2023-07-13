@@ -140,11 +140,11 @@ def test_sort():
     run.add_score("q2", "d1", 2)
     run.add_score("q2", "d2", 1)
 
-    assert run.sorted == False
+    assert run.sorted is False
 
     run.sort()
 
-    assert run.sorted == True
+    assert run.sorted is True
 
     assert List(run.run["q1"].keys()) == List(["d3", "d2", "d1"])
     assert List(run.run["q1"].values()) == List([3, 2, 1])
@@ -153,7 +153,7 @@ def test_sort():
 
     run.add_score("q2", "d2", 3)
 
-    assert run.sorted == False
+    assert run.sorted is False
 
 
 def test_to_typed_list():

@@ -4,10 +4,10 @@ import numba
 import numpy as np
 from numba import config, njit, prange
 
-config.THREADING_LAYER = "workqueue"
-
 from .common import clean_qrels
 from .hits import _hits
+
+config.THREADING_LAYER = "workqueue"
 
 
 # LOW LEVEL FUNCTIONS ==========================================================

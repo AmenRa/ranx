@@ -60,7 +60,7 @@ combined_test_run = fuse(
 | [BordaFuse][bordafuse]                                     | bordafuse |     No     | [Weighted BordaFuse][weighted-bordafuse] | w_bordafuse |    Yes     |
 | [Condorcet][condorcet]                                     | condorcet |     No     | [Weighted Condorcet][weighted-condorcet] | w_condorcet |    Yes     |
 | [BayesFuse][bayesfuse]                                     | bayesfuse |    Yes     | [Mixed][mixed]                           | mixed       |    Yes     |
-| [WMNZ][wmnz]                                               | wmnz      |    Yes     | [Wighted Sum][wighted-sum]               | wsum        |    Yes     |
+| [WMNZ][wmnz]                                               | wmnz      |    Yes     | [Weighted Sum][weighted-sum]               | wsum        |    Yes     |
 | [Rank-Biased Centroids (RBC)][rank-biased-centroids-rbc]   | rbc       |    Yes     |                                          |             |
 
 
@@ -705,7 +705,7 @@ Computes Weighted MNZ as proposed by [Wu et al.](https://dl.acm.org/doi/10.1145/
 | step                       |        0.1        |
 
 
-### Wighted Sum
+### Weighted Sum
 Computes a weighted sum of the scores given to documents by a list of Runs.
 
 

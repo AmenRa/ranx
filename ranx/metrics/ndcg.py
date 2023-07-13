@@ -4,9 +4,9 @@ import numba
 import numpy as np
 from numba import config, njit, prange
 
-config.THREADING_LAYER = "workqueue"
-
 from .common import clean_qrels, fix_k
+
+config.THREADING_LAYER = "workqueue"
 
 
 # LOW LEVEL FUNCTIONS ==========================================================
@@ -143,7 +143,7 @@ def ndcg(
     where,
 
     - $\operatorname{DCG}$ is Discounted Cumulative Gain;
-    - $\operatorname{IDCG}$ is Ideal Discounted Cumulative Gain (max possibile DCG).
+    - $\operatorname{IDCG}$ is Ideal Discounted Cumulative Gain (max possible DCG).
 
     If k > 0,
 
@@ -154,7 +154,7 @@ def ndcg(
     where,
 
     - $\operatorname{DCG}_k$ is Discounted Cumulative Gain at k;
-    - $\operatorname{IDCG}_k$ is Ideal Discounted Cumulative Gain at k (max possibile DCG at k).
+    - $\operatorname{IDCG}_k$ is Ideal Discounted Cumulative Gain at k (max possible DCG at k).
 
     ```bibtex
         @article{DBLP:journals/tois/JarvelinK02,
@@ -261,7 +261,7 @@ def ndcg_burges(
     where,
 
     - $\operatorname{DCG}$ is Discounted Cumulative Gain;
-    - $\operatorname{IDCG}$ is Ideal Discounted Cumulative Gain (max possibile DCG).
+    - $\operatorname{IDCG}$ is Ideal Discounted Cumulative Gain (max possible DCG).
 
     If k > 0,
 
@@ -272,7 +272,7 @@ def ndcg_burges(
     where,
 
     - $\operatorname{DCG}_k$ is Discounted Cumulative Gain at k;
-    - $\operatorname{IDCG}_k$ is Ideal Discounted Cumulative Gain at k (max possibile DCG at k).
+    - $\operatorname{IDCG}_k$ is Ideal Discounted Cumulative Gain at k (max possible DCG at k).
 
     ```bibtex
         @inproceedings{DBLP:conf/icml/BurgesSRLDHH05,

@@ -2,7 +2,7 @@ from functools import cmp_to_key
 from typing import List
 
 import numpy as np
-from numba import njit, prange
+from numba import prange
 from numba.typed import List as TypedList
 
 from ..data_structures import Run
