@@ -19,8 +19,9 @@ def _comb_sum(results):
 
     for res in results:
         for doc_id in res.keys():
+            doc_id = to_unicode(doc_id)
             if combined_results.get(doc_id, False) == False:
-                combined_results[to_unicode(doc_id)] = sum(
+                combined_results[doc_id] = sum(
                     [res.get(doc_id, 0.0) for res in results]
                 )
 

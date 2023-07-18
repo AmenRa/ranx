@@ -9,6 +9,7 @@ from .common import (
     convert_results_dict_list_to_run,
     create_empty_results_dict,
     create_empty_results_dict_list,
+    to_unicode,
 )
 
 

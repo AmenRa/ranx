@@ -20,6 +20,7 @@ def _mixed(results, weights):
 
     for res in results:
         for doc_id in res.keys():
+            doc_id = to_unicode(doc_id)
             if combined_results.get(doc_id, False) == False:
                 scores = np.array(
                     [
@@ -29,9 +30,7 @@ def _mixed(results, weights):
                     ]
                 )
 
-                combined_results[to_unicode(doc_id)] = sum(scores) * np.sqrt(
-                    len(scores)
-                )
+                combined_results[doc_id] = sum(scores) * np.sqrt(len(scores))
 
     return combined_results
 

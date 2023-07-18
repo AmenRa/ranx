@@ -49,7 +49,7 @@ def set_relevance_level(typed_list, relevance_level):
 def create_dict_from_lists(keys, values):
     d = TypedDict()
     for i, k in enumerate(keys):
-        d[k + ""] = values[i]
+        d[k] = values[i]
     return d
 
 

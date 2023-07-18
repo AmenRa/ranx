@@ -19,8 +19,9 @@ def _comb_min(results):
 
     for res in results:
         for doc_id in res.keys():
+            doc_id = to_unicode(doc_id)
             if combined_results.get(doc_id, False) == False:
-                combined_results[to_unicode(doc_id)] = min(
+                combined_results[doc_id] = min(
                     [res.get(doc_id, 1e9) for res in results]
                 )
 

@@ -6,6 +6,7 @@ from .common import (
     convert_results_dict_list_to_run,
     create_empty_results_dict,
     create_empty_results_dict_list,
+    to_unicode,
 )
 
 
@@ -17,6 +18,7 @@ def _rank_norm(results):
 
     normalized_results = create_empty_results_dict()
     for i, doc_id in enumerate(results.keys()):
+        doc_id = to_unicode(doc_id)
         normalized_results[doc_id] = 1 - (i / n_results)
 
     return normalized_results

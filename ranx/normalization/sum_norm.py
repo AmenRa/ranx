@@ -8,6 +8,7 @@ from .common import (
     create_empty_results_dict_list,
     extract_scores,
     safe_min,
+    to_unicode,
 )
 
 
@@ -23,6 +24,7 @@ def _sum_norm(results):
 
     normalized_results = create_empty_results_dict()
     for doc_id in results.keys():
+        doc_id = to_unicode(doc_id)
         normalized_results[doc_id] = (results[doc_id] - min_score) / (denominator)
 
     return normalized_results
