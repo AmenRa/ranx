@@ -1,3 +1,4 @@
+import gzip
 import os
 from collections import defaultdict
 from typing import Dict, List
@@ -233,8 +234,8 @@ class Run(object):
         return run
 
     @staticmethod
-    def from_file(path: str, kind: str = None):
-        """Parse a run file into ranx.Run. Supported formats are JSON, TREC run, and LZ4. Correct import behavior is inferred from the file extension: ".json" -> "json", ".trec" -> "trec", ".txt" -> "trec", ".lz4" -> "lz4". Use the "kind" argument to override this behavior.
+    def from_file(path: str, kind: str = None, name: str = None):
+        """Parse a run file into ranx.Run. Supported formats are JSON, TREC run, gzipped TREC run, and LZ4. Correct import behavior is inferred from the file extension: ".json" -> "json", ".trec" -> "trec", ".txt" -> "trec", ".lz4" -> "lz4". Use the "kind" argument to override this behavior.
 
         Args:
             path (str): File path.
@@ -253,18 +254,15 @@ class Run(object):
             run = load_lz4(path)
         else:
             run = defaultdict(dict)
-            name = ""
-            with open(path) as f:
+            with gzip.open(path, "rt") if kind == "gz" else open(path) as f:
                 for line in f:
                     q_id, _, doc_id, _, rel, run_name = line.split()
                     run[q_id][doc_id] = float(rel)
-                    if not name:
+                    if name is None:
                         name = run_name
 
         run = Run.from_dict(run)
-
-        if kind == "trec":
-            run.name = name
+        run.name = name
 
         return run
 
@@ -350,6 +348,7 @@ def get_file_kind(path: str = "run.json", kind: str = None) -> str:
         "json",
         "trec",
         "lz4",
+        "gz",
     }, "Error `kind` must be 'json', 'trec', or 'lz4'"
 
     return kind

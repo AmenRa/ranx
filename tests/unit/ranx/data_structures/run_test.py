@@ -200,6 +200,19 @@ def test_save_load_trec(run):
     assert run.run["q2"]["d2"] == 0.2
 
 
+def test_load_gzipped_trec(run):
+    run = Run.from_file("tests/unit/ranx/test_data/run.trec.gz")
+
+    assert len(run.run) == 2
+    assert len(run.run["q1"]) == 3
+    assert len(run.run["q2"]) == 2
+    assert run.run["q1"]["d1"] == 0.1
+    assert run.run["q1"]["d2"] == 0.2
+    assert run.run["q1"]["d3"] == 0.3
+    assert run.run["q2"]["d1"] == 0.1
+    assert run.run["q2"]["d2"] == 0.2
+
+
 def test_save_load_lz4(run):
     Run(run).save("tests/unit/ranx/test_data/run.lz4")
     run = Run.from_file("tests/unit/ranx/test_data/run.lz4")

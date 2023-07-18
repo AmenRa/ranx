@@ -1,3 +1,4 @@
+import gzip
 import os
 from collections import defaultdict
 from typing import Dict, List
@@ -230,7 +231,7 @@ class Qrels(object):
 
     @staticmethod
     def from_file(path: str, kind: str = None):
-        """Parse a qrels file into ranx.Qrels. Supported formats are JSON and TREC qrels format. Correct import behavior is inferred from the file extension: ".json" -> "json", ".trec" -> "trec", ".txt" -> "trec". Use the "kind" argument to override this behavior.
+        """Parse a qrels file into ranx.Qrels. Supported formats are JSON, TREC qrels, and gzipped TREC qrels. Correct import behavior is inferred from the file extension: ".json" -> "json", ".trec" -> "trec", ".txt" -> "trec", ".gz" -> "gzipped trec". Use the "kind" argument to override this behavior.
 
         Args:
             path (str): File path.
@@ -247,7 +248,7 @@ class Qrels(object):
             qrels = orjson.loads(open(path, "rb").read())
         else:
             qrels = defaultdict(dict)
-            with open(path) as f:
+            with gzip.open(path, "rt") if kind == "gz" else open(path) as f:
                 for line in f:
                     q_id, _, doc_id, rel = line.split()
                     qrels[q_id][doc_id] = int(rel)
@@ -324,9 +325,6 @@ def get_file_kind(path: str = "qrels.json", kind: str = None) -> str:
         kind = "trec" if kind == "txt" else kind
 
     # Sanity check
-    assert kind in {
-        "json",
-        "trec",
-    }, "Error `kind` must be 'json' or 'trec'"
+    assert kind in {"json", "trec", "gz"}, "Error `kind` must be 'json' or 'trec'"
 
     return kind

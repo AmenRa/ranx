@@ -180,7 +180,20 @@ def test_from_dict():
 
 
 def test_from_trec_file():
-    qrels = Qrels.from_file("tests/unit/ranx/test_data/qrels.trec", kind="trec")
+    qrels = Qrels.from_file("tests/unit/ranx/test_data/qrels.trec")
+
+    assert len(qrels.qrels) == 2
+    assert len(qrels.qrels["q1"]) == 3
+    assert len(qrels.qrels["q2"]) == 2
+    assert qrels.qrels["q1"]["d1"] == 1
+    assert qrels.qrels["q1"]["d2"] == 2
+    assert qrels.qrels["q1"]["d3"] == 3
+    assert qrels.qrels["q2"]["d1"] == 1
+    assert qrels.qrels["q2"]["d2"] == 2
+
+
+def test_from_gzipped_trec_file():
+    qrels = Qrels.from_file("tests/unit/ranx/test_data/qrels.trec.gz")
 
     assert len(qrels.qrels) == 2
     assert len(qrels.qrels["q1"]) == 3
