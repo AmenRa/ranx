@@ -11,6 +11,7 @@ from .common import (
     convert_results_dict_list_to_run,
     create_empty_results_dict,
     create_empty_results_dict_list,
+    to_unicode,
 )
 
 
@@ -67,7 +68,7 @@ def _compare(x, y, run_indices):
 
 
 def _condorcet(results, candidates):
-    new_results = create_empty_results_dict()
+    combined_results = create_empty_results_dict()
 
     run_indices = _get_run_indices(results, candidates)
     sort_indices = sorted(
@@ -79,18 +80,18 @@ def _condorcet(results, candidates):
     max_score = len(doc_ids)
 
     for i, doc_id in enumerate(doc_ids):
-        new_results[doc_id] = max_score - i
+        combined_results[to_unicode(doc_id)] = max_score - i
 
-    return new_results
+    return combined_results
 
 
 def _condorcet_parallel(q_ids, results, candidates):
-    new_results = create_empty_results_dict_list(len(q_ids))
+    combined_results = create_empty_results_dict_list(len(q_ids))
 
     for i in prange(len(q_ids)):
-        new_results[i] = _condorcet(results[i], candidates[i])
+        combined_results[i] = _condorcet(results[i], candidates[i])
 
-    return convert_results_dict_list_to_run(q_ids, new_results)
+    return convert_results_dict_list_to_run(q_ids, combined_results)
 
 
 def condorcet(runs: List[Run], name: str = "condorcet"):

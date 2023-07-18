@@ -10,6 +10,12 @@ from ..metrics import get_hit_lists
 
 
 @njit(cache=True)
+def to_unicode(x):
+    """Forces type conversion to numba.types.unicode_type."""
+    return x + ""
+
+
+@njit(cache=True)
 def create_empty_results_dict():
     return TypedDict.empty(
         key_type=types.unicode_type,

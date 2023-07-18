@@ -9,6 +9,7 @@ from .common import (
     convert_results_dict_list_to_run,
     create_empty_results_dict,
     create_empty_results_dict_list,
+    to_unicode,
 )
 
 
@@ -31,7 +32,7 @@ def _wmnz(results, weights):
                 scores_sum = sum(scores_and_weights[:, 0])
                 weights_sum = sum(scores_and_weights[:, 1])
 
-                combined_results[doc_id] = scores_sum * weights_sum
+                combined_results[to_unicode(doc_id)] = scores_sum * weights_sum
 
     return combined_results
 

@@ -11,6 +11,7 @@ from .common import (
     convert_results_dict_list_to_run,
     create_empty_results_dict,
     create_empty_results_dict_list,
+    to_unicode,
 )
 
 
@@ -24,7 +25,7 @@ def _sum_odds(
     for res in results:
         for doc_id in res.keys():
             if combined_results.get(doc_id, False) == False:
-                combined_results[doc_id] = sum(
+                combined_results[to_unicode(doc_id)] = sum(
                     [res.get(doc_id, min_odd) for res in results]
                 )
 
@@ -90,24 +91,24 @@ def estimate_bayesfuse_log_odds(qrels: Qrels, runs: Run) -> np.ndarray:
 
 @njit(cache=True)
 def _bayes_score(results, log_odds):
-    new_results = create_empty_results_dict()
+    combined_results = create_empty_results_dict()
     run_doc_ids = TypedList(results.keys())
 
     for i, doc_id in enumerate(run_doc_ids):
-        new_results[doc_id] = log_odds[i]
+        combined_results[to_unicode(doc_id)] = log_odds[i]
 
-    return new_results
+    return combined_results
 
 
 @njit(cache=True, parallel=True)
 def _bayes_score_parallel(run, log_odds):
     q_ids = TypedList(run.keys())
-    new_results = create_empty_results_dict_list(len(q_ids))
+    combined_results = create_empty_results_dict_list(len(q_ids))
 
     for i in prange(len(q_ids)):
-        new_results[i] = _bayes_score(run[q_ids[i]], log_odds)
+        combined_results[i] = _bayes_score(run[q_ids[i]], log_odds)
 
-    return convert_results_dict_list_to_run(q_ids, new_results)
+    return convert_results_dict_list_to_run(q_ids, combined_results)
 
 
 def bayesfuse(runs: List[Run], log_odds: List[np.ndarray], name: str = "bayesfuse"):

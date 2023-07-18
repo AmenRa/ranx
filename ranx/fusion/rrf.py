@@ -9,29 +9,30 @@ from .common import (
     convert_results_dict_list_to_run,
     create_empty_results_dict,
     create_empty_results_dict_list,
+    to_unicode,
 )
 
 
 # LOW LEVEL FUNCTIONS ==========================================================
 @njit(cache=True)
 def _rrf_score(results, k):
-    new_results = create_empty_results_dict()
+    combined_results = create_empty_results_dict()
 
     for i, doc_id in enumerate(results.keys()):
-        new_results[doc_id] = 1 / (k + i + 1)
+        combined_results[to_unicode(doc_id)] = 1 / (k + i + 1)
 
-    return new_results
+    return combined_results
 
 
 @njit(cache=True, parallel=True)
 def _rrf_score_parallel(run, k):
     q_ids = TypedList(run.keys())
-    new_results = create_empty_results_dict_list(len(q_ids))
+    combined_results = create_empty_results_dict_list(len(q_ids))
 
     for i in prange(len(q_ids)):
-        new_results[i] = _rrf_score(run[q_ids[i]], k)
+        combined_results[i] = _rrf_score(run[q_ids[i]], k)
 
-    return convert_results_dict_list_to_run(q_ids, new_results)
+    return convert_results_dict_list_to_run(q_ids, combined_results)
 
 
 # HIGH LEVEL FUNCTIONS =========================================================

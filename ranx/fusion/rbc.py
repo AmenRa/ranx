@@ -9,29 +9,30 @@ from .common import (
     convert_results_dict_list_to_run,
     create_empty_results_dict,
     create_empty_results_dict_list,
+    to_unicode,
 )
 
 
 @njit(cache=True)
 def _rbc_score(results, phi):
-    new_results = create_empty_results_dict()
+    combined_results = create_empty_results_dict()
     run_doc_ids = TypedList(results.keys())
 
     for i, doc_id in enumerate(run_doc_ids):
-        new_results[doc_id] = (1 - phi) * phi**i
+        combined_results[to_unicode(doc_id)] = (1 - phi) * phi**i
 
-    return new_results
+    return combined_results
 
 
 @njit(cache=True, parallel=True)
 def _rbc_score_parallel(run, phi):
     q_ids = TypedList(run.keys())
-    new_results = create_empty_results_dict_list(len(q_ids))
+    combined_results = create_empty_results_dict_list(len(q_ids))
 
     for i in prange(len(q_ids)):
-        new_results[i] = _rbc_score(run[q_ids[i]], phi)
+        combined_results[i] = _rbc_score(run[q_ids[i]], phi)
 
-    return convert_results_dict_list_to_run(q_ids, new_results)
+    return convert_results_dict_list_to_run(q_ids, combined_results)
 
 
 def rbc(runs: List[Run], phi: float, name: str = "rbc"):

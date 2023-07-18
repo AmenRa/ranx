@@ -11,32 +11,33 @@ from .common import (
     create_empty_results_dict,
     create_empty_results_dict_list,
     estimate_probs_multi,
+    to_unicode,
 )
 
 
 @njit(cache=True)
 def _slide_score(results, probs, w):
-    new_results = create_empty_results_dict()
+    combined_results = create_empty_results_dict()
     N = len(results)
 
     for p, doc_id in enumerate(results.keys()):
         a = max(p - w, 0)
         b = min(p + w, N - 1)
         # We add 1 to b because of NumPy slicing
-        new_results[doc_id] = sum(probs[a : b + 1]) / (b - a + 1)
+        combined_results[to_unicode(doc_id)] = sum(probs[a : b + 1]) / (b - a + 1)
 
-    return new_results
+    return combined_results
 
 
 @njit(cache=True, parallel=True)
 def _slide_score_parallel(run, probs, w):
     q_ids = TypedList(run.keys())
-    new_results = create_empty_results_dict_list(len(q_ids))
+    combined_results = create_empty_results_dict_list(len(q_ids))
 
     for i in prange(len(q_ids)):
-        new_results[i] = _slide_score(run[q_ids[i]], probs, w)
+        combined_results[i] = _slide_score(run[q_ids[i]], probs, w)
 
-    return convert_results_dict_list_to_run(q_ids, new_results)
+    return convert_results_dict_list_to_run(q_ids, combined_results)
 
 
 def slidefuse(

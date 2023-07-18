@@ -9,6 +9,7 @@ from .common import (
     convert_results_dict_list_to_run,
     create_empty_results_dict,
     create_empty_results_dict_list,
+    to_unicode,
 )
 
 
@@ -28,7 +29,9 @@ def _mixed(results, weights):
                     ]
                 )
 
-                combined_results[doc_id] = sum(scores) * np.sqrt(len(scores))
+                combined_results[to_unicode(doc_id)] = sum(scores) * np.sqrt(
+                    len(scores)
+                )
 
     return combined_results
 

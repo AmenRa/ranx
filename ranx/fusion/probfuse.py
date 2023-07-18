@@ -12,6 +12,7 @@ from .common import (
     convert_results_dict_list_to_run,
     create_empty_results_dict,
     create_empty_results_dict_list,
+    to_unicode,
 )
 
 
@@ -58,7 +59,7 @@ def estimate_probfuse_probs(qrels: Qrels, runs: List[Run], n_segments: int):
 
 @njit(cache=True)
 def _prob_score(results, segment_probs):
-    new_results = create_empty_results_dict()
+    combined_results = create_empty_results_dict()
     probs = np.array([0.0] * len(results))
     n_segments = len(segment_probs)
     segment_size = ceil(len(results) / n_segments)
@@ -69,20 +70,20 @@ def _prob_score(results, segment_probs):
         probs[start:end] = segment_probs[k] / (k + 1)
 
     for i, doc_id in enumerate(results.keys()):
-        new_results[doc_id] = probs[i]
+        combined_results[to_unicode(doc_id)] = probs[i]
 
-    return new_results
+    return combined_results
 
 
 @njit(cache=True, parallel=True)
 def _prob_score_parallel(run, probs):
     q_ids = TypedList(run.keys())
-    new_results = create_empty_results_dict_list(len(q_ids))
+    combined_results = create_empty_results_dict_list(len(q_ids))
 
     for i in prange(len(q_ids)):
-        new_results[i] = _prob_score(run[q_ids[i]], probs)
+        combined_results[i] = _prob_score(run[q_ids[i]], probs)
 
-    return convert_results_dict_list_to_run(q_ids, new_results)
+    return convert_results_dict_list_to_run(q_ids, combined_results)
 
 
 def probfuse(runs: List[Run], probs: List[np.ndarray], name: str = "probfuse"):

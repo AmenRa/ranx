@@ -9,6 +9,7 @@ from .common import (
     convert_results_dict_list_to_run,
     create_empty_results_dict,
     create_empty_results_dict_list,
+    to_unicode,
 )
 
 
@@ -21,7 +22,7 @@ def _comb_med(results):
         for doc_id in res.keys():
             if combined_results.get(doc_id, False) == False:
                 scores = np.array([res[doc_id] for res in results if doc_id in res])
-                combined_results[doc_id] = np.median(scores)
+                combined_results[to_unicode(doc_id)] = np.median(scores)
 
     return combined_results
 

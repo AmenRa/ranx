@@ -10,29 +10,30 @@ from .common import (
     convert_results_dict_list_to_run,
     create_empty_results_dict,
     create_empty_results_dict_list,
+    to_unicode,
 )
 
 
 # LOW LEVEL FUNCTIONS ==========================================================
 @njit(cache=True)
 def _map_score(results, map_score):
-    new_results = create_empty_results_dict()
+    combined_results = create_empty_results_dict()
 
     for i, doc_id in enumerate(results.keys()):
-        new_results[doc_id] = map_score / (i + 1)
+        combined_results[to_unicode(doc_id)] = map_score / (i + 1)
 
-    return new_results
+    return combined_results
 
 
 @njit(cache=True, parallel=True)
 def _map_score_parallel(run, map_score):
     q_ids = TypedList(run.keys())
-    new_results = create_empty_results_dict_list(len(q_ids))
+    combined_results = create_empty_results_dict_list(len(q_ids))
 
     for i in prange(len(q_ids)):
-        new_results[i] = _map_score(run[q_ids[i]], map_score)
+        combined_results[i] = _map_score(run[q_ids[i]], map_score)
 
-    return convert_results_dict_list_to_run(q_ids, new_results)
+    return convert_results_dict_list_to_run(q_ids, combined_results)
 
 
 # HIGH LEVEL FUNCTIONS =========================================================

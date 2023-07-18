@@ -8,6 +8,7 @@ from .common import (
     convert_results_dict_list_to_run,
     create_empty_results_dict,
     create_empty_results_dict_list,
+    to_unicode,
 )
 
 
@@ -19,7 +20,7 @@ def _comb_sum(results):
     for res in results:
         for doc_id in res.keys():
             if combined_results.get(doc_id, False) == False:
-                combined_results[doc_id] = sum(
+                combined_results[to_unicode(doc_id)] = sum(
                     [res.get(doc_id, 0.0) for res in results]
                 )
 

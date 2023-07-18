@@ -8,6 +8,7 @@ from .common import (
     convert_results_dict_list_to_run,
     create_empty_results_dict,
     create_empty_results_dict_list,
+    to_unicode,
 )
 
 
@@ -19,7 +20,7 @@ def _comb_min(results):
     for res in results:
         for doc_id in res.keys():
             if combined_results.get(doc_id, False) == False:
-                combined_results[doc_id] = min(
+                combined_results[to_unicode(doc_id)] = min(
                     [res.get(doc_id, 1e9) for res in results]
                 )
 

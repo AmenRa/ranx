@@ -11,29 +11,30 @@ from .common import (
     create_empty_results_dict,
     create_empty_results_dict_list,
     estimate_probs_multi,
+    to_unicode,
 )
 
 
 @njit(cache=True)
 def _pos_score(results, probs):
-    new_results = create_empty_results_dict()
+    combined_results = create_empty_results_dict()
     len_probs = len(probs)
 
     for i, doc_id in enumerate(results.keys()):
-        new_results[doc_id] = probs[i] if i < len_probs else 0.0
+        combined_results[to_unicode(doc_id)] = probs[i] if i < len_probs else 0.0
 
-    return new_results
+    return combined_results
 
 
 @njit(cache=True, parallel=True)
 def _pos_score_parallel(run, probs):
     q_ids = TypedList(run.keys())
-    new_results = create_empty_results_dict_list(len(q_ids))
+    combined_results = create_empty_results_dict_list(len(q_ids))
 
     for i in prange(len(q_ids)):
-        new_results[i] = _pos_score(run[q_ids[i]], probs)
+        combined_results[i] = _pos_score(run[q_ids[i]], probs)
 
-    return convert_results_dict_list_to_run(q_ids, new_results)
+    return convert_results_dict_list_to_run(q_ids, combined_results)
 
 
 def posfuse(runs: List[Run], probs: List[np.ndarray], name: str = "posfuse") -> Run:

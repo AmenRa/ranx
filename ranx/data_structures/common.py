@@ -49,7 +49,6 @@ def set_relevance_level(typed_list, relevance_level):
 def create_dict_from_lists(keys, values):
     d = TypedDict()
     for i, k in enumerate(keys):
-        # k + "" does force type conversion to numba.types.unicode_type
         d[k + ""] = values[i]
     return d
 

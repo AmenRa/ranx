@@ -10,6 +10,7 @@ from .common import (
     convert_results_dict_list_to_run,
     create_empty_results_dict,
     create_empty_results_dict_list,
+    to_unicode,
 )
 
 
@@ -31,30 +32,30 @@ def get_candidates(runs):
 
 @njit(cache=True)
 def _borda_score(results, candidates):
-    new_results = create_empty_results_dict()
+    combined_results = create_empty_results_dict()
     run_doc_ids = TypedList(results.keys())
     other_doc_ids = [id for id in candidates if id not in run_doc_ids]
     max_points = len(candidates)
     unranked_points = (max_points - len(run_doc_ids) + 1) / 2
 
     for i, doc_id in enumerate(run_doc_ids):
-        new_results[doc_id] = max_points - i
+        combined_results[to_unicode(doc_id)] = max_points - i
 
     for doc_id in other_doc_ids:
-        new_results[doc_id] = unranked_points
+        combined_results[to_unicode(doc_id)] = unranked_points
 
-    return new_results
+    return combined_results
 
 
 @njit(cache=True, parallel=True)
 def _borda_score_parallel(run, candidates):
     q_ids = TypedList(run.keys())
-    new_results = create_empty_results_dict_list(len(q_ids))
+    combined_results = create_empty_results_dict_list(len(q_ids))
 
     for i in prange(len(q_ids)):
-        new_results[i] = _borda_score(run[q_ids[i]], candidates[i])
+        combined_results[i] = _borda_score(run[q_ids[i]], candidates[i])
 
-    return convert_results_dict_list_to_run(q_ids, new_results)
+    return convert_results_dict_list_to_run(q_ids, combined_results)
 
 
 def bordafuse(runs: List[Run], name: str = "bordafuse"):
