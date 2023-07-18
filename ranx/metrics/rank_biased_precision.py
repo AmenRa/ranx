@@ -4,7 +4,7 @@ import numba
 import numpy as np
 from numba import config, njit, prange
 
-from .get_hit_lists import _get_hit_list
+from .common import clean_qrels
 
 config.THREADING_LAYER = "workqueue"
 
@@ -12,9 +12,27 @@ config.THREADING_LAYER = "workqueue"
 # LOW LEVEL FUNCTIONS ==========================================================
 @njit(cache=True)
 def _rank_biased_precision(qrels, run, p, rel_lvl):
-    hit_list = _get_hit_list(qrels, run, k=0, rel_lvl=rel_lvl)
-    p_values = p ** np.arange(len(hit_list))
-    p_values_sum = sum(hit_list * p_values)
+    qrels = clean_qrels(qrels, rel_lvl)
+    if len(qrels) == 0:
+        return 0.0
+
+    max_true_id = np.max(qrels[:, 0])
+    min_true_id = np.min(qrels[:, 0])
+
+    weighted_hit_list = np.zeros((len(run)), dtype=np.float64)
+
+    for i in range(len(run)):
+        if run[i, 0] > max_true_id:
+            continue
+        if run[i, 0] < min_true_id:
+            continue
+        for j in range(qrels.shape[0]):
+            if run[i, 0] == qrels[j, 0]:
+                weighted_hit_list[i] = qrels[j, 1]
+                break
+
+    p_values = p ** np.arange(len(weighted_hit_list))
+    p_values_sum = sum(weighted_hit_list * p_values)
 
     return (1 - p) * p_values_sum
 
