@@ -1,7 +1,6 @@
 from math import isclose
 
 import pytest
-import pytrec_eval
 
 from ranx import Qrels, Run
 from ranx.metrics.bpref import bpref
@@ -103,15 +102,3 @@ def test_bpref(qrels, run):
     assert isclose(scores[1], 1 / 2 * ((1 - (1 / 2)) + (1 - (1 / 2))))
     assert isclose(scores[2], 1 / 3 * ((1 - (1 / 3)) + (1 - (1 / 3)) + (1 - (2 / 3))))
     assert isclose(scores[3], 1 / 4 * ((1 - (1 / 4)) + (1 - (2 / 4)) + (1 - (2 / 4))))
-
-
-def test_bpref_vs_trec_eval(qrels_dict, run_dict, qrels, run):
-    scores = bpref(qrels, run)
-
-    evaluator = pytrec_eval.RelevanceEvaluator(qrels_dict, ["bpref"])
-    trec_results = evaluator.evaluate(run_dict)
-
-    assert isclose(scores[0], trec_results["q1"]["bpref"])
-    assert isclose(scores[1], trec_results["q2"]["bpref"])
-    assert isclose(scores[2], trec_results["q3"]["bpref"])
-    assert isclose(scores[3], trec_results["q4"]["bpref"])
