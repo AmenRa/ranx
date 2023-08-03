@@ -16,13 +16,14 @@ dependencies:
   - pytest
   - python>=3.8
   - scipy>=1.8
+  - seaborn
   - orjson
   - lz4
   - tabulate
   - tqdm
   - rich
+  - conda-forge::fastparquet
   - pip:
-    - pytrec_eval
     - twine
     - ir_datasets
     - cbor2
