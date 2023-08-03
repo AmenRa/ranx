@@ -4,6 +4,7 @@ bug_data
 find_bugs.*
 TODO.md
 \data
+.ruff_cache
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
