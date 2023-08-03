@@ -1,7 +1,7 @@
 import gzip
 import os
 from collections import defaultdict
-from typing import Dict, List
+from typing import Any, Dict, List
 
 import ir_datasets
 import numpy as np
@@ -172,8 +172,24 @@ class Qrels(object):
             d[q_id] = dict(self[q_id])
         return d
 
-    def save(self, path: str = "qrels.json", kind: str = None):
-        """Write `qrels` to `path` as JSON file or TREC qrels format.        File type is automatically inferred form the filename extension: ".json" -> "json", ".trec" -> "trec", ".txt" -> "trec". Use the "kind" argument to override this behavior.
+    def to_dataframe(self) -> pd.DataFrame:
+        """Convert Qrels to Pandas DataFrame with the following columns: `q_id`, `doc_id`, and `score`.
+
+        Returns:
+            pandas.DataFrame: Qrels as Pandas DataFrame.
+        """
+        data = {"q_id": [], "doc_id": [], "score": []}
+
+        for q_id in self.qrels:
+            for doc_id in self.qrels[q_id]:
+                data["q_id"].append(q_id)
+                data["doc_id"].append(doc_id)
+                data["score"].append(self.qrels[q_id][doc_id])
+
+        return pd.DataFrame.from_dict(data)
+
+    def save(self, path: str = "qrels.json", kind: str = None) -> None:
+        """Write `qrels` to `path` as JSON file, TREC qrels format, or Parquet file. File type is automatically inferred form the filename extension: ".json" -> "json", ".trec" -> "trec", ".txt" -> "trec", ".parq" -> "parquet", ".parquet" -> "parquet". Use the "kind" argument to override this behavior.
 
         Args:
             path (str, optional): Saving path. Defaults to "qrels.json".
@@ -186,6 +202,8 @@ class Qrels(object):
         if kind == "json":
             with open(path, "wb") as f:
                 f.write(orjson.dumps(self.to_dict(), option=orjson.OPT_INDENT_2))
+        elif kind == "parquet":
+            self.to_dataframe().to_parquet(path, index=False)
         else:
             with open(path, "w") as f:
                 for i, q_id in enumerate(self.qrels.keys()):
@@ -265,7 +283,7 @@ class Qrels(object):
         """Convert a Pandas DataFrame to ranx.Qrels.
 
         Args:
-            df (pd.DataFrame): Qrels as Pandas DataFrame
+            df (pandas.DataFrame): Qrels as Pandas DataFrame.
             q_id_col (str, optional): Query IDs column. Defaults to "q_id".
             doc_id_col (str, optional): Document IDs column. Defaults to "doc_id".
             score_col (str, optional): Relevance score judgments column. Defaults to "score".
@@ -288,6 +306,35 @@ class Qrels(object):
         )
 
         return Qrels.from_dict(qrels_dict)
+
+    @staticmethod
+    def from_parquet(
+        path: str,
+        q_id_col: str = "q_id",
+        doc_id_col: str = "doc_id",
+        score_col: str = "score",
+        pd_kwargs: Dict[str, Any] = None,
+    ):
+        """Convert a Parquet file to ranx.Qrels.
+
+        Args:
+            path (str): File path.
+            q_id_col (str, optional): Query IDs column. Defaults to "q_id".
+            doc_id_col (str, optional): Document IDs column. Defaults to "doc_id".
+            score_col (str, optional): Relevance score judgments column. Defaults to "score".
+            pd_kwargs (Dict[str, Any], optional): Additional arguments to pass to `pandas.read_parquet` (see https://pandas.pydata.org/docs/reference/api/pandas.read_parquet.html). Defaults to None.
+
+        Returns:
+            Qrels: ranx.Qrels
+        """
+        pd_kwargs = {} if pd_kwargs is None else pd_kwargs
+
+        return Qrels.from_df(
+            df=pd.read_parquet(path, *pd_kwargs),
+            q_id_col=q_id_col,
+            doc_id_col=doc_id_col,
+            score_col=score_col,
+        )
 
     @staticmethod
     def from_ir_datasets(dataset_id: str):
@@ -323,8 +370,14 @@ def get_file_kind(path: str = "qrels.json", kind: str = None) -> str:
     if kind is None:
         kind = os.path.splitext(path)[1][1:]
         kind = "trec" if kind == "txt" else kind
+        kind = "parquet" if kind == "parq" else kind
 
     # Sanity check
-    assert kind in {"json", "trec", "gz"}, "Error `kind` must be 'json' or 'trec'"
+    assert kind in {
+        "json",
+        "trec",
+        "gz",
+        "parquet",
+    }, "Error `kind` must be 'json', 'trec', 'gz', or 'parquet'"
 
     return kind

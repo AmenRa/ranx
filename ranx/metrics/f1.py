@@ -2,12 +2,10 @@ from typing import Union
 
 import numba
 import numpy as np
-from numba import config, njit, prange
+from numba import njit, prange
 
 from .common import clean_qrels
 from .hits import _hits
-
-config.THREADING_LAYER = "workqueue"
 
 
 # LOW LEVEL FUNCTIONS ==========================================================
@@ -24,6 +22,9 @@ def _f1(qrels, run, k, rel_lvl):
     hits_score = _hits(qrels, run, k, rel_lvl)
     precision_score = hits_score / k
     recall_score = hits_score / qrels.shape[0]
+
+    if precision_score + recall_score == 0:
+        return 0.0
 
     return 2 * ((precision_score * recall_score) / (precision_score + recall_score))
 

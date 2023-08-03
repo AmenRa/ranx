@@ -1,4 +1,5 @@
 cbor2
+fastparquet
 ir_datasets
 lz4
 numba

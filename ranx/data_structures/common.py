@@ -1,9 +1,7 @@
 import numpy as np
-from numba import config, njit, prange
+from numba import njit, prange
 from numba.typed import Dict as TypedDict
 from numba.typed import List as TypedList
-
-config.THREADING_LAYER = "workqueue"
 
 
 @njit(cache=True)

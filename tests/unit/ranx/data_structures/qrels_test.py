@@ -1,7 +1,9 @@
 import pandas as pd
 from numba.typed import List
+from pandas.testing import assert_frame_equal
 
 from ranx import Qrels
+from ranx.data_structures.qrels import get_file_kind
 
 
 def test_init():
@@ -154,18 +156,37 @@ def test_to_typed_list():
     assert qrels_list[1].shape == (2, 2)
 
 
+def test_to_dict():
+    qrels_dict = {"q1": {"d1": 1, "d2": 2, "d3": 3}, "q2": {"d1": 1, "d2": 2}}
+
+    assert Qrels(qrels_dict).to_dict() == qrels_dict
+
+
+def test_to_dataframe():
+    qrels_df = pd.DataFrame.from_dict(
+        {
+            "q_id": ["q1", "q1", "q1", "q2", "q2"],
+            "doc_id": ["d1", "d2", "d3", "d1", "d2"],
+            "score": [1, 2, 3, 1, 2],
+        }
+    )
+
+    new_qrels_df = Qrels.from_df(qrels_df).to_dataframe()
+
+    assert "q_id" in new_qrels_df.columns
+    assert "doc_id" in new_qrels_df.columns
+    assert "score" in new_qrels_df.columns
+
+    assert_frame_equal(
+        qrels_df.sort_values(by=qrels_df.columns.tolist()).reset_index(drop=True),
+        new_qrels_df.sort_values(by=new_qrels_df.columns.tolist()).reset_index(
+            drop=True
+        ),
+    )
+
+
 def test_from_dict():
-    qrels_py = {
-        "q1": {
-            "d1": 1,
-            "d2": 2,
-            "d3": 3,
-        },
-        "q2": {
-            "d1": 1,
-            "d2": 2,
-        },
-    }
+    qrels_py = {"q1": {"d1": 1, "d2": 2, "d3": 3}, "q2": {"d1": 1, "d2": 2}}
 
     qrels = Qrels.from_dict(qrels_py)
 
@@ -239,6 +260,19 @@ def test_from_dataframe():
     assert qrels.qrels["q2"]["d2"] == 2
 
 
+def test_from_parquet():
+    qrels = Qrels.from_parquet("tests/unit/ranx/test_data/qrels.parquet")
+
+    assert len(qrels.qrels) == 2
+    assert len(qrels.qrels["q1"]) == 3
+    assert len(qrels.qrels["q2"]) == 2
+    assert qrels.qrels["q1"]["d1"] == 1
+    assert qrels.qrels["q1"]["d2"] == 2
+    assert qrels.qrels["q1"]["d3"] == 3
+    assert qrels.qrels["q2"]["d1"] == 1
+    assert qrels.qrels["q2"]["d2"] == 2
+
+
 def test_set_relevance_level():
     qrels_py = {
         "q1": {
@@ -263,3 +297,12 @@ def test_set_relevance_level():
     assert qrels.qrels["q1"]["d3"] == 2
     assert qrels.qrels["q2"]["d1"] == 0
     assert qrels.qrels["q2"]["d2"] == 1
+
+
+def test_get_file_kind():
+    assert get_file_kind("qrels.json") == "json"
+    assert get_file_kind("qrels.trec") == "trec"
+    assert get_file_kind("qrels.txt") == "trec"
+    assert get_file_kind("qrels.gz") == "gz"
+    assert get_file_kind("qrels.parquet") == "parquet"
+    assert get_file_kind("qrels.parq") == "parquet"

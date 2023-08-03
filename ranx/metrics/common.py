@@ -1,7 +1,5 @@
 import numpy as np
-from numba import config, njit
-
-config.THREADING_LAYER = "workqueue"
+from numba import njit
 
 
 @njit(cache=True)

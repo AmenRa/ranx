@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.16] - 2022-08-03
+### Added
+- Added support for importing qrels from `parquet` files in `qrels.py`.
+- Added support for importing runs from `parquet` files in `run.py`.
+- Added support for exporting qrels as `pandas.DataFrame` in `qrels.py`.
+- Added support for exporting runs as `pandas.DataFrame` in `run.py`.
+- Added support for saving qrels as `parquet` files in `qrels.py`.
+- Added support for saving runs as `parquet` files in `run.py`.
+  
+### Fixed
+- Fixed `f1` when there are no relevants.
+  
+### Changed
+- Moved `numba` threading layer settings to `ranx/__init__.py`.
+
+### Removed
+- Removed dependency from `pytrec_eval`.
+
 ## [0.3.15] - 2022-07-18
 ### Added
 - Added support for gzipped TREC files to `from_file` in `qrels.py`.
@@ -57,7 +75,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `ranx` now requires `scipy>=1.8`.
 
 ### Removed
-- Removed dependance from `statsmodels`.
+- Removed dependency from `statsmodels`.
  
 ## [0.3.4] - 2022-11-22
 ### Fixed

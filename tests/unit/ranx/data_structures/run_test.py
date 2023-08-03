@@ -1,8 +1,10 @@
 import pandas as pd
 import pytest
 from numba.typed import List
+from pandas.testing import assert_frame_equal
 
 from ranx import Qrels, Run
+from ranx.data_structures.run import get_file_kind
 
 
 # FIXTURES =====================================================================
@@ -172,6 +174,33 @@ def test_to_typed_list():
     assert run_list[1].shape == (2, 2)
 
 
+def test_to_dict():
+    run_dict = {"q1": {"d1": 0.1, "d2": 0.2, "d3": 0.3}, "q2": {"d1": 0.1, "d2": 0.2}}
+
+    assert Run(run_dict).to_dict() == run_dict
+
+
+def test_to_dataframe():
+    run_df = pd.DataFrame.from_dict(
+        {
+            "q_id": ["q1", "q1", "q1", "q2", "q2"],
+            "doc_id": ["d1", "d2", "d3", "d1", "d2"],
+            "score": [0.1, 0.2, 0.3, 0.1, 0.2],
+        }
+    )
+
+    new_run_df = Run.from_df(run_df).to_dataframe()
+
+    assert "q_id" in new_run_df.columns
+    assert "doc_id" in new_run_df.columns
+    assert "score" in new_run_df.columns
+
+    assert_frame_equal(
+        run_df.sort_values(by=run_df.columns.tolist()).reset_index(drop=True),
+        new_run_df.sort_values(by=new_run_df.columns.tolist()).reset_index(drop=True),
+    )
+
+
 def test_save_load_json(run):
     Run(run).save("tests/unit/ranx/test_data/run.json")
     run = Run.from_file("tests/unit/ranx/test_data/run.json")
@@ -273,6 +302,19 @@ def test_from_dataframe():
     assert run.run["q2"]["d2"] == 2.1
 
 
+def test_from_parquet():
+    run = Run.from_parquet("tests/unit/ranx/test_data/run.parquet")
+
+    assert len(run.run) == 2
+    assert len(run.run["q1"]) == 3
+    assert len(run.run["q2"]) == 2
+    assert run.run["q1"]["d1"] == 0.1
+    assert run.run["q1"]["d2"] == 0.2
+    assert run.run["q1"]["d3"] == 0.3
+    assert run.run["q2"]["d1"] == 0.1
+    assert run.run["q2"]["d2"] == 0.2
+
+
 def test_make_comparable():
     qrels = Qrels(
         {
@@ -301,3 +343,13 @@ def test_make_comparable():
     assert run.run["q1"]["d3"] == 0.2
     assert run.run["q2"]["d1"] == 0.1
     assert run.run["q2"]["d2"] == 0.2
+
+
+def test_get_file_kind():
+    assert get_file_kind("qrels.json") == "json"
+    assert get_file_kind("qrels.trec") == "trec"
+    assert get_file_kind("qrels.txt") == "trec"
+    assert get_file_kind("qrels.gz") == "gz"
+    assert get_file_kind("qrels.lz4") == "lz4"
+    assert get_file_kind("qrels.parquet") == "parquet"
+    assert get_file_kind("qrels.parq") == "parquet"

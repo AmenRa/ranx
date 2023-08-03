@@ -2,12 +2,10 @@ from typing import Union
 
 import numba
 import numpy as np
-from numba import config, njit, prange
+from numba import njit, prange
 from numba.typed import List as TypedList
 
 from .common import clean_qrels, fix_k
-
-config.THREADING_LAYER = "workqueue"
 
 
 # LOW LEVEL FUNCTIONS ==========================================================
