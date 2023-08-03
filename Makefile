@@ -21,18 +21,18 @@ requirements: .venv  ## Install/refresh all project requirements
 
 .PHONY: build
 build: .venv  ## Compile and install ranx
-	source $(VENV_BIN)/activate
+	. $(VENV_BIN)/activate
 
 
 .PHONY: fix-lint
 fix-lint: .venv  ## Fix linting
-	source $(VENV_BIN)/activate
+	. $(VENV_BIN)/activate
 	$(VENV_BIN)/black .
 	$(VENV_BIN)/isort .
 
 .PHONY: lint
 lint: .venv  ## Check linting
-	source $(VENV_BIN)/activate
+	. $(VENV_BIN)/activate
 	$(VENV_BIN)/isort --check .
 	$(VENV_BIN)/black --check .
 	$(VENV_BIN)/blackdoc .
@@ -42,19 +42,29 @@ lint: .venv  ## Check linting
 
 .PHONY: test
 test: .venv build  ## Run unittest
-	source $(VENV_BIN)/activate
-	$(VENV_BIN)/python -m pytest --ignore=tests/unit/ranx/trec
+	. $(VENV_BIN)/activate
+	$(VENV_BIN)/pytest --ignore=tests/unit/ranx/trec
 
 .PHONY: coverage
 coverage: .venv build  ## Run tests and report coverage
-	source $(VENV_BIN)/activate
-	$(VENV_BIN)/pytest --cov -n auto --dist worksteal -m "not benchmark"
+	. $(VENV_BIN)/activate
+	$(VENV_BIN)/pytest --ignore=tests/unit/ranx/trec --cov -n auto --dist worksteal -m "not benchmark"
+
+.PHONY: release
+release: .venv build  ## Release a new version
+	. $(VENV_BIN)/activate
+	$(VENV_BIN)/python setup.py sdist bdist_wheel
+	$(VENV_BIN)/twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
 
 .PHONY: clean
 clean:  ## Clean up caches and build artifacts
 	@rm -rf .venv/
 	@rm -rf target/
 	@rm -rf .pytest_cache/
+	@rm -rf .coverage
+	@rm -rf ranx.egg-info
+	@rm -rf dist
+	@rm -rf build
 
 .PHONY: help
 help:  ## Display this help screen
