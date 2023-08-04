@@ -43,12 +43,12 @@ lint: .venv  ## Check linting
 .PHONY: test
 test: .venv build  ## Run unittest
 	. $(VENV_BIN)/activate
-	$(VENV_BIN)/pytest --ignore=tests/unit/ranx/trec
+	$(VENV_BIN)/pytest
 
 .PHONY: coverage
 coverage: .venv build  ## Run tests and report coverage
 	. $(VENV_BIN)/activate
-	$(VENV_BIN)/pytest --ignore=tests/unit/ranx/trec --cov -n auto --dist worksteal -m "not benchmark"
+	$(VENV_BIN)/pytest --cov -n auto --dist worksteal -m "not benchmark"
 
 .PHONY: release
 release: .venv build  ## Release a new version
