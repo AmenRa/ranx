@@ -11,7 +11,7 @@ from ..utils import python_dict_to_typed_list
 
 
 def format_metrics(metrics: Union[List[str], str]) -> List[str]:
-    if type(metrics) == str:
+    if isinstance(metrics, str):
         metrics = [metrics]
     return metrics
 
@@ -43,7 +43,7 @@ def extract_metric_and_params(metric):
 def convert_qrels(qrels):
     if type(qrels) == Qrels:
         return qrels.to_typed_list()
-    elif type(qrels) == dict:
+    elif isinstance(qrels, dict):
         return python_dict_to_typed_list(qrels, sort=True)
     return qrels
 
@@ -51,7 +51,7 @@ def convert_qrels(qrels):
 def convert_run(run):
     if type(run) == Run:
         return run.to_typed_list()
-    elif type(run) == dict:
+    elif isinstance(run, dict):
         return python_dict_to_typed_list(run, sort=True)
     return run
 
@@ -133,7 +133,7 @@ def evaluate(
     _qrels = convert_qrels(qrels)
     _run = convert_run(run)
     metrics = format_metrics(metrics)
-    assert all(type(m) == str for m in metrics), "Metrics error"
+    assert all(isinstance(m, str) for m in metrics), "Metrics error"
 
     # Compute metrics ----------------------------------------------------------
     metric_scores_dict = {}

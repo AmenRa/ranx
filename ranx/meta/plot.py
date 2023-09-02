@@ -25,7 +25,7 @@ def plot(
 
     _qrels = qrels.to_typed_list()
 
-    if type(runs) == list:
+    if isinstance(runs, list):
         _runs = [run.to_typed_list() for run in runs]
         names = [
             run.name if run.name is not None else f"run_{i+1}"

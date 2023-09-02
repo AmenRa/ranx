@@ -65,7 +65,7 @@ def compare(
         Report: See report.
     """
     metrics = format_metrics(metrics)
-    assert all(type(m) == str for m in metrics), "Metrics error"
+    assert all(isinstance(m, str) for m in metrics), "Metrics error"
 
     model_names = []
     results = defaultdict(dict)
