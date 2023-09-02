@@ -25,8 +25,8 @@ Qrels can also be loaded from TREC-style and JSON files, from [ir-datasets](http
 
 ## Load from files
 Parse a qrels file into `ranx.Qrels`.  
-Supported formats are JSON and TREC qrels format.  
-Correct import behavior is inferred from the file extension: `.json` → `json`, `.trec` → `trec`, `.txt` → `trec`.  
+Supported formats are JSON, TREC qrels, and gzipped TREC qrels.
+Correct import behavior is inferred from the file extension: `.json` -> `json`, `.trec` -> `trec`, `.txt` -> `trec`, `.gz` -> `gzipped trec`.  
 Use the `kind` argument to override the default behavior.
 
 
@@ -34,6 +34,7 @@ Use the `kind` argument to override the default behavior.
 qrels = Qrels.from_file("path/to/qrels.json")  # JSON file
 qrels = Qrels.from_file("path/to/qrels.trec")  # TREC-Style file
 qrels = Qrels.from_file("path/to/qrels.txt")   # TREC-Style file with txt extension
+qrels = Qrels.from_file("path/to/qrels.gz")    # Gzipped TREC-Style file
 qrels = Qrels.from_file("path/to/qrels.custom", kind="json")  # Loaded as JSON file
 ```
 
@@ -62,14 +63,30 @@ qrels = Qrels.from_df(
 )
 ```
 
+## Load from Parquet files
+`ranx` can load `qrels` from Parquet files, even from remote sources.  
+You can control the behavior of the underlying `pandas.read_parquet` function by passing additional arguments through the `pd_kwargs` argument (see https://pandas.pydata.org/docs/reference/api/pandas.read_parquet.html).
+
+```python
+qrels = Qrels.from_parquet(
+    path="/path/to/parquet/file""",
+    q_id_col="q_id",
+    doc_id_col="doc_id",
+    score_col="score",
+    pd_kwargs=None,
+)
+```
+
 ## Save
 Write `qrels` to `path` as JSON file or TREC qrels format.  
-File type is automatically inferred form the filename extension: `.json` → `json`, `.trec` → `trec`, `.txt` → `trec`.  
+File type is automatically inferred form the filename extension: `.json` -> `json`, `.trec` -> `trec`, `.txt` -> `trec`, `.parq` -> `parquet`, `.parquet` -> `parquet`.  
 Use the `kind` argument to override the default behavior.
 
 ```python
-qrels.save("path/to/qrels.json")  # Save as JSON file
-qrels.save("path/to/qrels.trec")  # Save as TREC-Style file
-qrels.save("path/to/qrels.txt")   # Save as TREC-Style file with txt extension
+qrels.save("path/to/qrels.json")     # Save as JSON file
+qrels.save("path/to/qrels.trec")     # Save as TREC-Style file
+qrels.save("path/to/qrels.txt")      # Save as TREC-Style file with txt extension
+qrels.save("path/to/qrels.parq")     # Save as Parquet file
+qrels.save("path/to/qrels.parquet")  # Save as Parquet file
 qrels.save("path/to/qrels.custom", kind="json")  # Save as JSON file
 ```

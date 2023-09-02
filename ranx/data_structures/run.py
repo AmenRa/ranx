@@ -253,7 +253,7 @@ class Run(object):
 
     @staticmethod
     def from_file(path: str, kind: str = None, name: str = None):
-        """Parse a run file into ranx.Run. Supported formats are JSON, TREC run, gzipped TREC run, and LZ4. Correct import behavior is inferred from the file extension: ".json" -> "json", ".trec" -> "trec", ".txt" -> "trec", ".lz4" -> "lz4". Use the "kind" argument to override this behavior.
+        """Parse a run file into ranx.Run. Supported formats are JSON, TREC run, gzipped TREC run, and LZ4. Correct import behavior is inferred from the file extension: ".json" -> "json", ".trec" -> "trec", ".txt" -> "trec", ".gz" -> "gzipped trec", ".lz4" -> "lz4". Use the "kind" argument to override this behavior.
 
         Args:
             path (str): File path.
