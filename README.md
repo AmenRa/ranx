@@ -37,7 +37,7 @@ On [ranxhub](https://amenra.github.io/ranxhub), you can download and share pre-c
  
 If you use [ranx](https://github.com/AmenRa/ranx) to evaluate results or conducting experiments involving fusion for your scientific publication, please consider citing it: [evaluation bibtex](https://dblp.org/rec/conf/ecir/Bassani22.html?view=bibtex), [fusion bibtex](https://dblp.org/rec/conf/cikm/BassaniR22.html?view=bibtex), [ranxhub bibtex](https://dblp.org/rec/conf/sigir/Bassani23.html?view=bibtex).
 
-NB: `ranx` is not suited for evaluating classifiers. Please, refer to the [FAQ](https://amenra.github.io/ranx/faq) for further details.
+NB: [ranx](https://github.com/AmenRa/ranx) is not suited for evaluating classifiers. Please, refer to the [FAQ](https://amenra.github.io/ranx/faq) for further details.
 
 For a quick overview, follow the [Usage](#-usage) section.
 
