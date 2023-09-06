@@ -252,7 +252,7 @@ If you use the fusion functionalities provided by [ranx](https://github.com/Amen
   ```
 </details>
 
-If you use pre-computed runs from [ranxhub]((https://amenra.github.io/ranxhub) to make comparison for your scientific publication, please consider citing our [SIGIR 2023](https://sigir.org/sigir2023) paper:
+If you use pre-computed runs from [ranxhub](https://amenra.github.io/ranxhub) to make comparison for your scientific publication, please consider citing our [SIGIR 2023](https://sigir.org/sigir2023) paper:
 <details>
   <summary>BibTeX</summary>
   
