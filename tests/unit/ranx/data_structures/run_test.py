@@ -203,8 +203,9 @@ def test_to_dataframe():
 
 def test_save_load_json(run):
     Run(run).save("tests/unit/ranx/test_data/run.json")
-    run = Run.from_file("tests/unit/ranx/test_data/run.json")
+    run = Run.from_file("tests/unit/ranx/test_data/run.json", name="test_run")
 
+    assert run.name == "test_run"
     assert len(run.run) == 2
     assert len(run.run["q1"]) == 3
     assert len(run.run["q2"]) == 2
@@ -217,8 +218,9 @@ def test_save_load_json(run):
 
 def test_save_load_trec(run):
     Run(run).save("tests/unit/ranx/test_data/run.trec")
-    run = Run.from_file("tests/unit/ranx/test_data/run.trec")
+    run = Run.from_file("tests/unit/ranx/test_data/run.trec", name="test_run")
 
+    assert run.name == "test_run"
     assert len(run.run) == 2
     assert len(run.run["q1"]) == 3
     assert len(run.run["q2"]) == 2
@@ -230,8 +232,9 @@ def test_save_load_trec(run):
 
 
 def test_load_gzipped_trec(run):
-    run = Run.from_file("tests/unit/ranx/test_data/run.trec.gz")
+    run = Run.from_file("tests/unit/ranx/test_data/run.trec.gz", name="test_run")
 
+    assert run.name == "test_run"
     assert len(run.run) == 2
     assert len(run.run["q1"]) == 3
     assert len(run.run["q2"]) == 2
@@ -269,8 +272,9 @@ def test_from_dict():
         },
     }
 
-    run = Run.from_dict(run_py)
+    run = Run.from_dict(run_py, name="test_run")
 
+    assert run.name == "test_run"
     assert len(run.run) == 2
     assert len(run.run["q1"]) == 3
     assert len(run.run["q2"]) == 2
@@ -290,8 +294,9 @@ def test_from_dataframe():
         }
     )
 
-    run = Run.from_df(df)
+    run = Run.from_df(df, name="test_run")
 
+    assert run.name == "test_run"
     assert len(run.run) == 2
     assert len(run.run["q1"]) == 3
     assert len(run.run["q2"]) == 2
@@ -303,8 +308,9 @@ def test_from_dataframe():
 
 
 def test_from_parquet():
-    run = Run.from_parquet("tests/unit/ranx/test_data/run.parquet")
+    run = Run.from_parquet("tests/unit/ranx/test_data/run.parquet", name="test_run")
 
+    assert run.name == "test_run"
     assert len(run.run) == 2
     assert len(run.run["q1"]) == 3
     assert len(run.run["q2"]) == 2

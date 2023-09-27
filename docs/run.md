@@ -28,7 +28,8 @@ run = Run(run_dict, name="bm25")
 Parse a run file into `ranx.Run`.  
 Supported formats are JSON, TREC run, gzipped TREC run, and LZ4.  
 Correct import behavior is inferred from the file extension: `.json` -> `json`, `.trec` -> `trec`, `.txt` -> `trec`, `.gz` -> `trec`, `.lz4` -> `lz4`.  
-Use the `kind` argument to override the default behavior.
+Use the argument `kind` to override the default behavior.
+Use the argument `name` to set the name of the run. Default is `None`.
 
 ```python
 run = Run.from_file("path/to/run.json")  # JSON file
@@ -40,6 +41,9 @@ run = Run.from_file("path/to/run.custom", kind="json")  # Loaded as JSON file
 ```
 
 ## Load from Pandas DataFrames
+`ranx` can load `runs` from Pandas DataFrames.  
+The argument `name` is used to set the name of the run. Default is `None`.
+
 ```python
 from pandas import DataFrame
 
@@ -54,12 +58,14 @@ run = Run.from_df(
     q_id_col="q_id",
     doc_id_col="doc_id",
     score_col="score",
+    name="my_run",
 )
 ```
 
 ## Load from Parquet files
 `ranx` can load `runs` from Parquet files, even from remote sources.  
-You can control the behavior of the underlying `pandas.read_parquet` function by passing additional arguments through the `pd_kwargs` argument (see https://pandas.pydata.org/docs/reference/api/pandas.read_parquet.html).
+You can control the behavior of the underlying `pandas.read_parquet` function by passing additional arguments through the `pd_kwargs` argument (see https://pandas.pydata.org/docs/reference/api/pandas.read_parquet.html).  
+The argument `name` is used to set the name of the run. Default is `None`.
 
 ```python
 run = Run.from_parquet(
@@ -68,6 +74,7 @@ run = Run.from_parquet(
     doc_id_col="doc_id",
     score_col="score",
     pd_kwargs=None,
+    name="my_run",
 )
 ```
 

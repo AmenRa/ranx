@@ -293,10 +293,10 @@ class Qrels(object):
         """
         assert (
             df[q_id_col].dtype == "O"
-        ), "DataFrame scores column dtype must be `object` (string)"
+        ), "DataFrame Query IDs column dtype must be `object` (string)"
         assert (
             df[doc_id_col].dtype == "O"
-        ), "DataFrame scores column dtype must be `object` (string)"
+        ), "DataFrame Document IDs column dtype must be `object` (string)"
         assert df[score_col].dtype == int, "DataFrame scores column dtype must be `int`"
 
         qrels_dict = (

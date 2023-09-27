@@ -221,11 +221,12 @@ class Run(object):
                             f.write("\n")
 
     @staticmethod
-    def from_dict(d: Dict[str, Dict[str, float]]):
+    def from_dict(d: Dict[str, Dict[str, float]], name: str = None):
         """Convert a Python dictionary in form of {q_id: {doc_id: score}} to ranx.Run.
 
         Args:
             d (Dict[str, Dict[str, int]]): Run as Python dictionary
+            name (str, optional): Run name. Defaults to None.
 
         Returns:
             Run: ranx.Run
@@ -248,6 +249,7 @@ class Run(object):
         run = Run()
         run.run = create_and_sort(q_ids, doc_ids, scores)
         run.sorted = True
+        run.name = name
 
         return run
 
@@ -258,6 +260,7 @@ class Run(object):
         Args:
             path (str): File path.
             kind (str, optional): Kind of file to load, must be either "json" or "trec".
+            name (str, optional): Run name. Defaults to None.
 
         Returns:
             Run: ranx.Run
@@ -279,8 +282,7 @@ class Run(object):
                     if name is None:
                         name = run_name
 
-        run = Run.from_dict(run)
-        run.name = name
+        run = Run.from_dict(run, name)
 
         return run
 
@@ -290,6 +292,7 @@ class Run(object):
         q_id_col: str = "q_id",
         doc_id_col: str = "doc_id",
         score_col: str = "score",
+        name: str = None,
     ):
         """Convert a Pandas DataFrame to ranx.Run.
 
@@ -298,16 +301,17 @@ class Run(object):
             q_id_col (str, optional): Query IDs column. Defaults to "q_id".
             doc_id_col (str, optional): Document IDs column. Defaults to "doc_id".
             score_col (str, optional): Relevance scores column. Defaults to "score".
+            name (str, optional): Run name. Defaults to None.
 
         Returns:
             Run: ranx.Run
         """
         assert (
             df[q_id_col].dtype == "O"
-        ), "DataFrame scores column dtype must be `object` (string)"
+        ), "DataFrame Query IDs column dtype must be `object` (string)"
         assert (
             df[doc_id_col].dtype == "O"
-        ), "DataFrame scores column dtype must be `object` (string)"
+        ), "DataFrame Document IDs column dtype must be `object` (string)"
         assert (
             df[score_col].dtype == float
         ), "DataFrame scores column dtype must be `float`"
@@ -318,7 +322,7 @@ class Run(object):
             .to_dict()
         )
 
-        return Run.from_dict(run_py)
+        return Run.from_dict(run_py, name)
 
     @staticmethod
     def from_parquet(
@@ -327,6 +331,7 @@ class Run(object):
         doc_id_col: str = "doc_id",
         score_col: str = "score",
         pd_kwargs: Dict[str, Any] = None,
+        name: str = None,
     ):
         """Convert a Parquet file to ranx.Run.
 
@@ -336,6 +341,7 @@ class Run(object):
             doc_id_col (str, optional): Document IDs column. Defaults to "doc_id".
             score_col (str, optional): Relevance scores column. Defaults to "score".
             pd_kwargs (Dict[str, Any], optional): Additional arguments to pass to `pandas.read_parquet` (see https://pandas.pydata.org/docs/reference/api/pandas.read_parquet.html). Defaults to None.
+            name (str, optional): Run name. Defaults to None.
 
         Returns:
             Run: ranx.Run
@@ -347,6 +353,7 @@ class Run(object):
             q_id_col=q_id_col,
             doc_id_col=doc_id_col,
             score_col=score_col,
+            name=name,
         )
 
     @staticmethod
