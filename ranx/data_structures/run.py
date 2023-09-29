@@ -313,7 +313,7 @@ class Run(object):
             df[doc_id_col].dtype == "O"
         ), "DataFrame Document IDs column dtype must be `object` (string)"
         assert (
-            df[score_col].dtype == float
+            df[score_col].dtype == np.float64
         ), "DataFrame scores column dtype must be `float`"
 
         run_py = (
