@@ -538,3 +538,45 @@ def test_keys_control():
 
     with pytest.raises(Exception):
         evaluate(qrels, run, "ndcg@5")
+
+
+def test_std():
+    qrels_dict = {"q_1": {"d_12": 5, "d_25": 3}, "q_2": {"d_11": 6, "d_22": 1}}
+
+    run_dict = {
+        "q_1": {
+            "d_12": 0.9,
+            "d_23": 0.8,
+            "d_25": 0.7,
+            "d_36": 0.6,
+            "d_32": 0.5,
+            "d_35": 0.4,
+        },
+        "q_2": {
+            "d_12": 0.9,
+            "d_11": 0.8,
+            "d_25": 0.7,
+            "d_36": 0.6,
+            "d_22": 0.5,
+            "d_35": 0.4,
+        },
+    }
+
+    qrels = Qrels(qrels_dict)
+    run = Run(run_dict)
+
+    res = evaluate(qrels, run, ["map@5", "mrr"], return_std=True)
+
+    assert len(res.keys()) == 2
+    assert "map@5" in res
+    assert "mrr" in res
+    assert "mean" in res["map@5"]
+    assert "std" in res["map@5"]
+    assert "mean" in res["mrr"]
+    assert "std" in res["mrr"]
+    assert res["map@5"]["std"] == np.std(list(run.scores["map@5"].values()))
+    assert res["mrr"]["std"] == np.std(list(run.scores["mrr"].values()))
+    assert run.std_scores == {
+        "map@5": np.std(list(run.scores["map@5"].values())),
+        "mrr": np.std(list(run.scores["mrr"].values())),
+    }

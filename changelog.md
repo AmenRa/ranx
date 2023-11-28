@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.19] - 2022-11-28
+### Added
+- `Run` now has an additional property to store metrics standard deviation.
+- `evaluate` now has `return_std` flag to compute metrics standard deviation.
+
 ## [0.3.18] - 2022-09-29
 ### Changed
 - `Qrels.from_df` now checks that scores are `numpy.int64` to avoid errors on Windows.

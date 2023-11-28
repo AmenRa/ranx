@@ -72,6 +72,7 @@ class Run(object):
         self.metadata = {}
         self.scores = defaultdict(dict)
         self.mean_scores = {}
+        self.std_scores = {}
 
     def keys(self):
         """Returns query ids. Used internally."""

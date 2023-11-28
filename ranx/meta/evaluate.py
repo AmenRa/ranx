@@ -77,6 +77,7 @@ def evaluate(
     ],
     metrics: Union[List[str], str],
     return_mean: bool = True,
+    return_std: bool = False,
     threads: int = 0,
     save_results_in_run: bool = True,
     make_comparable: bool = False,
@@ -124,6 +125,9 @@ def evaluate(
     elif threads != 0:
         set_num_threads(threads)
 
+    if not return_mean:
+        return_std = False
+
     if make_comparable and type(qrels) == Qrels and type(run) == Run:
         run = run.make_comparable(qrels)
 
@@ -145,12 +149,21 @@ def evaluate(
     if type(run) == Run and save_results_in_run:
         for m, scores in metric_scores_dict.items():
             run.mean_scores[m] = np.mean(scores)
+            if return_std:
+                run.std_scores[m] = np.std(scores)
             for i, q_id in enumerate(run.get_query_ids()):
                 run.scores[m][q_id] = scores[i]
 
     # Prepare output -----------------------------------------------------------
     if return_mean:
         for m, scores in metric_scores_dict.items():
-            metric_scores_dict[m] = np.mean(scores)
+            if return_std:
+                metric_scores_dict[m] = {
+                    "mean": np.mean(scores),
+                    "std": np.std(scores),
+                }
+
+            else:
+                metric_scores_dict[m] = np.mean(scores)
 
     return metric_scores_dict[m] if len(metrics) == 1 else metric_scores_dict
