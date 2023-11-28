@@ -34,7 +34,7 @@ plugins:
         python:
           rendering:
             show_source: false
-      custom_templates: templates
+      # custom_templates: templates
       watch:
         - ranx
 
