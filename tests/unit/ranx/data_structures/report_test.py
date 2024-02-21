@@ -144,3 +144,19 @@ def test_stat_test(qrels, runs, metrics):
     assert report.stat_test == "tukey"
     assert report.get_stat_test_label(report.stat_test) == "Tukey's HSD test"
     assert report.get_stat_test_label(report.stat_test) in report.to_latex()
+
+
+def test_to_dataframe(qrels, runs, metrics):
+    report = compare(qrels, runs, metrics)
+    report_df = report.to_dataframe()
+
+    assert report_df["model_names"].tolist() == report.model_names
+    assert report_df.columns.tolist() == ["model_names"] + metrics
+
+    assert all(
+        all(
+            report_df[report_df["model_names"] == model][metric].notnull().all()
+            for metric in metrics
+        )
+        for model in report_df["model_names"]
+    )
