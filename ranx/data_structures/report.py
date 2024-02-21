@@ -3,6 +3,7 @@
 import json
 from typing import Dict, List, Tuple
 
+import pandas as pd
 from tabulate import tabulate
 
 from .frozenset_dict import FrozensetDict
@@ -318,6 +319,23 @@ class Report(object):
                         ]
 
         return d
+
+    def to_dataframe(self) -> pd.DataFrame:
+        """Returns the Report data as a Pandas DataFrame.
+
+        Returns:
+            pd.DataFrame: Report data as a Pandas DataFrame
+        """
+        report_dict = self.to_dict()
+        report_scores = {
+            name: report_dict[name]["scores"] for name in report_dict["model_names"]
+        }
+        df = pd.DataFrame.from_dict(report_scores, orient="index")
+        df = df.reset_index().rename(
+            columns={"index": "model_names"}
+        )  # index to model_names column
+
+        return df
 
     def save(self, path: str):
         """Save the Report data as JSON file.
