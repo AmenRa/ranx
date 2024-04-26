@@ -7,7 +7,6 @@ The normalization strategy to apply before fusion can be defined through the `no
 | **Normalization Strategies**                   | **Alias**         |
 |------------------------------------------------|-------------------|
 | [Min-Max Norm][min-max-norm]                   | min-max           |
-| [Min-Max-Inverted Norm][min-max-inverted-norm] | min-max-inverted  |
 | [Max Norm][max-norm]                           | max               |
 | [Sum Norm][sum-norm]                           | sum               |
 | [ZMUV Norm][zmuv-norm]                         | zmuv              |
@@ -23,10 +22,9 @@ $$
 \operatorname{MinMaxNorm(s)}=\frac{s - s_{min}}{s_{max} - s_{min}}
 $$
 
-## Min-Max-Inverted Norm
----
-Contrary to the standard Min-Max Norm, Min-Max-Inverted Norm scales the scores (s) of a result list between 0 and 1,
-but inversely, setting the maximum score ($s_{max}$) to 0 and the minimum score ($s_{min}$) to 1.
+Min-Max Norm accepts an optional boolean parameter `invert`, which, when set to true,
+Min-Max Norm scales the scores (s) of a result list between 0 and 1,
+setting the maximum score ($s_{max}$) to 0 and the minimum score ($s_{min}$) to 1.
 
 $$
 \operatorname{MinMaxInvertedNorm(s)}=\frac{s_{max} - s}{s_{max} - s_{min}}
