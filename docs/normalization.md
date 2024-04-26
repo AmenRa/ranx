@@ -27,7 +27,7 @@ Min-Max Norm scales the scores (s) of a result list between 0 and 1,
 setting the maximum score ($s_{max}$) to 0 and the minimum score ($s_{min}$) to 1.
 
 $$
-\operatorname{MinMaxInvertedNorm(s)}=\frac{s_{max} - s}{s_{max} - s_{min}}
+\operatorname{MinMaxNorm(s)}=\frac{s_{max} - s}{s_{max} - s_{min}}
 $$
 
 ## Max Norm

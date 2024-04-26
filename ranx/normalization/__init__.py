@@ -1,7 +1,6 @@
 __all__ = [
     "max_norm",
     "min_max_norm",
-    "min_max_inverted_num",
     "rank_norm",
     "sum_norm",
     "zmuv_norm",
@@ -11,7 +10,6 @@ __all__ = [
 from .borda_norm import borda_norm
 from .max_norm import max_norm
 from .min_max_norm import min_max_norm
-from .min_max_inverted_norm import min_max_inverted_norm
 from .rank_norm import rank_norm
 from .sum_norm import sum_norm
 from .zmuv_norm import zmuv_norm
@@ -24,8 +22,6 @@ def norm_switch(method: str = "min-max"):
         return max_norm
     elif method in {"min_max", "min-max"}:
         return min_max_norm
-    elif method in {"min_max_inverted", "min-max-inverted"}:
-        return min_max_inverted_norm
     elif method == "rank":
         return rank_norm
     elif method == "sum":
