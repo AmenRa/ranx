@@ -43,7 +43,7 @@ def test_min_max_norm(run):
     assert norm_run["q2"]["d2"] == (2 - 1) / (2 - 1)
 
 
-@pytest.mark.parametrize("norm_name", ["min_max_inverted", "min_max-inverted"])
+@pytest.mark.parametrize("norm_name", ["min_max_inverted", "min-max-inverted"])
 def test_min_max_norm_with_invert(run, norm_name):
     run_copy = run.run.copy()
     assert run.run == run_copy

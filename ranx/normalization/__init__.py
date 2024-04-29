@@ -22,7 +22,7 @@ def norm_switch(method: str = "min-max"):
         return max_norm
     elif method in {"min_max", "min-max"}:
         return lambda run: min_max_norm(run, invert=False)
-    elif method in {"min_max_inverted", "min_max-inverted"}:
+    elif method in {"min_max_inverted", "min-max-inverted"}:
         return lambda run: min_max_norm(run, invert=True)
     elif method == "rank":
         return rank_norm
