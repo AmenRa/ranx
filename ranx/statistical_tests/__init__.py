@@ -72,15 +72,15 @@ def compute_statistical_significance(
                     treatment_metric_scores = metric_scores[treatment]
 
                     # Compute statistical significance
-                    comparisons[
-                        frozenset([control, treatment])
-                    ] = _compute_statistical_significance(
-                        control_metric_scores,
-                        treatment_metric_scores,
-                        stat_test,
-                        n_permutations,
-                        max_p,
-                        random_seed,
+                    comparisons[frozenset([control, treatment])] = (
+                        _compute_statistical_significance(
+                            control_metric_scores,
+                            treatment_metric_scores,
+                            stat_test,
+                            n_permutations,
+                            max_p,
+                            random_seed,
+                        )
                     )
 
         return comparisons

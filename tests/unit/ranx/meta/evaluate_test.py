@@ -298,11 +298,7 @@ def test_dcg_burges():
 
     assert np.allclose(
         evaluate(y_true, y_pred_1, f"dcg_burges@{k}"),
-        (
-            (2**5 - 1) / np.log2(3)
-            + (2**4 - 1) / np.log2(5)
-            + (2**3 - 1) / np.log2(6)
-        ),
+        ((2**5 - 1) / np.log2(3) + (2**4 - 1) / np.log2(5) + (2**3 - 1) / np.log2(6)),
     )
 
     assert np.allclose(
@@ -343,11 +339,7 @@ def test_ndcg_burges():
 
     assert np.allclose(
         evaluate(y_true, y_pred_1, f"ndcg_burges@{k}"),
-        (
-            (2**5 - 1) / np.log2(3)
-            + (2**4 - 1) / np.log2(5)
-            + (2**3 - 1) / np.log2(6)
-        )
+        ((2**5 - 1) / np.log2(3) + (2**4 - 1) / np.log2(5) + (2**3 - 1) / np.log2(6))
         / idcg,
     )
 
