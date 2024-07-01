@@ -4,24 +4,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.3.19] - 2022-11-28
+## [0.3.19] - 2023-11-28
 ### Added
 - `Run` now has an additional property to store metrics standard deviation.
 - `evaluate` now has `return_std` flag to compute metrics standard deviation.
 
-## [0.3.18] - 2022-09-29
+## [0.3.18] - 2023-09-29
 ### Changed
 - `Qrels.from_df` now checks that scores are `numpy.int64` to avoid errors on Windows.
 - `Run.from_df` now checks that scores are `numpy.float64` to avoid errors on Windows.
 
-## [0.3.17] - 2022-09-27
+## [0.3.17] - 2023-09-27
 ### Changed
 - All `Run` import methods allow for specifying the `name` of the run.
 
 ### Fixed
 - Fixed misleading error messages when importing `Qrels` and `Run` from `pandas.DataFrame` with wrong `dtypes`.
 
-## [0.3.16] - 2022-08-03
+## [0.3.16] - 2023-08-03
 ### Added
 - Added support for importing qrels from `parquet` files in `qrels.py`.
 - Added support for importing runs from `parquet` files in `run.py`.
@@ -39,7 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 - Removed dependency from `pytrec_eval`.
 
-## [0.3.15] - 2022-07-18
+## [0.3.15] - 2023-07-18
 ### Added
 - Added support for gzipped TREC files to `from_file` in `qrels.py`.
 - Added support for gzipped TREC files to `from_file` in `run.py`.
@@ -49,40 +49,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed `rank_biased_precision` considering relevance as binary instead of graded.
 - Fixed high memory consumption for `qrels` and `run`.
 
-## [0.3.14] - 2022-06-24
+## [0.3.14] - 2023-06-24
 ### Fixed
 - Fixed missing metric labels for `dcg` and `dcg_burges` in `report.py`.
 
-## [0.3.13] - 2022-06-16
+## [0.3.13] - 2023-06-16
 ### Added
 - Added `dcg` and `dcg_burges` among the available metrics.
 
-## [0.3.12] - 2022-06-07
+## [0.3.12] - 2023-06-07
 ### Fixed
 - Fixed missing dependency `seaborn`.
 
-## [0.3.10] - 2022-05-26
+## [0.3.10] - 2023-05-26
 ### Fixed
 - Fixed a bug affecting the download of ranxhub runs with special symbols in their ids, such as `+`.
 
-## [0.3.9] - 2022-05-26
+## [0.3.9] - 2023-05-26
 ### Changed
 - Changed `save` in `ranxhub.py` to automatically save average metric scores.
 
 ### Fixed
 - Fixed a bug affecting `make_comparable` in `run.py`: runs were not sorted after this operation, resulting in wrong metrics computation afterwards.
 
-## [0.3.8] - 2022-05-01
+## [0.3.8] - 2023-05-01
 ### Added
 - It is now possible to plot Interpolated Precision-Recall Curve. Click [here](https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/7_plot.ipynb) for further details.
 
-## [0.3.7] - 2022-04-17
+## [0.3.7] - 2023-04-17
 ### Added
 - Added `make_comparable` to `run.py`. It makes a run comparable to a given qrels whether the run misses results for queries appearing in the qrels or have results for additional queries, which are removed.
 - Added  `make_comparable` parameter to `evaluate.py`.
 - Added  `make_comparable` parameter to `compare.py`.
   
-## [0.3.5] - 2022-02-13
+## [0.3.5] - 2023-02-13
 ### Fixed
 - Fixed a bug affecting `Tukey's HSD Test`: results from the test were not converted to proper dtypes from strings, causing the superscript reporting statistical significance differences in `report.py` to be wrong.
 
