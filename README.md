@@ -19,11 +19,9 @@
   <a href="https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/1_overview.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab"/></a>
 </p>
 
-## 🔥 News
+<!-- ## 🔥 News
 
-- [August 3 2023] `ranx` `0.3.16` is out!  
-This release adds support for importing Qrels and Runs from `parquet` files, exporting them as `pandas.DataFrame` and save them as `parquet` files.
-Any dependence on `trec_eval` have been removed to make `ranx` truly MIT-compliant.
+- [month day year] -->
 
 ## ⚡️ Introduction
 
@@ -98,6 +96,7 @@ Please, refer to the [documentation](https://amenra.github.io/ranx/fusion) for f
 ### Normalization Strategies
 
 * [Min-Max Norm](https://amenra.github.io/ranx/normalization/#min-max-norm) 
+* [Min-Max Inverted Norm](https://amenra.github.io/ranx/normalization/#min-max-inverted-norm) 
 * [Max Norm](https://amenra.github.io/ranx/normalization/#sum-norm)         
 * [Sum Norm](https://amenra.github.io/ranx/normalization/#rank-norm)        
 * [ZMUV Norm](https://amenra.github.io/ranx/normalization/#max-norm)   
@@ -105,7 +104,6 @@ Please, refer to the [documentation](https://amenra.github.io/ranx/fusion) for f
 * [Borda Norm](https://amenra.github.io/ranx/normalization/#borda-norm)
 
 Please, refer to the [documentation](https://amenra.github.io/ranx/fusion) for further details.
-
 
 
 ## 🔌 Requirements

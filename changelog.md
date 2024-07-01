@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.20] - 2024-11-28
+### Changed
+- `Report` now allows for export to Pandas DataFrame thanks to @hotchpotch contrib.
+- `min-max norm` now allows for inverting min and max for distance scores normalization thanks to @MochiXu, @diegoceccarelli, and @AndreP-git.
+
 ## [0.3.19] - 2023-11-28
 ### Added
 - `Run` now has an additional property to store metrics standard deviation.
