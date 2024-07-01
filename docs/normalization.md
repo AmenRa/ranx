@@ -4,15 +4,15 @@
 Normalization aims at transforming the scores of a result list into new values to make them comparable with those of other normalized result lists, which is mandatory for correctly applying many of the provided fusion methods.
 The normalization strategy to apply before fusion can be defined through the `norm` parameter of the functions `fuse` and `optimize_fusion` (defaults to `min-max`).
 
-| **Normalization Strategies**                   | **Alias**         |
-|------------------------------------------------|-------------------|
-| [Min-Max Norm][min-max-norm]                   | min-max           |
-| [Min-Max-Inverted Norm][min-max-norm-inverted] | min-max-inverted  |
-| [Max Norm][max-norm]                           | max               |
-| [Sum Norm][sum-norm]                           | sum               |
-| [ZMUV Norm][zmuv-norm]                         | zmuv              |
-| [Rank Norm][rank-norm]                         | rank              |
-| [Borda Norm][borda-norm]                       | borda             |
+| **Normalization Strategies**                   | **Alias**        |
+| ---------------------------------------------- | ---------------- |
+| [Min-Max Norm][min-max-norm]                   | min-max          |
+| [Min-Max-Inverted Norm][min-max-norm-inverted] | min-max-inverted |
+| [Max Norm][max-norm]                           | max              |
+| [Sum Norm][sum-norm]                           | sum              |
+| [ZMUV Norm][zmuv-norm]                         | zmuv             |
+| [Rank Norm][rank-norm]                         | rank             |
+| [Borda Norm][borda-norm]                       | borda            |
 
 
 ## Min-Max Norm
@@ -25,10 +25,10 @@ $$
 
 ## Min-Max Inverted Norm
 ---
-Min-Max Norm scales the scores (s) of a result list between 0 and 1, scaling to 1 the minimum score ($s_{min}$) and 0 the maximum score ($s_{max}$).
+Min-Max Inverted Norm scales the scores (s) of a result list between 0 and 1, scaling to 1 the minimum score ($s_{min}$) and 0 the maximum score ($s_{max}$). It is handy when distance metrics are used to compute relevance scores, i.e. when lower scores indicates higher relevance.
 
 $$
-\operatorname{MinMaxNorm(s)}=\frac{s_{max} - s}{s_{max} - s_{min}}
+\operatorname{MinMaxInvertedNorm(s)}=\frac{s_{max} - s}{s_{max} - s_{min}}
 $$
 
 ## Max Norm
