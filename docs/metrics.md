@@ -181,7 +181,7 @@ Compute **Discounted Cumulative Gain** (DCG) at k as proposed by [Burges et al.]
 </details>
 
 $$
-\operatorname{DCG} = \frac{2^{\operatorname{rel}_i-1}}{\log_2(i+1)}
+\operatorname{DCG} = \frac{2^{\operatorname{rel}_i}-1}{\log_2(i+1)}
 $$
 
 where,
