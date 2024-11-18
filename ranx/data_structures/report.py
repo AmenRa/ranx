@@ -9,7 +9,7 @@ from tabulate import tabulate
 from .frozenset_dict import FrozensetDict
 
 chars = list("abcdefghijklmnopqrstuvwxyz")
-super_chars = list("ᵃᵇᶜᵈᵉᶠᵍʰᶦʲᵏˡᵐⁿᵒᵖ۹ʳˢᵗᵘᵛʷˣʸᶻ")
+super_chars = list("ᵃᵇᶜᵈᵉᶠᵍʰⁱʲᵏˡᵐⁿᵒᵖ۹ʳˢᵗᵘᵛʷˣʸᶻ")
 
 metric_labels = {
     **{
