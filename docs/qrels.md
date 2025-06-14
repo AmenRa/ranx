@@ -33,8 +33,8 @@ Use the `kind` argument to override the default behavior.
 ```python
 qrels = Qrels.from_file("path/to/qrels.json")  # JSON file
 qrels = Qrels.from_file("path/to/qrels.trec")  # TREC-Style file
-qrels = Qrels.from_file("path/to/qrels.txt")   # TREC-Style file with txt extension
-qrels = Qrels.from_file("path/to/qrels.gz")    # Gzipped TREC-Style file
+qrels = Qrels.from_file("path/to/qrels.txt")  # TREC-Style file with txt extension
+qrels = Qrels.from_file("path/to/qrels.gz")  # Gzipped TREC-Style file
 qrels = Qrels.from_file("path/to/qrels.custom", kind="json")  # Loaded as JSON file
 ```
 
@@ -49,11 +49,13 @@ qrels = Qrels.from_ir_datasets("msmarco-document/dev")
 ```python
 from pandas import DataFrame
 
-qrels_df = DataFrame.from_dict({
-    "q_id":   [ "q_1",  "q_1",  "q_2",  "q_2"  ],
-    "doc_id": [ "d_12", "d_25", "d_11", "d_22" ],
-    "score":  [  5,      3,      6,      1     ],
-})
+qrels_df = DataFrame.from_dict(
+    {
+        "q_id": ["q_1", "q_1", "q_2", "q_2"],
+        "doc_id": ["d_12", "d_25", "d_11", "d_22"],
+        "score": [5, 3, 6, 1],
+    }
+)
 
 qrels = Qrels.from_df(
     df=qrels_df,
@@ -69,7 +71,7 @@ You can control the behavior of the underlying `pandas.read_parquet` function by
 
 ```python
 qrels = Qrels.from_parquet(
-    path="/path/to/parquet/file""",
+    path="/path/to/parquet/file" "",
     q_id_col="q_id",
     doc_id_col="doc_id",
     score_col="score",
@@ -83,10 +85,10 @@ File type is automatically inferred form the filename extension: `.json` -> `jso
 Use the `kind` argument to override the default behavior.
 
 ```python
-qrels.save("path/to/qrels.json")     # Save as JSON file
-qrels.save("path/to/qrels.trec")     # Save as TREC-Style file
-qrels.save("path/to/qrels.txt")      # Save as TREC-Style file with txt extension
-qrels.save("path/to/qrels.parq")     # Save as Parquet file
+qrels.save("path/to/qrels.json")  # Save as JSON file
+qrels.save("path/to/qrels.trec")  # Save as TREC-Style file
+qrels.save("path/to/qrels.txt")  # Save as TREC-Style file with txt extension
+qrels.save("path/to/qrels.parq")  # Save as Parquet file
 qrels.save("path/to/qrels.parquet")  # Save as Parquet file
 qrels.save("path/to/qrels.custom", kind="json")  # Save as JSON file
 ```

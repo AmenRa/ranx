@@ -10,8 +10,8 @@ from ranx import fuse
 
 combined_run = fuse(
     runs=[run_1, run_2],  # A list of Run instances to fuse
-    norm="min-max",       # The normalization strategy to apply before fusion
-    method="max",         # The fusion algorithm to use 
+    norm="min-max",  # The normalization strategy to apply before fusion
+    method="max",  # The fusion algorithm to use
 )
 ```
 
@@ -35,9 +35,9 @@ best_params = optimize_fusion(
 )
 
 combined_test_run = fuse(
-    runs=[test_run_1, test_run_2, test_run_3],  
-    norm="min-max",       
-    method="wsum",        
+    runs=[test_run_1, test_run_2, test_run_3],
+    norm="min-max",
+    method="wsum",
     params=best_params,
 )
 ```
@@ -296,7 +296,7 @@ Computes ISR as proposed by [Mourão et al.](https://www.sciencedirect.com/scien
                     Fl{\'{a}}vio Martins and
                     Jo{\~{a}}o Magalh{\~{a}}es},
         title     = {Multimodal medical information retrieval with unsupervised rank fusion},
-        journal   = {Comput. Medical Imaging Graph.},
+        journal   = {Computerized Medical Imaging and Graphics},
         volume    = {39},
         pages     = {35--45},
         year      = {2015},
@@ -320,7 +320,7 @@ Computes Log_ISR as proposed by [Mourão et al.](https://www.sciencedirect.com/s
                     Fl{\'{a}}vio Martins and
                     Jo{\~{a}}o Magalh{\~{a}}es},
         title     = {Multimodal medical information retrieval with unsupervised rank fusion},
-        journal   = {Comput. Medical Imaging Graph.},
+        journal   = {Computerized Medical Imaging and Graphics},
         volume    = {39},
         pages     = {35--45},
         year      = {2015},
@@ -344,7 +344,7 @@ Computes Log_ISR as proposed by [Mourão et al.](https://www.sciencedirect.com/s
                     Fl{\'{a}}vio Martins and
                     Jo{\~{a}}o Magalh{\~{a}}es},
         title     = {Multimodal medical information retrieval with unsupervised rank fusion},
-        journal   = {Comput. Medical Imaging Graph.},
+        journal   = {Computerized Medical Imaging and Graphics},
         volume    = {39},
         pages     = {35--45},
         year      = {2015},

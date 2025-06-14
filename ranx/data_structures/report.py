@@ -47,7 +47,7 @@ class Report(object):
         qrels=qrels,
         runs=[run_1, run_2, run_3, run_4, run_5],
         metrics=["map@100", "mrr@100", "ndcg@10"],
-        max_p=0.01  # P-value threshold
+        max_p=0.01,  # P-value threshold
     )
 
     print(report)
@@ -255,37 +255,20 @@ class Report(object):
 
         ```python
         {
-            "stat_test": "fisher"
-            # metrics and model_names allows to read the report without
-            # inspecting the json to discover the used metrics and
-            # the compared models
-            "metrics": ["metric_1", "metric_2", ...],
-            "model_names": ["model_1", "model_2", ...],
-            #
+            "stat_test": "fisher",
+            "metrics": ["map@100", "mrr@100", "ndcg@10"],
+            "model_names": ["model_1", "model_2", "model_3"],
             "model_1": {
-                "scores": {
-                    "metric_1": ...,
-                    "metric_2": ...,
-                    ...
-                },
+                "scores": {"map@100": 0.320, "mrr@100": 0.320, "ndcg@10": 0.368},
                 "comparisons": {
-                    "model_2": {
-                        "metric_1": ...,  # p-value
-                        "metric_2": ...,  # p-value
-                        ...
-                    },
-                    ...
+                    "model_2": {"map@100": 0.001, "mrr@100": 0.002, "ndcg@10": 0.003},
+                    "model_3": {"map@100": 0.004, "mrr@100": 0.005, "ndcg@10": 0.006},
                 },
                 "win_tie_loss": {
-                    "model_2": {
-                        "W": ...,
-                        "T": ...,
-                        "L": ...,
-                    },
-                    ...
+                    "model_2": {"W": 10, "T": 5, "L": 15},
+                    "model_3": {"W": 12, "T": 4, "L": 14},
                 },
             },
-            ...
         }
         ```
 

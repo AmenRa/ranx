@@ -51,7 +51,7 @@ def log_isr(runs: List[Run], name: str = "log_isr") -> Run:
                         Fl{\'{a}}vio Martins and
                         Jo{\~{a}}o Magalh{\~{a}}es},
             title     = {Multimodal medical information retrieval with unsupervised rank fusion},
-            journal   = {Comput. Medical Imaging Graph.},
+            journal   = {Computerized Medical Imaging and Graphics},
             volume    = {39},
             pages     = {35--45},
             year      = {2015},

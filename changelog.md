@@ -36,7 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added support for saving runs as `parquet` files in `run.py`.
   
 ### Fixed
-- Fixed `f1` when there are no relevants.
+- Fixed `f1` when there are no relevant.
   
 ### Changed
 - Moved `numba` threading layer settings to `ranx/__init__.py`.
