@@ -1,7 +1,7 @@
 import gzip
 import os
 from collections import defaultdict
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Union
 
 import numpy as np
 import pandas as pd
@@ -43,12 +43,17 @@ class Run(object):
     run = Run()  # Creates an empty Run with no name
     ```
     """
+
     metadata: Dict[str, Any]
     scores: Dict[str, Dict[str, float]]
     mean_scores: Dict[str, float]
     std_scores: Dict[str, float]
 
-    def __init__(self, run: Union[None, Dict[str, Dict[str, float]]] = None, name: Union[None, str] = None):
+    def __init__(
+        self,
+        run: Union[None, Dict[str, Dict[str, float]]] = None,
+        name: Union[None, str] = None,
+    ):
         """Initialize a Run object.
 
         Args:
