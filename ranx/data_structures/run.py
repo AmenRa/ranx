@@ -1,7 +1,7 @@
 import gzip
 import os
 from collections import defaultdict
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional, Union
 
 import numpy as np
 import pandas as pd
@@ -43,8 +43,39 @@ class Run(object):
     run = Run()  # Creates an empty Run with no name
     ```
     """
+    metadata: Dict[str, Any]
+    scores: Dict[str, Dict[str, float]]
+    mean_scores: Dict[str, float]
+    std_scores: Dict[str, float]
 
-    def __init__(self, run: Dict[str, Dict[str, float]] = None, name: str = None):
+    def __init__(self, run: Union[None, Dict[str, Dict[str, float]]] = None, name: Union[None, str] = None):
+        """Initialize a Run object.
+
+        Args:
+            run (Dict[str, Dict[str, float]], optional): A dictionary mapping query IDs to dictionaries of document scores.
+                The inner dictionaries map document IDs to their relevance scores.
+                Example:
+                ```python
+                {
+                    "q_1": {
+                        "d_1": 1.5,
+                        "d_2": 2.6,
+                    },
+                    "q_2": {
+                        "d_3": 2.8,
+                        "d_2": 1.2,
+                        "d_5": 3.1,
+                    },
+                }
+                ```
+                If None, creates an empty Run. Defaults to None.
+            name (str, optional): A name for the run (e.g., "bm25", "t5", etc.). Defaults to None.
+
+        Note:
+            - Query IDs and document IDs can be any string
+            - Scores must be numeric values
+            - The run will be automatically sorted by score in descending order
+        """
         if run is None:
             self.run = TypedDict.empty(
                 key_type=types.unicode_type,
