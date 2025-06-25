@@ -1,0 +1,1365 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="⚡️ A Blazing-Fast Python Library for Ranking Evaluation and Comparison 🐍">
+      
+      
+      
+        <link rel="canonical" href="https://ranx.github.io/">
+      
+      
+      
+        <link rel="next" href="compare/">
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>ranx</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#news" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="ranx" class="md-header__button md-logo" aria-label="ranx" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ranx
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Home
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="red" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/amenra/ranx" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    amenra/ranx
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="ranx" class="md-nav__button md-logo" aria-label="ranx" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ranx
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/amenra/ranx" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    amenra/ranx
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="." class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#news" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔥 News
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⚡️ Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✨ Features
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✨ Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metrics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistical-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Statistical Tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#off-the-shelf-qrels" class="md-nav__link">
+    <span class="md-ellipsis">
+      Off-the-shelf Qrels
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#off-the-shelf-runs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Off-the-shelf Runs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fusion-algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fusion Algorithms
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#normalization-strategies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Normalization Strategies
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔌 Requirements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      💾 Installation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      💡 Usage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="💡 Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-qrels-and-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create Qrels and Run
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evaluate" class="md-nav__link">
+    <span class="md-ellipsis">
+      Evaluate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compare" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compare
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fusion
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      📖 Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      📚 Documentation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#citation" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎓 Citation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#feature-requests" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎁 Feature Requests
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#want-to-contribute" class="md-nav__link">
+    <span class="md-ellipsis">
+      🤘 Want to contribute?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    <span class="md-ellipsis">
+      📄 License
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="compare/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Compare
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="evaluate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Evaluate
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FAQ
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fusion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fusion
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Metrics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="normalization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Normalization
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="qrels/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Qrels
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="report/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Report
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="run/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Run
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="stat_tests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Statistical Tests
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#news" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔥 News
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⚡️ Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✨ Features
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✨ Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metrics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistical-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Statistical Tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#off-the-shelf-qrels" class="md-nav__link">
+    <span class="md-ellipsis">
+      Off-the-shelf Qrels
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#off-the-shelf-runs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Off-the-shelf Runs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fusion-algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fusion Algorithms
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#normalization-strategies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Normalization Strategies
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔌 Requirements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      💾 Installation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      💡 Usage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="💡 Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-qrels-and-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create Qrels and Run
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evaluate" class="md-nav__link">
+    <span class="md-ellipsis">
+      Evaluate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compare" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compare
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fusion
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      📖 Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      📚 Documentation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#citation" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎓 Citation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#feature-requests" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎁 Feature Requests
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#want-to-contribute" class="md-nav__link">
+    <span class="md-ellipsis">
+      🤘 Want to contribute?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    <span class="md-ellipsis">
+      📄 License
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>Home</h1>
+
+<div align="center">
+  <img src="https://repository-images.githubusercontent.com/268892956/750228ec-f3f2-465d-9c17-420c688ba2bc">
+</div>
+
+<p align="center">
+  <!-- Python -->
+  <a href="https://www.python.org" alt="Python"><img src="https://badges.aleen42.com/src/python.svg"></a>
+  <!-- Version -->
+  <a href="https://pypi.org/project/ranx/"><img src="https://img.shields.io/pypi/v/ranx?color=light-green" alt="PyPI version"></a>
+  <!-- Downloads -->
+  <a href="https://pepy.tech/project/ranx"><img src="https://static.pepy.tech/personalized-badge/ranx?period=total&units=international_system&left_color=grey&right_color=blue&left_text=downloads" alt="Download counter"></a>
+  <!-- Docs -->
+  <a href="https://amenra.github.io/ranx"><img src="https://img.shields.io/badge/docs-passing-<COLOR>.svg" alt="Documentation Status"></a>
+  <!-- Black -->
+  <a href="https://github.com/psf/black" alt="Code style: black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
+  <!-- License -->
+  <a href="https://lbesson.mit-license.org/"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></a>
+  <!-- Google Colab -->
+  <a href="https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/1_overview.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab"/></a>
+</p>
+
+<h2 id="news">🔥 News</h2>
+<ul>
+<li>[August 3 2023] <code>ranx</code> <code>0.3.16</code> is out!<br />
+This release adds support for importing Qrels and Runs from <code>parquet</code> files, exporting them as <code>pandas.DataFrame</code> and save them as <code>parquet</code> files.
+Any dependence on <code>trec_eval</code> have been removed to make <code>ranx</code> truly MIT-compliant.</li>
+</ul>
+<h2 id="introduction">⚡️ Introduction</h2>
+<p><a href="https://github.com/AmenRa/ranx">ranx</a> ([raŋks]) is a library of fast ranking evaluation metrics implemented in <a href="https://en.wikipedia.org/wiki/Python_(programming_language)">Python</a>, leveraging <a href="https://github.com/numba/numba">Numba</a> for high-speed <a href="https://en.wikipedia.org/wiki/Automatic_vectorization">vector operations</a> and <a href="https://en.wikipedia.org/wiki/Automatic_parallelization">automatic parallelization</a>.
+It offers a user-friendly interface to evaluate and compare <a href="https://en.wikipedia.org/wiki/Information_retrieval">Information Retrieval</a> and <a href="https://en.wikipedia.org/wiki/Recommender_system">Recommender Systems</a>.
+<a href="https://github.com/AmenRa/ranx">ranx</a> allows you to perform statistical tests and export <a href="https://en.wikipedia.org/wiki/LaTeX">LaTeX</a> tables for your scientific publications.
+Moreover, <a href="https://github.com/AmenRa/ranx">ranx</a> provides several <a href="https://amenra.github.io/ranx/fusion">fusion algorithms</a> and <a href="https://amenra.github.io/ranx/normalization">normalization strategies</a>, and an automatic <a href="https://amenra.github.io/ranx/fusion/#optimize-fusion">fusion optimization</a> functionality.
+<a href="https://github.com/AmenRa/ranx">ranx</a> also have a companion repository of pre-computed runs to facilitated model comparisons called <a href="https://amenra.github.io/ranxhub">ranxhub</a>.
+On <a href="https://amenra.github.io/ranxhub">ranxhub</a>, you can download and share pre-computed runs for Information Retrieval datasets, such as <a href="https://arxiv.org/abs/1611.09268">MSMARCO Passage Ranking</a>.
+<a href="https://github.com/AmenRa/ranx">ranx</a> was featured in <a href="https://ecir2022.org">ECIR 2022</a>, <a href="https://www.cikm2022.org">CIKM 2022</a>, and <a href="https://sigir.org/sigir2023">SIGIR 2023</a>. </p>
+<p>If you use <a href="https://github.com/AmenRa/ranx">ranx</a> to evaluate results or conducting experiments involving fusion for your scientific publication, please consider citing it: <a href="https://dblp.org/rec/conf/ecir/Bassani22.html?view=bibtex">evaluation bibtex</a>, <a href="https://dblp.org/rec/conf/cikm/BassaniR22.html?view=bibtex">fusion bibtex</a>, <a href="https://dblp.org/rec/conf/sigir/Bassani23.html?view=bibtex">ranxhub bibtex</a>.</p>
+<p>NB: <code>ranx</code> is not suited for evaluating classifiers. Please, refer to the <a href="https://amenra.github.io/ranx/faq">FAQ</a> for further details.</p>
+<p>For a quick overview, follow the <a href="#-usage">Usage</a> section.</p>
+<p>For a in-depth overview, follow the <a href="#-examples">Examples</a> section.</p>
+<h2 id="features">✨ Features</h2>
+<h3 id="metrics">Metrics</h3>
+<ul>
+<li><a href="https://amenra.github.io/ranx/metrics/#hits">Hits</a></li>
+<li><a href="https://amenra.github.io/ranx/metrics/#hit-rate-success">Hit Rate</a></li>
+<li><a href="https://amenra.github.io/ranx/metrics/#precision">Precision</a></li>
+<li><a href="https://amenra.github.io/ranx/metrics/#recall">Recall</a></li>
+<li><a href="https://amenra.github.io/ranx/metrics/#f1">F1</a></li>
+<li><a href="https://amenra.github.io/ranx/metrics/#r-precision">r-Precision</a></li>
+<li><a href="https://amenra.github.io/ranx/metrics/#bpref">Bpref</a></li>
+<li><a href="https://amenra.github.io/ranx/metrics/#rank-biased-precision">Rank-biased Precision (RBP)</a></li>
+<li><a href="https://amenra.github.io/ranx/metrics/#mean-reciprocal-rank">Mean Reciprocal Rank (MRR)</a></li>
+<li><a href="https://amenra.github.io/ranx/metrics/#mean-average-precision">Mean Average Precision (MAP)</a></li>
+<li><a href="https://amenra.github.io/ranx/metrics/#dcg">Discounted Cumulative Gain (DCG)</a></li>
+<li><a href="https://amenra.github.io/ranx/metrics/#ndcg">Normalized Discounted Cumulative Gain (NDCG)</a></li>
+</ul>
+<p>The metrics have been tested against <a href="https://github.com/usnistgov/trec_eval">TREC Eval</a> for correctness.</p>
+<h3 id="statistical-tests">Statistical Tests</h3>
+<ul>
+<li><a href="https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/t_test.htm">Paired Student's t-Test</a> (default)</li>
+<li><a href="https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/fishrand.htm">Fisher's Randomization Test</a></li>
+<li><a href="https://www.itl.nist.gov/div898/handbook/prc/section4/prc471.htm">Tukey's HSD Test</a></li>
+</ul>
+<p>Please, refer to <a href="https://dl.acm.org/doi/10.1145/1321440.1321528">Smucker et al.</a>, <a href="https://dl.acm.org/doi/10.1145/2094072.2094076">Carterette</a>, and <a href="http://www.sigir.org/wp-content/uploads/2018/01/p032.pdf">Fuhr</a> for additional information on statistical tests for Information Retrieval.</p>
+<h3 id="off-the-shelf-qrels">Off-the-shelf Qrels</h3>
+<p>You can load qrels from <a href="https://ir-datasets.com">ir-datasets</a> as simply as:
+<div class="highlight"><pre><span></span><code><span class="n">qrels</span> <span class="o">=</span> <span class="n">Qrels</span><span class="o">.</span><span class="n">from_ir_datasets</span><span class="p">(</span><span class="s2">&quot;msmarco-document/dev&quot;</span><span class="p">)</span>
+</code></pre></div>
+A full list of the available qrels is provided <a href="https://ir-datasets.com">here</a>.</p>
+<h3 id="off-the-shelf-runs">Off-the-shelf Runs</h3>
+<p>You can load runs from <a href="https://amenra.github.io/ranxhub/">ranxhub</a> as simply as:
+<div class="highlight"><pre><span></span><code><span class="n">run</span> <span class="o">=</span> <span class="n">Run</span><span class="o">.</span><span class="n">from_ranxhub</span><span class="p">(</span><span class="s2">&quot;run-id&quot;</span><span class="p">)</span>
+</code></pre></div>
+A full list of the available runs is provided <a href="https://amenra.github.io/ranxhub//browse">here</a>.</p>
+<h3 id="fusion-algorithms">Fusion Algorithms</h3>
+<table>
+<thead>
+<tr>
+<th><strong>Name</strong></th>
+<th><strong>Name</strong></th>
+<th><strong>Name</strong></th>
+<th><strong>Name</strong></th>
+<th><strong>Name</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://amenra.github.io/ranx/fusion/#combmin">CombMIN</a></td>
+<td><a href="https://amenra.github.io/ranx/fusion/#combmnz">CombMNZ</a></td>
+<td><a href="https://amenra.github.io/ranx/fusion/#reciprocal-rank-fusion-rrf">RRF</a></td>
+<td><a href="https://amenra.github.io/ranx/fusion/#mapfuse">MAPFuse</a></td>
+<td><a href="https://amenra.github.io/ranx/fusion/#bordafuse">BordaFuse</a></td>
+</tr>
+<tr>
+<td><a href="https://amenra.github.io/ranx/fusion/#combmed">CombMED</a></td>
+<td><a href="https://amenra.github.io/ranx/fusion/#combgmnz">CombGMNZ</a></td>
+<td><a href="https://amenra.github.io/ranx/fusion/#rank-biased-centroids-rbc">RBC</a></td>
+<td><a href="https://amenra.github.io/ranx/fusion/#posfuse">PosFuse</a></td>
+<td><a href="https://amenra.github.io/ranx/fusion/#weighted-bordafuse">Weighted BordaFuse</a></td>
+</tr>
+<tr>
+<td><a href="https://amenra.github.io/ranx/fusion/#combanz">CombANZ</a></td>
+<td><a href="https://amenra.github.io/ranx/fusion/#isr">ISR</a></td>
+<td><a href="https://amenra.github.io/ranx/fusion/#wmnz">WMNZ</a></td>
+<td><a href="https://amenra.github.io/ranx/fusion/#probfuse">ProbFuse</a></td>
+<td><a href="https://amenra.github.io/ranx/fusion/#condorcet">Condorcet</a></td>
+</tr>
+<tr>
+<td><a href="https://amenra.github.io/ranx/fusion/#combmax">CombMAX</a></td>
+<td><a href="https://amenra.github.io/ranx/fusion/#log_isr">Log_ISR</a></td>
+<td><a href="https://amenra.github.io/ranx/fusion/#mixed">Mixed</a></td>
+<td><a href="https://amenra.github.io/ranx/fusion/#segfuse">SegFuse</a></td>
+<td><a href="https://amenra.github.io/ranx/fusion/#weighted-condorcet">Weighted Condorcet</a></td>
+</tr>
+<tr>
+<td><a href="https://amenra.github.io/ranx/fusion/#combsum">CombSUM</a></td>
+<td><a href="https://amenra.github.io/ranx/fusion/#logn_isr">LogN_ISR</a></td>
+<td><a href="https://amenra.github.io/ranx/fusion/#bayesfuse">BayesFuse</a></td>
+<td><a href="https://amenra.github.io/ranx/fusion/#slidefuse">SlideFuse</a></td>
+<td><a href="https://amenra.github.io/ranx/fusion/#wighted-sum">Weighted Sum</a></td>
+</tr>
+</tbody>
+</table>
+<p>Please, refer to the <a href="https://amenra.github.io/ranx/fusion">documentation</a> for further details.</p>
+<h3 id="normalization-strategies">Normalization Strategies</h3>
+<ul>
+<li><a href="https://amenra.github.io/ranx/normalization/#min-max-norm">Min-Max Norm</a> </li>
+<li><a href="https://amenra.github.io/ranx/normalization/#sum-norm">Max Norm</a>         </li>
+<li><a href="https://amenra.github.io/ranx/normalization/#rank-norm">Sum Norm</a>        </li>
+<li><a href="https://amenra.github.io/ranx/normalization/#max-norm">ZMUV Norm</a>   </li>
+<li><a href="https://amenra.github.io/ranx/normalization/#zmuv-norm">Rank Norm</a>  </li>
+<li><a href="https://amenra.github.io/ranx/normalization/#borda-norm">Borda Norm</a></li>
+</ul>
+<p>Please, refer to the <a href="https://amenra.github.io/ranx/fusion">documentation</a> for further details.</p>
+<h2 id="requirements">🔌 Requirements</h2>
+<p><div class="highlight"><pre><span></span><code>python&gt;<span class="o">=</span><span class="m">3</span>.8
+</code></pre></div>
+As of <code>v.0.3.5</code>, <a href="https://github.com/AmenRa/ranx">ranx</a> requires <code>python&gt;=3.8</code>.</p>
+<h2 id="installation">💾 Installation</h2>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>ranx
+</code></pre></div>
+<h2 id="usage">💡 Usage</h2>
+<h3 id="create-qrels-and-run">Create Qrels and Run</h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">ranx</span><span class="w"> </span><span class="kn">import</span> <span class="n">Qrels</span><span class="p">,</span> <span class="n">Run</span>
+
+<span class="n">qrels_dict</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&quot;q_1&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;d_12&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;d_25&quot;</span><span class="p">:</span> <span class="mi">3</span> <span class="p">},</span>
+               <span class="s2">&quot;q_2&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;d_11&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;d_22&quot;</span><span class="p">:</span> <span class="mi">1</span> <span class="p">}</span> <span class="p">}</span>
+
+<span class="n">run_dict</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&quot;q_1&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;d_12&quot;</span><span class="p">:</span> <span class="mf">0.9</span><span class="p">,</span> <span class="s2">&quot;d_23&quot;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span> <span class="s2">&quot;d_25&quot;</span><span class="p">:</span> <span class="mf">0.7</span><span class="p">,</span>
+                      <span class="s2">&quot;d_36&quot;</span><span class="p">:</span> <span class="mf">0.6</span><span class="p">,</span> <span class="s2">&quot;d_32&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;d_35&quot;</span><span class="p">:</span> <span class="mf">0.4</span>  <span class="p">},</span>
+             <span class="s2">&quot;q_2&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;d_12&quot;</span><span class="p">:</span> <span class="mf">0.9</span><span class="p">,</span> <span class="s2">&quot;d_11&quot;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span> <span class="s2">&quot;d_25&quot;</span><span class="p">:</span> <span class="mf">0.7</span><span class="p">,</span>
+                      <span class="s2">&quot;d_36&quot;</span><span class="p">:</span> <span class="mf">0.6</span><span class="p">,</span> <span class="s2">&quot;d_22&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;d_35&quot;</span><span class="p">:</span> <span class="mf">0.4</span>  <span class="p">}</span> <span class="p">}</span>
+
+<span class="n">qrels</span> <span class="o">=</span> <span class="n">Qrels</span><span class="p">(</span><span class="n">qrels_dict</span><span class="p">)</span>
+<span class="n">run</span> <span class="o">=</span> <span class="n">Run</span><span class="p">(</span><span class="n">run_dict</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="evaluate">Evaluate</h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">ranx</span><span class="w"> </span><span class="kn">import</span> <span class="n">evaluate</span>
+
+<span class="c1"># Compute score for a single metric</span>
+<span class="n">evaluate</span><span class="p">(</span><span class="n">qrels</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="s2">&quot;ndcg@5&quot;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="mf">0.7861</span>
+
+<span class="c1"># Compute scores for multiple metrics at once</span>
+<span class="n">evaluate</span><span class="p">(</span><span class="n">qrels</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;map@5&quot;</span><span class="p">,</span> <span class="s2">&quot;mrr&quot;</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="p">{</span><span class="s2">&quot;map@5&quot;</span><span class="p">:</span> <span class="mf">0.6416</span><span class="p">,</span> <span class="s2">&quot;mrr&quot;</span><span class="p">:</span> <span class="mf">0.75</span><span class="p">}</span>
+</code></pre></div>
+<h3 id="compare">Compare</h3>
+<p><div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">ranx</span><span class="w"> </span><span class="kn">import</span> <span class="n">compare</span>
+
+<span class="c1"># Compare different runs and perform Two-sided Paired Student&#39;s t-Test</span>
+<span class="n">report</span> <span class="o">=</span> <span class="n">compare</span><span class="p">(</span>
+    <span class="n">qrels</span><span class="o">=</span><span class="n">qrels</span><span class="p">,</span>
+    <span class="n">runs</span><span class="o">=</span><span class="p">[</span><span class="n">run_1</span><span class="p">,</span> <span class="n">run_2</span><span class="p">,</span> <span class="n">run_3</span><span class="p">,</span> <span class="n">run_4</span><span class="p">,</span> <span class="n">run_5</span><span class="p">],</span>
+    <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;map@100&quot;</span><span class="p">,</span> <span class="s2">&quot;mrr@100&quot;</span><span class="p">,</span> <span class="s2">&quot;ndcg@10&quot;</span><span class="p">],</span>
+    <span class="n">max_p</span><span class="o">=</span><span class="mf">0.01</span>  <span class="c1"># P-value threshold</span>
+<span class="p">)</span>
+</code></pre></div>
+Output:
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">report</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>#    Model    MAP@100    MRR@100    NDCG@10
+---  -------  --------   --------   ---------
+a    model_1  0.320ᵇ     0.320ᵇ     0.368ᵇᶜ
+b    model_2  0.233      0.234      0.239
+c    model_3  0.308ᵇ     0.309ᵇ     0.330ᵇ
+d    model_4  0.366ᵃᵇᶜ   0.367ᵃᵇᶜ   0.408ᵃᵇᶜ
+e    model_5  0.405ᵃᵇᶜᵈ  0.406ᵃᵇᶜᵈ  0.451ᵃᵇᶜᵈ
+</code></pre></div></p>
+<h3 id="fusion">Fusion</h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">ranx</span><span class="w"> </span><span class="kn">import</span> <span class="n">fuse</span><span class="p">,</span> <span class="n">optimize_fusion</span>
+
+<span class="n">best_params</span> <span class="o">=</span> <span class="n">optimize_fusion</span><span class="p">(</span>
+    <span class="n">qrels</span><span class="o">=</span><span class="n">train_qrels</span><span class="p">,</span>
+    <span class="n">runs</span><span class="o">=</span><span class="p">[</span><span class="n">train_run_1</span><span class="p">,</span> <span class="n">train_run_2</span><span class="p">,</span> <span class="n">train_run_3</span><span class="p">],</span>
+    <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;min-max&quot;</span><span class="p">,</span>     <span class="c1"># The norm. to apply before fusion</span>
+    <span class="n">method</span><span class="o">=</span><span class="s2">&quot;wsum&quot;</span><span class="p">,</span>      <span class="c1"># The fusion algorithm to use (Weighted Sum)</span>
+    <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;ndcg@100&quot;</span><span class="p">,</span>  <span class="c1"># The metric to maximize</span>
+<span class="p">)</span>
+
+<span class="n">combined_test_run</span> <span class="o">=</span> <span class="n">fuse</span><span class="p">(</span>
+    <span class="n">runs</span><span class="o">=</span><span class="p">[</span><span class="n">test_run_1</span><span class="p">,</span> <span class="n">test_run_2</span><span class="p">,</span> <span class="n">test_run_3</span><span class="p">],</span>  
+    <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;min-max&quot;</span><span class="p">,</span>       
+    <span class="n">method</span><span class="o">=</span><span class="s2">&quot;wsum&quot;</span><span class="p">,</span>        
+    <span class="n">params</span><span class="o">=</span><span class="n">best_params</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<h2 id="examples">📖 Examples</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th style="text-align: left;">Link</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Overview</td>
+<td style="text-align: left;"><a href="https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/1_overview.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></td>
+</tr>
+<tr>
+<td>Qrels and Run</td>
+<td style="text-align: left;"><a href="https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/2_qrels_and_run.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></td>
+</tr>
+<tr>
+<td>Evaluation</td>
+<td style="text-align: left;"><a href="https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/3_evaluation.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></td>
+</tr>
+<tr>
+<td>Comparison and Report</td>
+<td style="text-align: left;"><a href="https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/4_comparison_and_report.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></td>
+</tr>
+<tr>
+<td>Fusion</td>
+<td style="text-align: left;"><a href="https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/5_fusion.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></td>
+</tr>
+<tr>
+<td>Plot</td>
+<td style="text-align: left;"><a href="https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/7_plot.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></td>
+</tr>
+<tr>
+<td>Share your runs with <a href="https://amenra.github.io/ranxhub">ranxhub</a></td>
+<td style="text-align: left;"><a href="https://colab.research.google.com/github/AmenRa/ranx/blob/master/notebooks/6_ranxhub.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="documentation">📚 Documentation</h2>
+<p>Browse the <a href="https://amenra.github.io/ranx">documentation</a> for more details and examples.</p>
+<h2 id="citation">🎓 Citation</h2>
+<p>If you use <a href="https://github.com/AmenRa/ranx">ranx</a> to evaluate results for your scientific publication, please consider citing our <a href="https://ecir2022.org">ECIR 2022</a> paper:</p>
+<details>
+  <summary>BibTeX</summary>
+
+  <div class="highlight"><pre><span></span><code><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">ranx</span><span class="p">,</span>
+<span class="w">  </span><span class="na">author</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{Elias Bassani}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">title</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="s">{ranx: {A} Blazing-Fast Python Library for Ranking Evaluation and Comparison}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">booktitle</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{{ECIR} {(2)}}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">series</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{Lecture Notes in Computer Science}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">volume</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{13186}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">pages</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="s">{259--264}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">publisher</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Springer}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">year</span><span class="w">         </span><span class="p">=</span><span class="w"> </span><span class="s">{2022}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">doi</span><span class="w">          </span><span class="p">=</span><span class="w"> </span><span class="s">{10.1007/978-3-030-99739-7\_30}</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+
+<p>If you use the fusion functionalities provided by <a href="https://github.com/AmenRa/ranx">ranx</a> for conducting the experiments of your scientific publication, please consider citing our <a href="https://www.cikm2022.org">CIKM 2022</a> paper:</p>
+<details>
+  <summary>BibTeX</summary>
+
+  <div class="highlight"><pre><span></span><code><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">ranx.fuse</span><span class="p">,</span>
+<span class="w">  </span><span class="na">author</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Elias Bassani and</span>
+<span class="s">              Luca Romelli}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">title</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{ranx.fuse: {A} Python Library for Metasearch}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">booktitle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{{CIKM}}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">pages</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{4808--4812}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">publisher</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{{ACM}}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">year</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">{2022}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">doi</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{10.1145/3511808.3557207}</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+
+<p>If you use pre-computed runs from [ranxhub]((https://amenra.github.io/ranxhub) to make comparison for your scientific publication, please consider citing our <a href="https://sigir.org/sigir2023">SIGIR 2023</a> paper:</p>
+<details>
+  <summary>BibTeX</summary>
+
+  <div class="highlight"><pre><span></span><code><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">ranxhub</span><span class="p">,</span>
+<span class="w">  </span><span class="na">author</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{Elias Bassani}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">title</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="s">{ranxhub: An Online Repository for Information Retrieval Runs}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">booktitle</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{{SIGIR}}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">pages</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="s">{3210--3214}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">publisher</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{{ACM}}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">year</span><span class="w">         </span><span class="p">=</span><span class="w"> </span><span class="s">{2023}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">doi</span><span class="w">          </span><span class="p">=</span><span class="w"> </span><span class="s">{10.1145/3539618.3591823}</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+
+<h2 id="feature-requests">🎁 Feature Requests</h2>
+<p>Would you like to see other features implemented? Please, open a <a href="https://github.com/AmenRa/ranx/issues/new?assignees=&amp;labels=enhancement&amp;template=feature_request.md&amp;title=%5BFeature+Request%5D+title">feature request</a>.</p>
+<h2 id="want-to-contribute">🤘 Want to contribute?</h2>
+<p>Would you like to contribute? Please, drop me an <a href="mailto:elias.bssn@gmail.com?subject=[GitHub]%20ranx">e-mail</a>.</p>
+<h2 id="license">📄 License</h2>
+<p><a href="https://github.com/AmenRa/ranx">ranx</a> is an open-sourced software licensed under the <a href="LICENSE">MIT license</a>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": ".", "features": [], "search": "assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

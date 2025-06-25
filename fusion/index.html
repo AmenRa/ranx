@@ -1,0 +1,2063 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="⚡️ A Blazing-Fast Python Library for Ranking Evaluation and Comparison 🐍">
+      
+      
+      
+        <link rel="canonical" href="https://ranx.github.io/fusion/">
+      
+      
+        <link rel="prev" href="../faq/">
+      
+      
+        <link rel="next" href="../metrics/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>Fusion - ranx</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#fusion" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="ranx" class="md-header__button md-logo" aria-label="ranx" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ranx
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Fusion
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="red" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/amenra/ranx" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    amenra/ranx
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ranx" class="md-nav__button md-logo" aria-label="ranx" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ranx
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/amenra/ranx" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    amenra/ranx
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../compare/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Compare
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../evaluate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Evaluate
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FAQ
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Fusion
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fusion
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#fuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fuse
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optimize-fusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Optimize Fusion
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#supported-fusion-algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supported fusion algorithms
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Supported fusion algorithms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bayesfuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      BayesFuse
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bordafuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      BordaFuse
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combanz" class="md-nav__link">
+    <span class="md-ellipsis">
+      CombANZ
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combgmnz" class="md-nav__link">
+    <span class="md-ellipsis">
+      CombGMNZ
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combmax" class="md-nav__link">
+    <span class="md-ellipsis">
+      CombMAX
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combmed" class="md-nav__link">
+    <span class="md-ellipsis">
+      CombMED
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combmin" class="md-nav__link">
+    <span class="md-ellipsis">
+      CombMIN
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combmnz" class="md-nav__link">
+    <span class="md-ellipsis">
+      CombMNZ
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combsum" class="md-nav__link">
+    <span class="md-ellipsis">
+      CombSUM
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#condorcet" class="md-nav__link">
+    <span class="md-ellipsis">
+      Condorcet
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isr" class="md-nav__link">
+    <span class="md-ellipsis">
+      ISR
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log_isr" class="md-nav__link">
+    <span class="md-ellipsis">
+      Log_ISR
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logn_isr" class="md-nav__link">
+    <span class="md-ellipsis">
+      LogN_ISR
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mapfuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      MAPFuse
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mixed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mixed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#posfuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      PosFuse
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#probfuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      ProbFuse
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rank-biased-centroids-rbc" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rank-Biased Centroids (RBC)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reciprocal-rank-fusion-rrf" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reciprocal Rank Fusion (RRF)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#segfuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      SegFuse
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#slidefuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlideFuse
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#weighted-bordafuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      Weighted BordaFuse
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#weighted-condorcet" class="md-nav__link">
+    <span class="md-ellipsis">
+      Weighted Condorcet
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wmnz" class="md-nav__link">
+    <span class="md-ellipsis">
+      WMNZ
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#weighted-sum" class="md-nav__link">
+    <span class="md-ellipsis">
+      Weighted Sum
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Metrics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../normalization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Normalization
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qrels/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Qrels
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../report/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Report
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../run/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Run
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../stat_tests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Statistical Tests
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#fuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fuse
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optimize-fusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Optimize Fusion
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#supported-fusion-algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supported fusion algorithms
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Supported fusion algorithms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bayesfuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      BayesFuse
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bordafuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      BordaFuse
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combanz" class="md-nav__link">
+    <span class="md-ellipsis">
+      CombANZ
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combgmnz" class="md-nav__link">
+    <span class="md-ellipsis">
+      CombGMNZ
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combmax" class="md-nav__link">
+    <span class="md-ellipsis">
+      CombMAX
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combmed" class="md-nav__link">
+    <span class="md-ellipsis">
+      CombMED
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combmin" class="md-nav__link">
+    <span class="md-ellipsis">
+      CombMIN
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combmnz" class="md-nav__link">
+    <span class="md-ellipsis">
+      CombMNZ
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combsum" class="md-nav__link">
+    <span class="md-ellipsis">
+      CombSUM
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#condorcet" class="md-nav__link">
+    <span class="md-ellipsis">
+      Condorcet
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isr" class="md-nav__link">
+    <span class="md-ellipsis">
+      ISR
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log_isr" class="md-nav__link">
+    <span class="md-ellipsis">
+      Log_ISR
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logn_isr" class="md-nav__link">
+    <span class="md-ellipsis">
+      LogN_ISR
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mapfuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      MAPFuse
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mixed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mixed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#posfuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      PosFuse
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#probfuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      ProbFuse
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rank-biased-centroids-rbc" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rank-Biased Centroids (RBC)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reciprocal-rank-fusion-rrf" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reciprocal Rank Fusion (RRF)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#segfuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      SegFuse
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#slidefuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlideFuse
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#weighted-bordafuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      Weighted BordaFuse
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#weighted-condorcet" class="md-nav__link">
+    <span class="md-ellipsis">
+      Weighted Condorcet
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wmnz" class="md-nav__link">
+    <span class="md-ellipsis">
+      WMNZ
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#weighted-sum" class="md-nav__link">
+    <span class="md-ellipsis">
+      Weighted Sum
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="fusion">Fusion</h1>
+<h2 id="fuse">Fuse</h2>
+<hr />
+<p><code>ranx</code> provides several <a class="autorefs autorefs-internal" href="#supported-fusion-algorithms">fusion algorithms</a>, all of which can be accessed through a single function in the same fashion as <code>evaluate</code>.</p>
+<p>Usage example:
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">ranx</span><span class="w"> </span><span class="kn">import</span> <span class="n">fuse</span>
+
+<span class="n">combined_run</span> <span class="o">=</span> <span class="n">fuse</span><span class="p">(</span>
+    <span class="n">runs</span><span class="o">=</span><span class="p">[</span><span class="n">run_1</span><span class="p">,</span> <span class="n">run_2</span><span class="p">],</span>  <span class="c1"># A list of Run instances to fuse</span>
+    <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;min-max&quot;</span><span class="p">,</span>       <span class="c1"># The normalization strategy to apply before fusion</span>
+    <span class="n">method</span><span class="o">=</span><span class="s2">&quot;max&quot;</span><span class="p">,</span>         <span class="c1"># The fusion algorithm to use </span>
+<span class="p">)</span>
+</code></pre></div></p>
+<h2 id="optimize-fusion">Optimize Fusion</h2>
+<hr />
+<p>As many fusion algorithms require a training or optimization step, <code>ranx</code> provides
+a function to optimize all of those algorithms. For algorithms requiring
+hyper-parameter optimization, <code>ranx</code> automatically evaluates pre-defined
+configurations via grid search. In those cases, <code>ranx</code> shows a progress bar.</p>
+<p>Usage example:
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">ranx</span><span class="w"> </span><span class="kn">import</span> <span class="n">fuse</span><span class="p">,</span> <span class="n">optimize_fusion</span>
+
+<span class="n">best_params</span> <span class="o">=</span> <span class="n">optimize_fusion</span><span class="p">(</span>
+    <span class="n">qrels</span><span class="o">=</span><span class="n">train_qrels</span><span class="p">,</span>
+    <span class="n">runs</span><span class="o">=</span><span class="p">[</span><span class="n">train_run_1</span><span class="p">,</span> <span class="n">train_run_2</span><span class="p">,</span> <span class="n">train_run_3</span><span class="p">],</span>
+    <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;min-max&quot;</span><span class="p">,</span>
+    <span class="n">method</span><span class="o">=</span><span class="s2">&quot;wsum&quot;</span><span class="p">,</span>
+    <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;ndcg@100&quot;</span><span class="p">,</span>  <span class="c1"># The metric to maximize during optimization</span>
+<span class="p">)</span>
+
+<span class="n">combined_test_run</span> <span class="o">=</span> <span class="n">fuse</span><span class="p">(</span>
+    <span class="n">runs</span><span class="o">=</span><span class="p">[</span><span class="n">test_run_1</span><span class="p">,</span> <span class="n">test_run_2</span><span class="p">,</span> <span class="n">test_run_3</span><span class="p">],</span>  
+    <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;min-max&quot;</span><span class="p">,</span>       
+    <span class="n">method</span><span class="o">=</span><span class="s2">&quot;wsum&quot;</span><span class="p">,</span>        
+    <span class="n">params</span><span class="o">=</span><span class="n">best_params</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div></p>
+<h2 id="supported-fusion-algorithms">Supported fusion algorithms</h2>
+<hr />
+<p><code>ranx</code> supports the following fusion algorithms:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Algorithm</strong></th>
+<th><strong>Alias</strong></th>
+<th style="text-align: center;"><strong>Optim.</strong></th>
+<th><strong>Algorithm</strong></th>
+<th><strong>Alias</strong></th>
+<th style="text-align: center;"><strong>Optim.</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a class="autorefs autorefs-internal" href="#combmin">CombMIN</a></td>
+<td>min</td>
+<td style="text-align: center;">No</td>
+<td><a class="autorefs autorefs-internal" href="#combmax">CombMAX</a></td>
+<td>max</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr>
+<td><a class="autorefs autorefs-internal" href="#combmed">CombMED</a></td>
+<td>med</td>
+<td style="text-align: center;">No</td>
+<td><a class="autorefs autorefs-internal" href="#combsum">CombSUM</a></td>
+<td>sum</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr>
+<td><a class="autorefs autorefs-internal" href="#combanz">CombANZ</a></td>
+<td>anz</td>
+<td style="text-align: center;">No</td>
+<td><a class="autorefs autorefs-internal" href="#combmnz">CombMNZ</a></td>
+<td>mnz</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr>
+<td><a class="autorefs autorefs-internal" href="#combgmnz">CombGMNZ</a></td>
+<td>gmnz</td>
+<td style="text-align: center;">Yes</td>
+<td><a class="autorefs autorefs-internal" href="#isr">ISR</a></td>
+<td>isr</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr>
+<td><a class="autorefs autorefs-internal" href="#log_isr">Log_ISR</a></td>
+<td>log_isr</td>
+<td style="text-align: center;">No</td>
+<td><a class="autorefs autorefs-internal" href="#logn_isr">LogN_ISR</a></td>
+<td>logn_isr</td>
+<td style="text-align: center;">Yes</td>
+</tr>
+<tr>
+<td><a class="autorefs autorefs-internal" href="#reciprocal-rank-fusion-rrf">Reciprocal Rank Fusion (RRF)</a></td>
+<td>rrf</td>
+<td style="text-align: center;">Yes</td>
+<td><a class="autorefs autorefs-internal" href="#posfuse">PosFuse</a></td>
+<td>posfuse</td>
+<td style="text-align: center;">Yes</td>
+</tr>
+<tr>
+<td><a class="autorefs autorefs-internal" href="#probfuse">ProbFuse</a></td>
+<td>probfuse</td>
+<td style="text-align: center;">Yes</td>
+<td><a class="autorefs autorefs-internal" href="#segfuse">SegFuse</a></td>
+<td>segfuse</td>
+<td style="text-align: center;">Yes</td>
+</tr>
+<tr>
+<td><a class="autorefs autorefs-internal" href="#slidefuse">SlideFuse</a></td>
+<td>slidefuse</td>
+<td style="text-align: center;">Yes</td>
+<td><a class="autorefs autorefs-internal" href="#mapfuse">MAPFuse</a></td>
+<td>mapfuse</td>
+<td style="text-align: center;">Yes</td>
+</tr>
+<tr>
+<td><a class="autorefs autorefs-internal" href="#bordafuse">BordaFuse</a></td>
+<td>bordafuse</td>
+<td style="text-align: center;">No</td>
+<td><a class="autorefs autorefs-internal" href="#weighted-bordafuse">Weighted BordaFuse</a></td>
+<td>w_bordafuse</td>
+<td style="text-align: center;">Yes</td>
+</tr>
+<tr>
+<td><a class="autorefs autorefs-internal" href="#condorcet">Condorcet</a></td>
+<td>condorcet</td>
+<td style="text-align: center;">No</td>
+<td><a class="autorefs autorefs-internal" href="#weighted-condorcet">Weighted Condorcet</a></td>
+<td>w_condorcet</td>
+<td style="text-align: center;">Yes</td>
+</tr>
+<tr>
+<td><a class="autorefs autorefs-internal" href="#bayesfuse">BayesFuse</a></td>
+<td>bayesfuse</td>
+<td style="text-align: center;">Yes</td>
+<td><a class="autorefs autorefs-internal" href="#mixed">Mixed</a></td>
+<td>mixed</td>
+<td style="text-align: center;">Yes</td>
+</tr>
+<tr>
+<td><a class="autorefs autorefs-internal" href="#wmnz">WMNZ</a></td>
+<td>wmnz</td>
+<td style="text-align: center;">Yes</td>
+<td><a class="autorefs autorefs-internal" href="#weighted-sum">Weighted Sum</a></td>
+<td>wsum</td>
+<td style="text-align: center;">Yes</td>
+</tr>
+<tr>
+<td><a class="autorefs autorefs-internal" href="#rank-biased-centroids-rbc">Rank-Biased Centroids (RBC)</a></td>
+<td>rbc</td>
+<td style="text-align: center;">Yes</td>
+<td></td>
+<td></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="bayesfuse">BayesFuse</h3>
+<p>Computes BayesFuse as proposed by <a href="https://dl.acm.org/doi/10.1145/383952.384007">Aslam et al.</a>.  </p>
+<details>
+    <summary>BibTeX</summary>
+    <div class="highlight"><pre><span></span><code><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">DBLP:conf/sigir/AslamM01</span><span class="p">,</span>
+<span class="w">    </span><span class="na">author</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Javed A. Aslam and</span>
+<span class="s">                Mark H. Montague}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">editor</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{W. Bruce Croft and</span>
+<span class="s">                David J. Harper and</span>
+<span class="s">                Donald H. Kraft and</span>
+<span class="s">                Justin Zobel}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">title</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{Models for Metasearch}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">booktitle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{{SIGIR} 2001: Proceedings of the 24th Annual International {ACM} {SIGIR}</span>
+<span class="s">                Conference on Research and Development in Information Retrieval, September</span>
+<span class="s">                9-13, 2001, New Orleans, Louisiana, {USA}}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">pages</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{275--284}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">publisher</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{{ACM}}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">year</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">{2001}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">url</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{https://doi.org/10.1145/383952.384007}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">doi</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{10.1145/383952.384007}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">timestamp</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Tue, 06 Nov 2018 11:07:25 +0100}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">biburl</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{https://dblp.org/rec/conf/sigir/AslamM01.bib}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">bibsource</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{dblp computer science bibliography, https://dblp.org}</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+
+<h3 id="bordafuse">BordaFuse</h3>
+<p>Computes BordaFuse as proposed by <a href="https://dl.acm.org/doi/10.1145/383952.384007">Aslam et al.</a>.  </p>
+<details>
+    <summary>BibTeX</summary>
+    <div class="highlight"><pre><span></span><code><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">DBLP:conf/sigir/AslamM01</span><span class="p">,</span>
+<span class="w">    </span><span class="na">author</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Javed A. Aslam and</span>
+<span class="s">                Mark H. Montague}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">editor</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{W. Bruce Croft and</span>
+<span class="s">                David J. Harper and</span>
+<span class="s">                Donald H. Kraft and</span>
+<span class="s">                Justin Zobel}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">title</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{Models for Metasearch}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">booktitle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{{SIGIR} 2001: Proceedings of the 24th Annual International {ACM} {SIGIR}</span>
+<span class="s">                Conference on Research and Development in Information Retrieval, September</span>
+<span class="s">                9-13, 2001, New Orleans, Louisiana, {USA}}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">pages</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{275--284}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">publisher</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{{ACM}}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">year</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">{2001}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">url</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{https://doi.org/10.1145/383952.384007}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">doi</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{10.1145/383952.384007}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">timestamp</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Tue, 06 Nov 2018 11:07:25 +0100}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">biburl</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{https://dblp.org/rec/conf/sigir/AslamM01.bib}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">bibsource</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{dblp computer science bibliography, https://dblp.org}</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+
+<h3 id="combanz">CombANZ</h3>
+<p>Computes CombANZ as proposed by <a href="https://trec.nist.gov/pubs/trec2/papers/txt/23.txt">Fox et al.</a>.  </p>
+<details>
+    <summary>BibTeX</summary>
+    <div class="highlight"><pre><span></span><code><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">DBLP:conf/trec/FoxS93</span><span class="p">,</span>
+<span class="w">    </span><span class="na">author</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Edward A. Fox and</span>
+<span class="s">                Joseph A. Shaw}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">title</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{Combination of Multiple Searches}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">booktitle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{{TREC}}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">series</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{{NIST} Special Publication}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">volume</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{500-215}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">pages</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{243--252}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">publisher</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{National Institute of Standards and Technology {(NIST)}}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">year</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">{1993}</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+
+<h3 id="combgmnz">CombGMNZ</h3>
+<p>Computes CombGMNZ as proposed by <a href="https://dl.acm.org/doi/10.1145/258525.258587">Joon Ho Lee</a>.</p>
+<details>
+    <summary>BibTeX</summary>
+    <div class="highlight"><pre><span></span><code><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">DBLP:conf/sigir/Lee97</span><span class="p">,</span>
+<span class="w">    </span><span class="na">author</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Joon Ho Lee}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">title</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{Analyses of Multiple Evidence Combination}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">booktitle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{{SIGIR}}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">pages</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{267--276}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">publisher</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{{ACM}}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">year</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">{1997}</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+<table>
+<thead>
+<tr>
+<th><strong>Optimization Parameter</strong></th>
+<th style="text-align: center;"><strong>Default Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>min_gamma</td>
+<td style="text-align: center;">0.01</td>
+</tr>
+<tr>
+<td>max_gamma</td>
+<td style="text-align: center;">1.0</td>
+</tr>
+<tr>
+<td>step</td>
+<td style="text-align: center;">0.01</td>
+</tr>
+</tbody>
+</table>
+<h3 id="combmax">CombMAX</h3>
+<p>Computes CombMAX as proposed by <a href="https://trec.nist.gov/pubs/trec2/papers/txt/23.txt">Fox et al.</a>.</p>
+<details>
+    <summary>BibTeX</summary>
+    <div class="highlight"><pre><span></span><code><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">DBLP:conf/trec/FoxS93</span><span class="p">,</span>
+<span class="w">    </span><span class="na">author</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Edward A. Fox and</span>
+<span class="s">                Joseph A. Shaw}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">title</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{Combination of Multiple Searches}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">booktitle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{{TREC}}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">series</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{{NIST} Special Publication}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">volume</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{500-215}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">pages</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{243--252}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">publisher</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{National Institute of Standards and Technology {(NIST)}}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">year</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">{1993}</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+
+<h3 id="combmed">CombMED</h3>
+<p>Computes CombMED as proposed by <a href="https://trec.nist.gov/pubs/trec2/papers/txt/23.txt">Fox et al.</a>.</p>
+<details>
+    <summary>BibTeX</summary>
+    <div class="highlight"><pre><span></span><code><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">DBLP:conf/trec/FoxS93</span><span class="p">,</span>
+<span class="w">    </span><span class="na">author</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Edward A. Fox and</span>
+<span class="s">                Joseph A. Shaw}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">title</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{Combination of Multiple Searches}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">booktitle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{{TREC}}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">series</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{{NIST} Special Publication}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">volume</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{500-215}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">pages</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{243--252}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">publisher</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{National Institute of Standards and Technology {(NIST)}}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">year</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">{1993}</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+
+<h3 id="combmin">CombMIN</h3>
+<p>Computes CombMIN as proposed by <a href="https://trec.nist.gov/pubs/trec2/papers/txt/23.txt">Fox et al.</a>.</p>
+<details>
+    <summary>BibTeX</summary>
+    <div class="highlight"><pre><span></span><code><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">DBLP:conf/trec/FoxS93</span><span class="p">,</span>
+<span class="w">    </span><span class="na">author</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Edward A. Fox and</span>
+<span class="s">                Joseph A. Shaw}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">title</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{Combination of Multiple Searches}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">booktitle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{{TREC}}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">series</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{{NIST} Special Publication}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">volume</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{500-215}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">pages</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{243--252}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">publisher</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{National Institute of Standards and Technology {(NIST)}}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">year</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">{1993}</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+
+<h3 id="combmnz">CombMNZ</h3>
+<p>Computes CombMNZ as proposed by <a href="https://trec.nist.gov/pubs/trec2/papers/txt/23.txt">Fox et al.</a>.</p>
+<details>
+    <summary>BibTeX</summary>
+    <div class="highlight"><pre><span></span><code><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">DBLP:conf/trec/FoxS93</span><span class="p">,</span>
+<span class="w">    </span><span class="na">author</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Edward A. Fox and</span>
+<span class="s">                Joseph A. Shaw}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">title</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{Combination of Multiple Searches}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">booktitle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{{TREC}}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">series</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{{NIST} Special Publication}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">volume</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{500-215}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">pages</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{243--252}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">publisher</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{National Institute of Standards and Technology {(NIST)}}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">year</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">{1993}</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+
+<h3 id="combsum">CombSUM</h3>
+<p>Computes CombSUM as proposed by <a href="https://trec.nist.gov/pubs/trec2/papers/txt/23.txt">Fox et al.</a>.</p>
+<details>
+    <summary>BibTeX</summary>
+    <div class="highlight"><pre><span></span><code><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">DBLP:conf/trec/FoxS93</span><span class="p">,</span>
+<span class="w">    </span><span class="na">author</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Edward A. Fox and</span>
+<span class="s">                Joseph A. Shaw}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">title</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{Combination of Multiple Searches}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">booktitle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{{TREC}}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">series</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{{NIST} Special Publication}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">volume</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{500-215}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">pages</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{243--252}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">publisher</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{National Institute of Standards and Technology {(NIST)}}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">year</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">{1993}</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+
+<h3 id="condorcet">Condorcet</h3>
+<p>Computes Condorcet as proposed by <a href="https://dl.acm.org/doi/10.1145/584792.584881">Montague et al.</a>.</p>
+<details>
+    <summary>BibTeX</summary>
+    <div class="highlight"><pre><span></span><code><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">DBLP:conf/cikm/MontagueA02</span><span class="p">,</span>
+<span class="w">    </span><span class="na">author</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Mark H. Montague and</span>
+<span class="s">                Javed A. Aslam}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">title</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{Condorcet fusion for improved retrieval}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">booktitle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Proceedings of the 2002 {ACM} {CIKM} International Conference on Information</span>
+<span class="s">                and Knowledge Management, McLean, VA, USA, November 4-9, 2002}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">pages</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{538--548}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">publisher</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{{ACM}}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">year</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">{2002}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">url</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{https://doi.org/10.1145/584792.584881}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">doi</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{10.1145/584792.584881}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">timestamp</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Tue, 06 Nov 2018 16:57:50 +0100}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">biburl</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{https://dblp.org/rec/conf/cikm/MontagueA02.bib}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">bibsource</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{dblp computer science bibliography, https://dblp.org}</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+
+<h3 id="isr">ISR</h3>
+<p>Computes ISR as proposed by <a href="https://www.sciencedirect.com/science/article/abs/pii/S0895611114000664">Mourão et al.</a>.</p>
+<details>
+    <summary>BibTeX</summary>
+    <div class="highlight"><pre><span></span><code><span class="nc">@article</span><span class="p">{</span><span class="nl">DBLP:journals/cmig/MouraoMM15</span><span class="p">,</span>
+<span class="w">    </span><span class="na">author</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Andr{\&#39;{e}} Mour{\~{a}}o and</span>
+<span class="s">                Fl{\&#39;{a}}vio Martins and</span>
+<span class="s">                Jo{\~{a}}o Magalh{\~{a}}es}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">title</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{Multimodal medical information retrieval with unsupervised rank fusion}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">journal</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="s">{Comput. Medical Imaging Graph.}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">volume</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{39}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">pages</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{35--45}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">year</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">{2015}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">url</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{https://doi.org/10.1016/j.compmedimag.2014.05.006}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">doi</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{10.1016/j.compmedimag.2014.05.006}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">timestamp</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Thu, 14 May 2020 10:17:16 +0200}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">biburl</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{https://dblp.org/rec/journals/cmig/MouraoMM15.bib}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">bibsource</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{dblp computer science bibliography, https://dblp.org}</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+
+<h3 id="log_isr">Log_ISR</h3>
+<p>Computes Log_ISR as proposed by <a href="https://www.sciencedirect.com/science/article/abs/pii/S0895611114000664">Mourão et al.</a>.</p>
+<details>
+    <summary>BibTeX</summary>
+    <div class="highlight"><pre><span></span><code><span class="nc">@article</span><span class="p">{</span><span class="nl">DBLP:journals/cmig/MouraoMM15</span><span class="p">,</span>
+<span class="w">    </span><span class="na">author</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Andr{\&#39;{e}} Mour{\~{a}}o and</span>
+<span class="s">                Fl{\&#39;{a}}vio Martins and</span>
+<span class="s">                Jo{\~{a}}o Magalh{\~{a}}es}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">title</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{Multimodal medical information retrieval with unsupervised rank fusion}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">journal</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="s">{Comput. Medical Imaging Graph.}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">volume</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{39}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">pages</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{35--45}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">year</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">{2015}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">url</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{https://doi.org/10.1016/j.compmedimag.2014.05.006}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">doi</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{10.1016/j.compmedimag.2014.05.006}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">timestamp</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Thu, 14 May 2020 10:17:16 +0200}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">biburl</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{https://dblp.org/rec/journals/cmig/MouraoMM15.bib}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">bibsource</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{dblp computer science bibliography, https://dblp.org}</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+
+<h3 id="logn_isr">LogN_ISR</h3>
+<p>Computes Log_ISR as proposed by <a href="https://www.sciencedirect.com/science/article/abs/pii/S0895611114000664">Mourão et al.</a>.</p>
+<details>
+    <summary>BibTeX</summary>
+    <div class="highlight"><pre><span></span><code><span class="nc">@article</span><span class="p">{</span><span class="nl">DBLP:journals/cmig/MouraoMM15</span><span class="p">,</span>
+<span class="w">    </span><span class="na">author</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Andr{\&#39;{e}} Mour{\~{a}}o and</span>
+<span class="s">                Fl{\&#39;{a}}vio Martins and</span>
+<span class="s">                Jo{\~{a}}o Magalh{\~{a}}es}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">title</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{Multimodal medical information retrieval with unsupervised rank fusion}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">journal</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="s">{Comput. Medical Imaging Graph.}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">volume</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{39}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">pages</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{35--45}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">year</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">{2015}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">url</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{https://doi.org/10.1016/j.compmedimag.2014.05.006}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">doi</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{10.1016/j.compmedimag.2014.05.006}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">timestamp</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Thu, 14 May 2020 10:17:16 +0200}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">biburl</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{https://dblp.org/rec/journals/cmig/MouraoMM15.bib}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">bibsource</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{dblp computer science bibliography, https://dblp.org}</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+<table>
+<thead>
+<tr>
+<th><strong>Optimization Parameter</strong></th>
+<th style="text-align: center;"><strong>Default Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>min_sigma</td>
+<td style="text-align: center;">0.01</td>
+</tr>
+<tr>
+<td>max_sigma</td>
+<td style="text-align: center;">1.0</td>
+</tr>
+<tr>
+<td>step</td>
+<td style="text-align: center;">0.01</td>
+</tr>
+</tbody>
+</table>
+<h3 id="mapfuse">MAPFuse</h3>
+<p>Computes MAPFuse as proposed by <a href="https://dl.acm.org/doi/10.1145/1835449.1835508">Lillis et al.</a>.</p>
+<details>
+    <summary>BibTeX</summary>
+    <div class="highlight"><pre><span></span><code><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">DBLP:conf/sigir/LillisZTCLD10</span><span class="p">,</span>
+<span class="w">    </span><span class="na">author</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{David Lillis and</span>
+<span class="s">                Lusheng Zhang and</span>
+<span class="s">                Fergus Toolan and</span>
+<span class="s">                Rem W. Collier and</span>
+<span class="s">                David Leonard and</span>
+<span class="s">                John Dunnion}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">editor</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Fabio Crestani and</span>
+<span class="s">                St{\&#39;{e}}phane Marchand{-}Maillet and</span>
+<span class="s">                Hsin{-}Hsi Chen and</span>
+<span class="s">                Efthimis N. Efthimiadis and</span>
+<span class="s">                Jacques Savoy}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">title</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{Estimating probabilities for effective data fusion}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">booktitle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Proceeding of the 33rd International {ACM} {SIGIR} Conference on Research</span>
+<span class="s">                and Development in Information Retrieval, {SIGIR} 2010, Geneva, Switzerland,</span>
+<span class="s">                July 19-23, 2010}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">pages</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{347--354}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">publisher</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{{ACM}}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">year</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">{2010}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">url</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{https://doi.org/10.1145/1835449.1835508}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">doi</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{10.1145/1835449.1835508}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">timestamp</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Tue, 06 Nov 2018 11:07:25 +0100}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">biburl</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{https://dblp.org/rec/conf/sigir/LillisZTCLD10.bib}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">bibsource</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{dblp computer science bibliography, https://dblp.org}</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+
+<h3 id="mixed">Mixed</h3>
+<p>Computes Mixed as proposed by <a href="https://dl.acm.org/doi/10.1145/584792.584908">Wu et al.</a>.</p>
+<details>
+    <summary>BibTeX</summary>
+    <div class="highlight"><pre><span></span><code><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">DBLP:conf/cikm/WuC02</span><span class="p">,</span>
+<span class="w">    </span><span class="na">author</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Shengli Wu and</span>
+<span class="s">                Fabio Crestani}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">title</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{Data fusion with estimated weights}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">booktitle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Proceedings of the 2002 {ACM} {CIKM} International Conference on Information</span>
+<span class="s">                and Knowledge Management, McLean, VA, USA, November 4-9, 2002}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">pages</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{648--651}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">publisher</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{{ACM}}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">year</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">{2002}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">url</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{https://doi.org/10.1145/584792.584908}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">doi</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{10.1145/584792.584908}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">timestamp</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Tue, 06 Nov 2018 16:57:40 +0100}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">biburl</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{https://dblp.org/rec/conf/cikm/WuC02.bib}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">bibsource</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{dblp computer science bibliography, https://dblp.org}</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+<table>
+<thead>
+<tr>
+<th><strong>Optimization Parameter</strong></th>
+<th style="text-align: center;"><strong>Default Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>step</td>
+<td style="text-align: center;">0.1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="posfuse">PosFuse</h3>
+<p>Computes PosFuse as proposed by <a href="https://dl.acm.org/doi/10.1145/1835449.1835508">Lillis et al.</a>.</p>
+<details>
+    <summary>BibTeX</summary>
+    <div class="highlight"><pre><span></span><code><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">DBLP:conf/sigir/LillisZTCLD10</span><span class="p">,</span>
+<span class="w">    </span><span class="na">author</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{David Lillis and</span>
+<span class="s">                Lusheng Zhang and</span>
+<span class="s">                Fergus Toolan and</span>
+<span class="s">                Rem W. Collier and</span>
+<span class="s">                David Leonard and</span>
+<span class="s">                John Dunnion}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">editor</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Fabio Crestani and</span>
+<span class="s">                St{\&#39;{e}}phane Marchand{-}Maillet and</span>
+<span class="s">                Hsin{-}Hsi Chen and</span>
+<span class="s">                Efthimis N. Efthimiadis and</span>
+<span class="s">                Jacques Savoy}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">title</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{Estimating probabilities for effective data fusion}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">booktitle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Proceeding of the 33rd International {ACM} {SIGIR} Conference on Research</span>
+<span class="s">                and Development in Information Retrieval, {SIGIR} 2010, Geneva, Switzerland,</span>
+<span class="s">                July 19-23, 2010}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">pages</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{347--354}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">publisher</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{{ACM}}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">year</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">{2010}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">url</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{https://doi.org/10.1145/1835449.1835508}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">doi</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{10.1145/1835449.1835508}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">timestamp</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Tue, 06 Nov 2018 11:07:25 +0100}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">biburl</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{https://dblp.org/rec/conf/sigir/LillisZTCLD10.bib}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">bibsource</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{dblp computer science bibliography, https://dblp.org}</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+
+<h3 id="probfuse">ProbFuse</h3>
+<p>Computes ProbFuse as proposed by <a href="https://dl.acm.org/doi/10.1145/1148170.1148197">Lillis et al.</a>.</p>
+<details>
+    <summary>BibTeX</summary>
+    <div class="highlight"><pre><span></span><code><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">DBLP:conf/sigir/LillisTCD06</span><span class="p">,</span>
+<span class="w">    </span><span class="na">author</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{David Lillis and</span>
+<span class="s">                Fergus Toolan and</span>
+<span class="s">                Rem W. Collier and</span>
+<span class="s">                John Dunnion}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">editor</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Efthimis N. Efthimiadis and</span>
+<span class="s">                Susan T. Dumais and</span>
+<span class="s">                David Hawking and</span>
+<span class="s">                Kalervo J{\&quot;{a}}rvelin}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">title</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{ProbFuse: a probabilistic approach to data fusion}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">booktitle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{{SIGIR} 2006: Proceedings of the 29th Annual International {ACM} {SIGIR}</span>
+<span class="s">                Conference on Research and Development in Information Retrieval, Seattle,</span>
+<span class="s">                Washington, USA, August 6-11, 2006}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">pages</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{139--146}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">publisher</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{{ACM}}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">year</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">{2006}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">url</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{https://doi.org/10.1145/1148170.1148197}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">doi</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{10.1145/1148170.1148197}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">timestamp</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Wed, 14 Nov 2018 10:58:10 +0100}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">biburl</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{https://dblp.org/rec/conf/sigir/LillisTCD06.bib}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">bibsource</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{dblp computer science bibliography, https://dblp.org}</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+<table>
+<thead>
+<tr>
+<th><strong>Optimization Parameter</strong></th>
+<th style="text-align: center;"><strong>Default Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>min_n_segments</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr>
+<td>max_n_segments</td>
+<td style="text-align: center;">100</td>
+</tr>
+</tbody>
+</table>
+<h3 id="rank-biased-centroids-rbc">Rank-Biased Centroids (RBC)</h3>
+<p>Computes Rank-Biased Centroid (RBC) as proposed by <a href="https://dl.acm.org/doi/10.1145/3077136.3080839">Bailey et al.</a>.</p>
+<details>
+    <summary>BibTeX</summary>
+    <div class="highlight"><pre><span></span><code><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">DBLP:conf/sigir/BaileyMST17</span><span class="p">,</span>
+<span class="w">    </span><span class="na">author</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Peter Bailey and</span>
+<span class="s">                Alistair Moffat and</span>
+<span class="s">                Falk Scholer and</span>
+<span class="s">                Paul Thomas}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">editor</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Noriko Kando and</span>
+<span class="s">                Tetsuya Sakai and</span>
+<span class="s">                Hideo Joho and</span>
+<span class="s">                Hang Li and</span>
+<span class="s">                Arjen P. de Vries and</span>
+<span class="s">                Ryen W. White}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">title</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{Retrieval Consistency in the Presence of Query Variations}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">booktitle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Proceedings of the 40th International {ACM} {SIGIR} Conference on</span>
+<span class="s">                Research and Development in Information Retrieval, Shinjuku, Tokyo,</span>
+<span class="s">                Japan, August 7-11, 2017}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">pages</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{395--404}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">publisher</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{{ACM}}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">year</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">{2017}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">url</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{https://doi.org/10.1145/3077136.3080839}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">doi</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{10.1145/3077136.3080839}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">timestamp</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Wed, 25 Sep 2019 16:43:14 +0200}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">biburl</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{https://dblp.org/rec/conf/sigir/BaileyMST17.bib}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">bibsource</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{dblp computer science bibliography, https://dblp.org}</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+<table>
+<thead>
+<tr>
+<th><strong>Optimization Parameter</strong></th>
+<th style="text-align: center;"><strong>Default Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>min_phi</td>
+<td style="text-align: center;">0.01</td>
+</tr>
+<tr>
+<td>max_phi</td>
+<td style="text-align: center;">1.0</td>
+</tr>
+<tr>
+<td>step</td>
+<td style="text-align: center;">0.01</td>
+</tr>
+</tbody>
+</table>
+<h3 id="reciprocal-rank-fusion-rrf">Reciprocal Rank Fusion (RRF)</h3>
+<p>Computes Reciprocal Rank Fusion as proposed by <a href="https://dl.acm.org/doi/10.1145/1571941.1572114">Cormack et al.</a>.</p>
+<details>
+    <summary>BibTeX</summary>
+    <div class="highlight"><pre><span></span><code><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">DBLP:conf/sigir/CormackCB09</span><span class="p">,</span>
+<span class="w">    </span><span class="na">author</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Gordon V. Cormack and</span>
+<span class="s">                Charles L. A. Clarke and</span>
+<span class="s">                Stefan B{\&quot;{u}}ttcher}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">title</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{Reciprocal rank fusion outperforms condorcet and individual rank learning</span>
+<span class="s">                methods}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">booktitle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{{SIGIR}}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">pages</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{758--759}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">publisher</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{{ACM}}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">year</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">{2009}</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+<table>
+<thead>
+<tr>
+<th><strong>Optimization Parameter</strong></th>
+<th style="text-align: center;"><strong>Default Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>min_k</td>
+<td style="text-align: center;">10</td>
+</tr>
+<tr>
+<td>max_k</td>
+<td style="text-align: center;">100</td>
+</tr>
+<tr>
+<td>step</td>
+<td style="text-align: center;">10</td>
+</tr>
+</tbody>
+</table>
+<h3 id="segfuse">SegFuse</h3>
+<p>Computes SegFuse as proposed by <a href="https://link.springer.com/chapter/10.1007/978-3-540-78646-7_33">Shokouhi</a>.</p>
+<details>
+    <summary>BibTeX</summary>
+    <div class="highlight"><pre><span></span><code><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">DBLP:conf/ecir/Shokouhi07a</span><span class="p">,</span>
+<span class="w">    </span><span class="na">author</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Milad Shokouhi}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">editor</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Giambattista Amati and</span>
+<span class="s">                Claudio Carpineto and</span>
+<span class="s">                Giovanni Romano}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">title</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{Segmentation of Search Engine Results for Effective Data-Fusion}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">booktitle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Advances in Information Retrieval, 29th European Conference on {IR}</span>
+<span class="s">                Research, {ECIR} 2007, Rome, Italy, April 2-5, 2007, Proceedings}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">series</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Lecture Notes in Computer Science}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">volume</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{4425}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">pages</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{185--197}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">publisher</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Springer}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">year</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">{2007}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">url</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{https://doi.org/10.1007/978-3-540-71496-5\_19}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">doi</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{10.1007/978-3-540-71496-5\_19}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">timestamp</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Tue, 14 May 2019 10:00:37 +0200}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">biburl</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{https://dblp.org/rec/conf/ecir/Shokouhi07a.bib}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">bibsource</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{dblp computer science bibliography, https://dblp.org}</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+
+<h3 id="slidefuse">SlideFuse</h3>
+<p>Computes SlideFuse as proposed by <a href="https://link.springer.com/chapter/10.1007/978-3-540-78646-7_33">Lillis et al.</a>.</p>
+<details>
+    <summary>BibTeX</summary>
+    <div class="highlight"><pre><span></span><code><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">DBLP:conf/ecir/LillisTCD08</span><span class="p">,</span>
+<span class="w">    </span><span class="na">author</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{David Lillis and</span>
+<span class="s">                Fergus Toolan and</span>
+<span class="s">                Rem W. Collier and</span>
+<span class="s">                John Dunnion}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">editor</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Craig Macdonald and</span>
+<span class="s">                Iadh Ounis and</span>
+<span class="s">                Vassilis Plachouras and</span>
+<span class="s">                Ian Ruthven and</span>
+<span class="s">                Ryen W. White}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">title</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{Extending Probabilistic Data Fusion Using Sliding Windows}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">booktitle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Advances in Information Retrieval , 30th European Conference on {IR}</span>
+<span class="s">                Research, {ECIR} 2008, Glasgow, UK, March 30-April 3, 2008. Proceedings}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">series</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Lecture Notes in Computer Science}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">volume</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{4956}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">pages</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{358--369}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">publisher</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Springer}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">year</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">{2008}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">url</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{https://doi.org/10.1007/978-3-540-78646-7\_33}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">doi</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{10.1007/978-3-540-78646-7\_33}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">timestamp</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Sun, 25 Oct 2020 22:33:08 +0100}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">biburl</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{https://dblp.org/rec/conf/ecir/LillisTCD08.bib}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">bibsource</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{dblp computer science bibliography, https://dblp.org}</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+<table>
+<thead>
+<tr>
+<th><strong>Optimization Parameter</strong></th>
+<th style="text-align: center;"><strong>Default Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>min_w</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr>
+<td>max_w</td>
+<td style="text-align: center;">100</td>
+</tr>
+</tbody>
+</table>
+<h3 id="weighted-bordafuse">Weighted BordaFuse</h3>
+<p>Computes Weighted BordaFuse as proposed by <a href="https://dl.acm.org/doi/10.1145/383952.384007">Aslam et al.</a>.</p>
+<details>
+    <summary>BibTeX</summary>
+    <div class="highlight"><pre><span></span><code><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">DBLP:conf/sigir/AslamM01</span><span class="p">,</span>
+<span class="w">    </span><span class="na">author</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Javed A. Aslam and</span>
+<span class="s">                Mark H. Montague}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">editor</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{W. Bruce Croft and</span>
+<span class="s">                David J. Harper and</span>
+<span class="s">                Donald H. Kraft and</span>
+<span class="s">                Justin Zobel}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">title</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{Models for Metasearch}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">booktitle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{{SIGIR} 2001: Proceedings of the 24th Annual International {ACM} {SIGIR}</span>
+<span class="s">                Conference on Research and Development in Information Retrieval, September</span>
+<span class="s">                9-13, 2001, New Orleans, Louisiana, {USA}}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">pages</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{275--284}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">publisher</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{{ACM}}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">year</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">{2001}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">url</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{https://doi.org/10.1145/383952.384007}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">doi</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{10.1145/383952.384007}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">timestamp</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Tue, 06 Nov 2018 11:07:25 +0100}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">biburl</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{https://dblp.org/rec/conf/sigir/AslamM01.bib}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">bibsource</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{dblp computer science bibliography, https://dblp.org}</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+<table>
+<thead>
+<tr>
+<th><strong>Optimization Parameter</strong></th>
+<th style="text-align: center;"><strong>Default Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>step</td>
+<td style="text-align: center;">0.1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="weighted-condorcet">Weighted Condorcet</h3>
+<p>Computes Weighted Condorcet as proposed by <a href="https://dl.acm.org/doi/10.1145/584792.584881">Montague et al.</a>.</p>
+<details>
+    <summary>BibTeX</summary>
+    <div class="highlight"><pre><span></span><code><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">DBLP:conf/cikm/MontagueA02</span><span class="p">,</span>
+<span class="w">    </span><span class="na">author</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Mark H. Montague and</span>
+<span class="s">                Javed A. Aslam}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">title</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{Condorcet fusion for improved retrieval}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">booktitle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Proceedings of the 2002 {ACM} {CIKM} International Conference on Information</span>
+<span class="s">                and Knowledge Management, McLean, VA, USA, November 4-9, 2002}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">pages</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{538--548}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">publisher</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{{ACM}}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">year</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">{2002}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">url</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{https://doi.org/10.1145/584792.584881}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">doi</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{10.1145/584792.584881}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">timestamp</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Tue, 06 Nov 2018 16:57:50 +0100}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">biburl</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{https://dblp.org/rec/conf/cikm/MontagueA02.bib}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">bibsource</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{dblp computer science bibliography, https://dblp.org}</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+<table>
+<thead>
+<tr>
+<th><strong>Optimization Parameter</strong></th>
+<th style="text-align: center;"><strong>Default Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>step</td>
+<td style="text-align: center;">0.1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="wmnz">WMNZ</h3>
+<p>Computes Weighted MNZ as proposed by <a href="https://dl.acm.org/doi/10.1145/584792.584908">Wu et al.</a>.</p>
+<details>
+    <summary>BibTeX</summary>
+    <div class="highlight"><pre><span></span><code><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">DBLP:conf/cikm/WuC02</span><span class="p">,</span>
+<span class="w">    </span><span class="na">author</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Shengli Wu and</span>
+<span class="s">                Fabio Crestani}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">title</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{Data fusion with estimated weights}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">booktitle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Proceedings of the 2002 {ACM} {CIKM} International Conference on Information</span>
+<span class="s">                and Knowledge Management, McLean, VA, USA, November 4-9, 2002}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">pages</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{648--651}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">publisher</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{{ACM}}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">year</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">{2002}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">url</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{https://doi.org/10.1145/584792.584908}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">doi</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{10.1145/584792.584908}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">timestamp</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Tue, 06 Nov 2018 16:57:40 +0100}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">biburl</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{https://dblp.org/rec/conf/cikm/WuC02.bib}</span><span class="p">,</span>
+<span class="w">    </span><span class="na">bibsource</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{dblp computer science bibliography, https://dblp.org}</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+<table>
+<thead>
+<tr>
+<th><strong>Optimization Parameter</strong></th>
+<th style="text-align: center;"><strong>Default Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>step</td>
+<td style="text-align: center;">0.1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="weighted-sum">Weighted Sum</h3>
+<p>Computes a weighted sum of the scores given to documents by a list of Runs.</p>
+<table>
+<thead>
+<tr>
+<th><strong>Optimization Parameter</strong></th>
+<th style="text-align: center;"><strong>Default Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>step</td>
+<td style="text-align: center;">0.1</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
