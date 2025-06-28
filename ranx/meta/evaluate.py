@@ -41,7 +41,7 @@ def extract_metric_and_params(metric):
 
 
 def convert_qrels(qrels):
-    if type(qrels) == Qrels:
+    if isinstance(qrels, Qrels):
         return qrels.to_typed_list()
     elif isinstance(qrels, dict):
         return python_dict_to_typed_list(qrels, sort=True)
@@ -49,7 +49,7 @@ def convert_qrels(qrels):
 
 
 def convert_run(run):
-    if type(run) == Run:
+    if isinstance(run, Run):
         return run.to_typed_list()
     elif isinstance(run, dict):
         return python_dict_to_typed_list(run, sort=True)
@@ -128,10 +128,10 @@ def evaluate(
     if not return_mean:
         return_std = False
 
-    if make_comparable and type(qrels) == Qrels and type(run) == Run:
+    if make_comparable and isinstance(qrels, Qrels) and isinstance(run, Run):
         run = run.make_comparable(qrels)
 
-    if type(qrels) in [Qrels, dict] and type(run) in [Run, dict]:
+    if isinstance(qrels, (Qrels, dict)) and isinstance(run, (Run, dict)):
         check_keys(qrels, run)
 
     _qrels = convert_qrels(qrels)
@@ -146,7 +146,7 @@ def evaluate(
         metric_scores_dict[metric] = metric_switch(m)(_qrels, _run, k, rel_lvl)
 
     # Save results in Run ------------------------------------------------------
-    if type(run) == Run and save_results_in_run:
+    if isinstance(run, Run) and save_results_in_run:
         for m, scores in metric_scores_dict.items():
             run.mean_scores[m] = np.mean(scores)
             if return_std:

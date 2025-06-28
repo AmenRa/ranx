@@ -35,8 +35,7 @@ lint: .venv  ## Check linting
 	. $(VENV_BIN)/activate
 	$(VENV_BIN)/isort --check .
 	$(VENV_BIN)/black --check .
-	$(VENV_BIN)/blackdoc .
-	$(VENV_BIN)/ruff .
+	$(VENV_BIN)/ruff check .
 	$(VENV_BIN)/typos .
 #	$(VENV_BIN)/mypy ranx
 
