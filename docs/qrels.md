@@ -69,7 +69,7 @@ You can control the behavior of the underlying `pandas.read_parquet` function by
 
 ```python
 qrels = Qrels.from_parquet(
-    path="/path/to/parquet/file""",
+    path="/path/to/parquet/file",
     q_id_col="q_id",
     doc_id_col="doc_id",
     score_col="score",

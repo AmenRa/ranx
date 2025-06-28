@@ -32,7 +32,7 @@ def compare(
         qrels=qrels,
         runs=[run_1, run_2, run_3, run_4, run_5],
         metrics=["map@100", "mrr@100", "ndcg@10"],
-        max_p=0.01  # P-value threshold
+        max_p=0.01,  # P-value threshold
     )
 
     print(report)

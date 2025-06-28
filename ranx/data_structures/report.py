@@ -47,7 +47,7 @@ class Report(object):
         qrels=qrels,
         runs=[run_1, run_2, run_3, run_4, run_5],
         metrics=["map@100", "mrr@100", "ndcg@10"],
-        max_p=0.01  # P-value threshold
+        max_p=0.01,  # P-value threshold
     )
 
     print(report)
@@ -253,7 +253,7 @@ class Report(object):
     def to_dict(self) -> Dict:
         """Returns the Report data as a Python dictionary.
 
-        ```python
+        ```
         {
             "stat_test": "fisher"
             # metrics and model_names allows to read the report without

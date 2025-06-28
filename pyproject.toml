@@ -1,7 +1,13 @@
 [tool.ruff]
 # E501 ignore long comment lines (black should take care of that)
 # E712 ignore == False, needed for numba checks.
+[tool.ruff.lint]
 ignore = ["E501", "E712"]
+
+[tool.black]
+extend-exclude = '''
+\.md$|\.markdown$
+'''
 
 [tool.isort]
 profile = "black"
