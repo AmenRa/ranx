@@ -5,9 +5,17 @@ from typing import Any, Dict, List
 
 import numpy as np
 import pandas as pd
-from numba import types
-from numba.typed import Dict as TypedDict
-from numba.typed import List as TypedList
+
+try:
+    from numba import types
+    from numba.typed import Dict as TypedDict
+    from numba.typed import List as TypedList
+
+    NUMBA_AVAILABLE = True
+except ImportError:
+    NUMBA_AVAILABLE = False
+    TypedDict = dict
+    TypedList = list
 
 from ..io import download, load_json, load_lz4, save_json, save_lz4
 from .common import (

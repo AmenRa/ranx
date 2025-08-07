@@ -7,9 +7,22 @@ import ir_datasets
 import numpy as np
 import orjson
 import pandas as pd
-from numba import njit, prange, types
-from numba.typed import Dict as TypedDict
-from numba.typed import List as TypedList
+
+try:
+    from numba import njit, prange, types
+
+    NUMBA_AVAILABLE = True
+except ImportError:
+    NUMBA_AVAILABLE = False
+
+from ..decorators import maybe_njit
+
+try:
+    from numba.typed import Dict as TypedDict
+    from numba.typed import List as TypedList
+except ImportError:
+    TypedDict = dict
+    TypedList = list
 
 from .common import (
     add_and_sort,

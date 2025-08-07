@@ -1,14 +1,13 @@
 from typing import Union
 
-import numba
 import numpy as np
-from numba import njit, prange
 
+from ..decorators import maybe_njit
 from .common import clean_qrels, fix_k
 
 
 # LOW LEVEL FUNCTIONS ==========================================================
-@njit(cache=True)
+@maybe_njit(cache=True)
 def _dcg(qrels, run, k, rel_lvl, jarvelin):
     qrels = clean_qrels(qrels, rel_lvl)
     if len(qrels) == 0:
@@ -40,20 +39,53 @@ def _dcg(qrels, run, k, rel_lvl, jarvelin):
         return np.sum((2**weighted_hit_list - 1) / np.log2(np.arange(1, k + 1) + 1))
 
 
-@njit(cache=True, parallel=True)
-def _dcg_parallel(qrels, run, k, rel_lvl, jarvelin):
+# Handle parallel version with conditional compilation
+try:
+    from numba import njit, prange
+
+    @njit(cache=True, parallel=True)
+    def _dcg_parallel_numba(qrels, run, k, rel_lvl, jarvelin):
+        scores = np.zeros((len(qrels)), dtype=np.float64)
+        for i in prange(len(qrels)):
+            scores[i] = _dcg(qrels[i], run[i], k, rel_lvl, jarvelin)
+        return scores
+
+    @njit(cache=True, parallel=True)
+    def _ndcg_parallel_numba(qrels, run, k, rel_lvl, jarvelin):
+        scores = np.zeros((len(qrels)), dtype=np.float64)
+        for i in prange(len(qrels)):
+            scores[i] = _ndcg(qrels[i], run[i], k, rel_lvl, jarvelin)
+        return scores
+
+    NUMBA_AVAILABLE = True
+except ImportError:
+    NUMBA_AVAILABLE = False
+
+
+def _dcg_parallel_numpy(qrels, run, k, rel_lvl, jarvelin):
+    """NumPy fallback implementation."""
     scores = np.zeros((len(qrels)), dtype=np.float64)
-    for i in prange(len(qrels)):
+    for i in range(len(qrels)):
         scores[i] = _dcg(qrels[i], run[i], k, rel_lvl, jarvelin)
     return scores
 
 
-@njit(cache=True)
+def _dcg_parallel(qrels, run, k, rel_lvl, jarvelin):
+    """Dispatch to best available implementation."""
+    from ..config import use_numba
+
+    if NUMBA_AVAILABLE and use_numba():
+        return _dcg_parallel_numba(qrels, run, k, rel_lvl, jarvelin)
+    else:
+        return _dcg_parallel_numpy(qrels, run, k, rel_lvl, jarvelin)
+
+
+@maybe_njit(cache=True)
 def _idcg(qrels, k, rel_lvl, jarvelin):
     return _dcg(qrels, qrels, k, rel_lvl, jarvelin)
 
 
-@njit(cache=True)
+@maybe_njit(cache=True)
 def _ndcg(qrels, run, k, rel_lvl, jarvelin):
     dcg_score = _dcg(qrels, run, k, rel_lvl, jarvelin)
     idcg_score = _idcg(qrels, k, rel_lvl, jarvelin)
@@ -65,18 +97,28 @@ def _ndcg(qrels, run, k, rel_lvl, jarvelin):
     return dcg_score / idcg_score
 
 
-@njit(cache=True, parallel=True)
-def _ndcg_parallel(qrels, run, k, rel_lvl, jarvelin):
+def _ndcg_parallel_numpy(qrels, run, k, rel_lvl, jarvelin):
+    """NumPy fallback implementation."""
     scores = np.zeros((len(qrels)), dtype=np.float64)
-    for i in prange(len(qrels)):
+    for i in range(len(qrels)):
         scores[i] = _ndcg(qrels[i], run[i], k, rel_lvl, jarvelin)
     return scores
 
 
+def _ndcg_parallel(qrels, run, k, rel_lvl, jarvelin):
+    """Dispatch to best available implementation."""
+    from ..config import use_numba
+
+    if NUMBA_AVAILABLE and use_numba():
+        return _ndcg_parallel_numba(qrels, run, k, rel_lvl, jarvelin)
+    else:
+        return _ndcg_parallel_numpy(qrels, run, k, rel_lvl, jarvelin)
+
+
 # HIGH LEVEL FUNCTIONS =========================================================
 def dcg(
-    qrels: Union[np.ndarray, numba.typed.List],
-    run: Union[np.ndarray, numba.typed.List],
+    qrels: Union[np.ndarray, list],
+    run: Union[np.ndarray, list],
     k: int = 0,
     rel_lvl: int = 1,
 ) -> np.ndarray:
@@ -105,9 +147,9 @@ def dcg(
     ```
 
     Args:
-        qrels (Union[np.ndarray, numba.typed.List]): IDs and relevance scores of _relevant_ documents.
+        qrels: IDs and relevance scores of _relevant_ documents.
 
-        run (Union[np.ndarray, numba.typed.List]): IDs and relevance scores of _retrieved_ documents.
+        run: IDs and relevance scores of _retrieved_ documents.
 
         k (int, optional): Number of retrieved documents to consider. k=0 means all retrieved documents will be considered. Defaults to 0.
 
@@ -124,8 +166,8 @@ def dcg(
 
 
 def ndcg(
-    qrels: Union[np.ndarray, numba.typed.List],
-    run: Union[np.ndarray, numba.typed.List],
+    qrels: Union[np.ndarray, list],
+    run: Union[np.ndarray, list],
     k: int = 0,
     rel_lvl: int = 1,
 ) -> np.ndarray:
@@ -168,9 +210,9 @@ def ndcg(
     ```
 
     Args:
-        qrels (Union[np.ndarray, numba.typed.List]): IDs and relevance scores of _relevant_ documents.
+        qrels: IDs and relevance scores of _relevant_ documents.
 
-        run (Union[np.ndarray, numba.typed.List]): IDs and relevance scores of _retrieved_ documents.
+        run: IDs and relevance scores of _retrieved_ documents.
 
         k (int, optional): Number of retrieved documents to consider. k=0 means all retrieved documents will be considered. Defaults to 0.
 
@@ -187,8 +229,8 @@ def ndcg(
 
 
 def dcg_burges(
-    qrels: Union[np.ndarray, numba.typed.List],
-    run: Union[np.ndarray, numba.typed.List],
+    qrels: Union[np.ndarray, list],
+    run: Union[np.ndarray, list],
     k: int = 0,
     rel_lvl: int = 1,
 ) -> np.ndarray:
@@ -223,9 +265,9 @@ def dcg_burges(
     ```
 
     Args:
-        qrels (Union[np.ndarray, numba.typed.List]): IDs and relevance scores of _relevant_ documents.
+        qrels: IDs and relevance scores of _relevant_ documents.
 
-        run (Union[np.ndarray, numba.typed.List]): IDs and relevance scores of _retrieved_ documents.
+        run: IDs and relevance scores of _retrieved_ documents.
 
         k (int, optional): Number of retrieved documents to consider. k=0 means all retrieved documents will be considered. Defaults to 0.
 
@@ -242,8 +284,8 @@ def dcg_burges(
 
 
 def ndcg_burges(
-    qrels: Union[np.ndarray, numba.typed.List],
-    run: Union[np.ndarray, numba.typed.List],
+    qrels: Union[np.ndarray, list],
+    run: Union[np.ndarray, list],
     k: int = 0,
     rel_lvl: int = 1,
 ) -> np.ndarray:
@@ -292,9 +334,9 @@ def ndcg_burges(
     ```
 
     Args:
-        qrels (Union[np.ndarray, numba.typed.List]): IDs and relevance scores of _relevant_ documents.
+        qrels: IDs and relevance scores of _relevant_ documents.
 
-        run (Union[np.ndarray, numba.typed.List]): IDs and relevance scores of _retrieved_ documents.
+        run: IDs and relevance scores of _retrieved_ documents.
 
         k (int, optional): Number of retrieved documents to consider. k=0 means all retrieved documents will be considered. Defaults to 0.
 
