@@ -1,14 +1,13 @@
 from typing import Union
 
-import numba
 import numpy as np
-from numba import njit, prange
 
+from ..decorators import maybe_njit
 from .hits import _hits
 
 
 # LOW LEVEL FUNCTIONS ==========================================================
-@njit(cache=True)
+@maybe_njit(cache=True)
 def _precision(qrels, run, k, rel_lvl):
     k = k if k != 0 else run.shape[0]
     if k == 0:
@@ -17,18 +16,44 @@ def _precision(qrels, run, k, rel_lvl):
     return _hits(qrels, run, k, rel_lvl) / k
 
 
-@njit(cache=True, parallel=True)
-def _precision_parallel(qrels, run, k, rel_lvl):
+# Handle parallel version with conditional compilation
+try:
+    from numba import njit, prange
+
+    @njit(cache=True, parallel=True)
+    def _precision_parallel_numba(qrels, run, k, rel_lvl):
+        scores = np.zeros((len(qrels)), dtype=np.float64)
+        for i in prange(len(qrels)):
+            scores[i] = _precision(qrels[i], run[i], k, rel_lvl)
+        return scores
+
+    NUMBA_AVAILABLE = True
+except ImportError:
+    NUMBA_AVAILABLE = False
+
+
+def _precision_numpy(qrels, run, k, rel_lvl):
+    """NumPy fallback implementation."""
     scores = np.zeros((len(qrels)), dtype=np.float64)
-    for i in prange(len(qrels)):
+    for i in range(len(qrels)):
         scores[i] = _precision(qrels[i], run[i], k, rel_lvl)
     return scores
 
 
+def _precision_parallel(qrels, run, k, rel_lvl):
+    """Dispatch to best available implementation."""
+    from ..config import use_numba
+
+    if NUMBA_AVAILABLE and use_numba():
+        return _precision_parallel_numba(qrels, run, k, rel_lvl)
+    else:
+        return _precision_numpy(qrels, run, k, rel_lvl)
+
+
 # HIGH LEVEL FUNCTIONS =========================================================
 def precision(
-    qrels: Union[np.ndarray, numba.typed.List],
-    run: Union[np.ndarray, numba.typed.List],
+    qrels: Union[np.ndarray, list],
+    run: Union[np.ndarray, list],
     k: int = 0,
     rel_lvl: int = 1,
 ) -> np.ndarray:
@@ -59,9 +84,9 @@ def precision(
     - $r_k$ is the number of retrieved relevant documents at k.
 
     Args:
-        qrels (Union[np.ndarray, numba.typed.List]): IDs and relevance scores of _relevant_ documents.
+        qrels (Union[np.ndarray, list]): IDs and relevance scores of _relevant_ documents.
 
-        run (Union[np.ndarray, numba.typed.List]): IDs and relevance scores of _retrieved_ documents.
+        run (Union[np.ndarray, list]): IDs and relevance scores of _retrieved_ documents.
 
         k (int, optional): Number of retrieved documents to consider. k=0 means all retrieved documents will be considered. Defaults to 0.
 

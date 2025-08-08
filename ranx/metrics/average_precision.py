@@ -1,14 +1,13 @@
 from typing import Union
 
-import numba
 import numpy as np
-from numba import njit, prange
 
+from ..decorators import maybe_njit
 from .common import clean_qrels, fix_k
 
 
 # LOW LEVEL FUNCTIONS ==========================================================
-@njit(cache=True)
+@maybe_njit(cache=True)
 def _average_precision(qrels, run, k, rel_lvl):
     qrels = clean_qrels(qrels, rel_lvl)
     if len(qrels) == 0:
@@ -42,18 +41,44 @@ def _average_precision(qrels, run, k, rel_lvl):
     return np.sum(precision_scores) / qrels.shape[0]
 
 
-@njit(cache=True, parallel=True)
-def _average_precision_parallel(qrels, run, k, rel_lvl):
+# Handle parallel version with conditional compilation
+try:
+    from numba import njit, prange
+
+    @njit(cache=True, parallel=True)
+    def _average_precision_parallel_numba(qrels, run, k, rel_lvl):
+        scores = np.zeros((len(qrels)), dtype=np.float64)
+        for i in prange(len(qrels)):
+            scores[i] = _average_precision(qrels[i], run[i], k, rel_lvl)
+        return scores
+
+    NUMBA_AVAILABLE = True
+except ImportError:
+    NUMBA_AVAILABLE = False
+
+
+def _average_precision_numpy(qrels, run, k, rel_lvl):
+    """NumPy fallback implementation."""
     scores = np.zeros((len(qrels)), dtype=np.float64)
-    for i in prange(len(qrels)):
+    for i in range(len(qrels)):
         scores[i] = _average_precision(qrels[i], run[i], k, rel_lvl)
     return scores
 
 
+def _average_precision_parallel(qrels, run, k, rel_lvl):
+    """Dispatch to best available implementation."""
+    from ..config import use_numba
+
+    if NUMBA_AVAILABLE and use_numba():
+        return _average_precision_parallel_numba(qrels, run, k, rel_lvl)
+    else:
+        return _average_precision_numpy(qrels, run, k, rel_lvl)
+
+
 # HIGH LEVEL FUNCTIONS =========================================================
 def average_precision(
-    qrels: Union[np.ndarray, numba.typed.List],
-    run: Union[np.ndarray, numba.typed.List],
+    qrels: Union[np.ndarray, list],
+    run: Union[np.ndarray, list],
     k: int = 0,
     rel_lvl: int = 1,
 ) -> np.ndarray:
@@ -72,9 +97,9 @@ def average_precision(
     - $R$ is the total number of relevant documents.
 
     Args:
-        qrels (Union[np.ndarray, numba.typed.List]): IDs and relevance scores of _relevant_ documents.
+        qrels: IDs and relevance scores of _relevant_ documents.
 
-        run (Union[np.ndarray, numba.typed.List]): IDs and relevance scores of _retrieved_ documents.
+        run: IDs and relevance scores of _retrieved_ documents.
 
         k (int, optional): Number of retrieved documents to consider. k=0 means all retrieved documents will be considered. Defaults to 0.
 
