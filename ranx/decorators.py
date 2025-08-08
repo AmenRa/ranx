@@ -82,27 +82,8 @@ def maybe_jit(*args, **kwargs):
     return decorator
 
 
-# We need to handle prange differently since Numba needs to know about it at compile time
-if NUMBA_AVAILABLE:
-    from numba import prange as numba_prange
-
-    def maybe_prange(*args, **kwargs):
-        """
-        Conditional prange that falls back to regular range when Numba is disabled.
-
-        Returns:
-            prange when Numba is available and enabled, otherwise range
-        """
-        if use_numba():
-            return numba_prange(*args, **kwargs)
-        else:
-            return range(*args, **kwargs)
-
-else:
-
-    def maybe_prange(*args, **kwargs):
-        """Fallback to range when Numba is not available."""
-        return range(*args, **kwargs)
+# Note: prange requires separate implementations because Numba needs compile-time
+# knowledge of whether to use prange or range. See metrics files for examples.
 
 
 def create_typed_dict(key_type=None, value_type=None, initial_dict=None):
