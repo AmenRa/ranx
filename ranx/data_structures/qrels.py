@@ -15,7 +15,6 @@ try:
 except ImportError:
     NUMBA_AVAILABLE = False
 
-from ..decorators import maybe_njit
 
 try:
     from numba.typed import Dict as TypedDict

@@ -1,12 +1,10 @@
 """Conditional decorators for optional Numba support."""
 
-from typing import Any, Callable, Dict, List, Union
-
 from .config import use_numba
 
 # Check if Numba is available
 try:
-    from numba import jit, njit, prange
+    from numba import jit, njit
     from numba.typed import Dict as TypedDict
     from numba.typed import List as TypedList
 

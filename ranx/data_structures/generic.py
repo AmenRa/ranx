@@ -1,4 +1,4 @@
-from ..decorators import create_typed_dict, create_typed_list, maybe_njit
+from ..decorators import create_typed_dict, create_typed_list
 
 # Handle Numba-specific imports conditionally
 try:

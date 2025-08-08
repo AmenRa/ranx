@@ -1,6 +1,5 @@
 """Tests for optional Numba functionality."""
 
-import numpy as np
 import pytest
 
 import ranx
