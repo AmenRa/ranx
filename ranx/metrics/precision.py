@@ -32,7 +32,7 @@ except ImportError:
     NUMBA_AVAILABLE = False
 
 
-def _precision_parallel_numpy(qrels, run, k, rel_lvl):
+def _precision_numpy(qrels, run, k, rel_lvl):
     """NumPy fallback implementation."""
     scores = np.zeros((len(qrels)), dtype=np.float64)
     for i in range(len(qrels)):
@@ -47,7 +47,7 @@ def _precision_parallel(qrels, run, k, rel_lvl):
     if NUMBA_AVAILABLE and use_numba():
         return _precision_parallel_numba(qrels, run, k, rel_lvl)
     else:
-        return _precision_parallel_numpy(qrels, run, k, rel_lvl)
+        return _precision_numpy(qrels, run, k, rel_lvl)
 
 
 # HIGH LEVEL FUNCTIONS =========================================================

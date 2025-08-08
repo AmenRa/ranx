@@ -62,7 +62,7 @@ except ImportError:
     NUMBA_AVAILABLE = False
 
 
-def _dcg_parallel_numpy(qrels, run, k, rel_lvl, jarvelin):
+def _dcg_numpy(qrels, run, k, rel_lvl, jarvelin):
     """NumPy fallback implementation."""
     scores = np.zeros((len(qrels)), dtype=np.float64)
     for i in range(len(qrels)):
@@ -77,7 +77,7 @@ def _dcg_parallel(qrels, run, k, rel_lvl, jarvelin):
     if NUMBA_AVAILABLE and use_numba():
         return _dcg_parallel_numba(qrels, run, k, rel_lvl, jarvelin)
     else:
-        return _dcg_parallel_numpy(qrels, run, k, rel_lvl, jarvelin)
+        return _dcg_numpy(qrels, run, k, rel_lvl, jarvelin)
 
 
 @maybe_njit(cache=True)
@@ -97,7 +97,7 @@ def _ndcg(qrels, run, k, rel_lvl, jarvelin):
     return dcg_score / idcg_score
 
 
-def _ndcg_parallel_numpy(qrels, run, k, rel_lvl, jarvelin):
+def _ndcg_numpy(qrels, run, k, rel_lvl, jarvelin):
     """NumPy fallback implementation."""
     scores = np.zeros((len(qrels)), dtype=np.float64)
     for i in range(len(qrels)):
@@ -112,7 +112,7 @@ def _ndcg_parallel(qrels, run, k, rel_lvl, jarvelin):
     if NUMBA_AVAILABLE and use_numba():
         return _ndcg_parallel_numba(qrels, run, k, rel_lvl, jarvelin)
     else:
-        return _ndcg_parallel_numpy(qrels, run, k, rel_lvl, jarvelin)
+        return _ndcg_numpy(qrels, run, k, rel_lvl, jarvelin)
 
 
 # HIGH LEVEL FUNCTIONS =========================================================

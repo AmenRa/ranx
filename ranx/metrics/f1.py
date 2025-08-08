@@ -44,7 +44,7 @@ except ImportError:
     NUMBA_AVAILABLE = False
 
 
-def _f1_parallel_numpy(qrels, run, k, rel_lvl):
+def _f1_numpy(qrels, run, k, rel_lvl):
     """NumPy fallback implementation."""
     scores = np.zeros((len(qrels)), dtype=np.float64)
     for i in range(len(qrels)):
@@ -59,7 +59,7 @@ def _f1_parallel(qrels, run, k, rel_lvl):
     if NUMBA_AVAILABLE and use_numba():
         return _f1_parallel_numba(qrels, run, k, rel_lvl)
     else:
-        return _f1_parallel_numpy(qrels, run, k, rel_lvl)
+        return _f1_numpy(qrels, run, k, rel_lvl)
 
 
 # HIGH LEVEL FUNCTIONS =========================================================
