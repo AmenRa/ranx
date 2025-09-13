@@ -31,7 +31,7 @@ Any dependence on `trec_eval` have been removed to make `ranx` truly MIT-complia
 It offers a user-friendly interface to evaluate and compare [Information Retrieval](https://en.wikipedia.org/wiki/Information_retrieval) and [Recommender Systems](https://en.wikipedia.org/wiki/Recommender_system).
 [ranx](https://github.com/AmenRa/ranx) allows you to perform statistical tests and export [LaTeX](https://en.wikipedia.org/wiki/LaTeX) tables for your scientific publications.
 Moreover, [ranx](https://github.com/AmenRa/ranx) provides several [fusion algorithms](https://amenra.github.io/ranx/fusion) and [normalization strategies](https://amenra.github.io/ranx/normalization), and an automatic [fusion optimization](https://amenra.github.io/ranx/fusion/#optimize-fusion) functionality.
-[ranx](https://github.com/AmenRa/ranx) also have a companion repository of pre-computed runs to facilitated model comparisons called [ranxhub](https://amenra.github.io/ranxhub).
+[ranx](https://github.com/AmenRa/ranx) also have a companion repository of pre-computed runs to facilitate model comparisons called [ranxhub](https://amenra.github.io/ranxhub).
 On [ranxhub](https://amenra.github.io/ranxhub), you can download and share pre-computed runs for Information Retrieval datasets, such as [MSMARCO Passage Ranking](https://arxiv.org/abs/1611.09268).
 [ranx](https://github.com/AmenRa/ranx) was featured in [ECIR 2022](https://ecir2022.org), [CIKM 2022](https://www.cikm2022.org), and [SIGIR 2023](https://sigir.org/sigir2023). 
  
@@ -91,7 +91,7 @@ A full list of the available runs is provided [here](https://amenra.github.io/ra
 | [CombMED](https://amenra.github.io/ranx/fusion/#combmed) | [CombGMNZ](https://amenra.github.io/ranx/fusion/#combgmnz) | [RBC](https://amenra.github.io/ranx/fusion/#rank-biased-centroids-rbc)  | [PosFuse](https://amenra.github.io/ranx/fusion/#posfuse)     | [Weighted BordaFuse](https://amenra.github.io/ranx/fusion/#weighted-bordafuse) |
 | [CombANZ](https://amenra.github.io/ranx/fusion/#combanz) | [ISR](https://amenra.github.io/ranx/fusion/#isr)           | [WMNZ](https://amenra.github.io/ranx/fusion/#wmnz)                      | [ProbFuse](https://amenra.github.io/ranx/fusion/#probfuse)   | [Condorcet](https://amenra.github.io/ranx/fusion/#condorcet)                   |
 | [CombMAX](https://amenra.github.io/ranx/fusion/#combmax) | [Log_ISR](https://amenra.github.io/ranx/fusion/#log_isr)   | [Mixed](https://amenra.github.io/ranx/fusion/#mixed)                    | [SegFuse](https://amenra.github.io/ranx/fusion/#segfuse)     | [Weighted Condorcet](https://amenra.github.io/ranx/fusion/#weighted-condorcet) |
-| [CombSUM](https://amenra.github.io/ranx/fusion/#combsum) | [LogN_ISR](https://amenra.github.io/ranx/fusion/#logn_isr) | [BayesFuse](https://amenra.github.io/ranx/fusion/#bayesfuse)            | [SlideFuse](https://amenra.github.io/ranx/fusion/#slidefuse) | [Weighted Sum](https://amenra.github.io/ranx/fusion/#wighted-sum)              |
+| [CombSUM](https://amenra.github.io/ranx/fusion/#combsum) | [LogN_ISR](https://amenra.github.io/ranx/fusion/#logn_isr) | [BayesFuse](https://amenra.github.io/ranx/fusion/#bayesfuse)            | [SlideFuse](https://amenra.github.io/ranx/fusion/#slidefuse) | [Weighted Sum](https://amenra.github.io/ranx/fusion/#weighted-sum)              |
 
 Please, refer to the [documentation](https://amenra.github.io/ranx/fusion) for further details.
 

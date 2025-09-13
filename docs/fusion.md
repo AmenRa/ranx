@@ -335,7 +335,7 @@ Computes Log_ISR as proposed by [Mourão et al.](https://www.sciencedirect.com/s
 
 
 ### LogN_ISR
-Computes Log_ISR as proposed by [Mourão et al.](https://www.sciencedirect.com/science/article/abs/pii/S0895611114000664).
+Computes LogN_ISR as proposed by [Mourão et al.](https://www.sciencedirect.com/science/article/abs/pii/S0895611114000664).
 <details>
     <summary>BibTeX</summary>
     ```bibtex

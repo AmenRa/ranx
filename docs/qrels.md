@@ -79,7 +79,7 @@ qrels = Qrels.from_parquet(
 
 ## Save
 Write `qrels` to `path` as JSON file or TREC qrels format.  
-File type is automatically inferred form the filename extension: `.json` -> `json`, `.trec` -> `trec`, `.txt` -> `trec`, `.parq` -> `parquet`, `.parquet` -> `parquet`.  
+File type is automatically inferred from the filename extension: `.json` -> `json`, `.trec` -> `trec`, `.txt` -> `trec`, `.parq` -> `parquet`, `.parquet` -> `parquet`.  
 Use the `kind` argument to override the default behavior.
 
 ```python

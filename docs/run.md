@@ -80,7 +80,7 @@ run = Run.from_parquet(
 
 ## Save
 Write `run` to `path` as JSON file, TREC run, LZ4 file, or Parquet file.   
-File type is automatically inferred form the filename extension: `.json` -> `json`, `.trec` -> `trec`, `.txt` -> `trec`, and `.lz4` -> `lz4`, `.parq` -> `parquet`, `.parquet` -> `parquet`.  
+File type is automatically inferred from the filename extension: `.json` -> `json`, `.trec` -> `trec`, `.txt` -> `trec`, and `.lz4` -> `lz4`, `.parq` -> `parquet`, `.parquet` -> `parquet`.  
 Use the `kind` argument to override this behavior.
 
 ```python
