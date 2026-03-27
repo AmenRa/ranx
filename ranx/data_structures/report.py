@@ -199,21 +199,21 @@ class Report(object):
 
         table_prefix = (
             "% To change the table size, act on the resizebox argument `0.8`.\n"
-            + """\\begin{table*}[ht]\n\centering\n\caption{\nOverall effectiveness of the models.\nThe best results are highlighted in boldface.\nSuperscripts denote significant differences in """
+            + "\\begin{table*}[ht]\n\\centering\n\\caption{\nOverall effectiveness of the models.\nThe best results are highlighted in boldface.\nSuperscripts denote significant differences in "
             + self.get_stat_test_label(self.stat_test)
-            + """ with $p \le """
+            + " with $p \\le "
             + str(self.max_p)
             + "$.\n}\n\\resizebox{0.8\\textwidth}{!}{"
             + "\n\\begin{tabular}{c|l"
             + "|c" * len(self.metrics)
             + "}"
             + "\n\\toprule"
-            + "\n\\textbf{\#}"
+            + "\n\\textbf{\\#}"
             + "\n& \\textbf{Model}"
             + "".join(
                 [f"\n& \\textbf{{{self.get_metric_label(m)}}}" for m in self.metrics]
             )
-            + " \\\\ \n\midrule"
+            + " \\\\ \n\\midrule"
         )
 
         table_content = []
@@ -243,7 +243,7 @@ class Report(object):
         )
 
         table_suffix = (
-            "\\bottomrule\n\end{tabular}\n}\n\label{tab:results}\n\end{table*}"
+            "\\bottomrule\n\\end{tabular}\n}\n\\label{tab:results}\n\\end{table*}"
         )
 
         return (

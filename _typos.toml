@@ -3,4 +3,5 @@ extend-ignore-identifiers-re = [
     ".*Hsi",
     "relevants",
     "Comput",
+    "ttest.*",
 ]

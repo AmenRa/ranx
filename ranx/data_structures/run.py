@@ -310,12 +310,12 @@ class Run(object):
         Returns:
             Run: ranx.Run
         """
-        assert (
-            df[q_id_col].dtype == "O"
-        ), "DataFrame Query IDs column dtype must be `object` (string)"
-        assert (
-            df[doc_id_col].dtype == "O"
-        ), "DataFrame Document IDs column dtype must be `object` (string)"
+        assert pd.api.types.is_string_dtype(
+            df[q_id_col]
+        ), "DataFrame Query IDs column dtype must be string"
+        assert pd.api.types.is_string_dtype(
+            df[doc_id_col]
+        ), "DataFrame Document IDs column dtype must be string"
         assert (
             df[score_col].dtype == np.float64
         ), "DataFrame scores column dtype must be `float`"
