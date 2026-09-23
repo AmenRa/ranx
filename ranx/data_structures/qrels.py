@@ -74,7 +74,8 @@ class Qrels(object):
             # Doc IDs
             doc_ids = [list(doc.keys()) for doc in qrels.values()]
             max_len = max(len(y) for x in doc_ids for y in x)
-            dtype = f"<U{max_len}"
+            width = 1 << (max_len - 1).bit_length() if max_len > 1 else 1
+            dtype = f"<U{width}"
             doc_ids = TypedList([np.array(x, dtype=dtype) for x in doc_ids])
 
             # Scores
