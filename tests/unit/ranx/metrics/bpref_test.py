@@ -102,3 +102,35 @@ def test_bpref(qrels, run):
     assert isclose(scores[1], 1 / 2 * ((1 - (1 / 2)) + (1 - (1 / 2))))
     assert isclose(scores[2], 1 / 3 * ((1 - (1 / 3)) + (1 - (1 / 3)) + (1 - (2 / 3))))
     assert isclose(scores[3], 1 / 4 * ((1 - (1 / 4)) + (1 - (2 / 4)) + (1 - (2 / 4))))
+
+
+def test_bpref_without_judged_nonrelevant(run):
+    positive_only_qrels = Qrels({"q1": {"d1": 1, "d2": 1}}).to_typed_list()
+    scores = bpref(positive_only_qrels, run[:1])
+    assert scores[0] == 1.0
+
+
+@pytest.mark.parametrize(
+    ("judgments", "rel_lvl"),
+    [
+        ({"d1": 1, "d2": 1}, 1),
+        ({"d1": 2, "d2": 3}, 2),
+    ],
+)
+def test_bpref_positive_only_partial_retrieval_ignores_unjudged(judgments, rel_lvl):
+    positive_only_qrels = Qrels({"q1": judgments}).to_typed_list()
+    run_with_one_relevant_and_unjudged = Run(
+        {"q1": {"unjudged": 3, "d1": 2, "also_unjudged": 1}}
+    ).to_typed_list()
+
+    scores = bpref(
+        positive_only_qrels, run_with_one_relevant_and_unjudged, rel_lvl=rel_lvl
+    )
+
+    assert isclose(scores[0], 1 / 2)
+
+
+def test_bpref_without_relevant_documents(run):
+    no_relevant_qrels = Qrels({"q1": {"d1": 0, "d2": 0}}).to_typed_list()
+    scores = bpref(no_relevant_qrels, run[:1])
+    assert scores[0] == 0.0
