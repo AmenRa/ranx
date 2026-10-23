@@ -14,11 +14,20 @@ def _bpref(qrels, run, rel_lvl):
     n_rels = sum(qrels[:, 1] >= rel_lvl)
     n_non_rels = sum(qrels[:, 1] < rel_lvl)
 
+    # TREC eval defines bpref as 0 when there are no relevant documents.
+    if n_rels == 0:
+        return 0.0
+
     hit_list = _get_hit_list(qrels, run, k=0, rel_lvl=rel_lvl)
     unjudged_list = _get_unjudged_list(qrels, run, k=0)
 
     # Remove unjudged from hit_list
     hit_list = hit_list[unjudged_list != 1]
+
+    if n_non_rels == 0:
+        # With no judged nonrelevant documents, each retrieved relevant
+        # document contributes 1 (the TREC eval bpref convention).
+        return np.sum(hit_list == 1) / n_rels
 
     return (
         np.sum(
