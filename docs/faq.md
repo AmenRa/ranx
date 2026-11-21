@@ -7,3 +7,8 @@ No, it's not. `ranx` is meant for ranking tasks. Although some metrics are commo
 Zero and negative scored results are NOT filtered out by `ranx`.
 Relevance scores are used only for sorting and there is no constraint on the values produce by a ranking models, although some of them only outputs positive values.
 Therefore, if you think that zero and negative scored results should be filtered out, you should do it before passing the `runs` to `ranx`.
+
+## How are equal retrieval scores ordered?
+Runs and dictionary inputs break score ties by the original document ID in descending lexicographic order, matching `trec_eval`. For example, tied IDs `doc2`, `doc10`, and `doc1` are ordered in that sequence, regardless of input order. Scores still take precedence over IDs.
+
+This makes evaluation reproducible, but a tie crossing a rank cutoff remains arbitrary: document IDs decide which tied documents count at `k`. Positional array and typed-list inputs have already lost their original string IDs and retain their supplied order.

@@ -10,7 +10,7 @@ from pandas import DataFrame
 
 @njit(cache=True)
 def descending_sort(x):
-    return x[np.argsort(x[:, 1])[::-1]]
+    return x[np.argsort(-x[:, 1], kind="mergesort")]
 
 
 @njit(cache=True, parallel=True)
@@ -24,12 +24,16 @@ def descending_sort_parallel(x):
 def python_dict_to_typed_list(x: Dict[str, Dict[str, Number]], sort: bool = True):
     """Converts a nested Python Dictionary to Numba Typed List to be used with ranx's metrics with no effort.
 
-    Note: Doc IDs will be hashed.
+    Note: Doc IDs will be hashed. When sorting, establish the string ID
+    tie-break before hashing, then preserve it with a stable score sort.
     """
     out = TypedList(
         [
             np.array(
-                [[hash(doc_id), score] for doc_id, score in doc.items()],
+                [
+                    [hash(doc_id), doc[doc_id]]
+                    for doc_id in (sorted(doc, reverse=True) if sort else doc)
+                ],
                 dtype=np.float64,
             )
             for doc in x.values()
