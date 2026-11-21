@@ -56,7 +56,7 @@ def typed_list_argosrt(typed_list):
     array = np.empty((len(typed_list)))
     for i in range(len(typed_list)):
         array[i] = typed_list[i]
-    return np.argsort(array)
+    return np.argsort(array, kind="mergesort")
 
 
 @njit(cache=True)
@@ -77,9 +77,11 @@ def sort_dict_by_value(d):
     new_d = TypedDict()
 
     keys = TypedList(d.keys())
-    values = TypedList(d.values())
+    keys.sort()
+    values = TypedList([d[key] for key in keys])
 
-    for i in typed_list_argosrt([-v for v in values]):
+    # Stable ascending score order, reversed, breaks ties by descending doc ID.
+    for i in typed_list_argosrt(values)[::-1]:
         new_d[keys[i]] = values[i]
 
     return new_d
